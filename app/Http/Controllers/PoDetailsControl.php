@@ -1,0 +1,65 @@
+<?php 
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\poDetails; 
+use App\po_list;
+use Illuminate\Support\Facades\DB;
+
+
+class PoDetailsControl extends Controller
+{
+    public function store(Request $request)
+    {
+        $input = $request->all();
+        //dd($input);
+        $UserIn=getUser()->id;
+        $request->validate([
+        'PO'=>'required|unique:po_details',
+        'PO_total'=>'required',
+        'Vendor'=>'required',
+        'Ship_to'=>'required',
+        ]);
+
+        $PO = new po_list([
+        'PO'=> $input['PO'],
+        'Total_Amount'=>$input['PO_total'],
+        'Created_by'=>$UserIn,
+        'Status'=>'Open',
+        'Reviewed_by'=>'test1',
+        'Vendor'=>$input['Vendor'],
+        'Ship_to'=>$input['Ship_to'],
+        ]);
+        
+        $countarray = count($input['po_items'])-1;
+        //dd($countarray);
+            for($i=0;$i<=$countarray;$i++){          
+                     $newData = new poDetails([
+                    'Icode' => $input['po_items'][$i]['Icode'],
+                    'Qty' => $input['po_items'][$i]['Qty'],
+                    'UnitCost' => $input['po_items'][$i]['UnitCost'],
+                    'PO' => $input['PO']
+        ]);
+        
+                    $newData->save();
+                   
+                } $PO->save();
+
+}
+public function LoadPo(){
+    $po= po_list::all();
+    return $po;
+}
+
+public function GetPo(Request $request){
+    $PO= DB::connection('mysql')->select("SELECT * FROM `po_details` where PO=?",[$request['PO']]);
+    //dd($PO);
+    return $PO;
+}
+public function GetPoHead(Request $request){
+    $PO= DB::connection('mysql')->select("SELECT * FROM `po_lists` where PO=?",[$request['PO']]);
+    //dd($PO);
+    return $PO;
+}
+}

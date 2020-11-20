@@ -8,7 +8,9 @@
       <router-link class="nav-link" to='/PO_list'>List</router-link>
     </li>
     <li class="nav-item">
+      <keep-alive>
       <router-link class="nav-link" to='/PO_Create'>Create</router-link>
+      </keep-alive>
     </li>
     
   </ul></div>

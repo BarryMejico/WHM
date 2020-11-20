@@ -43,3 +43,5 @@ Route::post('SaveItem','itemController@SaveItem');
 Route::get('LoadItems','itemController@LoadItems');
 Route::post('SaveItems','itemController@update');
 Route::post('DeleteItem','itemController@Delete');
+
+Route::get('treedata','LocationController@treedata');

@@ -31,7 +31,7 @@
                     </div>
   </div>
   <div class="col-xl-4">
-    <button href="#addCustomerModal" data-toggle="modal" type="button" class="btn btn-primary btn-sm">Ship to</button>
+    <button href="#addCustomerModal" data-toggle="modal" type="button" class="btn btn-secondary btn-sm">Ship to</button>
                     <div>
                    <b>Name: </b><label class="text-muted"><i>{{Customer}}</i></label><br>
                     <b>Address:</b><label class="text-muted"><i>{{add_Cus}}</i></label><br>
@@ -56,7 +56,7 @@
     </tr>
   </thead>
   <tbody v-if="po_items">
-    <tr v-for="(po_item, k) in po_items" :key="k">      
+    <tr  v-for="(po_item, k) in po_items" :key="k">      
       <th scope="row" class="in">{{k}}</th>
       <td>{{po_item.Icode}}</td>
       <td>{{po_item.idescription}}</td>
@@ -229,7 +229,7 @@ export default {
 
     data:function(){
       return int_data();
-      },
+      }, 
 
     mounted(){
       this.clearData();
@@ -240,6 +240,7 @@ export default {
       }else{
         this.Load_PO();
         this.Load_Details();
+        
       }
     },
 
@@ -400,11 +401,24 @@ export default {
                   }
 
                   this.po_items=this.po_items2;
+                  this.Load_idescription();
                   }
           )
          .catch((error)=>{
                 this.errors=error.response.data.errors;
             })
+        },
+
+        Load_idescription(){
+          
+          var i,j;
+                  for (i=0; i < this.po_items.length; i++){                    
+                    for (j=0; j < this.items.length; j++){
+                      if (this.po_items[i]['Icode']===this.items[j]['Code']){
+                      this.po_items[i]['idescription']=this.items[j]['Name'];  
+                      this.po_items[i]['iunit']=this.items[j]['Unit']; 
+                      //console.log("Yes"); 
+                  }}}
         },
 
       Load_Details(){

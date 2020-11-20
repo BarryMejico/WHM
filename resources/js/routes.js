@@ -17,6 +17,9 @@ import ListCus from './components/Page/Customer/ListCus';
 import Items from './components/Page/Items/CreateItem';
 import ListItem from './components/Page/Items/ListItem';
 
+import Location from './components/Page/Location/Location';
+
+
 import { before } from 'lodash';
 export default{
     mode: 'history',
@@ -155,6 +158,19 @@ export default{
         path:'/Items_List',
         component: ListItem,
         name: 'ItemList',
+        beforeEnter:(to,from,next)=>{
+            axios.get('api/Authenticated').then(()=>{
+                next()                
+            }).catch(()=>{
+                return next({name: '/login_'})
+            })
+        }
+    },
+//location w/in WH
+    {
+        path:'/Location',
+        component: Location,
+        name: 'Location',
         beforeEnter:(to,from,next)=>{
             axios.get('api/Authenticated').then(()=>{
                 next()                

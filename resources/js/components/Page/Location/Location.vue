@@ -26,7 +26,7 @@
                     <input v-model="selectedItem" id="head" type="text">
                     <input type="text">
                     <button @click="addNode" class="btn btn-secondary btn-sm">Add</button>
-                    <button @click="refreshTree" class="btn btn-secondary btn-sm">Save</button>
+                    <button @click="savingNode" class="btn btn-secondary btn-sm">Save</button>
                     <button @click="refreshTree" class="btn btn-secondary btn-sm">Refresh</button>
                    
                 </div>
@@ -44,39 +44,8 @@
 <script>
 
 
-function datatree(e){
-    e=e||window.event;
-    e=e.target||e.srcElement;
-    
-    var newId=e.id.slice(3,e.id.length);
-    
-    var eTarget = document.getElementById(newId),
-        eparent=document.getElementById(e.id),
-        textBox=document.getElementById("head");
-    //console.log(eTarget.style);
-    textBox.value=eTarget.id;
-    if(eTarget.style.display=="none"){
-        eTarget.style.display="inherit";
-        //eparent.style.backgroundColor="blue";
-    }else{
-        eTarget.style.display="none"
-        //eparent.style.backgroundColor="";
-    }
-}
 
-function CheckOut(){
-var eTarget = document.getElementById("Dispo"),
-newLiNode=document.createElement("li"),
-textNode=document.createTextNode(">" + eTarget.value);
-if(eTarget.value==""){
-eTarget.remove();
-}
-else{
-newLiNode.appendChild(textNode);
-console.log(newLiNode)
-eTarget.replaceWith(newLiNode);
-}
-}
+
 
 
 export default {
@@ -94,11 +63,59 @@ export default {
          
          this.getparent();
          //this.toggle_child();
-         document.getElementById("datatree").addEventListener("click",datatree);
-         document.getElementById("datatree").addEventListener("focusout",CheckOut);
+         document.getElementById("datatree").addEventListener("click",this.datatree);
+         document.getElementById("datatree").addEventListener("focusout",this.CheckOut);
          
      },
 methods:{
+
+CheckOut(){    
+var eTarget = document.getElementById("Dispo"),
+newLiNode=document.createElement("li"),
+textNode=document.createTextNode(">" + eTarget.value),
+parentcode=eTarget.parentElement.parentElement.id;
+
+//console.log(newcode)
+
+if(eTarget.value==""){
+eTarget.remove();
+}
+else{
+newLiNode.appendChild(textNode);
+eTarget.replaceWith(newLiNode);
+
+axios.post('/api/SaveNode',{ name:eTarget.value, parent:parentcode})
+.then(()=>{
+console.log(newLiNode);
+})
+}
+},
+
+savingNode(){
+
+},
+
+     datatree(e){
+    e=e||window.event;
+    e=e.target||e.srcElement;
+    
+    var newId=e.id.slice(3,e.id.length);
+    
+    var eTarget = document.getElementById(newId),
+        eparent=document.getElementById(e.id),
+        textBox=document.getElementById("head");
+   
+    textBox.value=eTarget.id;
+    
+    if(eTarget.style.display=="none"){
+        eTarget.style.display="inherit";
+        //eparent.style.backgroundColor="blue";
+    }else{
+        eTarget.style.display="none"
+        //eparent.style.backgroundColor="";
+    }
+},
+
     refreshTree(){
         setTimeout(() => location.reload(), 500);
     },
@@ -195,9 +212,7 @@ methods:{
             document.getElementById("Dispo").focus();
             
     },
-    away(){
-        console.log("away");
-    },
+
     
 }
 }

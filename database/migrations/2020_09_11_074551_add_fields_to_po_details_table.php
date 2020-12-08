@@ -20,7 +20,7 @@ class AddFieldsToPoDetailsTable extends Migration
             $table->string('PO');
         });
     }
-
+ 
     /**
      * Reverse the migrations.
      *

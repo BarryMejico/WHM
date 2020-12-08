@@ -1,8 +1,7 @@
 <?php 
 
 if (!function_exists('custom')) {
-
-
+    
     function Ucode() {
         $d = date("yy-m-dH");
         $code = $d;

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\item;
+use Illuminate\Support\Facades\DB;
 
 class itemController extends Controller
 {
@@ -52,5 +53,11 @@ class itemController extends Controller
         $id = item::destroy($input['ids']);
         
     }   
+
+    public function specificItem(Request $request){
+        $details= DB::connection('mysql')->select("SELECT * FROM `items` where Code=?",[$request['code']]);
+        
+    return $details;
+    }
     
 }

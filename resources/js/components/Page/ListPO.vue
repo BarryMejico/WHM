@@ -25,12 +25,14 @@
       <td>{{po_item.Vendor}}</td>
       <td>{{po_item.Total_Amount}}</td>
       <td>{{po_item.Status}}</td>
-      <td><label>
+      <td>
         <button class="btn-sm">
         <router-link :to="{ name:'PO', params:{PO_Load: po_item.PO }}">
           Purchase Order
         </router-link>
-        </button></label></td>
+        </button><button class="btn-sm"><router-link :to="{ name:'Receiving', params:{PO_Load: po_item.PO }}">
+          Receiving
+          </router-link></button></td>
     </tr>
   </tbody>
 </table>
@@ -46,11 +48,13 @@
 <script>
 import MenuList from '../Page/MainPO'
 import CreatePO from '../Page/CreatePO'
+import Receiving from './Inventory/Receiving.vue'
 
 export default {
     components: {
      MenuList,
-     CreatePO
+     CreatePO,
+        Receiving
     },
 
     data() {

@@ -1,4 +1,4 @@
-import Home from './components/Home';
+import Home from './components/Home'; 
 import About from './components/About';
 import Login from './components/Auth/LoginSys';
 import Register from './components/Auth/RegisterSys';
@@ -19,6 +19,7 @@ import ListItem from './components/Page/Items/ListItem';
 
 import Location from './components/Page/Location/Location';
 
+import Receiving from './components/Page/Inventory/Receiving';
 
 import { before } from 'lodash';
 export default{
@@ -174,6 +175,21 @@ export default{
         beforeEnter:(to,from,next)=>{
             axios.get('api/Authenticated').then(()=>{
                 next()                
+            }).catch(()=>{
+                return next({name: '/login_'})
+            })
+        }
+    },
+    
+    
+    {
+        path:'/Receiving',
+        component: Receiving,
+        name: 'Receiving',
+        beforeEnter:(to,from,next)=>{
+            axios.get('api/Authenticated').then(()=>{
+                next()
+                
             }).catch(()=>{
                 return next({name: '/login_'})
             })

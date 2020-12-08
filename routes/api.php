@@ -28,21 +28,30 @@ Route::middleware('auth:sanctum')->get('/Authenticated', function () {
 
 Route::post('registeraccount','RegisterControl@register');
 Route::post('login','RegisterControl@login');
-Route::post('SavePo','PoDetailsControl@store');
+
+
 Route::post('SaveVendor','VendorController@store');
 Route::post('DeleteVendor','VendorController@Delete');
-Route::get('LoadPo','PoDetailsControl@LoadPo');
 Route::get('LoadVen','VendorController@index');
+
+Route::get('LoadPo','PoDetailsControl@LoadPo');
 Route::get('GetPo','PoDetailsControl@GetPo');
 Route::get('GetPoHead','PoDetailsControl@GetPoHead');
+Route::post('DeletePOItem','PoDetailsControl@DeleteItem');
+Route::post('SavePo','PoDetailsControl@store');
+Route::post('SaveReceived','receivingController@store');
 
 Route::get('LoadCus','CustommerController@LoadCus');
 Route::post('SaveCus','CustommerController@store');
 
 Route::post('SaveItem','itemController@SaveItem');
+
+
 Route::get('LoadItems','itemController@LoadItems');
 Route::post('SaveItems','itemController@update');
 Route::post('DeleteItem','itemController@Delete');
 
 Route::get('treedata','LocationController@treedata');
 Route::post('SaveNode','LocationController@Save');
+Route::get('itemsInside','LocationDetailsController@SelectedParent');
+Route::post('saveItemtoLoaction','LocationDetailsController@save');

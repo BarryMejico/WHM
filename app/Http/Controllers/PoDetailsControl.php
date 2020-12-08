@@ -10,19 +10,19 @@ use Illuminate\Support\Facades\DB;
 
 class PoDetailsControl extends Controller
 {
-    public function store(Request $request)
+    public function store(Request $request) 
     {
         $input = $request->all();
         //dd($input);
         $UserIn=getUser()->id;
         $request->validate([
-        'PO'=>'required|unique:po_details',
+        'PO'=>'required',
         'PO_total'=>'required',
         'Vendor'=>'required',
         'Ship_to'=>'required',
         ]);
 
-        $PO = new po_list([
+        $PO = po_list::updateOrCreate(['PO'=> $input['PO']],[
         'PO'=> $input['PO'],
         'Total_Amount'=>$input['PO_total'],
         'Created_by'=>$UserIn,
@@ -34,8 +34,14 @@ class PoDetailsControl extends Controller
         
         $countarray = count($input['po_items'])-1;
         //dd($countarray);
+        
+        DB::table('po_details')->where('PO',$input['PO'])->delete();
+
             for($i=0;$i<=$countarray;$i++){          
-                     $newData = new poDetails([
+                     $newData = poDetails::updateOrCreate([
+                        'Icode' => $input['po_items'][$i]['Icode'],
+                        'PO' => $input['PO']
+                     ],[
                     'Icode' => $input['po_items'][$i]['Icode'],
                     'Qty' => $input['po_items'][$i]['Qty'],
                     'UnitCost' => $input['po_items'][$i]['UnitCost'],
@@ -61,5 +67,9 @@ public function GetPoHead(Request $request){
     $PO= DB::connection('mysql')->select("SELECT * FROM `po_lists` where PO=?",[$request['PO']]);
     //dd($PO);
     return $PO;
+}
+
+public function DeleteItem(Request $request){
+        $input = $request->all();
 }
 }

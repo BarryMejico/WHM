@@ -14,30 +14,38 @@
      
       <label for="mode">Mode:</label>                     
       <input id="mode" type="text" class="form-control" required autocomplete="name" autofocus>
-    
-</div>  
-  </div>
-    <div class="col-xl-3">        
-            
-            <button type="button" class="btn btn-info">Print</button>
-    </div>
-</div>
-<div class="row">
-  <div class="col-xl-4">
+
+       <div class="col-xl-5">
     <button href="#addVendorModal" data-toggle="modal" type="button" class="btn btn-secondary btn-sm">Vendor</button>
                     <div>
                     <b>Name:</b><label class="text-muted"><i>{{Vendor}}</i></label><br>
                     <b>Address:</b><label class="text-muted"><i>{{add_Ven}}</i></label><br>
                     </div>
   </div>
-  <div class="col-xl-4">
+  <div class="col-xl-5">
     <button href="#addCustomerModal" data-toggle="modal" type="button" class="btn btn-secondary btn-sm">Ship to</button>
                     <div>
                    <b>Name: </b><label class="text-muted"><i>{{Customer}}</i></label><br>
                     <b>Address:</b><label class="text-muted"><i>{{add_Cus}}</i></label><br>
                     </div>
   </div>
-  <div class="col-xl-4"></div>
+    
+</div>  
+  </div>
+    <div class="col-xl-3">        
+            
+            <button type="button" class="btn btn-info">Print</button>
+            <items-modal @SelectedItems="Selected_Item"></items-modal>
+    <div class="dropdown">
+    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+    <span class="caret">{{status}}</span></button>
+    <ul class="dropdown-menu">
+      <li>Open</li>
+      <li>Approved</li>
+      <li>Canceled</li>
+    </ul>
+</div>
+    </div>
 </div>
             
         <div class="sc">
@@ -52,8 +60,9 @@
       <th scope="col">Unit Cost</th>
       <th scope="col">Total Cost</th>
       <th scope="col">Action</th>
-      <button href="#addEmployeeModal" class="btn-light btn-sm nav-link" data-toggle="modal">Add Item</button>
+      
     </tr>
+    
   </thead>
   <tbody v-if="po_items">
     <tr  v-for="(po_item, k) in po_items" :key="k">      
@@ -64,7 +73,7 @@
       <td class="in"><div class="qty"><input v-model="po_item.Qty" min="1" type="number" @change="calculateLineTotal(po_item)"></div></td>
       <td class="in"><div class="qty"><input v-model="po_item.UnitCost"  @change="calculateLineTotal(po_item)"></div></td>
       <td>{{po_item.Tcost}} Php</td>
-      <td><a class="link" @click="deleteRow(k, po_item)">Delete</a>/<a class="link">Recompute</a></td>
+      <td><a class="link" @click="deleteRow(k, po_item,po_item.Icode)">Delete</a>/<a class="link">Recompute</a></td>
     </tr>
   </tbody>
 </table>
@@ -82,37 +91,6 @@
     
     </div>
     <hr>
-    <!--modal Items-->
-<div id="addEmployeeModal" class="modal fade">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			
-				<div class="modal-header">						
-					<h4 class="modal-title">Add Item</h4>
-					<button type="button" id="close" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				</div>
-				<div class="modal-body">	
-          <div class="form-group">		
-                    <label>Item Code</label>		
-										<input type="text" id='code' @keyup.enter="addNewRow('code')">
-          </div>
-
-<ul class="list-group">
-  <li class="list-group-item d-flex justify-content-between align-items-center" 
-    v-for="(item, k) in items" :key="k">
-    <a @click="Selected_Item(item.Code,item.Name,item.Unit)">{{item.Name}}</a>
-    <span class="badge badge-primary badge-pill">{{item.Unit}}</span>
-  </li>
-  <a class="link">New Vendor</a>
-</ul>
-				</div>
-				<div class="modal-footer">
-          <button  type="button" class="btn btn-light"  @click="addNewRow('code')">Add Item</button>
-				</div>
-			
-		</div>
-	</div>
-</div>
 <!--modal Vendor-->
 <div id="addVendorModal" class="modal fade">
 	<div class="modal-dialog">
@@ -182,7 +160,9 @@
 </template>
 
 <script>
+import ItemsModal from '../Modals/ItemsModal';
 import MenuList from '../Page/MainPO'
+
 function int_data(){
   return{
    //---for list of po
@@ -192,6 +172,7 @@ function int_data(){
        Vendor_code:'',
        Customer_code:'',
        Ship_to:'Ship',
+       status:'',
        //---for loading Vendors
         List_Vendor:[],
         Vendor:'',
@@ -224,33 +205,34 @@ export default {
   //prop:['PO_Load'],
 
     components: {
-     MenuList
+     MenuList,
+        ItemsModal
     }, 
 
     data:function(){
       return int_data();
       }, 
 
-    mounted(){
+    beforeMount(){
       this.clearData();
-      
+    },
+
+    mounted(){
       var $POL = this.$route.params.PO_Load;      
       if(typeof this.$route.params.PO_Load === "undefined" ){
         console.log("PO Undefied")
       }else{
         this.Load_PO();
         this.Load_Details();
-        
       }
     },
 
     methods:{
-      Selected_Item(code,Name,Unit){
+      Selected_Item(event){
+         var code=event['Code'],Name=event['Name'],Unit=event['Unit'];
         var i;
         var meron = false;
-
          for (i=0;i < this.po_items.length; i++){
-           
             if(this.po_items[i]['Icode']===code){
                meron = true;
             }
@@ -269,6 +251,7 @@ export default {
         }
             this.closeModal();
       },
+
 
       Selected_ven(codes){        
         var code;
@@ -302,6 +285,7 @@ export default {
           .then(
               (response)=>{
                   this.List_Vendor=response.data;
+                  
               }
           )
           .catch()
@@ -312,6 +296,8 @@ export default {
         .then(
           (response)=>{
             this.items=response.data;
+            
+            
           }
         )
       },
@@ -322,6 +308,7 @@ export default {
           .then(
               (response)=>{
                   this.List_Customer=response.data;
+                  
               }
           )
           .catch()
@@ -338,10 +325,10 @@ export default {
             this.closeModal()
         },
 
-        deleteRow(index,invoice_product) {
+        deleteRow(index,invoice_product,code) {
             var idx = this.po_items.indexOf(invoice_product);
             var sub=0-invoice_product.Tcost;
-            //console.log(idx, index);
+            console.log(idx, code);
             if (idx > -1) {
                 this.po_items.splice(idx, 1);
             }
@@ -360,6 +347,7 @@ export default {
             //console.log(total);
             this.calculateTotal(total);
         },
+
         closeModal() {
              document.getElementById('close').click();
 },
@@ -379,7 +367,6 @@ export default {
               //Created_by:this.userId['id'],       //'Created_by' => 'required',
               Vendor:this.Vendor_code,         //'Vendor'=>'required',
               Ship_to:this.Customer_code,            //'Ship_to'=>'required',
-
               })
             .then(()=>{
                this.clearData();
@@ -393,7 +380,9 @@ export default {
           axios.get('/api/GetPo', {params:{PO:this.$route.params.PO_Load}})
           .then(
               (response)=>{
+
                   this.po_items2=response.data;
+                  
                   var i;
                   for (i=0; i < this.po_items2.length; i++){
                       this.po_items2[i]['Tcost']=this.po_items2[i]['Qty']*this.po_items2[i]['UnitCost'];
@@ -401,6 +390,7 @@ export default {
                   }
 
                   this.po_items=this.po_items2;
+                  
                   this.Load_idescription();
                   }
           )
@@ -410,15 +400,17 @@ export default {
         },
 
         Load_idescription(){
-          
+         
           var i,j;
-                  for (i=0; i < this.po_items.length; i++){                    
+                  for (i=0; i < this.po_items.length; i++){   
+                      
                     for (j=0; j < this.items.length; j++){
+                      
                       if (this.po_items[i]['Icode']===this.items[j]['Code']){
                       this.po_items[i]['idescription']=this.items[j]['Name'];  
                       this.po_items[i]['iunit']=this.items[j]['Unit']; 
-                      //console.log("Yes"); 
                   }}}
+        
         },
 
       Load_Details(){
@@ -431,7 +423,8 @@ export default {
                   this.Vendor_code = this.po_details[0]['Vendor'];
                   this.Selected_ven(this.po_details[0]['Vendor']);
                   this.Customer_code = this.po_details[0]['Ship_to'];
-                   this.Selected_cus(this.po_details[0]['Ship_to']);
+                  this.Selected_cus(this.po_details[0]['Ship_to']);
+                  this.status=this.po_details[0]['Status'];
               }
           )
           .catch((error)=>{
@@ -441,11 +434,14 @@ export default {
 
         clearData(){
           Object.assign(this.$data, this.$options.data.apply(this));
-               
                this.load_vendor();
                this.load_customer();
                this.load_item();
-        }
+        },
+
+        deleteItem(code){
+          axios.post('/api/DeletePOItem',{params:{PO:this.po,code:code}})
+        },
     }
 }
 </script>

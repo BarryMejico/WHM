@@ -93,9 +93,6 @@
         <div id="Inventory" class="collapse">
             <ul>   
 	            <li><router-link to="/Vendor_Create">Receiving</router-link></li>
-                <li><router-link to="/Customer_Create">Placing/Put-Away</router-link></li>
-                <li><router-link to="/Items_Create">Picking</router-link></li>
-                <li><router-link to="/Items_Create">Added Value</router-link></li>
                 <li><router-link to="/Items_Create">Dispatching</router-link></li>
                 <li><router-link to="/Items_Create">Returns</router-link></li>
             </ul>
@@ -127,7 +124,7 @@
 <!--side bar End-->
 <div>
 <br>
-        <router-view></router-view>
+        <router-view></router-view> 
 <div>
 
 <!----------- Footer ------------>

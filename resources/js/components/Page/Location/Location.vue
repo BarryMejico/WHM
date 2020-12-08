@@ -1,14 +1,18 @@
 
-<template>
+<template> 
 
 <div>
     <div class="container">
     <div class="row justify-content-left">
         <div class="col-md-5">
             <div class="card">
-                <div class="card-header">Home<button @click="refreshTree" class="btn btn-secondary btn-sm">Refresh</button></div>
-
+                <div class="card-header">Tree Data</div>
+                    
                 <div class="card-body">
+                    <div class="row">
+                        
+                        <div><button style="border:solid black 1px;" @click="addNode" class="btn btn-secondary">Add</button></div>
+                    </div>
                     <label id="errorLabe"></label>
                     <div id="datatree" class="card-body tree">
                         <ul id="root" >
@@ -20,14 +24,22 @@
         </div>
         <div class="col-md-5">
             <div class="card">
-                <div class="card-header">Locations</div>
+                <div class="card-header"><label id="Namehead">/</label><label id="head" type="text"></label></div>
 
                 <div class="card-body">
-                    <input v-model="selectedItem" id="head" type="text">
+                    <ItemsModal @SelectedItems="Selected_Item"></ItemsModal>
+
                     <input type="text">
-                    <button @click="addNode" class="btn btn-secondary btn-sm">Add</button>
-                    <button @click="savingNode" class="btn btn-secondary btn-sm">Save</button>
-                    <button @click="refreshTree" class="btn btn-secondary btn-sm">Refresh</button>
+
+                    <ul class="list-group">
+                        <li class="list-group-item d-flex justify-content-between align-items-center" 
+                                  v-for="(item, k) in items" :key="k">
+                                    {{item.Name}}
+                            <span class="badge badge-primary badge-pill">{{item.Unit}}</span>
+                        </li>
+ 
+</ul>
+                    
                    
                 </div>
             </div>
@@ -42,13 +54,12 @@
 </template>
 
 <script>
-
-
-
-
-
+import ItemsModal from '../../Modals/ItemsModal.vue';
 
 export default {
+    components: {
+        ItemsModal
+    }, 
     data(){
 
         return{
@@ -56,18 +67,70 @@ export default {
             LocationRoot:[],
 
             selectedItem:'',
+
+            ItemsInsidecode:[],
+
+            items:[],
+
+            items2:[],
         }
     },
+
+    
 
      mounted(){
          
          this.getparent();
+         this.itemsloader();
          //this.toggle_child();
          document.getElementById("datatree").addEventListener("click",this.datatree);
          document.getElementById("datatree").addEventListener("focusout",this.CheckOut);
+         document.getElementById("datatree").addEventListener("dblclick",this.itemsInside);
          
      },
 methods:{
+
+saveItemtoLoaction(c,p){
+    
+    axios.post('/api/saveItemtoLoaction',{itemCode:c,parent:p})
+    .then(()=>{
+
+    })
+},
+
+    Selected_Item(event){
+        console.log(event['status']);
+        if (event['status']==1){
+             console.log("Item already Exist in other location!!!");
+             return;
+            }
+else{
+        var code=event['Code'],Name=event['Name'],Unit=event['Unit'];
+        var parent = document.getElementById('head').textContent;
+        var i;
+        var meron = false;
+
+         for (i=0;i < this.items.length; i++){
+            if(this.items[i]['Code']===code){
+               meron = true;
+            }
+        }
+
+         if (meron){
+             console.log("Item already Exist!!!")
+          }
+        else{
+            
+          this.saveItemtoLoaction(code,parent);
+        this.items.push({
+                Code:code,
+                Name:Name,
+                Unit:Unit,
+
+                                  });
+        }
+            //this.closeModal();
+    }},
 
 CheckOut(){    
 var eTarget = document.getElementById("Dispo"),
@@ -97,40 +160,70 @@ savingNode(){
 
      datatree(e){
     e=e||window.event;
-    e=e.target||e.srcElement;
-    
+    e=e.target||e.srcElement; 
     var newId=e.id.slice(3,e.id.length);
+    var eTarget = document.getElementById(newId);
+
     
-    var eTarget = document.getElementById(newId),
-        eparent=document.getElementById(e.id),
-        textBox=document.getElementById("head");
-   
-    textBox.value=eTarget.id;
-    
+
     if(eTarget.style.display=="none"){
         eTarget.style.display="inherit";
-        //eparent.style.backgroundColor="blue";
+        
     }else{
         eTarget.style.display="none"
-        //eparent.style.backgroundColor="";
+        
     }
+},
+
+itemsInside(e)
+{
+    e=e||window.event;
+    e=e.target||e.srcElement; 
+    var newId=e.id.slice(3,e.id.length);
+    var eTarget = document.getElementById(newId);
+        var parent=eTarget.id,
+        textBox=document.getElementById("head"),
+        textBox2=document.getElementById("Namehead");
+textBox.textContent=eTarget.id;
+    textBox2.textContent= e.textContent + "/";
+        
+    axios.get('/api/itemsInside',{params:{parent:parent}})
+        .then((response)=>{
+            this.ItemsInsidecode=response.data;
+
+            var i,j,code;
+            this.items=[];
+            for(i=0;i<this.ItemsInsidecode.length;i++){
+                code=this.ItemsInsidecode[i]['itemCode'];
+                console.log(code);
+                for(j=0;j<this.items2.length;j++){
+                    if(code==this.items2[j]['Code']){
+                            this.items.push({
+                             Code:this.items2[j]['Code'],
+                             Name:this.items2[j]['Name'],
+                             Unit:this.items2[j]['Unit']
+                })
+                    }
+                }
+                
+        }})
+},
+
+itemsloader(Code){
+    axios.get('/api/LoadItems')
+        .then(
+          (response)=>{
+            this.items2=response.data;
+            
+          }
+        )
 },
 
     refreshTree(){
         setTimeout(() => location.reload(), 500);
     },
 
-    toggle(idname){
-      var listNode=document.getElementById(idname);
-      //var i;
-       console.log(listNode);
 
-       //listNode.replaceChild()
-      //for(i=0;i<listNode.childElementCount; i++){
-          
-          //console.log(listNode.children[i]);
-     // }
-    },
 
     toggle_child(){
         this.children=[];
@@ -194,13 +287,16 @@ savingNode(){
           )
           .catch()    
 },
+
     addNode(){
-        var tId = document.getElementById("head").value;
+        var tId = document.getElementById("head").textContent;
         var TargetList=document.getElementById(tId),
             textBox=document.createElement("input"),
             newLi=document.createElement("li");
+
             textBox.type="text";
             textBox.id="Dispo";
+
             console.log("laman "+tId);
             newLi.appendChild(textBox);
             TargetList.append(newLi);

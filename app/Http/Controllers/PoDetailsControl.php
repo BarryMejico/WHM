@@ -72,4 +72,20 @@ public function GetPoHead(Request $request){
 public function DeleteItem(Request $request){
         $input = $request->all();
 }
+
+public function ChangeStatus(Request $request){
+    $input = $request->all();
+        //dd($input['PO']);
+        $UserIn=getUser()->id;
+        
+        $request->validate([
+        'PO'=>'required',
+        'Status'=>'required',
+        ]);
+
+        $PO = DB::table('po_lists')
+        ->where('PO',$input['PO'])
+        ->update(['Status'=>$input['Status']],['Reviewed_by'=>$UserIn]);
+        
+}
 }

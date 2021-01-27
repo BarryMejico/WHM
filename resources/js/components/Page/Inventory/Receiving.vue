@@ -405,13 +405,21 @@ export default {
           axios.get('/api/GetPoHead', {params:{PO:this.$route.params.PO_Load}})
           .then(
             (response)=>{
+                  
                   this.po_details = response.data;
+                  
+                  if(this.po_details[0]['Status']!=="Approved"){console.log("not approved PO")}
+                  else{
                   this.po = this.po_details[0]['PO'];
                   this.PO_total = this.po_details[0]['Total_Amount'];
                   this.Vendor_code = this.po_details[0]['Vendor'];
-                  this.Selected_ven(this.po_details[0]['Vendor']);
+                  //this.Selected_ven(this.po_details[0]['Vendor']);
                   this.Customer_code = this.po_details[0]['Ship_to'];
-                   this.Selected_cus(this.po_details[0]['Ship_to']);
+                   //this.Selected_cus(this.po_details[0]['Ship_to']);
+
+                   this.load_Selected_customer(this.Customer_code);
+                  this.load_Selected_vendor(this.Vendor_code);
+                  }
               }
           )
           .catch((error)=>{
@@ -424,7 +432,35 @@ export default {
                this.load_vendor();
                this.load_customer();
                this.load_item();
+        },
+         load_Selected_customer(cus){
+        var i;
+
+        
+
+        for(i=0;i<=this.List_Customer.length-1;i++){
+          
+
+            if(this.List_Customer[i]['Ccode']==cus){ 
+                this.add_Cus=this.List_Customer[i]['Address'];
+                this.Customer=this.List_Customer[i]['Customer'];
+                this.Customer_code=this.List_Customer[i]['Ccode'];
+            }
         }
+      },
+
+      load_Selected_vendor(ven){
+        var i;
+        
+        for(i=0;i<=this.List_Vendor.length-1;i++){
+          
+          if(this.List_Vendor[i]['Vcode']==ven){
+                this.add_Ven=this.List_Vendor[i]['Address'];
+                this.Vendor=this.List_Vendor[i]['Vendor'];
+                this.Vendor_code=this.List_Vendor[i]['Vcode'];
+            }
+        }
+      },
     }
 }
 </script>

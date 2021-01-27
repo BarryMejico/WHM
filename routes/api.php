@@ -41,6 +41,7 @@ Route::get('GetPo','PoDetailsControl@GetPo');
 Route::get('GetPoHead','PoDetailsControl@GetPoHead');
 Route::post('DeletePOItem','PoDetailsControl@DeleteItem');
 Route::post('SavePo','PoDetailsControl@store');
+Route::post('ChangeStatus','PoDetailsControl@ChangeStatus');
 
 
 Route::get('LoadCus','CustommerController@LoadCus');

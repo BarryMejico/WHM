@@ -86,7 +86,7 @@
   
 <span><b>Total:</b> {{PO_total}} Php</span><br>
 <hr>
-<button type="button" class="btn btn-info" @click.prevent="saveform">Save</button>
+<button type="button" id="SaveBtn" class="btn btn-info" @click.prevent="saveform">Save</button>
 <button type="button" class="btn danger btn-danger" @click.prevent="clearData">Clear ALL</button>
 </div>
         </div>
@@ -449,9 +449,18 @@ export default {
         },
 
         changeStatus(NewStatus){
+          if (this.status=="Open"){
           this.status=NewStatus;
-
           this.last_update= new Date().toISOString().slice(0, 10);
+          axios.post('/api/ChangeStatus',{PO:this.po,Status:NewStatus})
+          .then(
+           //disable form
+          )
+          .catch()
+          }
+          else{
+            console.log("PO already reviewed");
+          }
         },
     }
 }

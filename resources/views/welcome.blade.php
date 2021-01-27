@@ -83,39 +83,50 @@
     <button data-toggle="collapse" data-target="#Sales">Sales</button>
         <div id="Sales" class="collapse">
             <ul>  
-                <li><router-link to="/PO">Products</router-link></li>
-                <li><router-link to="/PO">Service</router-link></li>
-                <li><router-link to="/PO">Sales Invoice</router-link></li>
+                <li><router-link to="/Upcoming">Products</router-link></li>
+                <li><router-link to="/Upcoming">Service</router-link></li>
+                <li><router-link to="/invoice">Sales Invoice</router-link></li>
             </ul>
         </div>
 
     <button data-toggle="collapse" data-target="#Inventory">Inventory</button>
         <div id="Inventory" class="collapse">
             <ul>   
-	            <li><router-link to="/Vendor_Create">Receiving</router-link></li>
-                <li><router-link to="/Items_Create">Dispatching</router-link></li>
-                <li><router-link to="/Items_Create">Returns</router-link></li>
-            </ul>
-        </div>
-    <button data-toggle="collapse" data-target="#Accounting">Accounting</button>
-        <div id="Accounting" class="collapse">
-            <ul>   
-	            <li><router-link to="/Vendor_Create">Journals</router-link></li>
-                <li><router-link to="/Customer_Create">Cash Flow</router-link></li>
-                <li><router-link to="/Items_Create">Reports</router-link></li>
+	            <li><router-link to="/PO_list">Receiving</router-link></li>
+                <li><router-link to="/Upcoming">Dispatching</router-link></li>
+                <li><router-link to="/Upcoming">Returns</router-link></li>
             </ul>
         </div>
 
-<hr>
+        <button data-toggle="collapse" data-target="#Report">Report</button>
+        <div id="Report" class="collapse">
+            <ul>   
+	            <li><router-link to="/DeviceHistory">Device Repair History</router-link></li>
+                <li><router-link to="/Upcoming">???</router-link></li>
+                <li><router-link to="/Upcoming">???</router-link></li>
+            </ul>
+        </div>
+
+        <hr>
+    <button data-toggle="collapse" data-target="#Accounting">Accounting</button>
+        <div id="Accounting" class="collapse">
+            <ul>   
+	            <li><router-link to="/Upcoming">Journals</router-link></li>
+                <li><router-link to="/Upcoming">Cash Flow</router-link></li>
+                <li><router-link to="/Upcoming">Reports</router-link></li>
+            </ul>
+        </div>
+
+
 <button data-toggle="collapse" data-target="#WareHouse">WareHouse</button>
         <div id="WareHouse" class="collapse">
             <ul>   
-	            <li><router-link to="/Vendor_Create">Receiving</router-link></li>
-                <li><router-link to="/Customer_Create">Placing/Put-Away</router-link></li>
-                <li><router-link to="/Items_Create">Picking</router-link></li>
-                <li><router-link to="/Items_Create">Added Value</router-link></li>
-                <li><router-link to="/Items_Create">Dispatching</router-link></li>
-                <li><router-link to="/Items_Create">Returns</router-link></li>
+	            <li><router-link to="/Upcoming">Receiving</router-link></li>
+                <li><router-link to="/Upcoming">Placing/Put-Away</router-link></li>
+                <li><router-link to="/Upcoming">Picking</router-link></li>
+                <li><router-link to="/Upcoming">Added Value</router-link></li>
+                <li><router-link to="/Upcoming">Dispatching</router-link></li>
+                <li><router-link to="/Upcoming">Returns</router-link></li>
             </ul>
         </div>
 
@@ -184,10 +195,8 @@
 
 <script type="text/javascript">
 
-
-
 function openNav() {
-  document.getElementById("mySidenav").style.width = "250px";
+  document.getElementById("mySidenav").style.width = "350px";
   }
 
 function closeNav() {

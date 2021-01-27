@@ -33,20 +33,23 @@ Route::post('login','RegisterControl@login');
 Route::post('SaveVendor','VendorController@store');
 Route::post('DeleteVendor','VendorController@Delete');
 Route::get('LoadVen','VendorController@index');
+Route::post('updateVendor','VendorController@update');
+Route::get('LiveSearchVen','VendorController@Search');
 
 Route::get('LoadPo','PoDetailsControl@LoadPo');
 Route::get('GetPo','PoDetailsControl@GetPo');
 Route::get('GetPoHead','PoDetailsControl@GetPoHead');
 Route::post('DeletePOItem','PoDetailsControl@DeleteItem');
 Route::post('SavePo','PoDetailsControl@store');
-Route::post('SaveReceived','receivingController@store');
+
 
 Route::get('LoadCus','CustommerController@LoadCus');
 Route::post('SaveCus','CustommerController@store');
+Route::post('updateCus','CustommerController@update');
+Route::get('LiveSearchCus','CustommerController@Search');
 
 Route::post('SaveItem','itemController@SaveItem');
-
-
+Route::get('LiveSearchItem','itemController@Search');
 Route::get('LoadItems','itemController@LoadItems');
 Route::post('SaveItems','itemController@update');
 Route::post('DeleteItem','itemController@Delete');
@@ -55,3 +58,16 @@ Route::get('treedata','LocationController@treedata');
 Route::post('SaveNode','LocationController@Save');
 Route::get('itemsInside','LocationDetailsController@SelectedParent');
 Route::post('saveItemtoLoaction','LocationDetailsController@save');
+
+Route::get('stocks','receivingController@stocks');
+Route::post('SaveReceived','receivingController@store');
+
+Route::post('SaveCusDevice','DeviceController@SaveCusDevice');
+Route::get('getDevices','DeviceController@GetCusDevice');
+
+Route::post('SaveInvoice','SalesController@SaveInvoice');
+Route::get('LoadInvoive','SalesController@LoadInvoive');
+Route::post('ApprovedInvoice','SalesController@ApprovedInvoice');
+Route::get('GetInvoice','SalesController@GetInvoice');
+Route::get('GetInvoiceHead','SalesController@GetInvoiceHead');
+Route::get('history','SalesController@history');

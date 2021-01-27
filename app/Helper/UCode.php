@@ -3,8 +3,9 @@
 if (!function_exists('custom')) {
     
     function Ucode() {
-        $d = date("yy-m-dH");
-        $code = $d;
+        $d = date("yy-m-dHs");
+        $rand=rand(10,100);
+        $code = $d.$rand;
         return $code;
 }
 

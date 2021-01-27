@@ -14,6 +14,7 @@ class receivingController extends Controller
     {
         $input = $request->all();
         //dd($input);
+        
         $UserIn=getUser()->id;
         $countR=ReceivingList::count();
         $ReceivingCode=Ucode() . "-" . strval($countR);
@@ -81,5 +82,10 @@ class receivingController extends Controller
                    
                 } $PO->save();
 
+}
+
+public function stocks(){
+    $stocks= StocksList::all();
+    return $stocks;
 }
 }

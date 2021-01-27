@@ -8,7 +8,7 @@
 
                 <div class="card-body">
                     <img src="../media/logobk.png" alt="logo" style="width:40px;">
-                   A group of freelance web developers, Inovating a web service to give Pilipino entrepreneurs a tool for their businesses. 
+                   A group of freelance web developers inovating web services to give Filipino entrepreneurs a tool for their businesses. 
                 </div>
             </div>
         </div>

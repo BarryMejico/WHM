@@ -26,7 +26,7 @@ class PoDetailsControl extends Controller
         'PO'=> $input['PO'],
         'Total_Amount'=>$input['PO_total'],
         'Created_by'=>$UserIn,
-        'Status'=>'Open',
+        'Status'=>$input['status'],
         'Reviewed_by'=>'test1',
         'Vendor'=>$input['Vendor'],
         'Ship_to'=>$input['Ship_to'],

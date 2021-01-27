@@ -52,18 +52,27 @@
                 </div>
             </div>
         </div>
+        <message-box :message="message"></message-box>
     </div>
 </div>
 </template>
 <script>
+import messageBox from '../Modals/messageBox.vue';
 export default {
+  components: { messageBox },
     data() {
       return{
       log:{
         email:'',
         password:'',
       },
-      errors:[]
+      errors:[],
+      message:{
+          visibility:false,
+          head:'',
+          insdide:'',
+          errors:{},
+      },
     }},
 
     methods:{
@@ -74,7 +83,11 @@ export default {
                 setTimeout(() => location.reload(), 500);
             })
         .catch((error)=>{
-                this.errors=error.response.data.errors;
+                this.message.errors=error.response.data;
+                this.message.insdide="Please check these errors before proceeding!";
+                this.message.head="Error!";
+                this.message.visibility=true;
+                console.log(this.errors);
             })
     }
     }

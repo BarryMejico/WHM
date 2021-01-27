@@ -16,14 +16,15 @@
       <input id="mode" type="text" class="form-control" required autocomplete="name" autofocus>
 
        <div class="col-xl-5">
-    <button href="#addVendorModal" data-toggle="modal" type="button" class="btn btn-secondary btn-sm">Vendor</button>
+    <VendorModal @SelectedVendor="Selected_ven"></VendorModal>
+    
                     <div>
                     <b>Name:</b><label class="text-muted"><i>{{Vendor}}</i></label><br>
                     <b>Address:</b><label class="text-muted"><i>{{add_Ven}}</i></label><br>
                     </div>
   </div>
   <div class="col-xl-5">
-    <button href="#addCustomerModal" data-toggle="modal" type="button" class="btn btn-secondary btn-sm">Ship to</button>
+    <CustomerModal @SelectedCustomer="Selected_cus"></CustomerModal>
                     <div>
                    <b>Name: </b><label class="text-muted"><i>{{Customer}}</i></label><br>
                     <b>Address:</b><label class="text-muted"><i>{{add_Cus}}</i></label><br>
@@ -38,11 +39,14 @@
             <items-modal @SelectedItems="Selected_Item"></items-modal>
     <div class="dropdown">
     <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-    <span class="caret">{{status}}</span></button>
+    <span class="caret">{{status}}</span>
+    <p>{{last_update}}</p>
+    </button>
+    
     <ul class="dropdown-menu">
-      <li>Open</li>
-      <li>Approved</li>
-      <li>Canceled</li>
+      <li><button @click="changeStatus('Open')" class="my_btn btn">Open</button></li>
+      <li><button @click="changeStatus('Approved')" class="success my_btn">Approved</button></li>
+      <li><button @click="changeStatus('Canceled')" class="my_btn btn-danger">Canceled</button></li>
     </ul>
 </div>
     </div>
@@ -91,77 +95,36 @@
     
     </div>
     <hr>
-<!--modal Vendor-->
-<div id="addVendorModal" class="modal fade">
+
+
+<button href="#Loading" id="btnLoad"  data-toggle="modal" type="button" class="btn btn-primary btn-sm" >Loading</button>
+
+<!--modal Mod/Del-->
+<div id="Loading" class="modal fade">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			
 				<div class="modal-header">						
-					<h4 class="modal-title">Add Vendor</h4>
+					<h4 class="modal-title">Loading</h4>
 					<button type="button" id="close" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
-				<div class="modal-body">	
-          <div class="form-group">		
-                    <label>Item Code</label>	
-                    
-										<input type="text" id='Vcode' v-model="Vendor">
-<ul class="list-group">
-  <li class="list-group-item d-flex justify-content-between align-items-center" 
-    v-for="(Vendor, k) in List_Vendor" :key="k">
-    <a @click="Selected_ven(Vendor.id)">{{Vendor.Vendor}}</a>
-    <span class="badge badge-primary badge-pill">{{Vendor.id}}</span>
-  </li>
-  <a class="link">New Vendor</a>
-</ul>
-          </div>
-				</div>
-				<div class="modal-footer">
-          <button  type="button" class="btn btn-light" data-dismiss="modal" aria-hidden="true">Select Vendor</button>
-				</div>
-			
-		</div>
-	</div>
+				<div class="modal-body">
+          loading img
+        </div>
+    </div>
+  </div>
 </div>
 
-<!--modal Customer-->
-<div id="addCustomerModal" class="modal fade">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			
-				<div class="modal-header">						
-					<h4 class="modal-title">Add Customer</h4>
-					<button type="button" id="close" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				</div>
-				<div class="modal-body">	
-          <div class="form-group">		
-                    <label>Item Code</label>	
-                    
-										<input type="text" id='Vcode' v-model="Customer">
-<ul class="list-group">
-  <li class="list-group-item d-flex justify-content-between align-items-center" 
-    v-for="(Customer, k) in List_Customer" :key="k">
-    <a @click="Selected_cus(Customer.id)">{{Customer.Customer}}</a>
-    <span class="badge badge-primary badge-pill">{{Customer.id}}</span>
-  </li>
-  <a class="link">New Customer</a>
-</ul>
-
-          </div>
-				</div>
-				<div class="modal-footer">
-          <button  type="button" class="btn btn-light" data-dismiss="modal" aria-hidden="true">Select Vendor</button>
-				</div>
-			
-		</div>
-	</div>
-</div>
 </div>
 
 </template>
 
 <script>
 import ItemsModal from '../Modals/ItemsModal';
-import MenuList from '../Page/MainPO'
+import MenuList from '../Page/MainPO';
+import VendorModal from '../Modals/VendorModal';
+import CustomerModal from '../Modals/CustomerModal';
+
 
 function int_data(){
   return{
@@ -169,20 +132,21 @@ function int_data(){
        datacollection: null,
        po:'',
        PO_total:0,
-       Vendor_code:'',
-       Customer_code:'',
+       Vendor_code:'x',
+       Customer_code:'x',
        Ship_to:'Ship',
-       status:'',
+       status:'Open',
+       last_update:'',
        //---for loading Vendors
-        List_Vendor:[],
-        Vendor:'',
-        add_Ven:'',
+       // List_Vendor:[],
+        Vendor:'x',
+        add_Ven:'x',
   
       //---for loading Ship to
-       Ship:'',
-       List_Customer:[],
-       Customer:'',
-       add_Cus:'',
+      // Ship:'',
+      // List_Customer:[],
+       Customer:'x',
+       add_Cus:'x',
       
       //---for details of po
       po_items2:[],
@@ -205,29 +169,48 @@ export default {
   //prop:['PO_Load'],
 
     components: {
-     MenuList,
-        ItemsModal
+    MenuList,
+    ItemsModal,
+    VendorModal,
+    CustomerModal,
     }, 
 
     data:function(){
       return int_data();
       }, 
 
-    beforeMount(){
+    created(){
       this.clearData();
     },
 
-    mounted(){
+    beforeMount(){
+      //this.load();
       var $POL = this.$route.params.PO_Load;      
       if(typeof this.$route.params.PO_Load === "undefined" ){
         console.log("PO Undefied")
+        console.log(".");
       }else{
         this.Load_PO();
+        console.log(".");
         this.Load_Details();
+        console.log(". unload next");
+        //this.unload();
       }
+     
     },
 
+    mounted(){
+      
+    },
+    afterupdated(){
+                
+    },
+  
+
     methods:{
+      load(){document.getElementById('btnLoad').click();},
+      unload(){document.getElementById('close').click();},
+
       Selected_Item(event){
          var code=event['Code'],Name=event['Name'],Unit=event['Unit'];
         var i;
@@ -253,33 +236,19 @@ export default {
       },
 
 
-      Selected_ven(codes){        
-        var code;
-        code = parseInt(codes);
-        var i;
-        for (i=0;i < this.List_Vendor.length; i++){
-            if(this.List_Vendor[i]['id']===code){
-                this.add_Ven=this.List_Vendor[i]['Address'];
-                this.Vendor=this.List_Vendor[i]['Vendor'];
-                this.Vendor_code=this.List_Vendor[i]['id'];
-            }
-        }
-                this.Vendor_code=code;
-      },
-       Selected_cus(codes){        
-        var code;
-        code = parseInt(codes);
-        var i;
-        for (i=0;i < this.List_Customer.length; i++){
-            if(this.List_Customer[i]['id']===code){
-                this.add_Cus=this.List_Customer[i]['Address'];
-                this.Customer=this.List_Customer[i]['Customer'];
-                this.Customer_code=this.List_Customer[i]['id'];
-            }
-        }
-                this.Customer_code=code;
+      Selected_ven(event){  
+                this.add_Ven=event['Address'];
+                this.Vendor=event['Vendor'];
+                this.Vendor_code=event['Vcode'];
+  
       },
 
+       Selected_cus(event){        
+                this.add_Cus=event['Address'];
+                this.Customer=event['Customer'];
+                this.Customer_code=event['Ccode'];
+      },
+//------------------------------------------------------------------------------------------------------ 
       load_vendor(){
           axios.get('/api/LoadVen')
           .then(
@@ -296,24 +265,49 @@ export default {
         .then(
           (response)=>{
             this.items=response.data;
-            
-            
           }
         )
       },
-
 
       load_customer(){
           axios.get('/api/LoadCus')
           .then(
               (response)=>{
                   this.List_Customer=response.data;
-                  
               }
           )
           .catch()
       },
-      
+
+      load_Selected_customer(cus){
+        var i;
+
+        
+
+        for(i=0;i<=this.List_Customer.length-1;i++){
+          
+
+            if(this.List_Customer[i]['Ccode']==cus){ 
+                this.add_Cus=this.List_Customer[i]['Address'];
+                this.Customer=this.List_Customer[i]['Customer'];
+                this.Customer_code=this.List_Customer[i]['Ccode'];
+            }
+        }
+      },
+
+      load_Selected_vendor(ven){
+        var i;
+        
+        for(i=0;i<=this.List_Vendor.length-1;i++){
+          
+          if(this.List_Vendor[i]['Vcode']==ven){
+                this.add_Ven=this.List_Vendor[i]['Address'];
+                this.Vendor=this.List_Vendor[i]['Vendor'];
+                this.Vendor_code=this.List_Vendor[i]['Vcode'];
+            }
+        }
+      },
+//------------------------------------------------------------------------------------------------------    
         addNewRow(code) {
           var codes=$('#code').val()
           //console.log(codes);
@@ -367,6 +361,7 @@ export default {
               //Created_by:this.userId['id'],       //'Created_by' => 'required',
               Vendor:this.Vendor_code,         //'Vendor'=>'required',
               Ship_to:this.Customer_code,            //'Ship_to'=>'required',
+              status:this.status,
               })
             .then(()=>{
                this.clearData();
@@ -420,11 +415,21 @@ export default {
                   this.po_details = response.data;
                   this.po = this.po_details[0]['PO'];
                   this.PO_total = this.po_details[0]['Total_Amount'];
+                  
                   this.Vendor_code = this.po_details[0]['Vendor'];
-                  this.Selected_ven(this.po_details[0]['Vendor']);
+                  
+
                   this.Customer_code = this.po_details[0]['Ship_to'];
-                  this.Selected_cus(this.po_details[0]['Ship_to']);
+                  
+                  this.load_Selected_customer(this.Customer_code);
+                  this.load_Selected_vendor(this.Vendor_code);
+
+
                   this.status=this.po_details[0]['Status'];
+
+                  var D=this.po_details[0]['updated_at'];
+                  var myDate = D.split(" ");
+                  this.last_update=myDate[0];
               }
           )
           .catch((error)=>{
@@ -441,6 +446,12 @@ export default {
 
         deleteItem(code){
           axios.post('/api/DeletePOItem',{params:{PO:this.po,code:code}})
+        },
+
+        changeStatus(NewStatus){
+          this.status=NewStatus;
+
+          this.last_update= new Date().toISOString().slice(0, 10);
         },
     }
 }
@@ -508,8 +519,13 @@ text-align: center;
 .modal form label {
 	font-weight: normal;
 }	
+.my_btn{
+  padding: 0% !important;
+  margin:0% !important;
+}
+/**
 
-/**try for input table
+try for input table
 .in { color: blue;}
 .in input {display: block; padding: 0; margin: 0; border: 0; width: 100%;}
 .in td {margin: 0; padding: 0;}*/

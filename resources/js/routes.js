@@ -3,6 +3,7 @@ import About from './components/About';
 import Login from './components/Auth/LoginSys';
 import Register from './components/Auth/RegisterSys';
 import Dashboard from './components/Dashboard';
+import Upcoming from './components/Upcoming';
 
 import ListPO from './components/Page/ListPO';
 import CreatePO from './components/Page/CreatePO';
@@ -19,7 +20,15 @@ import ListItem from './components/Page/Items/ListItem';
 
 import Location from './components/Page/Location/Location';
 
-import Receiving from './components/Page/Inventory/Receiving';
+import Receiving from './components/Page/Inventory/Receiving'; 
+import Stocks from './components/Page/Inventory/Stocks';
+
+import invoice from './components/Page/Sales/invoice';
+import listInvoice from './components/Page/Sales/ListInvoice';
+
+import DeviceHistory from './components/Page/BasicReports/DeviceHistory';
+
+
 
 import { before } from 'lodash';
 export default{
@@ -195,6 +204,75 @@ export default{
             })
         }
     },
+
+    {
+        path:'/Stocks',
+        component: Stocks,
+        name: 'Stocks',
+        beforeEnter:(to,from,next)=>{
+            axios.get('api/Authenticated').then(()=>{
+                next()
+                
+            }).catch(()=>{
+                return next({name: '/login_'})
+            })
+        }
+    },
+
+    {
+        path:'/invoice',
+        component: invoice,
+        name: 'invoice',
+        beforeEnter:(to,from,next)=>{
+            axios.get('api/Authenticated').then(()=>{
+                next()
+                
+            }).catch(()=>{
+                return next({name: '/login_'})
+            })
+        }
+    },
+
+    {
+        path:'/Upcoming',
+        component: Upcoming,
+        name: 'Upcoming',
+        beforeEnter:(to,from,next)=>{
+            axios.get('api/Authenticated').then(()=>{
+                next()
+                
+            }).catch(()=>{
+                return next({name: '/login_'})
+            })
+        }
+    },
+
+    {
+        path:'/listInvoice',
+        component: listInvoice,
+        name: 'listInvoice',
+        beforeEnter:(to,from,next)=>{
+            axios.get('api/Authenticated').then(()=>{
+                next()
+                
+            }).catch(()=>{
+                return next({name: '/login_'})
+            })
+        }
+    },
     
+    {
+        path:'/DeviceHistory',
+        component: DeviceHistory,
+        name: 'DeviceHistory',
+        beforeEnter:(to,from,next)=>{
+            axios.get('api/Authenticated').then(()=>{
+                next()
+                
+            }).catch(()=>{
+                return next({name: '/login_'})
+            })
+        }
+    },
 ]
 }

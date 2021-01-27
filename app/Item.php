@@ -9,6 +9,7 @@ class Item extends Model
     protected $fillable = [
         'Name',
         'Unit',
-        'Code'        
+        'Code',
+        'status'        
     ];
 }

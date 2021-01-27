@@ -22,6 +22,7 @@ class itemController extends Controller
             'Name' => $REQUEST['Name'],
             'Code' => $REQUEST['Code'],
             'Unit' => $REQUEST['Unit'],
+            'status'=>1,
         ]);
     } 
 
@@ -58,6 +59,18 @@ class itemController extends Controller
         $details= DB::connection('mysql')->select("SELECT * FROM `items` where Code=?",[$request['code']]);
         
     return $details;
+    }
+
+    public function Search(Request $request){
+        $input = $request->all();
+        //$search = VendorModel::find($input['Search']);
+        $s= $input['Search'];
+        $search = DB::table('items')
+                ->where('Name', 'like', "%{$s}%")
+                ->get();
+        
+        //dd($input);
+        return $search;
     }
     
 }

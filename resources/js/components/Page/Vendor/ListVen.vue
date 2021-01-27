@@ -117,7 +117,7 @@ export default {
           },
 
           SaveVendor(){
-          axios.post('/api/SaveVendor',{Name:this.Name,Number:this.Cnum,Address:this.Add,ids:this.id})
+          axios.post('/api/updateVendor',{Name:this.Name,Number:this.Cnum,Address:this.Add,ids:this.id})
           .then(
               ()=>{
                 this.Name="";

@@ -1,17 +1,17 @@
 <template>
     <div>
 <div class="dropdown">
-    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+    <button class="dropdown-toggle" type="button" data-toggle="dropdown">
     <span class="caret">Add Items</span></button>
     <ul class="dropdown-menu">
       <li><button href="#addEmployeeModal" class="btn-light btn-sm nav-link" data-toggle="modal">From List</button></li>
-      <li><button class="btn-light btn-sm nav-link">Scan</button></li>
+      <li><button href="#ScanCode" class="btn-light btn-sm nav-link" data-toggle="modal">Scan</button></li>
     </ul>
 </div>
-<label>Scan Product Code of Serial Number</label>
-<input type="text"/>
+
       <!--modal-->
-       <div id="addEmployeeModal" class="modal fade">
+
+  <div id="addEmployeeModal" class="modal fade">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			
@@ -22,7 +22,7 @@
 				<div class="modal-body">	
           <div class="form-group">		
                     <label>Item Code</label>		
-										<input type="text" id='code' @keyup.enter="addNewRow('code')">
+										<input type="text" v-on:input="liveSearch" v-model="Search">
           </div>
 
 <ul class="list-group">
@@ -41,6 +41,32 @@
 		</div>
 	</div>
 </div>
+
+<div id="ScanCode" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			
+				<div class="modal-header">						
+					<h4 class="modal-title">Add Item</h4>
+					<button type="button" id="close" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body">	
+          <div class="form-group">		
+                    <label>Item Code</label>		
+										<input type="text" id='code' @keyup.enter="addNewRow('code')">
+          </div>
+
+
+				</div>
+				<div class="modal-footer">
+          <button  type="button" class="btn btn-light"  @click="addNewRow('code')">Add Item</button>
+				</div>
+			
+		</div>
+	</div>
+</div>
+
+
     </div>
 </template>
 
@@ -51,6 +77,8 @@ export default {
     return{
       //-----for loading items
         items:[],
+        //Live Search
+        Search:'',
     }
   },
   mounted(){
@@ -76,6 +104,17 @@ load_item(){
             this.items=response.data;
           }
         )
+      },
+
+      liveSearch(){
+        axios.get('/api/LiveSearchItem',{params:{Search:this.Search}})
+          .then(
+              (response)=>{
+                //console.log(response.data);
+              this.items=response.data;
+              }
+          )
+          .catch()
       },
   }
 }

@@ -28,7 +28,11 @@
       <td>{{po_item.Number}}</td>
       <td>{{po_item.Address}}</td>
       <td><button href="#addVendorModal"  data-toggle="modal" type="button" class="btn btn-primary btn-sm" 
-      @click="SelectItem(po_item.Vendor,po_item.Number,po_item.Address,po_item.id)">Vendor</button></td>
+      @click="SelectItem(po_item.Customer,po_item.Number,po_item.Address,po_item.id)">Modify</button>
+      
+      <button href="#addDeviceModal"  data-toggle="modal" type="button" class="btn btn-primary btn-sm" 
+      @click="ccode(po_item.Ccode)">Devices</button>
+      </td>
     </tr>
   </tbody>
 </table>
@@ -45,12 +49,48 @@
 </div>
 </div>
 <!--modal Mod/Del-->
+<div id="addDeviceModal" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			
+				<div class="modal-header">						
+					<h4 class="modal-title">Devices</h4>
+					<button type="button" id="close2" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body">	
+          
+          <div class="form-group">	
+            <input type="text" v-model="DeviceForm.Code" placeholder="Code">
+            <input type="text" v-model="DeviceForm.DeciveName" placeholder="DeciveName">
+            <input type="text" v-model="DeviceForm.Model" placeholder="Model">	
+<ul class="list-group">
+ <hr>
+ List of Devices
+  <li class="list-group-item d-flex justify-content-between align-items-center" 
+    v-for="(Device, k) in DevList" :key="k">
+    <a @click="Selected_cus(k)">{{Device.DeciveName}}</a>
+    <span class="badge badge-primary badge-pill">{{Device.Model}}</span>
+  </li>
+</ul> 
+
+
+          </div>
+				</div>
+				<div class="modal-footer">
+         <button type="button" class="btn btn-primary" @click.prevent="SaveCusDevice">Save</button>
+         <button  type="button" class="btn btn-light" @click.prevent="Delete">Delete</button>
+				</div>
+			
+		</div>
+	</div>
+</div>
+<!--modal Mod/Del-->
 <div id="addVendorModal" class="modal fade">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			
 				<div class="modal-header">						
-					<h4 class="modal-title">Vendor</h4>
+					<h4 class="modal-title">Customer</h4>
 					<button type="button" id="close" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
 				<div class="modal-body">	
@@ -92,14 +132,57 @@ export default {
              Cnum:'',
              Add:'',
              id:'',
-             success:false
+             success:false,
+             //for Devices
+             DeviceForm:{
+               Code:'1',
+               DeciveName:'1',
+               Model:'1',
+               Ccode:'1',
+               
+             },
+             //list oh cus list
+               DevList:[],
     }},
     mounted(){
         this.loadpos();
     },
 
     methods:{
+closeModal() {
+      document.getElementById('closeCus').click();
+              this.List_Customer=[];
+             
+             this.load_customer();
+},
+
+
+      ccode(ccode){
+        this.DevList=[];
+        this.DeviceForm.Ccode=ccode;
+
+        axios.get('/api/getDevices',{params:{ccode:ccode}})
+        .then(
+          (response)=>{
+           this.DevList=response.data;
+           console.log(this.DevList);
+          }
+        )
+      },
+
+      SaveCusDevice(){
+        
+        axios.post('/api/SaveCusDevice',this.DeviceForm)
+        .then(
+         ()=>{
+           this.closeModal();
+         } 
+        )
+        .catch()
+      },
+
       loadpos:function(){
+        
           axios.get('/api/LoadCus')
           .then(
               (response)=>{
@@ -109,23 +192,24 @@ export default {
           .catch()},
 
       SelectItem(n,n2,n3,id){
-        
             this.Name=n;
             this.Cnum=n2;
             this.Add=n3;
             this.id=id;
+            
           },
 
           SaveVendor(){
-          axios.post('/api/SaveVendor',{Name:this.Name,Number:this.Cnum,Address:this.Add,ids:this.id})
+          axios.post('/api/updateCus',{Name:this.Name,Number:this.Cnum,Address:this.Add,ids:this.id})
           .then(
               ()=>{
                 this.Name="";
                 this.Add="";
                 this.CNum="";
                 this.success=true;
-                this.loadpos();
                 this.closeModal();
+                this.loadpos();
+                
               }
           )
           .catch(error => {
@@ -149,6 +233,7 @@ export default {
 
             closeModal() {
              document.getElementById('close').click();
+             document.getElementById('close2').click();
 },
        
     }   

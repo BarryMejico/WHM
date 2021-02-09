@@ -10,9 +10,10 @@
 <span class="navbar-brand" style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Menu</span>
 @endguest
 
-
+<router-link class="nav-link" to='/Dashboard'>
 <img src="media/logo.png" alt="logo" style="width:40px;">
-  <a class="navbar-brand" href="#">{{ config('app.name', 'Araneus') }}</a>
+  <label class="navbar-brand">{{ config('app.name', 'Araneus') }}</label>
+</router-link>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
     <span class="navbar-toggler-icon"></span>
   </button> 

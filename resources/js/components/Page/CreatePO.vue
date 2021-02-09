@@ -212,12 +212,17 @@ export default {
       unload(){document.getElementById('close').click();},
 
       Selected_Item(event){
-         var code=event['Code'],Name=event['Name'],Unit=event['Unit'];
+        var code=event['Code'],Name=event['Name'],Unit=event['Unit'];
         var i;
         var meron = false;
+         
+         if (this.po_items[0]['Icode']=="")
+        {this.po_items.splice(0, 1);}
+         
          for (i=0;i < this.po_items.length; i++){
             if(this.po_items[i]['Icode']===code){
                meron = true;
+               this.po_items[i]['Qty']=this.po_items[i]['Qty']+1;
             }
         }
 
@@ -230,6 +235,7 @@ export default {
                 Icode:code,
                 idescription:Name,
                 iunit:Unit,
+                Qty:1,
                                   });
         }
             this.closeModal();
@@ -359,7 +365,6 @@ export default {
             var sub=0-invoice_product.Tcost;
             this.calculateTotal(sub);
             //console.log(invoice_product.Qty,invoice_product.UnitCost);
-            
             if (!isNaN(total)) {
                 invoice_product.Tcost = total.toFixed(2);
             }

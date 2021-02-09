@@ -66,7 +66,7 @@
       <td>{{po_item.idescription}}</td>
       <td>{{po_item.iunit}}</td>
       <td class="in"><div class="qty"><input v-model="po_item.Qty" min="1" type="number" @change="calculateLineTotal(po_item)"></div></td>
-      <td class="in"><div class="qty"><input v-model="po_item.UnitCost"  @change="calculateLineTotal(po_item)"></div></td>
+      <td class="in">{{po_item.UnitCost}}</td>
       <td>{{po_item.Tcost}} Php</td>
       <td><a class="link" @click="deleteRow(k, po_item)">Delete</a>/<a class="link">Recompute</a></td>
     </tr>
@@ -192,6 +192,8 @@ function int_data(){
       }],
       //-----for loading items
         items:[],
+        //try convert
+        AmountCeiling:'',
     }
     }
 
@@ -208,42 +210,79 @@ export default {
       return int_data();
       }, 
 
-    beforeMount(){
+    created(){
       this.clearData();
     },
 
-    mounted(){
+    beforeMount(){
       var $POL = this.$route.params.PO_Load;      
       if(typeof this.$route.params.PO_Load === "undefined" ){
         console.log("PO Undefied")
       }else{
-        //this.Load_PO();
+        this.Load_PO();
         this.Load_Details();
       }
     },
 
     methods:{
+      
       Selected_Item(event){
          var code=event['Code'],Name=event['Name'],Unit=event['Unit'];
-        var i;
+        var i,unitCost;
         var meron = false;
-         for (i=0;i < this.po_items.length; i++){
-            if(this.po_items[i]['Icode']===code){
-               meron = true;
+        var wala = false;
+        //console.log(this.po_items);
+        if (this.po_items[0]['Icode']=="")
+        {this.po_items.splice(0, 1);}
+
+         for (i=0;i < this.po_items2.length; i++){
+            if(this.po_items2[i]['Icode']==code){
+              unitCost=this.po_items2[i]['UnitCost'];
+              meron = true;
             }
         }
 
-        if (meron){
-            console.log("Item already Exist!!!")
+        if (meron==false){
+            console.log("wala sa list!!!");
         }
         else{
-          
-        this.po_items.push({
+          var j;
+          for (j=0;j<=this.po_items.length-1; j++){
+            if(this.po_items[j]['Icode']==code || this.po_items[j]['Icode']==""){
+              if(this.PO_total!= this.AmountCeiling){
+              console.log("Pasok");
+              var newQTY= parseFloat(this.po_items[j]['Qty'])+1;     
+              this.po_items[j]['Qty']=newQTY;
+              }
+              wala=true;
+              break;
+              
+            }
+            
+        }
+        
+        console.log(wala);
+              if(wala==false){
+              console.log("Pasok din");
+              this.AmountCeiling=this.PO_total;
+              this.PO_total=unitCost;
+              this.po_items.push({
                 Icode:code,
                 idescription:Name,
                 iunit:Unit,
+                Qty:1,
+                UnitCost:unitCost,
+                Tcost:unitCost,
+                
                                   });
+                
+            
+            }
         }
+            //this.tryconvert=Object.assign({}, this.po_items[this.po_items.length-1]);
+            //console.log(this.tryconvert);
+            this.calculateLineTotal(this.po_items[this.po_items.length-1]);
+            //this.calculateLineTotal(this.tryconvert);
             this.closeModal();
       },
 
@@ -338,6 +377,16 @@ export default {
             //console.log(idx, index);
             if (idx > -1) {
                 this.po_items.splice(idx, 1);
+            }
+
+            if (this.po_items.length==0){
+              this.po_items=[];
+              this.po_items.push({
+                Icode:'',
+                idescription:'',
+                iunit:'',
+                Qty:0,
+                                  });
             }
             this.calculateTotal(sub);
 
@@ -443,9 +492,9 @@ export default {
                       this.calculateTotal(this.po_items2[i]['Tcost']);
                   }
 
-                  this.po_items=this.po_items2;
+                  //this.po_items=this.po_items2;
                   
-                  this.Load_idescription();
+                  //this.Load_idescription();
                   }
           )
          .catch((error)=>{
@@ -477,11 +526,10 @@ export default {
                   if(this.po_details[0]['Status']!=="Approved"){console.log("not approved PO")}
                   else{
                   this.po = this.po_details[0]['PO'];
-                  this.PO_total = this.po_details[0]['Total_Amount'];
+                  //this.PO_total = this.po_details[0]['Total_Amount'];
                   this.Vendor_code = this.po_details[0]['Vendor'];
-                  //this.Selected_ven(this.po_details[0]['Vendor']);
                   this.Customer_code = this.po_details[0]['Ship_to'];
-                   //this.Selected_cus(this.po_details[0]['Ship_to']);
+                  
 
                    this.load_Selected_customer(this.Customer_code);
                   this.load_Selected_vendor(this.Vendor_code);

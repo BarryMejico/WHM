@@ -5,8 +5,12 @@
     <span class="caret">Add Items</span></button>
     <ul class="dropdown-menu">
       <li><button href="#addEmployeeModal" class="btn-light btn-sm nav-link" data-toggle="modal">From List</button></li>
-      <li><button href="#ScanCode" class="btn-light btn-sm nav-link" data-toggle="modal">Scan</button></li>
+      <li><button @click="ScanShow" class="btn-light btn-sm nav-link" data-toggle="modal">Scan</button></li>
     </ul>
+    <div v-show="Scan">
+    <input v-on:input="scanItem" id="ScanTxt" v-model="SearchS" type="text">
+    <button @click.prevent="ScanShow" class="btn-danger btn-sm">X</button>
+    </div>
 </div>
 
       <!--modal-->
@@ -71,18 +75,29 @@
 </template>
 
 <script>
+import DevicesModal from './DevicesModal.vue';
 
 export default {
+  components: { DevicesModal },
   data(){
     return{
       //-----for loading items
         items:[],
         //Live Search
         Search:'',
+        SearchS:'',
+        //scan
+        Scan:false,
     }
   },
   mounted(){
     this.load_item();
+  },
+
+  watch:{
+    Scan: function(){
+
+    }
   },
 
   methods:{
@@ -115,6 +130,30 @@ load_item(){
               }
           )
           .catch()
+      },
+
+      scanItem(){
+        this.items
+        var i;
+        for(i=0;i<this.items.length;i++){
+          if(this.SearchS==this.items[i]['Code']){
+            this.Selected_Item(i);
+            this.SearchS="";
+          }
+        }
+      },
+
+      ScanShow(){
+        if (this.Scan==false){
+        this.Scan=true;
+        
+        this.$nextTick(() => {
+    var s = document.getElementById("ScanTxt");
+        s.focus();
+  })
+        }
+        else{this.Scan=false;
+        }
       },
   }
 }

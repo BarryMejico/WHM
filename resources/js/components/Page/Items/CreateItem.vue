@@ -42,6 +42,7 @@
 
 <script>
 import MenuList from '../Items/MainItem'
+import Swal from 'sweetalert2'
 
 export default {
     components: {
@@ -62,6 +63,17 @@ export default {
           axios.post('/api/SaveItem',{Name:this.Name, Unit:this.Unit,Code:this.ItemCode})
           .then(
               ()=>{
+                   
+                  Swal.fire({
+                  icon:'success',
+                  title:this.Name + ' Added',
+                  text:'As New Item',
+                  timer:2000,
+                  showCancelButton: false,
+                  showConfirmButton: false
+                
+                }) 
+
                 this.Name="";
                 this.Unit="";
                 this.ItemCode="";
@@ -73,6 +85,14 @@ export default {
             if (error.response.status=422){
             this.errors = error.response.data.errors;
             console.log(this.errors);
+
+              Swal.fire({
+              title: 'Error',
+              icon: error.response.data.errors,
+              showCancelButton: false,
+              showConfirmButton: false 
+            })
+            
             }
             
             })

@@ -14,9 +14,9 @@
   <thead class="thead-dark">
     <tr>
       <th scope="col">#</th>
+      <th scope="col">Code</th>
       <th scope="col">Name</th>
-      <th scope="col">Contact Number</th>
-      <th scope="col">Address</th>
+      <th scope="col">Unit</th>
       
       <th scope="col">Action</th>
     </tr>
@@ -78,6 +78,7 @@
 
 <script>
 import MenuList from '../Items/MainItem'
+import Swal from 'sweetalert2'
 
 export default {
     components: {
@@ -140,13 +141,41 @@ export default {
 
             
             Delete(){
+              this.closeModal();
+               Swal.fire({
+                title: 'Confirmation',
+                text: 'Are you sure to remove ' + this.Name + ' as an Item?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No'
+              }).then((result) => {
+                if (result.value) {
+
+               
               axios.post('/api/DeleteItem',{ids:this.id})
           .then(
             ()=>{this.loadpos();
-            this.closeModal();
+            
             }
           )
           .catch();
+
+  
+            Swal.fire({
+              title: 'Item Removed Successfully',
+              icon: 'success',
+              timer:1500,
+              showCancelButton: false,
+              showConfirmButton: false 
+            })
+
+          }else if (result.dismiss === Swal.DismissReason.cancel) {
+          console.log('Item Stays');
+          }
+        })
+
+
             },
 
             closeModal() {

@@ -221,6 +221,7 @@ closeModal() {
             })
           
             },
+            
             Delete(){
               axios.post('/api/DeleteVendor',{ids:this.id})
           .then(

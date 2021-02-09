@@ -34,12 +34,14 @@
 </div>
 </div>
 
+
 </div>
 
 </template>
 
 <script>
 import MenuList from '../Customer/MainCus'
+import Swal from 'sweetalert2'
 
 export default {
     components: {
@@ -59,6 +61,16 @@ export default {
           axios.post('/api/SaveCus',{Name:this.Name,Number:this.CNumber,Address:this.Address,ids:null})
           .then(
               ()=>{
+
+              Swal.fire({
+                icon:'success',
+                title:this.Name + ' added',
+                text:'As New Customer',
+                timer:2000,
+                showCancelButton: false,
+                showConfirmButton: false
+                }) 
+
                 this.Name="";
                 this.Address="";
                 this.CNumber="";
@@ -75,6 +87,7 @@ export default {
             })
           
             }
+         
     }
       
 }

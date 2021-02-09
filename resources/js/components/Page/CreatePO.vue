@@ -124,7 +124,7 @@ import ItemsModal from '../Modals/ItemsModal';
 import MenuList from '../Page/MainPO';
 import VendorModal from '../Modals/VendorModal';
 import CustomerModal from '../Modals/CustomerModal';
-
+import Swal from 'sweetalert2'
 
 function int_data(){
   return{
@@ -320,13 +320,38 @@ export default {
         },
 
         deleteRow(index,invoice_product,code) {
-            var idx = this.po_items.indexOf(invoice_product);
-            var sub=0-invoice_product.Tcost;
-            console.log(idx, code);
-            if (idx > -1) {
-                this.po_items.splice(idx, 1);
-            }
-            this.calculateTotal(sub);
+
+             Swal.fire({
+                title: 'Confirmation',
+                text: 'Are you sure to remove this Item?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No'
+              }).then((result) => {
+                if (result.value) {
+
+                  var idx = this.po_items.indexOf(invoice_product);
+                  var sub=0-invoice_product.Tcost;
+                  console.log(idx, code);
+                  if (idx > -1) {
+                      this.po_items.splice(idx, 1);
+                  }
+                  this.calculateTotal(sub);
+
+  
+            Swal.fire({
+              title: 'Item Removed Successfully',
+              icon: 'success',
+              timer:1500,
+              showCancelButton: false,
+              showConfirmButton: false 
+            })
+
+          }else if (result.dismiss === Swal.DismissReason.cancel) {
+          console.log('Item Stays');
+          }
+        })
         },
         
         calculateLineTotal(invoice_product) {
@@ -354,7 +379,18 @@ export default {
         },
 
         saveform(){
-            axios.post('/api/SavePo', {
+
+             Swal.fire({
+                title: 'Confirmation',
+                text: 'Are you sure with the following details of your purchase?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No'
+              }).then((result) => {
+                if (result.value) {
+
+              axios.post('/api/SavePo', {
               po_items:this.po_items, 
               PO_total:this.PO_total,
               PO:this.po,
@@ -368,7 +404,28 @@ export default {
             })
             .catch((error)=>{
                 this.errors=error.response.data.errors;
+            Swal.fire({
+              title: 'Error',
+              icon: error.response.data.errors,
+              showCancelButton: false,
+              showConfirmButton: false 
             })
+            })
+  
+            Swal.fire({
+              title: 'Order is placed Successfully',
+              icon: 'success',
+              timer:1500,
+              showCancelButton: false,
+              showConfirmButton: false 
+            })
+
+          }else if (result.dismiss === Swal.DismissReason.cancel) {
+          console.log('Back to Create PO');
+          }
+        })
+
+
         },
 
         Load_PO(){

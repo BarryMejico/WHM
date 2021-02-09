@@ -58,6 +58,8 @@
 </template>
 <script>
 import messageBox from '../Modals/messageBox.vue';
+import Swal from 'sweetalert2'
+
 export default {
   components: { messageBox },
     data() {
@@ -77,6 +79,7 @@ export default {
 
     methods:{
         login(){
+
         axios.post('/api/login', this.log)
         .then(()=>{
                 this.$router.push({name:"Dashboard"});
@@ -88,7 +91,19 @@ export default {
                 this.message.head="Error!";
                 this.message.visibility=true;
                 console.log(this.errors);
+
+                 Swal.fire({
+                title: 'Oops!',
+                text: this.message.errors.message + ' ' + this.message.insdide,
+                icon: 'warning',
+                showCancelButton: false,
+                showConfirmButton:true
+            
+              })
+
             })
+
+
     }
     }
 }

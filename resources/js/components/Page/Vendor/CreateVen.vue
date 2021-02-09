@@ -40,6 +40,7 @@
 
 <script>
 import MenuList from '../Vendor/MainVen'
+import Swal from 'sweetalert2'
 
 export default {
     components: {
@@ -59,17 +60,34 @@ export default {
           axios.post('/api/SaveVendor',{Name:this.Name,Number:this.CNumber,Address:this.Address,ids:null})
           .then(
               ()=>{
+
+              Swal.fire({
+                icon:'success',
+                title:this.Name + ' added',
+                text:'As New Vendor',
+                timer:2000,
+                showCancelButton: false,
+                showConfirmButton: false
+                }) 
+
                 this.Name="";
                 this.Address="";
                 this.CNumber="";
                 this.success=true;
-                
+ 
               }
           )
           .catch(error => {
             if (error.response.status=422){
             this.errors = error.response.data.errors;
             console.log(this.errors);
+            
+              Swal.fire({
+              title: 'Error',
+              icon: error.response.data.errors,
+              showCancelButton: false,
+              showConfirmButton: false 
+            })
             }
             
             })

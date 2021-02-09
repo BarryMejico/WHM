@@ -1,6 +1,10 @@
 <template>
     <div>
     <div class="container">
+      <br>
+      <h1> Receiving </h1>
+      <hr>
+    
     <div class="row">
         <div class="col-lg-2">
             <MenuList></MenuList>
@@ -153,6 +157,7 @@
 <script>
 import ItemsModal from '../../Modals/ItemsModal';
 import MenuList from '../MainPO'
+import Swal from 'sweetalert2'
 
 function int_data(){
   return{
@@ -316,6 +321,18 @@ export default {
         },
 
         deleteRow(index,invoice_product) {
+
+
+            Swal.fire({
+                title: 'Confirmation',
+                text: 'Are you sure to remove this Item?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No'
+              }).then((result) => {
+                if (result.value) {
+
             var idx = this.po_items.indexOf(invoice_product);
             var sub=0-invoice_product.Tcost;
             //console.log(idx, index);
@@ -323,6 +340,21 @@ export default {
                 this.po_items.splice(idx, 1);
             }
             this.calculateTotal(sub);
+
+  
+            Swal.fire({
+              title: 'Item Removed Successfully',
+              icon: 'success',
+              timer:1500,
+              showCancelButton: false,
+              showConfirmButton: false 
+            })
+
+          }else if (result.dismiss === Swal.DismissReason.cancel) {
+          console.log('Item Stays');
+          }
+        })
+
         },
         
         calculateLineTotal(invoice_product) {
@@ -350,7 +382,19 @@ export default {
         },
 
         saveform(){
-            axios.post('/api/SaveReceived', {
+
+
+           Swal.fire({
+                title: 'Confirmation',
+                text: 'Are you sure with the following details of your received purchase?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No'
+              }).then((result) => {
+                if (result.value) {
+
+             axios.post('/api/SaveReceived', {
               po_items:this.po_items, 
               PO_total:this.PO_total,
               PO:this.po,
@@ -361,7 +405,29 @@ export default {
             })
             .catch((error)=>{
                 this.errors=error.response.data.errors;
+
+              Swal.fire({
+              title: 'Error',
+              icon: error.response.data.errors,
+              showCancelButton: false,
+              showConfirmButton: false 
             })
+                
+            })
+  
+            Swal.fire({
+              title: 'PO Received is placed Successfully',
+              icon: 'success',
+              timer:1500,
+              showCancelButton: false,
+              showConfirmButton: false 
+            })
+
+          }else if (result.dismiss === Swal.DismissReason.cancel) {
+          console.log('Back to Create PORecieve');
+          }
+        })
+
         },
 
         Load_PO(){

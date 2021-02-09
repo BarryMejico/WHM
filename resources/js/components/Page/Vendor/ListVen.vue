@@ -78,6 +78,7 @@
 
 <script>
 import MenuList from '../Vendor/MainVen'
+import Swal from 'sweetalert2'
 
 export default {
     components: {
@@ -138,13 +139,40 @@ export default {
           
             },
             Delete(){
-              axios.post('/api/DeleteVendor',{ids:this.id})
-          .then(
-            ()=>{this.loadpos();
-            this.closeModal();
-            }
-          )
-          .catch();
+               this.closeModal();
+               Swal.fire({
+                title: 'Confirmation',
+                text: 'Are you sure to remove ' + this.Name + ' as a Vendor?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No'
+              }).then((result) => {
+                if (result.value) {
+
+                  axios.post('/api/DeleteVendor',{ids:this.id})
+                    .then(
+                      ()=>{    
+                      this.loadpos();
+                     
+                      }
+                    )
+                    .catch();
+
+  
+            Swal.fire({
+              title: 'Vendor Removed',
+              icon: 'success',
+              timer:1500,
+              showCancelButton: false,
+              showConfirmButton: false 
+            })
+
+          }else if (result.dismiss === Swal.DismissReason.cancel) {
+          console.log('Vendor Stays');
+          }
+        })
+
             },
 
             closeModal() {

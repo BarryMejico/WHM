@@ -223,7 +223,7 @@ closeModal() {
             },
             
             Delete(){
-              axios.post('/api/DeleteVendor',{ids:this.id})
+              axios.post('/api/DeleteCustomer',{ids:this.id})
           .then(
             ()=>{this.loadpos();
             this.closeModal();

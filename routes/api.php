@@ -48,11 +48,12 @@ Route::get('LoadCus','CustommerController@LoadCus');
 Route::post('SaveCus','CustommerController@store');
 Route::post('updateCus','CustommerController@update');
 Route::get('LiveSearchCus','CustommerController@Search');
+Route::post('DeleteCustomer','CustommerController@Delete');
 
 Route::post('SaveItem','itemController@SaveItem');
 Route::get('LiveSearchItem','itemController@Search');
 Route::get('LoadItems','itemController@LoadItems');
-Route::post('SaveItems','itemController@update');
+Route::post('updateItems','itemController@update');
 Route::post('DeleteItem','itemController@Delete');
 
 Route::get('treedata','LocationController@treedata');

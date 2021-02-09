@@ -26,6 +26,11 @@ class CustommerController extends Controller
         $Vendor->save();
     }
 
+    public function Delete(Request $request){  
+        $input = $request->all();
+        $id = Customer::destroy($input['ids']);
+    }   
+
     public function update(Request $request){        
         $request->validate([
             'Name'=>'required',

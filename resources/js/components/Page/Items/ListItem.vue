@@ -28,7 +28,7 @@
       <td>{{po_item.Name}}</td>
       <td>{{po_item.Unit}}</td>
       <td><button href="#addVendorModal"  data-toggle="modal" type="button" class="btn btn-primary btn-sm" 
-      @click="SelectItem(po_item.Code,po_item.Name,po_item.Unit,po_item.id)">Vendor</button></td>
+      @click="SelectItem(k)">Vendor</button></td>
     </tr>
   </tbody>
 </table>
@@ -109,16 +109,16 @@ export default {
           )
           .catch()},
 
-      SelectItem(n,n2,n3,id){
-        
-            this.Name=n;
-            this.Cnum=n2;
-            this.Add=n3;
-            this.id=id;
+      SelectItem(index){
+            
+            this.Name=this.POs[index]['Name'];
+            this.Cnum=this.POs[index]['Unit'];
+            this.Add=this.POs[index]['Code'];
+            this.id=this.POs[index]['id'];
           },
 
           SaveVendor(){
-          axios.post('/api/SaveItems',{Name:this.Name,Unit:this.Cnum,Code:this.Add,ids:this.id})
+          axios.post('/api/updateItems',{Name:this.Name,Unit:this.Cnum,Code:this.Add,ids:this.id})
           .then(
               ()=>{
                 this.Name="";

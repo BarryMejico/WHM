@@ -40,12 +40,11 @@ class VendorController extends Controller
             'Number'=>'required',
             'Address'=>'required'  
         ]);
+
         $input = $request->all();
         $Code=Ucode();
         //dd($input);
         $Vendor = VendorModel::find($input['ids']);
-        
-    
         $Vendor ->Vendor= $input['Name'];
         $Vendor ->Number= $input['Number'];
         $Vendor ->Address= $input['Address']; 

@@ -32,21 +32,26 @@ class itemController extends Controller
     }
 
     public function update(Request $request){        
-        $request->validate([
-            'Name' => ['required', 'string', 'max:255'],
-            'Code' => ['required', 'string', 'unique:Items'],
-            'Unit' => ['required', 'string'],
-        ]);
-
         $input = $request->all();
         //$Code=Ucode();
         //dd($input);
-        $Vendor = item::updateOrCreate(['id'=> $input['ids']],[
-            'Name' =>  $request['Name'],
-            'Code' =>  $request['Code'],
-            'Unit' =>  $request['Unit'],
+        
+        $request->validate([
+            'Name' => ['required', 'string', 'max:255'],
+            'Code' => ['required', 'string'],
+            'Unit' => ['required', 'string'],
         ]);
-        //$Vendor->save();
+
+        
+       
+
+        $item = item::find($input['ids']);
+        $item ->Name= $input['Name'];
+        $item ->Code= $input['Code'];
+        $item ->Unit= $input['Unit']; 
+               
+        $item->save(); 
+        
     }
 
     public function Delete(Request $request){  

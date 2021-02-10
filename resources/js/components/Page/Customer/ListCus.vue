@@ -28,7 +28,7 @@
       <td>{{po_item.Number}}</td>
       <td>{{po_item.Address}}</td>
       <td><button href="#addVendorModal"  data-toggle="modal" type="button" class="btn btn-primary btn-sm" 
-      @click="SelectItem(po_item.Customer,po_item.Number,po_item.Address,po_item.id)">Modify</button>
+      @click="SelectItem(po_item.Customer,po_item.Number,po_item.Address,po_item.Ccode)">Modify</button>
       
       <button href="#addDeviceModal"  data-toggle="modal" type="button" class="btn btn-primary btn-sm" 
       @click="ccode(po_item.Ccode)">Devices</button>
@@ -223,7 +223,7 @@ closeModal() {
             },
             
             Delete(){
-              axios.post('/api/DeleteCustomer',{ids:this.id})
+              axios.post('/api/DeleteCustomer',{Ccode:this.id})
           .then(
             ()=>{this.loadpos();
             this.closeModal();

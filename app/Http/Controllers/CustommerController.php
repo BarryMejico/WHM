@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Customer;
 use Illuminate\Support\Facades\DB;
+use App\Rules\inUseData;
 
 class CustommerController extends Controller
 {
@@ -28,7 +29,11 @@ class CustommerController extends Controller
 
     public function Delete(Request $request){  
         $input = $request->all();
-        $id = Customer::destroy($input['ids']);
+
+        $request->validate([
+            'Ccode'=>['required', new inUseData],
+        ]);
+        $customer = Customer::where('Ccode',$input['Ccode'])->delete();
     }   
 
     public function update(Request $request){        
@@ -37,12 +42,11 @@ class CustommerController extends Controller
             'Number'=>'required',
             'Address'=>'required'  
         ]);
+
         $input = $request->all();
         $Code=Ucode();
         //dd($input);
         $customer = Customer::find($input['ids']);
-        
-    
         $customer ->Customer= $input['Name'];
         $customer ->Number= $input['Number'];
         $customer ->Address= $input['Address']; 

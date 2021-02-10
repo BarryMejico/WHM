@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\App;
 use App\Helper\Ucode;
 use App\Ucode\Ucode as UcodeUcode;
 use Illuminate\Support\Facades\DB;
+use App\Rules\inUseData;
 
 class VendorController extends Controller
 {
@@ -54,7 +55,11 @@ class VendorController extends Controller
 
     public function Delete(Request $request){  
         $input = $request->all();
-        $id = VendorModel::destroy($input['ids']);
+
+        $request->validate([
+            'Vcode'=>['required', new inUseData],
+        ]);
+        $customer = VendorModel::where('Vcode',$input['Vcode'])->delete();
     }   
 
     public function Search(Request $request){

@@ -28,7 +28,7 @@
       <td>{{po_item.Number}}</td>
       <td>{{po_item.Address}}</td>
       <td><button href="#addVendorModal"  data-toggle="modal" type="button" class="btn btn-primary btn-sm" 
-      @click="SelectItem(po_item.Vendor,po_item.Number,po_item.Address,po_item.id)">Vendor</button></td>
+      @click="SelectItem(po_item.Vendor,po_item.Number,po_item.Address,po_item.Vcode)">Vendor</button></td>
     </tr>
   </tbody>
 </table>
@@ -138,7 +138,9 @@ export default {
             })
           
             },
+            
             Delete(){
+
                this.closeModal();
                Swal.fire({
                 title: 'Confirmation',
@@ -150,7 +152,7 @@ export default {
               }).then((result) => {
                 if (result.value) {
 
-                  axios.post('/api/DeleteVendor',{ids:this.id})
+                  axios.post('/api/DeleteVendor',{Vcode:this.id})
                     .then(
                       ()=>{    
                       this.loadpos();

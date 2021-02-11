@@ -37,6 +37,21 @@ class CustommerController extends Controller
     }   
 
     public function update(Request $request){        
+        // $request->validate([
+        //     'Name'=>'required',
+        //     'Number'=>'required',
+        //     'Address'=>'required'  
+        // ]);
+
+        // $input = $request->all();
+        // $Code=Ucode();
+        // //dd($input);
+        // $customer = Customer::find($input['ids']);
+        // $customer ->Customer= $input['Name'];
+        // $customer ->Number= $input['Number'];
+        // $customer ->Address= $input['Address']; 
+               
+        // $customer->save(); 
         $request->validate([
             'Name'=>'required',
             'Number'=>'required',
@@ -46,12 +61,12 @@ class CustommerController extends Controller
         $input = $request->all();
         $Code=Ucode();
         //dd($input);
-        $customer = Customer::find($input['ids']);
-        $customer ->Customer= $input['Name'];
-        $customer ->Number= $input['Number'];
-        $customer ->Address= $input['Address']; 
-               
-        $customer->save(); 
+        $customer = Customer::where('Ccode',$input['ids'])
+        ->update([
+           'Customer'=> $input['Name'],
+           'Number'=> $input['Number'],
+           'Address'=> $input['Address'],
+        ]);
     }
 
 

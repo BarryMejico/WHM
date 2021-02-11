@@ -118,7 +118,7 @@
 
 <script>
 import MenuList from '../Customer/MainCus'
-
+import Swal from 'sweetalert2'
 export default {
     components: {
      MenuList
@@ -223,13 +223,53 @@ closeModal() {
             },
             
             Delete(){
+          //     axios.post('/api/DeleteCustomer',{Ccode:this.id})
+          // .then(
+          //   ()=>{this.loadpos();
+          //   this.closeModal();
+          //   }
+          // )
+          // .catch();
+          this.closeModal();
+             Swal.fire({
+                title: 'Confirmation',
+                text: 'Are you sure to remove ' + this.Name + ' as a Customer?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No'
+              }).then((result) => {
+                if (result.value) {
+
               axios.post('/api/DeleteCustomer',{Ccode:this.id})
-          .then(
-            ()=>{this.loadpos();
-            this.closeModal();
-            }
-          )
-          .catch();
+              .then(
+                ()=>{this.loadpos();
+                this.closeModal();
+
+                   Swal.fire({
+              title: 'Customer Removed Successfully',
+              icon: 'success',
+              timer:1500,
+              showCancelButton: false,
+              showConfirmButton: false 
+            })
+
+                })
+              .catch((error)=>{
+                Swal.fire({
+                title: 'Oops!',
+                text: error,
+                icon: 'warning',
+                showCancelButton: false,
+                showConfirmButton:true
+            
+              })
+
+            })
+          }else if (result.dismiss === Swal.DismissReason.cancel) {
+          console.log('Customer Info Stays');
+          }
+        })
             },
 
             closeModal() {

@@ -13,8 +13,8 @@
       <input class="form-control" v-model="po" id="po" type="text" required autocomplete="name" autofocus>
 
 
-  <div class="col-xl-5">
-    <CustomerModal @SelectedCustomer="Selected_cus"></CustomerModal>
+  <div id="target" class="col-xl-5">
+    <CustomerModal id="CusModal" @SelectedCustomer="Selected_cus"></CustomerModal>
                     <div>
                    <b>Name: </b><label class="text-muted"><i>{{Customer}}</i></label><br>
                     <b>Address:</b><label class="text-muted"><i>{{add_Cus}}</i></label><br>
@@ -38,16 +38,16 @@
     <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
     <span class="caret">{{status}}</span></button>
     <ul class="dropdown-menu">
-      <li>Open</li>
-      <li>Approved</li>
-      <li>Canceled</li>
+      <li><button @click="changeStatus('Open')" class="my_btn btn">Open</button></li>
+      <li><button @click="changeStatus('Approved')" class="success my_btn">Approved</button></li>
+      <li><button @click="changeStatus('Canceled')" class="my_btn btn-danger">Canceled</button></li>
     </ul>
 </div>
     </div>
 </div>
             
         <div class="sc">
-        <table class="table table-responsive">
+        <table id="tbl" class="table table-responsive">
   <thead class="thead-dark">
     <tr>
       <th scope="col">#</th>
@@ -68,11 +68,11 @@
       <td>{{po_item.Icode}}</td>
       <td>{{po_item.idescription}}</td>
       <td>{{po_item.iunit}}</td>
-      <td class="in"><div class="qty"><input v-model="po_item.Qty" min="1" type="number" @change="calculateLineTotal(po_item)"></div></td>
-      <td class="in"><div class="qty"><input v-model="po_item.UnitCost"  @change="calculateLineTotal(po_item)"></div></td>
+      <td class="in"><div class="qty"><input  v-model="po_item.Qty" min="1" type="number" @change="checkQty(po_item)" :disabled="disabled == 1"></div></td>
+      <td class="in"><div class="qty"><input  v-model="po_item.UnitCost"  @change="calculateLineTotal(po_item)" :disabled="disabled == 1"></div></td>
       <td>{{po_item.Tcost}} Php</td>
-      <td><a class="link" @click="deleteRow(k, po_item,po_item.Icode)">Delete</a>/
-      <a class="link" @click="calculateLineTotal(po_item)">Recompute</a></td>
+      <td :disabled="disabled == 1"><button class="my_btn btn link" @click="deleteRow(k, po_item,po_item.Icode)" :disabled="disabled == 1">Delete</button>/
+      <button class="my_btn btn link" @click="calculateLineTotal(po_item)">Recompute</button></td>
     </tr>
   </tbody>
 </table>
@@ -81,8 +81,8 @@
   
 <span><b>Total:</b> {{PO_total}} Php</span><br>
 <hr>
-<button type="button" class="btn btn-info" @click.prevent="saveform">Save</button>
-<button type="button" class="btn danger btn-danger" @click.prevent="clearData">Clear ALL</button>
+<button type="button" id="btnSave" class="btn btn-info" @click.prevent="saveform">Save</button>
+<button type="button" id="btnClear" class="btn danger btn-danger" @click.prevent="clearData">Clear ALL</button>
 </div>
         </div>
         </div>
@@ -140,6 +140,8 @@ function int_data(){
       }],
       //-----for loading items
         items:[],
+        //--disable
+        disabled:0,
     }
     }
 
@@ -164,7 +166,7 @@ export default {
 
       var $POL = this.$route.params.PO_Load;      
       if(typeof this.$route.params.PO_Load === "undefined" ){
-        console.log("PO Undefied")
+        //console.log("PO Undefied")
       }else{
         this.Load_PO();
          
@@ -172,19 +174,40 @@ export default {
     },
 
     mounted(){
-
+      
     },
 
     updated(){
       if(typeof this.$route.params.PO_Load === "undefined" ){
-        console.log("PO Undefied")
+        
+        //console.log("PO Undefied")
       }else{
         this.Load_Details();
-         
+        
+        
+      
+        
       }
     },
 
     methods:{
+
+      approvedStatus(status){
+         document.getElementById("po").disabled = true;
+        if (status=="Approved")
+        {
+        CustomerModal.disabled
+        ItemsModal.disabled//add item
+        DevicesModal.disabled//device
+        document.getElementById("btnSave").disabled = true;//save btn
+        document.getElementById("btnClear").disabled = true;//clear btn 
+        VendorModal.disabled
+        this.disabled=1}
+      },
+
+      changeStatus(){
+
+      },
 
       passCus(){
         
@@ -201,7 +224,7 @@ export default {
       },
 
       Selected_Item(event){
-        console.log(event);
+        //console.log(event);
          var code=event['Code'],Name=event['Name'],Unit=event['Unit'];
         var i;
         var meron = false;
@@ -212,7 +235,7 @@ export default {
         }
 
         if (meron){
-            console.log("Item already Exist!!!")
+            //console.log("Item already Exist!!!")
         }
         else{
           
@@ -293,6 +316,7 @@ export default {
             this.calculateTotal(sub);
         },
         
+        
         calculateLineTotal(invoice_product) {
             var total = parseFloat(invoice_product.Qty) * parseFloat(invoice_product.UnitCost);
             var sub=0-invoice_product.Tcost;
@@ -316,6 +340,26 @@ export default {
                 this.PO_total = total.toFixed(2);
             }
         },
+
+checkQty(product){
+  var Item;
+          axios.get('/api/getitem',{params:{Code:product.Icode}})
+          .then(
+            (res)=>{
+              Item=res.data;
+
+              if(Item[0]['Qty']>product.Qty){
+                this.calculateLineTotal(product)
+              }
+              else{
+                  product.Qty=Item[0]['Qty'];
+              }
+            }
+          )
+          .catch()
+          
+        },
+
 
         saveform(){
             axios.post('/api/SaveInvoice', {
@@ -381,6 +425,7 @@ export default {
                   this.PO_total = this.po_details[0]['Total_Amount'];
                   this.Customer_code =this.po_details[0]['Ccode'];
                   this.Selected_cus2(this.po_details[0]['Ccode']);
+                  this.approvedStatus(this.po_details[0]['Status']);
               });
         },
 

@@ -33,16 +33,16 @@
     
 </div>  
   </div>
+  
     <div class="col-xl-3">        
-            
             <button type="button" class="btn btn-info">Print</button>
             <items-modal @SelectedItems="Selected_Item"></items-modal>
+    <!--Status-->        
     <div class="dropdown">
     <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
     <span class="caret">{{status}}</span>
     <p>{{last_update}}</p>
     </button>
-    
     <ul class="dropdown-menu">
       <li><button @click="changeStatus('Open')" class="my_btn btn">Open</button></li>
       <li><button @click="changeStatus('Approved')" class="success my_btn">Approved</button></li>
@@ -50,6 +50,8 @@
     </ul>
 </div>
     </div>
+<!--End Status-->
+
 </div>
             
         <div class="sc">
@@ -74,10 +76,10 @@
       <td>{{po_item.Icode}}</td>
       <td>{{po_item.idescription}}</td>
       <td>{{po_item.iunit}}</td>
-      <td class="in"><div class="qty"><input v-model="po_item.Qty" min="1" type="number" @change="calculateLineTotal(po_item)"></div></td>
-      <td class="in"><div class="qty"><input v-model="po_item.UnitCost"  @change="calculateLineTotal(po_item)"></div></td>
+      <td class="in"><div class="qty"><input v-model="po_item.Qty" min="1" type="number" @change="calculateLineTotal(po_item)" :disabled="disabled == 1"></div></td>
+      <td class="in"><div class="qty"><input v-model="po_item.UnitCost"  @change="calculateLineTotal(po_item)" :disabled="disabled == 1"></div></td>
       <td>{{po_item.Tcost}} Php</td>
-      <td><a class="link" @click="deleteRow(k, po_item,po_item.Icode)">Delete</a>/<a class="link">Recompute</a></td>
+      <td><button class="my_btn btn link" @click="deleteRow(k, po_item,po_item.Icode)" :disabled="disabled == 1">X</button>/<button class="my_btn btn link">Recompute</button></td>
     </tr>
   </tbody>
 </table>
@@ -87,7 +89,7 @@
 <span><b>Total:</b> {{PO_total}} Php</span><br>
 <hr>
 <button type="button" id="SaveBtn" class="btn btn-info" @click.prevent="saveform">Save</button>
-<button type="button" class="btn danger btn-danger" @click.prevent="clearData">Clear ALL</button>
+<button type="button" id="CanBtn" class="btn danger btn-danger" @click.prevent="clearData">Clear ALL</button>
 </div>
         </div>
         </div>
@@ -161,6 +163,7 @@ function int_data(){
       }],
       //-----for loading items
         items:[],
+        disabled:0,
     }
     }
 
@@ -210,6 +213,19 @@ export default {
     methods:{
       load(){document.getElementById('btnLoad').click();},
       unload(){document.getElementById('close').click();},
+
+      approvedStatus(status){
+         document.getElementById("po").disabled = true;
+         console.log(status);
+        if (status=="Approved")
+        {
+        CustomerModal.disabled;
+        MenuList.disabled;//add item
+        VendorModal.disabled;
+        document.getElementById("SaveBtn").disabled = true;//save btn
+        document.getElementById("CanBtn").disabled = true;//clear btn 
+        this.disabled=1}
+      },
 
       Selected_Item(event){
         var code=event['Code'],Name=event['Name'],Unit=event['Unit'];
@@ -492,6 +508,8 @@ export default {
                   var D=this.po_details[0]['updated_at'];
                   var myDate = D.split(" ");
                   this.last_update=myDate[0];
+
+                  this.approvedStatus(this.po_details[0]['Status']);
               }
           )
           .catch((error)=>{

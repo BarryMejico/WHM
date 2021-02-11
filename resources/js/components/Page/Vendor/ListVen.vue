@@ -124,6 +124,7 @@ export default {
                 this.Name="";
                 this.Add="";
                 this.CNum="";
+                this.errors =[];
                 this.success=true;
                 this.loadpos();
                 this.closeModal();
@@ -138,7 +139,7 @@ export default {
             })
           
             },
-            
+
             Delete(){
 
                this.closeModal();

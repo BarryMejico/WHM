@@ -46,6 +46,7 @@ class VendorController extends Controller
         $Code=Ucode();
         //dd($input);
         $Vendor = VendorModel::find($input['ids']);
+        
         $Vendor ->Vendor= $input['Name'];
         $Vendor ->Number= $input['Number'];
         $Vendor ->Address= $input['Address']; 
@@ -61,7 +62,7 @@ class VendorController extends Controller
         ]);
         $customer = VendorModel::where('Vcode',$input['Vcode'])->delete();
     }   
-
+                                      
     public function Search(Request $request){
         $input = $request->all();
         //$search = VendorModel::find($input['Search']);

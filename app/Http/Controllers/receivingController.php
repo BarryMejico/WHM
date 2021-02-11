@@ -84,8 +84,17 @@ class receivingController extends Controller
 
 }
 
+public function item(Request $request){
+    $input = $request->all();
+    //dd($input);
+    $stocks = StocksList::where('ICode',$input['Code'])->get();
+    return $stocks;
+}
+
 public function stocks(){
     $stocks= StocksList::all();
     return $stocks;
 }
+
+
 }

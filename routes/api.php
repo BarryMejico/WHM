@@ -63,6 +63,7 @@ Route::post('saveItemtoLoaction','LocationDetailsController@save');
 
 Route::get('stocks','receivingController@stocks');
 Route::post('SaveReceived','receivingController@store');
+Route::get('getitem','receivingController@item');
 
 Route::post('SaveCusDevice','DeviceController@SaveCusDevice');
 Route::get('getDevices','DeviceController@GetCusDevice');

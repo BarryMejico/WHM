@@ -29,7 +29,6 @@ class CustommerController extends Controller
 
     public function Delete(Request $request){  
         $input = $request->all();
-
         $request->validate([
             'Ccode'=>['required', new inUseData],
         ]);

@@ -103,7 +103,7 @@
         <div id="Report" class="collapse">
             <ul>   
 	            <li><router-link to="/DeviceHistory">Device Repair History</router-link></li>
-                <li><router-link to="/Upcoming">???</router-link></li>
+                <li><router-link to="/SalesHistory">Sales History</router-link></li>
                 <li><router-link to="/Upcoming">???</router-link></li>
             </ul>
         </div>

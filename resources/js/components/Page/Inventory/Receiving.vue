@@ -65,7 +65,7 @@
       <td>{{po_item.Icode}}</td>
       <td>{{po_item.idescription}}</td>
       <td>{{po_item.iunit}}</td>
-      <td class="in"><div class="qty"><input v-model="po_item.Qty" min="1" type="number" @change="calculateLineTotal(po_item)"></div></td>
+      <td class="in"><div class="qty"><input v-model="po_item.Qty" min="1" type="number" @change="chckQty(po_item)"></div></td>
       <td class="in">{{po_item.UnitCost}}</td>
       <td>{{po_item.Tcost}} Php</td>
       <td><a class="link" @click="deleteRow(k, po_item)">Delete</a>/<a class="link">Recompute</a></td>
@@ -217,7 +217,7 @@ export default {
     beforeMount(){
       var $POL = this.$route.params.PO_Load;      
       if(typeof this.$route.params.PO_Load === "undefined" ){
-        console.log("PO Undefied")
+        //console.log("PO Undefied")
       }else{
         this.Load_PO();
         this.Load_Details();
@@ -243,27 +243,26 @@ export default {
         }
 
         if (meron==false){
-            console.log("wala sa list!!!");
+            //console.log("wala sa list!!!");
         }
         else{
           var j;
           for (j=0;j<=this.po_items.length-1; j++){
             if(this.po_items[j]['Icode']==code || this.po_items[j]['Icode']==""){
               if(this.PO_total!= this.AmountCeiling){
-              console.log("Pasok");
+              //console.log("Pasok");
               var newQTY= parseFloat(this.po_items[j]['Qty'])+1;     
               this.po_items[j]['Qty']=newQTY;
+              this.chckQty(this.po_items[j]);
               }
               wala=true;
-              break;
-              
+              break; 
             }
-            
         }
         
-        console.log(wala);
+        //console.log(wala);
               if(wala==false){
-              console.log("Pasok din");
+              //console.log("Pasok din");
               this.AmountCeiling=this.PO_total;
               this.PO_total=unitCost;
               this.po_items.push({
@@ -273,10 +272,7 @@ export default {
                 Qty:1,
                 UnitCost:unitCost,
                 Tcost:unitCost,
-                
-                                  });
-                
-            
+              });
             }
         }
             //this.tryconvert=Object.assign({}, this.po_items[this.po_items.length-1]);
@@ -300,6 +296,7 @@ export default {
         }
                 this.Vendor_code=code;
       },
+
        Selected_cus(codes){        
         var code;
         code = parseInt(codes);
@@ -342,7 +339,6 @@ export default {
           .then(
               (response)=>{
                   this.List_Customer=response.data;
-                  
               }
           )
           .catch()
@@ -360,8 +356,6 @@ export default {
         },
 
         deleteRow(index,invoice_product) {
-
-
             Swal.fire({
                 title: 'Confirmation',
                 text: 'Are you sure to remove this Item?',
@@ -400,22 +394,37 @@ export default {
             })
 
           }else if (result.dismiss === Swal.DismissReason.cancel) {
-          console.log('Item Stays');
+          //console.log('Item Stays');
           }
         })
 
+        },
+
+        chckQty(invoice_product){
+          var i;
+          
+          for (i=0;i < this.po_items2.length; i++){
+            if(this.po_items2[i]['Icode']==invoice_product.Icode){
+              if(this.po_items2[i]['Qty']<=invoice_product.Qty){
+                invoice_product.Qty=this.po_items2[i]['Qty'];
+                console.log("Qty is greater than expected!")
+              }
+              else{
+                
+              }
+            }
+        }
+
+          this.calculateLineTotal(invoice_product)
         },
         
         calculateLineTotal(invoice_product) {
             var total = parseFloat(invoice_product.Qty) * parseFloat(invoice_product.UnitCost);
             var sub=0-invoice_product.Tcost;
             this.calculateTotal(sub);
-            //console.log(invoice_product.Qty,invoice_product.UnitCost);
-            
             if (!isNaN(total)) {
                 invoice_product.Tcost = total.toFixed(2);
             }
-            //console.log(total);
             this.calculateTotal(total);
         },
 
@@ -431,8 +440,6 @@ export default {
         },
 
         saveform(){
-
-
            Swal.fire({
                 title: 'Confirmation',
                 text: 'Are you sure with the following details of your received purchase?',
@@ -473,7 +480,7 @@ export default {
             })
 
           }else if (result.dismiss === Swal.DismissReason.cancel) {
-          console.log('Back to Create PORecieve');
+          //console.log('Back to Create PORecieve');
           }
         })
 
@@ -523,7 +530,9 @@ export default {
                   
                   this.po_details = response.data;
                   
-                  if(this.po_details[0]['Status']!=="Approved"){console.log("not approved PO")}
+                  if(this.po_details[0]['Status']!=="Approved"){
+                    //console.log("not approved PO")
+                    }
                   else{
                   this.po = this.po_details[0]['PO'];
                   //this.PO_total = this.po_details[0]['Total_Amount'];

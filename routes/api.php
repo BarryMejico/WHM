@@ -74,3 +74,4 @@ Route::post('ApprovedInvoice','SalesController@ApprovedInvoice');
 Route::get('GetInvoice','SalesController@GetInvoice');
 Route::get('GetInvoiceHead','SalesController@GetInvoiceHead');
 Route::get('history','SalesController@history');
+Route::get('Saleshistory','SalesController@Saleshistory');

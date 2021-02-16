@@ -1,6 +1,7 @@
 <template>
     <div>
-        <button href="#addCustomerModal" data-toggle="modal" type="button" class="btn btn-secondary btn-sm">Customer</button>
+      
+        <button href="#addCustomerModal" data-toggle="modal" type="button" class="btn btn-secondary btn-sm" :disabled="disabled == 1">Customer</button>
         <!--modal Customer-->
 <div id="addCustomerModal" class="modal fade">
 	<div class="modal-dialog">
@@ -50,11 +51,17 @@ function int_data(){
     }
     }
 export default {
+
+  props:{
+    disabled: 0
+  },
+
     data:function(){
       return int_data();
       }, 
 mounted(){
 this.load_customer();
+
 },
 methods:{
 
@@ -68,6 +75,7 @@ methods:{
               this.List_Customer=[];
              
              this.load_customer();
+             
 },
 
     load_customer(){
@@ -86,6 +94,7 @@ methods:{
               (response)=>{
                 //console.log(response.data);
               this.List_Customer=response.data;
+              console.log(this.disabled);
               }
           )
           .catch()

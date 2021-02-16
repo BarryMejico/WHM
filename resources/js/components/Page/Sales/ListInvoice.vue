@@ -61,12 +61,15 @@ export default {
     components: {
      MenuList,
      CreatePO,
-        Receiving
+        Receiving,
+        
     },
 
     data() {
       return{
-             POs:[]
+             POs:[],
+             pass:true,
+             ItemStatus:"",
     }},
 
     mounted(){
@@ -88,13 +91,61 @@ export default {
           .catch()
 },
 
+checkQty(product,i,l,invoice){
+  var Item;
+          axios.get('/api/getitem',{params:{Code:product.Icode}})
+          .then(
+            (res)=>{
+              Item=res.data;
+              if(Item[0]['Qty']>=product.Qty){
+                if (this.ItemStatus==false){}
+                else{
+                  this.ItemStatus=true;}
+              }
+              else{
+                  this.ItemStatus= false;
+                }
+              var pers=100;
+              i=i+1;
+              
+              pers=(i/l)*100;
+              console.log(pers +"%: "+ this.ItemStatus);
+
+              if (pers==100 && this.ItemStatus){
+                if(this.ItemStatus){
+                        axios.post('/api/ApprovedInvoice',{params:{invoice:invoice}})
+                      .then(
+                       this.loadpos()
+                      )
+                      .catch()
+                }
+                
+              }
+            }
+
+            
+          )
+          .catch()
+          
+        },
+
 approve(invoice,status){
 if (status=="Open"){
-axios.post('/api/ApprovedInvoice',{params:{invoice:invoice}})
-          .then(
-                this.loadpos()
-          )
-          .catch()}
+  var inVoiceDetails;
+  axios.get('/api/GetInvoice',{params:{PO:invoice}})
+  .then(
+    (res)=>{
+      inVoiceDetails=res.data;
+       var i;
+      for(i=0;i<=inVoiceDetails.length-1;i++){
+        this.checkQty(inVoiceDetails[i],i,inVoiceDetails.length,invoice);
+        
+      }
+  
+    }
+  )
+
+  }
           else{
             console.log("Already approved!!")
           }

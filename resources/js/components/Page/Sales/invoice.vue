@@ -14,7 +14,7 @@
 
 
   <div id="target" class="col-xl-5">
-    <CustomerModal id="CusModal" @SelectedCustomer="Selected_cus"></CustomerModal>
+    <CustomerModal id="CusModal" @SelectedCustomer="Selected_cus" :disabled="disabled"></CustomerModal>
                     <div>
                    <b>Name: </b><label class="text-muted"><i>{{Customer}}</i></label><br>
                     <b>Address:</b><label class="text-muted"><i>{{add_Cus}}</i></label><br>
@@ -27,10 +27,10 @@
     <div class="col-xl-3">        
             
             <button type="button" class="btn btn-info">Print</button>
-            <items-modal @SelectedItems="Selected_Item"></items-modal>
+            <items-modal @SelectedItems="Selected_Item" :disabled="disabled"></items-modal>
 
          <div>
-            <devices-modal @SelectedDevice="Selected_Item" v-bind:selectedCus="ccode"></devices-modal>
+            <devices-modal @SelectedDevice="Selected_Item" v-bind:selectedCus="ccode" :disabled="disabled"></devices-modal>
             
          </div> 
 
@@ -228,9 +228,14 @@ export default {
          var code=event['Code'],Name=event['Name'],Unit=event['Unit'];
         var i;
         var meron = false;
+
+         if (this.po_items[0]['Icode']=="")
+        {this.po_items.splice(0, 1);}
+
          for (i=0;i < this.po_items.length; i++){
             if(this.po_items[i]['Icode']===code){
                meron = true;
+               this.po_items[i]['Qty']=this.po_items[i]['Qty']+1;
             }
         }
 
@@ -240,9 +245,10 @@ export default {
         else{
           
         this.po_items.push({
-                Icode:code,
+                 Icode:code,
                 idescription:Name,
                 iunit:Unit,
+                Qty:1, 
                                   });
         }
             this.closeModal();

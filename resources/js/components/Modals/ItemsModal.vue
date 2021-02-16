@@ -1,7 +1,7 @@
 <template>
     <div>
 <div class="dropdown">
-    <button class="dropdown-toggle" type="button" data-toggle="dropdown">
+    <button class="dropdown-toggle" type="button" data-toggle="dropdown" :disabled="disabled == 1">
     <span class="caret">Add Items</span></button>
     <ul class="dropdown-menu">
       <li><button href="#addEmployeeModal" class="btn-light btn-sm nav-link" data-toggle="modal">From List</button></li>
@@ -78,6 +78,10 @@
 import DevicesModal from './DevicesModal.vue';
 
 export default {
+  props:{
+    disabled: 0
+  },
+  
   components: { DevicesModal },
   data(){
     return{

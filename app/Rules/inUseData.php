@@ -54,6 +54,6 @@ class inUseData implements Rule
      */
     public function message()
     {
-        return 'The Data is already inuse.';
+        return 'the data is already in use.';
     }
 }

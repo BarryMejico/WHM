@@ -1,6 +1,6 @@
 <template>
     <div>
-        <button href="#addDevice" data-toggle="modal" type="button" class="btn btn-secondary btn-sm" @click="load_customer" >Device</button>
+        <button href="#addDevice" data-toggle="modal" type="button" class="btn btn-secondary btn-sm" @click="load_customer" :disabled="disabled == 1">Device</button>
         <!--modal Customer-->
 <div id="addDevice" class="modal fade">
 	<div class="modal-dialog">
@@ -61,7 +61,10 @@ function int_data(){
     }
     }
 export default {
-    props:['selectedCus'],
+    props:{
+    selectedCus:String,
+    disabled: 0}
+    ,
 
     data:function(){
       return int_data();

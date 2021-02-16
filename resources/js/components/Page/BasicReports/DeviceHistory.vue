@@ -74,15 +74,8 @@
              for(i=0;i<=this.inoDetails.length-1;i++){
                 for(j=0;j<=this.invo.length-1;j++){
                     if (this.inoDetails[i]['invoice']==this.invo[j]['invoice']){
-                       
-                       //console.log(this.inoDetails[i]['description']); 
-                        //console.log(i);
-                        //console.log("invo: " + this.invo[0]);
-                        //console.log("inodetails: " + this.inoDetails[i]);
                         var D=this.invo[j]['created_at'];
                         var myDate = D.split("T");
-                        console.log(myDate);
-
                         this.stocks.push({
                             created_at:myDate[0],
                             Created_by:this.invo[j]['Created_by'],

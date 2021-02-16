@@ -109,4 +109,10 @@ class SalesController extends Controller
         //dd($PO);
         return $PO;
     }
+
+    public function Saleshistory(Request $request){
+        $PO= DB::connection('mysql')->select("SELECT * FROM `sales` WHERE Status=?",[$request['Status']]);
+        //dd($PO);
+        return $PO;
+    }
 }

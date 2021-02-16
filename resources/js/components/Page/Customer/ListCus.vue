@@ -256,9 +256,12 @@ closeModal() {
 
                 })
               .catch((error)=>{
+                var error2;
+                error2=error.response.data;
+
                 Swal.fire({
                 title: 'Oops!',
-                text: error,
+                text: error2.errors.Ccode,
                 icon: 'warning',
                 showCancelButton: false,
                 showConfirmButton:true

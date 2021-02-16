@@ -1,6 +1,6 @@
 <template>
 <div>
-    <button href="#addVendorModal" data-toggle="modal" type="button" class="btn btn-secondary btn-sm">Vendor</button>
+    <button href="#addVendorModal" data-toggle="modal" type="button" class="btn btn-secondary btn-sm" :disabled="disabled == 1">Vendor</button>
     <!--modal Vendor-->
 <div id="addVendorModal" class="modal fade">
 	<div class="modal-dialog">
@@ -48,6 +48,10 @@ function int_data(){
     }
     }
 export default {
+
+  props:{
+    disabled: 0
+  },
 
     data:function(){
       return int_data();

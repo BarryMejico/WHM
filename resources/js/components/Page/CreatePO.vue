@@ -16,15 +16,14 @@
       <input id="mode" type="text" class="form-control" required autocomplete="name" autofocus>
 
        <div class="col-xl-5">
-    <VendorModal @SelectedVendor="Selected_ven"></VendorModal>
-    
+    <VendorModal @SelectedVendor="Selected_ven" :disabled="disabled" ></VendorModal>
                     <div>
                     <b>Name:</b><label class="text-muted"><i>{{Vendor}}</i></label><br>
                     <b>Address:</b><label class="text-muted"><i>{{add_Ven}}</i></label><br>
                     </div>
   </div>
   <div class="col-xl-5">
-    <CustomerModal @SelectedCustomer="Selected_cus"></CustomerModal>
+    <CustomerModal @SelectedCustomer="Selected_cus" :disabled="disabled" ></CustomerModal>
                     <div>
                    <b>Name: </b><label class="text-muted"><i>{{Customer}}</i></label><br>
                     <b>Address:</b><label class="text-muted"><i>{{add_Cus}}</i></label><br>
@@ -36,7 +35,7 @@
   
     <div class="col-xl-3">        
             <button type="button" class="btn btn-info">Print</button>
-            <items-modal @SelectedItems="Selected_Item"></items-modal>
+            <items-modal @SelectedItems="Selected_Item" :disabled="disabled"></items-modal>
     <!--Status-->        
     <div class="dropdown">
     <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
@@ -79,7 +78,7 @@
       <td class="in"><div class="qty"><input v-model="po_item.Qty" min="1" type="number" @change="calculateLineTotal(po_item)" :disabled="disabled == 1"></div></td>
       <td class="in"><div class="qty"><input v-model="po_item.UnitCost"  @change="calculateLineTotal(po_item)" :disabled="disabled == 1"></div></td>
       <td>{{po_item.Tcost}} Php</td>
-      <td><button class="my_btn btn link" @click="deleteRow(k, po_item,po_item.Icode)" :disabled="disabled == 1">X</button>/<button class="my_btn btn link">Recompute</button></td>
+      <td><button class="my_btn btn link" @click="deleteRow(k, po_item,po_item.Icode)" :disabled="disabled == 1">X</button>/<button class="my_btn btn link" :disabled="disabled == 1">Recompute</button></td>
     </tr>
   </tbody>
 </table>
@@ -91,14 +90,11 @@
 <button type="button" id="SaveBtn" class="btn btn-info" @click.prevent="saveform">Save</button>
 <button type="button" id="CanBtn" class="btn danger btn-danger" @click.prevent="clearData">Clear ALL</button>
 </div>
-        </div>
-        </div>
-        </div>
-    
+</div>
+</div>
+</div>
     </div>
     <hr>
-
-
 <button href="#Loading" id="btnLoad"  data-toggle="modal" type="button" class="btn btn-primary btn-sm" >Loading</button>
 
 <!--modal Mod/Del-->
@@ -219,9 +215,11 @@ export default {
          console.log(status);
         if (status=="Approved")
         {
+          
         CustomerModal.disabled;
-        MenuList.disabled;//add item
+        ItemsModal.disabled;
         VendorModal.disabled;
+
         document.getElementById("SaveBtn").disabled = true;//save btn
         document.getElementById("CanBtn").disabled = true;//clear btn 
         this.disabled=1}

@@ -6,6 +6,10 @@
         <MenuList></MenuList>
         </div>
 <div class="col-lg-10">
+   <h1> Items</h1>
+      <hr>
+      <br>
+      <br>
    <span class="alert alert-success" v-show="success">
         The data has been saved!!
       </span>	
@@ -28,7 +32,7 @@
       <td>{{po_item.Name}}</td>
       <td>{{po_item.Unit}}</td>
       <td><button href="#addVendorModal"  data-toggle="modal" type="button" class="btn btn-primary btn-sm" 
-      @click="SelectItem(k)">Vendor</button></td>
+      @click="SelectItem(k)">Modify</button></td>
     </tr>
   </tbody>
 </table>
@@ -45,7 +49,7 @@
 </div>
 </div>
 <!--modal Mod/Del-->
-<div id="addVendorModal" class="modal fade">
+<div id="addVendorModal" class="modal fade" >
 	<div class="modal-dialog">
 		<div class="modal-content">
 			

@@ -5,7 +5,11 @@
         <div class="col-lg-2">
             <MenuList></MenuList>
             </div>
-          <div class="col-lg-10">
+<div class="col-lg-10">
+      <h1>Sales Invoice</h1>
+      <hr>
+      <br>
+      <br>
 <div class="row">
   <div class="col-xl-9">
 <div class="form-inline">

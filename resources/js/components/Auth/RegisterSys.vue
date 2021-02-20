@@ -1,23 +1,26 @@
 <template>
     <div class="container">
+         <br>
+        <br>
+        <br>
         
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Registers</div>
+                <div class="card-header bg-dark" style="color:white">Registers</div>
                     
                 <div class="card-body">
+                        <br>
+                        <br>
                                        
-                        <div class="form-group row">
-                                
-                            <label class="col-md-4 col-form-label text-md-right">Name</label>
+                        <div class="form-group row">      
+                            <label for="name" class="col-md-4 col-form-label text-md-right">Name</label>
                             <div class="col-md-6">
-                                <input v-model="form.name" type="text" class="form-control" required autocomplete="name" autofocus>
+                                <input v-model="form.name" id="name" type="text" class="form-control" required autocomplete="name" autofocus>
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            
+                        <div class="form-group row">  
                             <label for="email" class="col-md-4 col-form-label text-md-right">E-Mail Address</label>
                             <div class="col-md-6">
                                 <input v-model="form.email" id="email" type="email" class="form-control" required autocomplete="email">
@@ -26,21 +29,18 @@
 
                         <div class="form-group row">
                             <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
-
                             <div class="col-md-6">
-                                <input v-model="form.password" id="password" type="password" class="form-control"  required autocomplete="new-password">
-
-                               
+                                <input v-model="form.password" id="password" type="password" class="form-control"  required autocomplete="new-password">   
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label for="password-confirm" class="col-md-4 col-form-label text-md-right">Confirm Password</label>
-
                             <div class="col-md-6">
                                 <input id="password-confirm" name="password_confirmation" v-model="form.password_confirmation" type="password" class="form-control"  required autocomplete="new-password">
                             </div>
                         </div>
+                        <br>
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
@@ -49,6 +49,9 @@
                                 </button>
                             </div>
                         </div>
+                         <br>
+                        <br>
+                        <br>
                    
                 </div>
             </div>
@@ -62,7 +65,7 @@
 </template>
 <script>
 import messageBox from '../Modals/messageBox.vue';
-
+import Swal from 'sweetalert2'
 function int_data(){
     return{
 form:{
@@ -89,7 +92,18 @@ export default {
 
     methods:{ 
         saveform(){
-            axios.post('/api/registeraccount', this.form).then(()=>{
+
+             Swal.fire({
+                title: 'Confirmation',
+                text: 'Are you sure with your user informations?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No'
+              }).then((result) => {
+                if (result.value) {
+
+                axios.post('/api/registeraccount', this.form).then(()=>{
                 console.log('Save');
                 this.cleardata();
                 this.message.head="Sucess!";
@@ -104,6 +118,20 @@ export default {
                 this.message.visibility=true;
                 console.log(this.errors);
             })
+  
+            Swal.fire({
+              title: 'User Added Successfully',
+              icon: 'success',
+              timer:1500,
+              showCancelButton: false,
+              showConfirmButton: false 
+            })
+
+          }else if (result.dismiss === Swal.DismissReason.cancel) {
+          console.log('Back to Create PO');
+          }
+        })
+
         },
 
         cleardata(){

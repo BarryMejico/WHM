@@ -6,6 +6,10 @@
         <MenuList></MenuList>
         </div>
 <div class="col-lg-10">
+   <h1> Receiving </h1>
+      <hr>
+      <br>
+      <br>
 <div class="row">
    <table class="table table-responsive">
   <thead class="thead-dark">

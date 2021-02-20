@@ -1,6 +1,13 @@
 <template>
-    <div>
-         <table class="table table-responsive">
+<div class="container">
+  <h1>Sales History</h1>
+  <hr>
+  <br>
+  <br>
+    <div class="row">
+      <div class="col"></div>
+      <div class="col-lg-10">
+  <table class="table table-responsive">
   <thead class="thead-dark">
     <tr>
       <th scope="col">#</th>
@@ -30,7 +37,10 @@
     </tr>
   </tbody>
 </table>
+      </div>
+       <div class="col"></div>
     </div>
+</div>
 </template>
 <script>
 export default {

@@ -10,6 +10,11 @@
             <MenuList></MenuList>
             </div>
           <div class="col-lg-10">
+             <h1> Receiving </h1>
+      <hr>
+      <br>
+      <br>
+           
 <div class="row">
   <div class="col-xl-9">
 <div class="form-inline">

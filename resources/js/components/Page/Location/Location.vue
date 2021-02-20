@@ -32,13 +32,13 @@
                     <input type="text">
 
                     <ul class="list-group">
-                        <li class="list-group-item d-flex justify-content-between align-items-center" 
-                                  v-for="(item, k) in items" :key="k">
-                                    {{item.Name}}
+                        <li 
+                            class="list-group-item d-flex justify-content-between align-items-center" 
+                            v-for="(item, k) in items" :key="k">
+                            {{item.Name}}
                             <span class="badge badge-primary badge-pill">{{item.Unit}}</span>
                         </li>
- 
-</ul>
+                    </ul>
                     
                    
                 </div>

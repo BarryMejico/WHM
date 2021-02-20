@@ -1,6 +1,10 @@
 <template>
     <div>
     <div class="container">
+        <h1>Device Repair History</h1>
+        <hr>
+        <br>
+        <br>
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">

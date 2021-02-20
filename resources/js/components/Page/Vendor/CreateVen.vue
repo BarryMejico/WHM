@@ -7,6 +7,10 @@
         </div>
 <div class="col-lg-10">
 <div>
+   <h1> Create Vendor </h1>
+      <hr>
+      <br>
+      <br>
   
     <div class="form-group">
       <div class="alert alert-success" v-show="success">

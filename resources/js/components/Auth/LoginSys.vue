@@ -1,9 +1,14 @@
 <template>
     <div class="container">
+        <br>
+        <br>
+        <br>
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Login</div>
+                <div class="card-header bg-dark" style="color:white">Login</div>
+                <br>
+                <br>
 
                 <div class="card-body">
                     <form>
@@ -11,9 +16,7 @@
                             <label for="email"  class="col-md-4 col-form-label text-md-right">E-Mail Address</label>
 
                             <div class="col-md-6">
-                                <input id="email" v-model="log.email" type="email" class="form-control @error('email') is-invalid @enderror" name="email"  required autocomplete="email" autofocus>
-
-                                
+                                <input id="email" v-model="log.email" type="email" class="form-control @error('email') is-invalid @enderror" name="email"  required autocomplete="email" autofocus> 
                             </div>
                         </div>
 
@@ -21,9 +24,7 @@
                             <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
 
                             <div class="col-md-6">
-                                <input id="password" v-model="log.password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-                               
+                                <input id="password" v-model="log.password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">  
                             </div>
                         </div>
 
@@ -40,15 +41,14 @@
                         </div>
 
                         <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button @click.prevent="login" action="" class="btn btn-primary">
+                            <div class="col-md-6 offset-md-4">
+                                <button @click.prevent="login" action="" class="btn btn-primary" >
                                     Login
-                                </button>
-
-                               
+                                </button>     
                             </div>
                         </div>
                     </form>
+
                 </div>
             </div>
         </div>
@@ -84,6 +84,14 @@ export default {
         .then(()=>{
                 this.$router.push({name:"Dashboard"});
                 setTimeout(() => location.reload(), 500);
+
+                Swal.fire({
+                title: 'Login Successfully',
+                icon: 'warning',
+                timer:2000,
+                showCancelButton: false,
+                showConfirmButton:false
+
             })
         .catch((error)=>{
                 this.message.errors=error.response.data;
@@ -92,7 +100,7 @@ export default {
                 this.message.visibility=true;
                 console.log(this.errors);
 
-                 Swal.fire({
+                Swal.fire({
                 title: 'Oops!',
                 text: this.message.errors.message + ' ' + this.message.insdide,
                 icon: 'warning',
@@ -100,11 +108,11 @@ export default {
                 showConfirmButton:true
             
               })
-
             })
 
 
-    }
+    })
+        }
     }
 }
 </script>

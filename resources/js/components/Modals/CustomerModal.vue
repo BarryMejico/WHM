@@ -1,7 +1,7 @@
 <template>
     <div>
       
-        <button href="#addCustomerModal" data-toggle="modal" type="button" class="btn btn-secondary btn-sm" :disabled="disabled == 1">Customer</button>
+        <button id="cus" href="#addCustomerModal" data-toggle="modal" type="button" class="btn btn-secondary btn-sm" :disabled="disabled == 1">Customer</button>
         <!--modal Customer-->
 <div id="addCustomerModal" class="modal fade">
 	<div class="modal-dialog">
@@ -142,4 +142,7 @@ methods:{
 .modal form label {
 	font-weight: normal;
 }	
+#cus{
+ width:290px;
+}
 </style>

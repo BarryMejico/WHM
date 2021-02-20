@@ -1,38 +1,54 @@
 <template>
-    <div>
-         <table class="table table-responsive">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Code</th>
-      <th scope="col">Description</th>
-      <th scope="col">Unit</th>
-      <th scope="col">Qty</th>
-      <th scope="col">Incoming</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr v-for="(item, k) in stocks" :key="k">      
-      <th scope="row">{{k}}</th>
-      <td>{{item.Icode}}</td>
-      <td>{{item.idescription}}</td>
-      <td>{{item.iunit}}</td>
-      <td>{{item.Qty}}</td>
-       <!--<td>
-        <button class="btn-sm">
-       <router-link :to="{ name:'PO', params:{PO_Load: po_item.PO }}">
-          Purchase Order
-        </router-link>
-        </button><button class="btn-sm"><router-link :to="{ name:'Receiving', params:{PO_Load: po_item.PO }}">
-          Receiving
-          </router-link></button></td>-->
-    </tr>
-  </tbody>
-</table>
-    </div>
+    <div class="container">
+      <div class='row'>
+         <div class="col-lg-2">
+           <MenuList></MenuList>
+         </div>
+
+          <div class="col-lg-10">
+            <h1> Stocks </h1>
+      <hr>
+      <br>
+      <br>
+            <table class="table table-responsive">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Code</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">Unit</th>
+                  <th scope="col">Qty</th>
+                  <th scope="col">Incoming</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(item, k) in stocks" :key="k">      
+                  <th scope="row">{{k}}</th>
+                  <td>{{item.Icode}}</td>
+                  <td>{{item.idescription}}</td>
+                  <td>{{item.iunit}}</td>
+                  <td>{{item.Qty}}</td>
+                  <!--<td>
+                    <button class="btn-sm">
+                  <router-link :to="{ name:'PO', params:{PO_Load: po_item.PO }}">
+                      Purchase Order
+                    </router-link>
+                    </button><button class="btn-sm"><router-link :to="{ name:'Receiving', params:{PO_Load: po_item.PO }}">
+                      Receiving
+                      </router-link></button></td>-->
+                </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+  </div>
 </template>
 <script>
+import MenuList from '../MainPO';
 export default {
+  components:{
+     MenuList
+  },
     data(){
         return{
             stocks:[{

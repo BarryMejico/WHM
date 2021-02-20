@@ -7,6 +7,11 @@
         </div>
 <div class="col-lg-10">
 <div>
+  <br>
+      <h1> Create Customer </h1>
+      <hr>
+      <br>
+      <br>
   
     <div class="form-group">
       <div class="alert alert-success" v-show="success">

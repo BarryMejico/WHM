@@ -1,6 +1,6 @@
 <template>
 <div>
-    <button href="#addVendorModal" data-toggle="modal" type="button" class="btn btn-secondary btn-sm" :disabled="disabled == 1">Vendor</button>
+    <button id="ven" href="#addVendorModal" data-toggle="modal" type="button" class="btn btn-secondary btn-sm" :disabled="disabled == 1">Vendor</button>
     <!--modal Vendor-->
 <div id="addVendorModal" class="modal fade">
 	<div class="modal-dialog">
@@ -15,14 +15,14 @@
                     <label>Item Code</label>	
                     <input type="text" v-on:input="liveSearch" v-model="Search">
                     </div>
-<ul class="list-group">
-  <li class="list-group-item d-flex justify-content-between align-items-center" 
-    v-for="(Vendor, k) in List_Vendor" :key="k">
-    <a @click="Selected_Vendor(k)">{{Vendor.Vendor}}</a>
-    <span class="badge badge-primary badge-pill">{{Vendor.id}}</span>
-  </li>
-  <a class="link">New Vendor</a>
-</ul>
+        <ul class="list-group">
+          <li class="list-group-item d-flex justify-content-between align-items-center" 
+            v-for="(Vendor, k) in List_Vendor" :key="k">
+            <a @click="Selected_Vendor(k)">{{Vendor.Vendor}}</a>
+            <span class="badge badge-primary badge-pill">{{Vendor.id}}</span>
+          </li>
+          <a class="link">New Vendor</a>
+        </ul>
           </div>
 				
 				<div class="modal-footer">
@@ -139,4 +139,8 @@ closeModal() {
 .modal form label {
 	font-weight: normal;
 }	
+#ven{
+  width:288px;
+ 
+}
 </style>

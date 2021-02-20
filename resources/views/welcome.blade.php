@@ -84,8 +84,8 @@
     <button data-toggle="collapse" data-target="#Sales">Sales</button>
         <div id="Sales" class="collapse">
             <ul>  
-                <li><router-link to="/Upcoming">Products</router-link></li>
-                <li><router-link to="/Upcoming">Service</router-link></li>
+                <li><router-link to="/Upcoming" class="notAvailable">Products</router-link></li>
+                <li><router-link to="/Upcoming" class="notAvailable">Service</router-link></li>
                 <li><router-link to="/invoice">Sales Invoice</router-link></li>
             </ul>
         </div>
@@ -94,8 +94,8 @@
         <div id="Inventory" class="collapse">
             <ul>   
 	            <li><router-link to="/PO_list">Receiving</router-link></li>
-                <li><router-link to="/Upcoming">Dispatching</router-link></li>
-                <li><router-link to="/Upcoming">Returns</router-link></li>
+                <li><router-link to="/Upcoming" class="notAvailable">Dispatching</router-link></li>
+                <li><router-link to="/Upcoming" class="notAvailable">Returns</router-link></li>
             </ul>
         </div>
 
@@ -104,7 +104,7 @@
             <ul>   
 	            <li><router-link to="/DeviceHistory">Device Repair History</router-link></li>
                 <li><router-link to="/SalesHistory">Sales History</router-link></li>
-                <li><router-link to="/Upcoming">???</router-link></li>
+                <li><router-link to="/Upcoming" class="notAvailable">???</router-link></li>
             </ul>
         </div>
 
@@ -112,9 +112,9 @@
     <button data-toggle="collapse" data-target="#Accounting">Accounting</button>
         <div id="Accounting" class="collapse">
             <ul>   
-	            <li><router-link to="/Upcoming">Journals</router-link></li>
-                <li><router-link to="/Upcoming">Cash Flow</router-link></li>
-                <li><router-link to="/Upcoming">Reports</router-link></li>
+	            <li><router-link to="/Upcoming" class="notAvailable">Journals</router-link></li>
+                <li><router-link to="/Upcoming" class="notAvailable">Cash Flow</router-link></li>
+                <li><router-link to="/Upcoming" class="notAvailable">Reports</router-link></li>
             </ul>
         </div>
 
@@ -122,12 +122,12 @@
 <button data-toggle="collapse" data-target="#WareHouse">WareHouse</button>
         <div id="WareHouse" class="collapse">
             <ul>   
-	            <li><router-link to="/Upcoming">Receiving</router-link></li>
-                <li><router-link to="/Upcoming">Placing/Put-Away</router-link></li>
-                <li><router-link to="/Upcoming">Picking</router-link></li>
-                <li><router-link to="/Upcoming">Added Value</router-link></li>
-                <li><router-link to="/Upcoming">Dispatching</router-link></li>
-                <li><router-link to="/Upcoming">Returns</router-link></li>
+	            <li><router-link to="/Upcoming" class="notAvailable">Receiving</router-link></li>
+                <li><router-link to="/Upcoming" class="notAvailable">Placing/Put-Away</router-link></li>
+                <li><router-link to="/Upcoming" class="notAvailable">Picking</router-link></li>
+                <li><router-link to="/Upcoming" class="notAvailable">Added Value</router-link></li>
+                <li><router-link to="/Upcoming" class="notAvailable">Dispatching</router-link></li>
+                <li><router-link to="/Upcoming" class="notAvailable">Returns</router-link></li>
             </ul>
         </div>
 
@@ -232,6 +232,11 @@ window.onclick = function(event) {
     }
 }
 </script>
+<style>
+    .notAvailable{
+        background-color:grey;
+    }
+</style>
 
 
 

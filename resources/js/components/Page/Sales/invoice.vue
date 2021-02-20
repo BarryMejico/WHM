@@ -1,102 +1,108 @@
 <template>
     <div>
     <div class="container">
-    <div class="row">
-        <div class="col-lg-2">
-            <MenuList></MenuList>
-            </div>
-<div class="col-lg-10">
-      <h1>Sales Invoice</h1>
+       <h1>Sales Invoice</h1>
       <hr>
       <br>
       <br>
-<div class="row">
-  <div class="col-xl-9">
-<div class="form-inline">
-      <label for="po">Invoice#:</label>                     
-      <input class="form-control" v-model="po" id="po" type="text" required autocomplete="name" autofocus>
 
+        <!------------------------------------------------------------------------------------------------------->
+      <div class="row">
+          <div class="col-lg-2">
+            <MenuList></MenuList>
+          </div>
+          <div class="col-lg-1"></div>
 
-  <div id="target" class="col-xl-5">
-    <CustomerModal id="CusModal" @SelectedCustomer="Selected_cus" :disabled="disabled"></CustomerModal>
-                    <div>
-                   <b>Name: </b><label class="text-muted"><i>{{Customer}}</i></label><br>
-                    <b>Address:</b><label class="text-muted"><i>{{add_Cus}}</i></label><br>
-                    </div>
-                    
-  </div>
-    
-</div>  
-  </div>
-    <div class="col-xl-3">        
-            
-            <button type="button" class="btn btn-info">Print</button>
-            <items-modal @SelectedItems="Selected_Item" :disabled="disabled"></items-modal>
+            <div class="col-lg-6">
 
-         <div>
-            <devices-modal @SelectedDevice="Selected_Item" v-bind:selectedCus="ccode" :disabled="disabled"></devices-modal>
-            
-         </div> 
+              <label for="po">Invoice#: </label>                     
+              <input class="form-control" v-model="po" id="po" type="text" required autocomplete="name" autofocus>
+             
+                <CustomerModal id="CusModal" @SelectedCustomer="Selected_cus" :disabled="disabled"></CustomerModal>
+                <div>
+                  <br>
+                  <b>Name: </b><br><label class="text-muted"><i>{{Customer}}</i></label><br>
+                  <b>Address:</b><br><label class="text-muted"><i>{{add_Cus}}</i></label><br>
+                </div>             
+          
+              </div> 
+               <div class="col-lg-1"></div>
 
-    <div class="dropdown">
-    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-    <span class="caret">{{status}}</span></button>
-    <ul class="dropdown-menu">
-      <li><button @click="changeStatus('Open')" class="my_btn btn">Open</button></li>
-      <li><button @click="changeStatus('Approved')" class="success my_btn">Approved</button></li>
-      <li><button @click="changeStatus('Canceled')" class="my_btn btn-danger">Canceled</button></li>
-    </ul>
-</div>
-    </div>
-</div>
-            
-        <div class="sc">
-        <table id="tbl" class="table table-responsive">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Item Code</th>
-      <th scope="col">Description</th>
-      <th scope="col">Unit</th>
-      <th scope="col">Qty</th>
-      <th scope="col">Unit Cost</th>
-      <th scope="col">Total Cost</th>
-      <th scope="col">Action</th>
+            <div class="col-lg-2">
+               <button type="button" class="btn btn-info">Print</button>
+                <items-modal @SelectedItems="Selected_Item" :disabled="disabled"></items-modal>
+
+                <div>
+                    <devices-modal @SelectedDevice="Selected_Item" v-bind:selectedCus="ccode" :disabled="disabled"></devices-modal> 
+                </div> 
+
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                    <span class="caret">{{status}}</span></button>
+                    <ul class="dropdown-menu">
+                      <li><button @click="changeStatus('Open')" class="my_btn btn">Open</button></li>
+                      <li><button @click="changeStatus('Approved')" class="success my_btn">Approved</button></li>
+                      <li><button @click="changeStatus('Canceled')" class="my_btn btn-danger">Canceled</button></li>
+                    </ul>
+                </div>
+            </div>
+     
+        </div>
       
-    </tr>
-    
-  </thead>
-  <tbody v-if="po_items">
-    <tr  v-for="(po_item, k) in po_items" :key="k">      
-      <th scope="row" class="in">{{k}}</th>
-      <td>{{po_item.Icode}}</td>
-      <td>{{po_item.idescription}}</td>
-      <td>{{po_item.iunit}}</td>
-      <td class="in"><div class="qty"><input  v-model="po_item.Qty" min="1" type="number" @change="checkQty(po_item)" :disabled="disabled == 1"></div></td>
-      <td class="in"><div class="qty"><input  v-model="po_item.UnitCost"  @change="calculateLineTotal(po_item)" :disabled="disabled == 1"></div></td>
-      <td>{{po_item.Tcost}} Php</td>
-      <td :disabled="disabled == 1"><button class="my_btn btn link" @click="deleteRow(k, po_item,po_item.Icode)" :disabled="disabled == 1">Delete</button>/
-      <button class="my_btn btn link" @click="calculateLineTotal(po_item)">Recompute</button></td>
-    </tr>
-  </tbody>
-</table>
-<hr>
-<div class="total">
-  
-<span><b>Total:</b> {{PO_total}} Php</span><br>
-<hr>
-<button type="button" id="btnSave" class="btn btn-info" @click.prevent="saveform">Save</button>
-<button type="button" id="btnClear" class="btn danger btn-danger" @click.prevent="clearData">Clear ALL</button>
-</div>
-        </div>
-        </div>
-        </div>
+        <br>
+        <br>
+        <br>
+      
+
+         <div class="row">
+              <div class="col-lg-10">
+                <table id="tbl" class="table table-responsive">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Item Code</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Unit</th>
+                    <th scope="col">Qty</th>
+                    <th scope="col">Unit Cost</th>
+                    <th scope="col">Total Cost</th>
+                    <th scope="col">Action</th>    
+                  </tr>
+                </thead>
+                <tbody v-if="po_items">
+                  <tr  v-for="(po_item, k) in po_items" :key="k">      
+                    <th scope="row" class="in">{{k}}</th>
+                    <td>{{po_item.Icode}}</td>
+                    <td>{{po_item.idescription}}</td>
+                    <td>{{po_item.iunit}}</td>
+                    <td class="in"><div class="qty"><input  v-model="po_item.Qty" min="1" type="number" @change="checkQty(po_item)" :disabled="disabled == 1"></div></td>
+                    <td class="in"><div class="qty"><input  v-model="po_item.UnitCost"  @change="calculateLineTotal(po_item)" :disabled="disabled == 1"></div></td>
+                    <td>{{po_item.Tcost}} Php</td>
+                    <td :disabled="disabled == 1">
+                    <badge class="my_btn btn link" @click="calculateLineTotal(po_item)"><small>Recompute</small></badge>
+                    <badge class="my_btn btn link" @click="deleteRow(k, po_item,po_item.Icode)" :disabled="disabled == 1"><small>X</small></badge></td>
+                  </tr>
+                </tbody>
+              </table>
+              </div>
+
+              <div class="col-lg-2">
+                <div class="total"> 
+                    <span><b>Total:</b> {{PO_total}} Php</span><br>
+                    <hr>
+                    <button type="button" id="btnSave" class="btn btn-info" @click.prevent="saveform">Save</button>
+                    <button type="button" id="btnClear" class="btn danger btn-danger" @click.prevent="clearData">Clear ALL</button>
+                </div>
+              </div>
+             
+         </div>
+      
+
+         
+
+       <!------------------------------------------------------------------------------------------------------->
     
     </div>
-    <hr>
-
-
-
 </div>
 
 </template>
@@ -467,9 +473,7 @@ checkQty(product){
 }
 </script>
 <style>
-.total{
-  float:right;
-}
+
 .PO{
   color:gray;
   max-height: 600px;
@@ -529,6 +533,21 @@ text-align: center;
 .modal form label {
 	font-weight: normal;
 }	
+th{
+  width:150px
+}
+tr:hover{
+  cursor: pointer;
+}
+.table{
+  width: 100% !important;
+}
+.total{
+   float:right;
+  box-shadow: 0px 0px 2px grey;
+  border-radius:5px;
+  padding:20px;
+}
 
 /**try for input table
 .in { color: blue;}

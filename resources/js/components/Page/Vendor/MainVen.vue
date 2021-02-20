@@ -1,15 +1,15 @@
 <template>
     <div>
             <div class="PO">
-                <div class=""><router-link to="/Vendor_Create">Vendor</router-link></div>
+                <div class="nav-link"><router-link to="/Vendor_Create"><button class="menuList">Create</button></router-link></div>
 <div id="collapsibleNavbar2">
   <ul class="nav flex-column">
     <li class="nav-item">
-      <router-link class="nav-link" to='/Vendor_List'>List</router-link>
+      <router-link class="nav-link" to='/Vendor_List'><button class="menuList">List</button></router-link>
     </li>
-    <li class="nav-item">
-      <router-link class="nav-link" to='/Vendor_Create'>Create</router-link>
-    </li>
+    <!-- <li class="nav-item">
+      <router-link class="nav-link" to='/Vendor_Create'><button class="menuList">Create</button></router-link>
+    </li> -->
     
   </ul></div>
             </div>
@@ -20,6 +20,15 @@
 <script>
 
 </script>
-<style>
+<style scoped>
+.menuList{
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px;
+  border-radius: 3px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
 
 </style>

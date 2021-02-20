@@ -1,15 +1,15 @@
 <template>
     <div>
     <div class="container">
+       <h1> Vendors </h1>
+      <hr>
+      <br>
+      <br>
     <div class="row">
         <div class="col-lg-2">
         <MenuList></MenuList>
         </div>
 <div class="col-lg-10">
-   <h1> Vendors </h1>
-      <hr>
-      <br>
-      <br>
    <span class="alert alert-success" v-show="success">
         The data has been saved!!
       </span>	
@@ -32,7 +32,7 @@
       <td>{{po_item.Number}}</td>
       <td>{{po_item.Address}}</td>
       <td><button href="#addVendorModal"  data-toggle="modal" type="button" class="btn btn-primary btn-sm" 
-      @click="SelectItem(po_item.Vendor,po_item.Number,po_item.Address,po_item.Vcode)">Vendor</button></td>
+      @click="SelectItem(po_item.Vendor,po_item.Number,po_item.Address,po_item.Vcode)">Modify</button></td>
     </tr>
   </tbody>
 </table>

@@ -1,6 +1,10 @@
 <template>
     <div>
     <div class="container">
+        <h1>Invoice List</h1>
+      <hr>
+      <br>
+      <br>
     <div class="row">
         <div class="col-lg-2">
         <MenuList></MenuList>

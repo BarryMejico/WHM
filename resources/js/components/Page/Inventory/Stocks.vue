@@ -1,15 +1,15 @@
 <template>
     <div class="container">
+      <h1> Stocks </h1>
+      <hr>
+      <br>
+      <br>
       <div class='row'>
          <div class="col-lg-2">
            <MenuList></MenuList>
          </div>
 
           <div class="col-lg-10">
-            <h1> Stocks </h1>
-      <hr>
-      <br>
-      <br>
             <table class="table table-responsive">
               <thead class="thead-dark">
                 <tr>

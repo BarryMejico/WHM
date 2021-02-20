@@ -1,15 +1,15 @@
 <template>
     <div>
     <div class="container">
+       <h1> Items</h1>
+      <hr>
+      <br>
+      <br>
     <div class="row">
         <div class="col-lg-2">
         <MenuList></MenuList>
         </div>
 <div class="col-lg-10">
-   <h1> Items</h1>
-      <hr>
-      <br>
-      <br>
    <span class="alert alert-success" v-show="success">
         The data has been saved!!
       </span>	

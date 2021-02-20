@@ -1,15 +1,15 @@
 <template>
     <div>
     <div class="container">
+      <h1> Create Item </h1>
+      <hr>
+      <br>
+      <br>
     <div class="row">
         <div class="col-lg-2">
         <MenuList></MenuList>
         </div>
 <div class="col-lg-10">
-   <h1> Create Item </h1>
-      <hr>
-      <br>
-      <br>
 <div>
   
     <div class="form-group">
@@ -29,8 +29,8 @@
     </div>
 
     <div class="form-group">
-      <label for="comment">Unit</label>
-      <input v-model="Unit" type="text" class="form-control" id="pwd" placeholder="Enter Number" name="Unit">
+      <label for="comment">Unit:</label>
+      <input v-model="Unit" type="text" class="form-control" id="pwd" placeholder="Enter Unit" name="Unit">
       <span class="alert-danger" v-if="errors.Unit">{{errors.Unit[0]}}</span>
     </div>
 

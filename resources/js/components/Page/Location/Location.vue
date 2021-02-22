@@ -3,45 +3,58 @@
 
 <div>
     <div class="container">
+        <h1>Tree Data : A Location Storage</h1>
+        <hr>
+        <br>
+        <br>
     <div class="row justify-content-left">
-        <div class="col-md-5">
-            <div class="card">
-                <div class="card-header">Tree Data</div>
-                    
-                <div class="card-body">
+        <div class="col-md-10">
+           <div class="card">
+                <div class="card-header">
                     <div class="row">
-                        
-                        <div><button style="border:solid black 1px;" @click="addNode" class="btn btn-secondary">Add</button></div>
+                        <div class="col-md-9">
+                             
+                            <h3>
+                                <label id="Namehead">/</label>
+                                <label id="head" type="text"></label>
+                            </h3>
+                        </div>
+                        <div class="col-md-3">
+                            <button @click="addNode" class="btn btn-info">Add</button>
+                        </div>
                     </div>
-                    <label id="errorLabe"></label>
-                    <div id="datatree" class="card-body tree">
-                        <ul id="root" >
-                        </ul>
-                   </div> 
-                   
                 </div>
-            </div>
+           </div>        
+               <br>
+               <br>
+                   
+            <label id="errorLabe"></label>
+            <div id="datatree" class="card-body tree">
+                <ul id="root">
+                </ul>
+            </div> 
+                   
+                
+           
         </div>
-        <div class="col-md-5">
+        <div class="col-md-2">
             <div class="card">
-                <div class="card-header"><label id="Namehead">/</label><label id="head" type="text"></label></div>
-
-                <div class="card-body">
-                    <ItemsModal @SelectedItems="Selected_Item"></ItemsModal>
+                <div class="card-header">
+                     <ItemsModal @SelectedItems="Selected_Item"></ItemsModal>
 
                     <input type="text">
 
                     <ul class="list-group">
                         <li 
                             class="list-group-item d-flex justify-content-between align-items-center" 
-                            v-for="(item, k) in items" :key="k">
+                            v-for="(item, k) in items" :key="k" style="border:solid grey 1px">
                             {{item.Name}}
                             <span class="badge badge-primary badge-pill">{{item.Unit}}</span>
                         </li>
                     </ul>
-                    
-                   
                 </div>
+
+                <!-- <div class="card-body"></div> -->
             </div>
         </div>
     </div>
@@ -55,6 +68,7 @@
 
 <script>
 import ItemsModal from '../../Modals/ItemsModal.vue';
+import Swal from 'sweetalert2'
 
 export default {
     components: {
@@ -101,6 +115,15 @@ saveItemtoLoaction(c,p){
     Selected_Item(event){
         console.log(event['status']);
         if (event['status']==1){
+
+              Swal.fire({
+                icon:'error',
+                title:'Oops !',
+                text:'Item already Exist in other location',
+                showCancelButton: true,
+                showConfirmButton: false
+                }) 
+
              console.log("Item already Exist in other location!!!");
              return;
             }
@@ -235,7 +258,7 @@ itemsloader(Code){
             var target = document.getElementById("root"),
             ulparent= document.createElement("UL"),
             Label=document.createElement("li"),
-            parentLabel=document.createTextNode(">" + this.LocationRoot[i]['name']);
+            parentLabel=document.createTextNode(">  " + this.LocationRoot[i]['name']);
 
             Label.id= "pa-" + this.LocationRoot[i]['code'];
             Label.appendChild(parentLabel);
@@ -252,7 +275,7 @@ itemsloader(Code){
 
                 var idname=this.LocationRoot[i]['parent'];
                 var liID="li-" + this.LocationRoot[i]['code'];
-                    var laman = ">" + this.LocationRoot[i]['name'];
+                    var laman = ">  " + this.LocationRoot[i]['name'];
                     var listNode=document.getElementById(idname),
                         liNode=document.createElement("LI"),
                         txtNode=document.createTextNode(laman),
@@ -319,17 +342,24 @@ itemsloader(Code){
 .tree {
 cursor:pointer;
 list-style: none;
+font-family: 'century gothic';
+font-size: 20px;
+
 }
 
 .tree ul{
-border-left: 1px solid black;
+border-left: 1px solid lightgrey;
 margin-left: 20px;
 padding-left: 20px;
+}
+.tree ul li:hover{
+    font-weight:900;
 }
 
 .tree ul li{
 cursor:pointer;
 list-style: none;
+
 
 }
 
@@ -338,12 +368,12 @@ color: cornflowerblue;
 
 }
 
-.tree li:click{
+.tree li:active{
 color: red;
 }
 
 .tree div{
-border: black 1px solid;
+border: grey 1px solid;
 }
 
 </style>

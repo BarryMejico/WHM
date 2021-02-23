@@ -160,33 +160,32 @@
 <br>
 <footer class="footer-bs">
         <div class="row">
-        	<div class="col-md-3 footer-brand animated fadeInLeft">
-            	<h2>Logo</h2>
-                <p>Suspendisse hendrerit tellus laoreet luctus pharetra. Aliquam porttitor vitae orci nec ultricies. Curabitur vehicula, libero eget faucibus faucibus, purus erat eleifend enim, porta pellentesque ex mi ut sem.</p>
-                <p>© 2014 BS3 UI Kit, All rights reserved</p>
+        	<div class="col-md-4 footer-brand animated fadeInLeft">
+                <h4><img src="../media/logobk.png" alt="logo" style="width:40px;"> barkSpider</h4>
+                <br>
+         
+                    <p id="bbb">The website footer is not to be neglected. According to research and different studies, it is a favourable place to capitalize on to increase conversions. Depending on the website type and the objectives of each page, the footer might include different elements of use for the visitors. The only thing you have to do is choose the RIGHT elements to put in the website footer, and organize them according to a clean structure, easy to browse and take benefit from.</p>
+                
+                    <p>© 2014 BS3 UI Kit, All rights reserved</p>
             </div>
-        	<div class="col-md-4 footer-nav animated fadeInUp">
-            	<h4>Menu —</h4>
+
+        	<div class="col-md-3 footer-nav animated fadeInUp">
+            	<h4>Company</h4>
+                <br>
+                <br>
             	<div class="col-md-6">
                     <ul class="pages">
-                        <li><a href="#">Travel</a></li>
-                        <li><a href="#">Nature</a></li>
-                        <li><a href="#">Explores</a></li>
-                        <li><a href="#">Science</a></li>
-                        <li><a href="#">Advice</a></li>
-                    </ul>
-                </div>
-            	<div class="col-md-6">
-                    <ul class="list">
                         <li><a href="#">About Us</a></li>
-                        <li><a href="#">Contacts</a></li>
                         <li><a href="#">Terms & Condition</a></li>
                         <li><a href="#">Privacy Policy</a></li>
                     </ul>
                 </div>
             </div>
-        	<div class="col-md-2 footer-social animated fadeInDown">
-            	<h4>Follow Us</h4>
+
+        	<div class="col-md-5 footer-social animated fadeInDown">
+            	<h4>Contact Us</h4>
+                <br>
+                <br>
             	<ul>
                 	<li><a href="#">Facebook</a></li>
                 	<li><a href="#">Twitter</a></li>
@@ -194,19 +193,9 @@
                 	<li><a href="#">RSS</a></li>
                 </ul>
             </div>
-        	<div class="col-md-3 footer-ns animated fadeInRight">
-            	<h4>Newsletter</h4>
-                <p>A rover wearing a fuzzy suit doesn’t alarm the real penguins</p>
-                <p>
-                    <div class="input-group">
-                      <input type="text" class="form-control" placeholder="Search for...">
-                      <span class="input-group-btn">
-                        <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-envelope"></span></button>
-                      </span>
-                    </div><!-- /input-group -->
-                 </p>
-            </div>
+        
         </div>
+      
     </footer>
 
 </div>
@@ -235,6 +224,9 @@ window.onclick = function(event) {
 <style>
     .notAvailable{
         background-color:grey;
+    }
+    #bbb{
+        padding:15px;
     }
 </style>
 

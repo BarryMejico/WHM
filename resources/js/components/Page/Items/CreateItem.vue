@@ -19,13 +19,13 @@
       
       <label for="name">Code:</label>
       <span class="alert-danger" v-if="errors && errors.Code">{{errors.Code[0]}}</span>
-      <input   class="form-control" id="name" placeholder="Enter name" v-model="ItemCode">
+      <input   class="form-control" id="name" placeholder="Enter Code" v-model="ItemCode">
     </div>
 
     <div class="form-group">
       <label for="pwd">Name:</label>
        <span class="alert-danger" v-if="errors && errors.Name">{{errors.Name[0]}}</span>
-      <input v-model="Name" type="text" class="form-control" id="pwd" placeholder="Enter Number">
+      <input v-model="Name" type="text" class="form-control" id="pwd" placeholder="Enter Name">
     </div>
 
     <div class="form-group">

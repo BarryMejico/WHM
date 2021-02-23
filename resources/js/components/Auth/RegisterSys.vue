@@ -5,9 +5,11 @@
         <br>
         
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-7">
             <div class="card">
-                <div class="card-header bg-dark" style="color:white">Registers</div>
+                <div class="card-header" style="text-align:center;">
+                    <h4 style="margin:5px;"><b>Register</b></h4>
+                    </div>
                     
                 <div class="card-body">
                         <br>
@@ -15,35 +17,35 @@
                                        
                         <div class="form-group row">      
                             <label for="name" class="col-md-4 col-form-label text-md-right">Name</label>
-                            <div class="col-md-6">
+                            <div class="col-md-7">
                                 <input v-model="form.name" id="name" type="text" class="form-control" required autocomplete="name" autofocus>
                             </div>
                         </div>
 
                         <div class="form-group row">  
                             <label for="email" class="col-md-4 col-form-label text-md-right">E-Mail Address</label>
-                            <div class="col-md-6">
+                            <div class="col-md-7">
                                 <input v-model="form.email" id="email" type="email" class="form-control" required autocomplete="email">
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
-                            <div class="col-md-6">
+                            <div class="col-md-7">
                                 <input v-model="form.password" id="password" type="password" class="form-control"  required autocomplete="new-password">   
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label for="password-confirm" class="col-md-4 col-form-label text-md-right">Confirm Password</label>
-                            <div class="col-md-6">
+                            <div class="col-md-7">
                                 <input id="password-confirm" name="password_confirmation" v-model="form.password_confirmation" type="password" class="form-control"  required autocomplete="new-password">
                             </div>
                         </div>
                         <br>
 
                         <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
+                            <div class="col-md-7 offset-md-4">
                                 <button @click.prevent="saveform" class="btn btn-primary">
                                    Register
                                 </button>

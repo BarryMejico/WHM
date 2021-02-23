@@ -28,7 +28,7 @@
     </div>
     <div class="form-group">
       <label for="comment">Address:</label>
-      <textarea v-model="Address" class="form-control" rows="5" id="comment" name="text"></textarea>
+      <textarea v-model="Address" class="form-control" rows="5" id="comment" name="text" placeholder="Enter Address"></textarea>
        <span class="alert-danger" v-if="errors.Address">{{errors.Address[0]}}</span>
     </div>
     <button type="button" class="btn btn-primary" @click.prevent="SaveVendor">Submit</button>

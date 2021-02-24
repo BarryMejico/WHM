@@ -9,7 +9,7 @@
         <div class="col-lg-2">
         <MenuList></MenuList>
         </div>
-<div class="col-lg-10">
+<div class="col-lg-6">
 <div>
   
     <div class="form-group">
@@ -17,24 +17,24 @@
       The data has been saved!!
       </div>
       
-      <label for="name">Code:</label>
+      <label for="name" class="text-muted"><small>Item Code</small></label>
       <span class="alert-danger" v-if="errors && errors.Code">{{errors.Code[0]}}</span>
       <input   class="form-control" id="name" placeholder="Enter Code" v-model="ItemCode">
     </div>
 
     <div class="form-group">
-      <label for="pwd">Name:</label>
+      <label for="pwd" class="text-muted"><small>Item Name</small></label>
        <span class="alert-danger" v-if="errors && errors.Name">{{errors.Name[0]}}</span>
       <input v-model="Name" type="text" class="form-control" id="pwd" placeholder="Enter Name">
     </div>
 
     <div class="form-group">
-      <label for="comment">Unit:</label>
+      <label for="comment" class="text-muted"><small>Unit</small></label>
       <input v-model="Unit" type="text" class="form-control" id="pwd" placeholder="Enter Unit" name="Unit">
       <span class="alert-danger" v-if="errors.Unit">{{errors.Unit[0]}}</span>
     </div>
 
-    <button type="button" class="btn btn-primary" @click.prevent="SaveVendor">Submit</button>
+    <button type="button" class="btn btn-dark" @click.prevent="SaveVendor">Submit</button>
   </div>
 </div>
 </div>

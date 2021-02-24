@@ -109,7 +109,7 @@
 
 <script>
 import ItemsModal from '../../Modals/ItemsModal';
-import VendorModal from '../../Modals/VendorModal';
+//import VendorModal from '../../Modals/VendorModal';
 import CustomerModal from '../../Modals/CustomerModal';
 
 import MenuList from '../../Page/Sales/MainInvoice';
@@ -162,7 +162,7 @@ export default {
     components: {
     MenuList,
     ItemsModal,
-    VendorModal,
+    //VendorModal,
     CustomerModal,
         DevicesModal,
     }, 
@@ -174,13 +174,6 @@ export default {
     beforeMount(){
       this.clearData();
 
-      var $POL = this.$route.params.PO_Load;      
-      if(typeof this.$route.params.PO_Load === "undefined" ){
-        //console.log("PO Undefied")
-      }else{
-        this.Load_PO();
-         
-      }
     },
 
     mounted(){
@@ -188,16 +181,7 @@ export default {
     },
 
     updated(){
-      if(typeof this.$route.params.PO_Load === "undefined" ){
-        
-        //console.log("PO Undefied")
-      }else{
-        this.Load_Details();
-        
-        
-      
-        
-      }
+     
     },
 
     methods:{
@@ -259,8 +243,9 @@ export default {
                 idescription:Name,
                 iunit:Unit,
                 Qty:1, 
-                                  });
+        });
         }
+        this.checkQty(this.po_items[this.po_items.length-1])
             this.closeModal();
       },
 
@@ -364,7 +349,12 @@ checkQty(product){
             (res)=>{
               Item=res.data;
 
+              if(Item.length==0){
+                product.Qty=0;
+              }
+
               if(Item[0]['Qty']>product.Qty){
+                
                 this.calculateLineTotal(product)
               }
               else{
@@ -461,7 +451,7 @@ checkQty(product){
 
         clearData(){
           Object.assign(this.$data, this.$options.data.apply(this));
-               this.load_vendor();
+               //this.load_vendor();
                this.load_customer();
                this.load_item();
         },

@@ -93,30 +93,33 @@ export default {
     },
 
     methods:{
-
+//pagination
       changepAGE(page){
-      //  console.log(this.POs);
-      //  axios.get(this.POs.next_page_url)
-      //  .then((res)=>{
-      //    this.POs=res.data;
-      //    })
+        axios.get('/api/LoadInvoive?page='+page)
+        .then((res)=>{
+          this.POs=res.data;
+          })
+          .catch((errors)=>{
+          })
       },
-
      prepAGE(){
-        console.log(this.POs);
         axios.get(this.POs.first_page_url)
         .then((res)=>{
           this.POs=res.data;
           })
+          .catch((errors)=>{
+          })
       },
-
       nextpAGE(){
-        console.log(this.POs);
         axios.get(this.POs.next_page_url)
         .then((res)=>{
           this.POs=res.data;
           })
+          .catch((errors)=>{
+          })
       },
+//end pagination
+
 
       loadpos:function(){
           axios.get('/api/LoadInvoive')

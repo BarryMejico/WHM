@@ -244,7 +244,7 @@ closeModal() {
                 cancelButtonText: 'No'
               }).then((result) => {
                 if (result.value) {
-
+                
               axios.post('/api/DeleteCustomer',{Ccode:this.id})
               .then(
                 ()=>{this.loadpos();

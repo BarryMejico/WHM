@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\item;
 use Illuminate\Support\Facades\DB;
+use App\Rules\inUseData;
 
 class itemController extends Controller
 {
@@ -42,12 +43,9 @@ class itemController extends Controller
             'Unit' => ['required', 'string'],
         ]);
 
-        
-       
-
         $item = item::find($input['ids']);
         $item ->Name= $input['Name'];
-        $item ->Code= $input['Code'];
+        //$item ->Code= $input['Code'];
         $item ->Unit= $input['Unit']; 
                
         $item->save(); 
@@ -56,7 +54,11 @@ class itemController extends Controller
 
     public function Delete(Request $request){  
         $input = $request->all();
-        $id = item::destroy($input['ids']);
+        //dd($input);
+        $request->validate([
+            'Icode'=>['required', new inUseData],
+        ]);
+        $Item = item::where('Code',$input['Icode'])->delete();
         
     }   
 

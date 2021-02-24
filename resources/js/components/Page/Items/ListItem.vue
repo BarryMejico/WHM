@@ -157,7 +157,7 @@ export default {
                 if (result.value) {
 
                
-              axios.post('/api/DeleteItem',{ids:this.id})
+              axios.post('/api/DeleteItem',{Icode:this.Add})
           .then(
             ()=>{this.loadpos();
             
@@ -185,7 +185,7 @@ export default {
             closeModal() {
              document.getElementById('close').click();
 },
-       
+
     }   
 }
 </script>
@@ -253,3 +253,4 @@ text-align: center;
 	font-weight: normal;
 }	
 </style>
+

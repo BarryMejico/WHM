@@ -161,20 +161,20 @@ export default {
                     .then(
                       ()=>{    
                       this.loadpos();
-                     
+                     Swal.fire({
+                     title: 'Vendor Removed',
+                      icon: 'success',
+                      timer:1500,
+                      showCancelButton: false,
+                       showConfirmButton: false 
+            })
+
                       }
                     )
                     .catch();
 
   
-            Swal.fire({
-              title: 'Vendor Removed',
-              icon: 'success',
-              timer:1500,
-              showCancelButton: false,
-              showConfirmButton: false 
-            })
-
+            
           }else if (result.dismiss === Swal.DismissReason.cancel) {
           console.log('Vendor Stays');
           }

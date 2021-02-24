@@ -45,13 +45,14 @@ class VendorController extends Controller
         $input = $request->all();
         $Code=Ucode();
         //dd($input);
-        $Vendor = VendorModel::find($input['ids']);
+
+        $customer = VendorModel::where('Vcode',$input['ids'])
+        ->update([
+           'Vendor'=> $input['Name'],
+           'Number'=> $input['Number'],
+           'Address'=> $input['Address'],
+        ]);
         
-        $Vendor ->Vendor= $input['Name'];
-        $Vendor ->Number= $input['Number'];
-        $Vendor ->Address= $input['Address']; 
-               
-        $Vendor->save(); 
     }
 
     public function Delete(Request $request){  

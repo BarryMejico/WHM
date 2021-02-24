@@ -222,8 +222,9 @@ export default {
       if(typeof this.$route.params.PO_Load === "undefined" ){
         //console.log("PO Undefied")
       }else{
-        this.Load_PO();
         this.Load_Details();
+        this.Load_PO();
+        
       }
     },
 
@@ -530,19 +531,16 @@ export default {
           axios.get('/api/GetPoHead', {params:{PO:this.$route.params.PO_Load}})
           .then(
             (response)=>{
-                  
                   this.po_details = response.data;
-                  
                   if(this.po_details[0]['Status']!=="Approved"){
                     //console.log("not approved PO")
+                    this.clearData()
                     }
                   else{
                   this.po = this.po_details[0]['PO'];
                   //this.PO_total = this.po_details[0]['Total_Amount'];
                   this.Vendor_code = this.po_details[0]['Vendor'];
                   this.Customer_code = this.po_details[0]['Ship_to'];
-                  
-
                    this.load_Selected_customer(this.Customer_code);
                   this.load_Selected_vendor(this.Vendor_code);
                   }

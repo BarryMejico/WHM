@@ -72,7 +72,8 @@
 <!--<ul onclick="closeNav()">-->
 
     <button><router-link to="/PO">Purchase Order</router-link></button>
-    <button data-toggle="collapse" data-target="#setup">Data Setup</button>
+
+    <button data-toggle="collapse" data-target="#setup" class="btnMenu">Data Setup</button>
         <div id="setup" class="collapse">
             <ul>   
 	            <li><router-link to="/Vendor_Create">Vendor</router-link></li>
@@ -81,7 +82,7 @@
             </ul>
         </div>
 
-    <button data-toggle="collapse" data-target="#Sales">Sales</button>
+    <button data-toggle="collapse" data-target="#Sales" class="btnMenu">Sales</button>
         <div id="Sales" class="collapse">
             <ul>  
                 <li><router-link to="/Upcoming" class="notAvailable">Products</router-link></li>
@@ -90,7 +91,7 @@
             </ul>
         </div>
 
-    <button data-toggle="collapse" data-target="#Inventory">Inventory</button>
+    <button data-toggle="collapse" data-target="#Inventory" class="btnMenu">Inventory</button>
         <div id="Inventory" class="collapse">
             <ul>   
 	            <li><router-link to="/PO_list">Receiving</router-link></li>
@@ -99,7 +100,7 @@
             </ul>
         </div>
 
-        <button data-toggle="collapse" data-target="#Report">Report</button>
+        <button data-toggle="collapse" data-target="#Report" class="btnMenu">Report</button>
         <div id="Report" class="collapse">
             <ul>   
 	            <li><router-link to="/DeviceHistory">Device Repair History</router-link></li>
@@ -108,8 +109,7 @@
             </ul>
         </div>
 
-        <hr>
-    <button data-toggle="collapse" data-target="#Accounting">Accounting</button>
+        <button data-toggle="collapse" data-target="#Accounting" class="btnMenu">Accounting</button>
         <div id="Accounting" class="collapse">
             <ul>   
 	            <li><router-link to="/Upcoming" class="notAvailable">Journals</router-link></li>
@@ -119,7 +119,7 @@
         </div>
 
 
-<button data-toggle="collapse" data-target="#WareHouse">WareHouse</button>
+<button data-toggle="collapse" data-target="#WareHouse" class="btnMenu">WareHouse</button>
         <div id="WareHouse" class="collapse">
             <ul>   
 	            <li><router-link to="/Upcoming" class="notAvailable">Receiving</router-link></li>
@@ -227,6 +227,9 @@ window.onclick = function(event) {
     }
     #bbb{
         padding:15px;
+    }
+    .btnMenu{
+        font-size:18px;
     }
 </style>
 

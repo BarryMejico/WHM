@@ -50,7 +50,7 @@
 		<div class="modal-content">
 			
 				<div class="modal-header">						
-					<h4 class="modal-title">Vendor</h4>
+					<h4 class="modal-title">Items</h4>
 					<button type="button" id="close" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
 				<div class="modal-body">	
@@ -92,7 +92,12 @@ export default {
              Cnum:'',
              Add:'',
              id:'',
-             success:false
+             success:false,
+             message:{
+          visibility:false,
+          head:'',
+          insdide:'',
+          errors:{}},
     }},
     mounted(){
         this.loadpos();
@@ -108,12 +113,21 @@ export default {
           )
           .catch()},
 
+<<<<<<< Updated upstream
       SelectItem(n,n2,n3,id){
         
             this.Name=n;
             this.Cnum=n2;
             this.Add=n3;
             this.id=id;
+=======
+      SelectItem(index){
+            
+            this.Name=this.POs[index]['Name'];
+            this.Cnum=this.POs[index]['Unit'];
+            this.Add=this.POs[index]['Code'];
+            this.id=this.POs[index]['Code'];
+>>>>>>> Stashed changes
           },
 
           SaveVendor(){
@@ -143,10 +157,49 @@ export default {
               axios.post('/api/DeleteItem',{ids:this.id})
           .then(
             ()=>{this.loadpos();
+<<<<<<< Updated upstream
             this.closeModal();
             }
           )
           .catch();
+=======
+            Swal.fire({
+              title: 'Item Removed Successfully',
+              icon: 'success',
+              timer:1500,
+              showCancelButton: false,
+              showConfirmButton: false 
+            
+            }
+          )}) 
+          .catch((error)=>{
+                this.message.errors=error.response.data;
+                this.message.insdide="Please check these errors before proceeding!";
+                this.message.head="Error!";
+                this.message.visibility=true;
+                
+
+                Swal.fire({
+                title: 'Oops!',
+                text: this.message.errors.message + ' ' + this.message.insdide,
+                icon: 'warning',
+                showCancelButton: false,
+                showConfirmButton:true
+            
+              })
+            });
+
+  
+            
+            
+
+          }else if (result.dismiss === Swal.DismissReason.cancel) {
+          console.log('Item Stays');
+          }
+        })
+
+
+>>>>>>> Stashed changes
             },
 
             closeModal() {

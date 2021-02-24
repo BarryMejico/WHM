@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\poDetails; 
 use App\po_list;
 use Illuminate\Support\Facades\DB;
+use App\Rules\inUseData;
 
 
 class PoDetailsControl extends Controller

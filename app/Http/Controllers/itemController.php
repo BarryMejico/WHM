@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\item;
 use Illuminate\Support\Facades\DB;
+use App\Rules\inUseData;
 
 class itemController extends Controller
 {
@@ -38,6 +39,7 @@ class itemController extends Controller
             'Unit' => ['required', 'string'],
         ]);
 
+<<<<<<< Updated upstream
         $input = $request->all();
         //$Code=Ucode();
         //dd($input);
@@ -47,11 +49,29 @@ class itemController extends Controller
             'Unit' =>  $request['Unit'],
         ]);
         //$Vendor->save();
+=======
+        
+        $customer = item::where('Code',$input['ids'])
+        ->update([
+           'Name'=> $input['Name'],
+           'Unit'=> $input['Unit'],
+           //'Address'=> $input['Address'],
+        ]);
+        
+>>>>>>> Stashed changes
     }
 
     public function Delete(Request $request){  
         $input = $request->all();
+
+        $request->validate([
+            
+            'ids' => ['required', new inUseData]
+            
+        ]);
+
         $id = item::destroy($input['ids']);
+        $customer = item::where('Code',$input['ids'])->delete();
         
     }   
 

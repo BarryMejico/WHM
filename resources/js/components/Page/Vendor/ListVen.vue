@@ -92,7 +92,13 @@ export default {
              Cnum:'',
              Add:'',
              id:'',
-             success:false
+             success:false,
+              message:{
+          visibility:false,
+          head:'',
+          insdide:'',
+          errors:{},
+      },
     }},
     mounted(){
         this.loadpos();
@@ -138,6 +144,7 @@ export default {
           
             },
             Delete(){
+<<<<<<< Updated upstream
               axios.post('/api/DeleteVendor',{ids:this.id})
           .then(
             ()=>{this.loadpos();
@@ -145,6 +152,62 @@ export default {
             }
           )
           .catch();
+=======
+
+               this.closeModal();
+               Swal.fire({
+                title: 'Confirmation',
+                text: 'Are you sure to remove ' + this.Name + ' as a Vendor?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No'
+              }).then((result) => {
+                if (result.value) {
+
+                  axios.post('/api/DeleteVendor',{Vcode:this.id})
+                    .then(
+                      ()=>{    
+                      this.loadpos();
+                      Swal.fire({
+              title: 'Vendor Removed',
+              icon: 'success',
+              timer:1500,
+              showCancelButton: false,
+              showConfirmButton: false 
+            })
+                     
+                      }
+                    )
+                    .catch((error)=>{
+                this.message.errors=error.response.data;
+                this.message.insdide="Please check these errors before proceeding!";
+                this.message.head="Error!";
+                this.message.visibility=true;
+                
+
+                Swal.fire({
+                title: 'Oops!',
+                text: this.message.errors.message + ' ' + this.message.insdide,
+                icon: 'warning',
+                showCancelButton: false,
+                showConfirmButton:true
+            
+              })
+            }
+
+                      
+                    );
+
+  
+            
+
+          }else if (result.dismiss === Swal.DismissReason.cancel) {
+          console.log('Vendor Stays');
+          }
+        })
+
+>>>>>>> Stashed changes
             },
 
             closeModal() {

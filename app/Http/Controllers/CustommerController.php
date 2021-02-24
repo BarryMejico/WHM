@@ -27,6 +27,10 @@ class CustommerController extends Controller
     }
 
     public function update(Request $request){        
+<<<<<<< Updated upstream
+=======
+   
+>>>>>>> Stashed changes
         $request->validate([
             'Name'=>'required',
             'Number'=>'required',
@@ -34,6 +38,7 @@ class CustommerController extends Controller
         ]);
         $input = $request->all();
         $Code=Ucode();
+<<<<<<< Updated upstream
         //dd($input);
         $customer = Customer::find($input['ids']);
         
@@ -43,6 +48,15 @@ class CustommerController extends Controller
         $customer ->Address= $input['Address']; 
                
         $customer->save(); 
+=======
+        dd($input);
+        $customer = Customer::where('Ccode',$input['ids'])
+        ->update([
+           'Customer'=> $input['Name'],
+           'Number'=> $input['Number'],
+           'Address'=> $input['Address'],
+        ]);
+>>>>>>> Stashed changes
     }
 
 

@@ -40,8 +40,13 @@
                         </div>
 
                         <div class="form-group row mb-0">
+<<<<<<< Updated upstream
                             <div class="col-md-8 offset-md-4">
                                 <button @click.prevent="login" action="" class="btn btn-primary">
+=======
+                            <div class="col-md-6 offset-md-4">
+                                <button @click.prevent="login()" class="btn btn-primary" >
+>>>>>>> Stashed changes
                                     Login
                                 </button>
 
@@ -81,15 +86,46 @@ export default {
         .then(()=>{
                 this.$router.push({name:"Dashboard"});
                 setTimeout(() => location.reload(), 500);
+<<<<<<< Updated upstream
+=======
+
+                Swal.fire({
+                title: 'Login Successfully',
+                icon: 'success',
+                timer:2000,
+                showCancelButton: false,
+                showConfirmButton:false
+
+>>>>>>> Stashed changes
             })
+             })
         .catch((error)=>{
+            console.log("s");
                 this.message.errors=error.response.data;
                 this.message.insdide="Please check these errors before proceeding!";
                 this.message.head="Error!";
                 this.message.visibility=true;
+<<<<<<< Updated upstream
                 console.log(this.errors);
             })
     }
+=======
+                
+
+                Swal.fire({
+                title: 'Oops!',
+                text: this.message.errors.message + ' ' + this.message.insdide,
+                icon: 'warning',
+                showCancelButton: false,
+                showConfirmButton:true
+            
+              })
+            })
+
+
+   
+        }
+>>>>>>> Stashed changes
     }
 }
 </script>

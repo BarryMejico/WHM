@@ -43,6 +43,7 @@ class VendorController extends Controller
         $input = $request->all();
         $Code=Ucode();
         //dd($input);
+<<<<<<< Updated upstream
         $Vendor = VendorModel::find($input['ids']);
         
     
@@ -51,6 +52,15 @@ class VendorController extends Controller
         $Vendor ->Address= $input['Address']; 
                
         $Vendor->save(); 
+=======
+
+        $Vendor = VendorModel::where('Vcode',$input['ids'])
+        ->update([
+           'Vendor'=> $input['Name'],
+           'Number'=> $input['Number'],
+           'Address'=> $input['Address'],
+        ]);
+>>>>>>> Stashed changes
     }
 
     public function Delete(Request $request){  

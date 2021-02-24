@@ -39,17 +39,6 @@ class itemController extends Controller
             'Unit' => ['required', 'string'],
         ]);
 
-<<<<<<< Updated upstream
-        $input = $request->all();
-        //$Code=Ucode();
-        //dd($input);
-        $Vendor = item::updateOrCreate(['id'=> $input['ids']],[
-            'Name' =>  $request['Name'],
-            'Code' =>  $request['Code'],
-            'Unit' =>  $request['Unit'],
-        ]);
-        //$Vendor->save();
-=======
         
         $customer = item::where('Code',$input['ids'])
         ->update([
@@ -58,7 +47,6 @@ class itemController extends Controller
            //'Address'=> $input['Address'],
         ]);
         
->>>>>>> Stashed changes
     }
 
     public function Delete(Request $request){  

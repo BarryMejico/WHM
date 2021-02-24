@@ -56,7 +56,8 @@ class SalesController extends Controller
     }
 
     public function LoadInvoive(){
-        $invoice= Sales::all();
+        //$invoice= Sales::all()->paginate(2);
+        $invoice= Sales::paginate(3);
         return $invoice;
     }
 

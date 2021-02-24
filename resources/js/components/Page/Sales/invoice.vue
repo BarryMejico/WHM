@@ -147,6 +147,7 @@ function int_data(){
         Qty:'',
         UnitCost:'',
         Tcost:0,
+        AvailableQty:0,
       }],
       //-----for loading items
         items:[],
@@ -174,6 +175,13 @@ export default {
     beforeMount(){
       this.clearData();
 
+      var $POL = this.$route.params.PO_Load;      
+      if(typeof this.$route.params.PO_Load === "undefined" ){
+        //console.log("PO Undefied")
+      }else{
+        this.Load_PO();
+         
+      }
     },
 
     mounted(){
@@ -181,7 +189,16 @@ export default {
     },
 
     updated(){
-     
+      if(typeof this.$route.params.PO_Load === "undefined" ){
+        
+        //console.log("PO Undefied")
+      }else{
+        this.Load_Details();
+        
+        
+      
+        
+      }
     },
 
     methods:{
@@ -235,17 +252,25 @@ export default {
 
         if (meron){
             //console.log("Item already Exist!!!")
+            
         }
         else{
-          
-        this.po_items.push({
+          axios.get('/api/getitem',{params:{Code:code}})
+          .then((res)=>{
+            this.po_items.push({
                  Icode:code,
                 idescription:Name,
                 iunit:Unit,
                 Qty:1, 
+                AvailableQty:res.data[0]['Qty'],
+                
         });
+
+        
+          })
+        
         }
-        this.checkQty(this.po_items[this.po_items.length-1])
+        this.checkQty(this.po_items[this.po_items.length-1]);
             this.closeModal();
       },
 
@@ -343,27 +368,13 @@ export default {
         },
 
 checkQty(product){
-  var Item;
-          axios.get('/api/getitem',{params:{Code:product.Icode}})
-          .then(
-            (res)=>{
-              Item=res.data;
 
-              if(Item.length==0){
-                product.Qty=0;
-              }
-
-              if(Item[0]['Qty']>product.Qty){
-                
+              if(parseFloat(product.AvailableQty)>=parseFloat(product.Qty)){
                 this.calculateLineTotal(product)
               }
               else{
-                  product.Qty=Item[0]['Qty'];
+                  product.Qty=product.AvailableQty;
               }
-            }
-          )
-          .catch()
-          
         },
 
 

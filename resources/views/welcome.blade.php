@@ -162,9 +162,9 @@
         <div class="row">
         	<div class="col-md-4 footer-brand animated fadeInLeft">
             <!----------------- di binabasa ------------------------>
-            <img src="../media/barkspider2 copy.png" alt="logo" style="width:40px;">
-            <!----------------- pero eto binabasa ------------------------>
-            <img src="../media/logo.png" alt="logo" style="width:40px;">
+            <img src="../media/barkspider2 copy.png" alt="logo" style="width:280px;">
+            <!----------------- pero eto binabasa ---------------------
+            <img src="../media/logo.png" alt="logo" style="width:40px;">--->
                 <br>
          
                     <p id="bbb">The website footer is not to be neglected. According to research and different studies, it is a favourable place to capitalize on to increase conversions. Depending on the website type and the objectives of each page, the footer might include different elements of use for the visitors. The only thing you have to do is choose the RIGHT elements to put in the website footer, and organize them according to a clean structure, easy to browse and take benefit from.</p>

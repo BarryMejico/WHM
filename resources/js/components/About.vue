@@ -7,7 +7,7 @@
 
                 <div align="center">
                   
-                        
+                      
                          <img src="../media/barkspider2 copy.png" alt="logo" style="width:50%;">
                   
                 </div>
@@ -36,5 +36,4 @@
 </div>
 </template>
 <script>
- 
 </script>

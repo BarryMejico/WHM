@@ -14,6 +14,13 @@ class VendorController extends Controller
 {
     public function index(){
         $Vendors=VendorModel::all();
+        //$Vendors=VendorModel::paginate(5);
+        return $Vendors;
+    }
+
+    public function indexPagination(){
+        //$Vendors=VendorModel::all();
+        $Vendors=VendorModel::paginate(5);
         return $Vendors;
     }
 

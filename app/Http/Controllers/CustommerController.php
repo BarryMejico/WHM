@@ -58,9 +58,15 @@ class CustommerController extends Controller
 
     public function LoadCus(){
             $Vendors=Customer::all();
+            //$Vendors=Customer::paginate(5);
             return $Vendors;
-        
     }
+
+    public function LoadCusPagination(){
+        //$Vendors=Customer::all();
+        $Vendors=Customer::paginate(5);
+        return $Vendors;
+}
 
     public function Search(Request $request){
         $input = $request->all();

@@ -29,6 +29,13 @@ class itemController extends Controller
 
     public function LoadItems(){
         $items= item::all();
+        //$items=item::paginate(5);
+        return $items;
+    }
+
+    public function LoadItemsPagination(){
+        //$items= item::all();
+        $items=item::paginate(5);
         return $items;
     }
 

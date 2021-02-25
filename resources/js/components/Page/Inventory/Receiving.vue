@@ -69,8 +69,8 @@
       <td>{{po_item.idescription}}</td>
       <td>{{po_item.iunit}}</td>
       <td class="in"><div class="qty"><input v-model="po_item.Qty" min="1" type="number" @change="chckQty(po_item)"></div></td>
-      <td class="in">{{po_item.UnitCost}}</td>
-      <td>{{po_item.Tcost}} Php</td>
+      <td class="in">{{po_item.UnitCost | numeral('0,0')}}</td>
+      <td>{{po_item.Tcost | numeral('0,0')}} Php</td>
       <td><a class="link" @click="deleteRow(k, po_item)">Delete</a>/<a class="link">Recompute</a></td>
     </tr>
   </tbody>
@@ -78,7 +78,7 @@
 <hr>
 <div class="total">
   
-<span><b>Total:</b> {{PO_total}} Php</span><br>
+<span><b>Total:</b> {{PO_total | numeral('0,0')}} Php</span><br>
 <hr>
 <button type="button" class="btn btn-info" @click.prevent="saveform">Save</button>
 <button type="button" class="btn danger btn-danger" @click.prevent="clearData">Clear ALL</button>
@@ -406,7 +406,6 @@ export default {
 
         chckQty(invoice_product){
           var i;
-          
           for (i=0;i < this.po_items2.length; i++){
             if(this.po_items2[i]['Icode']==invoice_product.Icode){
               if(this.po_items2[i]['Qty']<=invoice_product.Qty){
@@ -414,7 +413,6 @@ export default {
                 console.log("Qty is greater than expected!")
               }
               else{
-                
               }
             }
         }
@@ -453,6 +451,8 @@ export default {
                 cancelButtonText: 'No'
               }).then((result) => {
                 if (result.value) {
+
+                  if(1==1){}
 
              axios.post('/api/SaveReceived', {
               po_items:this.po_items, 
@@ -500,7 +500,7 @@ export default {
                   var i;
                   for (i=0; i < this.po_items2.length; i++){
                       this.po_items2[i]['Tcost']=this.po_items2[i]['Qty']*this.po_items2[i]['UnitCost'];
-                      this.calculateTotal(this.po_items2[i]['Tcost']);
+                      //this.calculateTotal(this.po_items2[i]['Tcost']);
                   }
 
                   //this.po_items=this.po_items2;
@@ -541,7 +541,7 @@ export default {
                   //this.PO_total = this.po_details[0]['Total_Amount'];
                   this.Vendor_code = this.po_details[0]['Vendor'];
                   this.Customer_code = this.po_details[0]['Ship_to'];
-                   this.load_Selected_customer(this.Customer_code);
+                  this.load_Selected_customer(this.Customer_code);
                   this.load_Selected_vendor(this.Vendor_code);
                   }
               }
@@ -556,6 +556,7 @@ export default {
                this.load_vendor();
                this.load_customer();
                this.load_item();
+               
         },
          load_Selected_customer(cus){
         var i;

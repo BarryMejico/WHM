@@ -102,7 +102,7 @@
                 <td>{{po_item.iunit}}</td>
                 <td class="in"><div class="qty"><input v-model="po_item.Qty" min="1" type="number" @change="calculateLineTotal(po_item)" :disabled="disabled == 1"></div></td>
                 <td class="in"><div class="qty"><input v-model="po_item.UnitCost"  @change="calculateLineTotal(po_item)" :disabled="disabled == 1"></div></td>
-                <td>{{po_item.Tcost}} Php</td>
+                <td>{{po_item.Tcost | numeral('0,0')}} Php</td>
                 <td>
                   <button class="my_btn btn link" :disabled="disabled == 1" ><small>Recompute</small></button>
                   <button class="my_btn btn link" @click="deleteRow(k, po_item,po_item.Icode)" :disabled="disabled == 1"><small>X</small></button>
@@ -113,7 +113,7 @@
         </div>
         <div class="col-lg-2">
             <div class="total">
-              <span><b>Total:</b> {{PO_total}} Php</span><br>
+              <span><b>Total:</b> {{PO_total| numeral('0,0')}} Php</span><br>
               <hr>
               <button type="button" id="SaveBtn" class="btn btn-info" @click.prevent="saveform">Save</button>
               <button type="button" id="CanBtn" class="btn danger btn-danger" @click.prevent="clearData">Clear ALL</button>

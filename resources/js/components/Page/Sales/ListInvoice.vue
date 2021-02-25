@@ -49,12 +49,11 @@
 </table>
 <ul class="pagination justify-content-end">
     <li class="page-item"><a class="page-link bg-dark text-white" @click.prevent="prepAGE()">Previous</a></li>
-
     <ul class="pagination justify-content-end" v-for="(pages, page) in POs.last_page" :key=page>
     <li class="page-item"><a class="page-link bg-dark text-white" @click.prevent="changepAGE(pages)">{{pages}}</a></li>
     </ul>
     <li class="page-item"><a class="page-link bg-dark text-white" @click.prevent="nextpAGE()">Next</a></li>
-  </ul>
+</ul>
     </div>
     </div>
 </div>

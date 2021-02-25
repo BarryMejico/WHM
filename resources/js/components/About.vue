@@ -6,10 +6,10 @@
         <div class="col-md-8">
 
                 <div align="center">
-                    <h1 style="font-family:Helvetica">
-                        <img src="../media/web.png" alt="logo" style="width:100px;">
-                        barkSpider
-                    </h1>
+                  
+                        
+                         <img src="../media/barkspider2 copy.png" alt="logo" style="width:50%;">
+                  
                 </div>
                 <br>
                 <br>

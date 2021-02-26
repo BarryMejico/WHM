@@ -5,94 +5,131 @@
       <hr>
       <br>
       <br>
-    
-    <div class="row">
-        <div class="col-lg-2">
-            <MenuList></MenuList>
-            </div>
-          <div class="col-lg-10">
-            
-           
-<div class="row">
-  <div class="col-xl-9">
-<div class="form-inline">
-      <label for="po">PO#:</label>                     
-      <input class="form-control" v-model="po" id="po" type="text" required autocomplete="name" disabled>
-     
-      <label for="mode">Mode:</label>                     
-      <input id="mode" type="text" class="form-control" required autocomplete="name" autofocus>
 
-       <div class="col-xl-5">
-          <!--<VendorModal @SelectedVendor="Selected_ven" :disabled="disabled" ></VendorModal>    
-   <button href="#addVendorModal" data-toggle="modal" type="button" class="btn btn-secondary btn-sm">Vendor</button>-->
-   <label>Vendor</label>
+      <div class="row">
+       <div class="col-lg-2">
+            <MenuList></MenuList>
+      </div>
+
+          <div class="col-lg-8">
+
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-inline">
+                   <label for="po">PO#: </label>                     
+                  <input class="form-control" v-model="po" id="po" type="text" required autocomplete="name" disabled>
+                  
+              </div>     
+            </div>
+            <div class="col-lg-6">
+              <div class="form-inline">
+               
+                   <label for="mode">Mode: </label>                     
+                    <input id="mode" type="text" class="form-control" required autocomplete="name" autofocus>
+ 
+              </div>     
+            </div>
+          </div>
+          <br>
+          <div class="row" style="text-align:center">
+            <div class="col-md-6"><label>Vendor</label></div>
+            <div class="col-md-6"><label>Customer</label></div>
+          </div>
+          <br>
+              <div class="row">
+                 
+              <div class="col-lg-6">
+                  <div class="form-inline"> 
+                 
                     <div>
-                    <b>Name:</b><label class="text-muted"><i>{{Vendor}}</i></label><br>
-                    <b>Address:</b><label class="text-muted"><i>{{add_Ven}}</i></label><br>
+                      <b>Name:</b><label class="text-muted"><i>{{Vendor}}</i></label><br>
+                      <b>Address:</b><label class="text-muted"><i>{{add_Ven}}</i></label><br>
                     </div>
-  </div>
-  <div class="col-xl-5">
-     <!--<CustomerModal @SelectedCustomer="Selected_cus" :disabled="disabled" ></CustomerModal>
-   <button href="#addCustomerModal" data-toggle="modal" type="button" class="btn btn-secondary btn-sm">Ship to</button>-->
-   <label>Customer</label>
+                </div>     
+              </div>
+              <div class="col-lg-6">
+                <div class="form-inline">    
+                   
                     <div>
-                   <b>Name: </b><label class="text-muted"><i>{{Customer}}</i></label><br>
-                    <b>Address:</b><label class="text-muted"><i>{{add_Cus}}</i></label><br>
+                      <b>Name: </b><label class="text-muted"><i>{{Customer}}</i></label><br>
+                      <b>Address:</b><label class="text-muted"><i>{{add_Cus}}</i></label><br>
                     </div>
-  </div>
+                </div>
+              </div>
+            </div>
+          
+        </div>
+        
+              <div class="col-lg-2">
+                  <button type="button" class="btn btn-info">Print</button>
+                  <items-modal @SelectedItems="Selected_Item" :disabled="disabled == 1"></items-modal>
+              
+                <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                <span class="caret">{{status}}</span>
+                <p>{{last_update}}</p>
+                </button>
+                <ul class="dropdown-menu">
+                  <li><button @click="changeStatus('Open')" class="my_btn btn">Open</button></li>
+                  <li><button @click="changeStatus('Approved')" class="success my_btn">Approved</button></li>
+                  <li><button @click="changeStatus('Canceled')" class="my_btn btn-danger">Canceled</button></li>
+                </ul>
+                </div>
+              </div>
+      </div>
+      <br>
+      <br>
+      <br>
+       <div class="sc">
+         <div class="row">
+           <div class="col-md-10">
+              <table class="table table-responsive">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Item Code</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Unit</th>
+                    <th scope="col">Qty</th>
+                    <th scope="col">Unit Cost</th>
+                    <th scope="col">Total Cost</th>
+                    <th scope="col">Action</th> 
+                  </tr>
+                </thead>
+                <tbody v-if="po_items">
+                  <tr  v-for="(po_item, k) in po_items" :key="k">      
+                    <th scope="row" class="in">{{k}}</th>
+                    <td>{{po_item.Icode}}</td>
+                    <td>{{po_item.idescription}}</td>
+                    <td>{{po_item.iunit}}</td>
+                    <td class="in"><div class="qty"><input v-model="po_item.Qty" min="1" type="number" @change="chckQty(po_item)"></div></td>
+                    <td class="in">{{po_item.UnitCost | numeral('0,0')}}</td>
+                    <td>{{po_item.Tcost | numeral('0,0')}} Php</td>
+                    <td>
+                      <span class="badge badge-info">Recompute</span>
+                     <span class="badge badge-danger" @click="deleteRow(k, po_item)">X</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <hr>
+             
+           </div>
+              <div class="col-md-2">
+                
+                    <span><b>Total:</b> {{PO_total | numeral('0,0')}} Php</span><br>
+                    <hr>
+                    <button type="button" class="btn btn-info" @click.prevent="saveform">Save</button>
+                    <button type="button" class="btn danger btn-danger" @click.prevent="clearData">Clear ALL</button>
+               
+              </div>
+      </div>
+       </div>
+
+
     
-</div>  
-  </div>
-    <div class="col-xl-3">        
-            
-            <button type="button" class="btn btn-info">Print</button>
-            <items-modal @SelectedItems="Selected_Item" :disabled="disabled == 1"></items-modal>
     </div>
-</div>
-            
-        <div class="sc">
-        <table class="table table-responsive">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Item Code</th>
-      <th scope="col">Description</th>
-      <th scope="col">Unit</th>
-      <th scope="col">Qty</th>
-      <th scope="col">Unit Cost</th>
-      <th scope="col">Total Cost</th>
-      <th scope="col">Action</th>
-      
-    </tr>
-    
-  </thead>
-  <tbody v-if="po_items">
-    <tr  v-for="(po_item, k) in po_items" :key="k">      
-      <th scope="row" class="in">{{k}}</th>
-      <td>{{po_item.Icode}}</td>
-      <td>{{po_item.idescription}}</td>
-      <td>{{po_item.iunit}}</td>
-      <td class="in"><div class="qty"><input v-model="po_item.Qty" min="1" type="number" @change="chckQty(po_item)"></div></td>
-      <td class="in">{{po_item.UnitCost | numeral('0,0')}}</td>
-      <td>{{po_item.Tcost | numeral('0,0')}} Php</td>
-      <td><a class="link" @click="deleteRow(k, po_item)">Delete</a>/<a class="link">Recompute</a></td>
-    </tr>
-  </tbody>
-</table>
-<hr>
-<div class="total">
-  
-<span><b>Total:</b> {{PO_total | numeral('0,0')}} Php</span><br>
-<hr>
-<button type="button" class="btn btn-info" @click.prevent="saveform">Save</button>
-<button type="button" class="btn danger btn-danger" @click.prevent="clearData">Clear ALL</button>
-</div>
-        </div>
-        </div>
-        </div>
-    
-    </div>
-    <hr>
+   
 <!--modal Vendor-->
 <div id="addVendorModal" class="modal fade">
 	<div class="modal-dialog">
@@ -255,7 +292,12 @@ export default {
         }
 
         if (meron==false){
-            alert("wala sa list!!!");
+             Swal.fire({
+                title: 'Item is Not on the List',
+                icon: 'info',
+                showCancelButton: true,
+                showConfirmButton: false 
+              })
         }
         else{
             if (this.po_items[0]['Icode']=="")
@@ -419,7 +461,15 @@ export default {
             if(this.po_items2[i]['Icode']==invoice_product.Icode){
               if( parseFloat(this.po_items2[i]['Qty'])<= parseFloat(invoice_product.Qty)){
                 invoice_product.Qty=this.po_items2[i]['Qty'];
-                alert("Qty is greater than expected!")
+               // alert("Qty is greater than expected!")
+
+                 Swal.fire({
+                          title: 'Qty is greater than expected',
+                          icon: 'info',
+                          showCancelButton: true,
+                          showConfirmButton: false 
+                        })
+                
               }
               else{
               }
@@ -452,7 +502,7 @@ export default {
 
         saveform(){
           var i,j;
- Swal.fire({
+              Swal.fire({
                 title: 'Confirmation',
                 text: 'Are you sure with the following details of your received purchase?',
                 icon: 'warning',
@@ -466,7 +516,16 @@ export default {
                     if(this.po_items[i]['Icode']==this.po_items2[j]['Icode']){
                       
                      if(this.po_items[i]['Qty']!=this.po_items2[j]['Qty']){
-                       alert('items are lesthan expected cant be save!!')
+                      // alert('items are lesthan expected cant be save!!')
+
+                        Swal.fire({
+                          title: 'Oops!',
+                          text:'items are less than expected, can`t be save',
+                          icon: 'warning',
+                          showCancelButton: true,
+                          showConfirmButton: false 
+                        })
+                       
                        return 0;
                      }
 
@@ -489,7 +548,8 @@ export default {
 
               Swal.fire({
               title: 'Error',
-              icon: error.response.data.errors,
+              icon:'danger',
+              text: error.response.data.errors,
               showCancelButton: false,
               showConfirmButton: false 
             })
@@ -554,11 +614,23 @@ export default {
             (response)=>{
                   this.po_details = response.data;
                   if(this.po_details[0]['Status']!=="Approved"){
-                    alert("not approved PO");
+                    //alert("not approved PO");
+                    Swal.fire({
+                      title: "This P.O. has not yet Approved",
+                      icon: 'info',
+                      showCancelButton: true,
+                      showConfirmButton: false 
+                    })
                     this.clearData()
                     }
                     else if(this.po_details[0]['Status']=="Done"){
-                    alert("PO Already Done");
+                    //alert("PO Already Done");
+                     Swal.fire({
+                      title: "PO Already Done",
+                      icon: 'info',
+                      showCancelButton: true,
+                      showConfirmButton: false 
+                    })
                     this.clearData()
                     }
                   else{

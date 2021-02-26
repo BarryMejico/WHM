@@ -282,14 +282,14 @@ export default {
         }
 
         if (meron){
-            //console.log("Item already Exist!!!")
-             Swal.fire({
-              title: 'Item already Exist!!!',
-              icon: 'warning',
-              timer:1500,
-              showCancelButton: false,
-              showConfirmButton: false 
-            })
+            console.log("Item already Exist!!!")
+            //  Swal.fire({
+            //   title: 'Item already Exist!!!',
+            //   icon: 'warning',
+            //   timer:1500,
+            //   showCancelButton: false,
+            //   showConfirmButton: false 
+            // })
         }
         else{
           

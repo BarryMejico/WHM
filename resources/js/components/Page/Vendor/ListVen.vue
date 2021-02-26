@@ -201,8 +201,6 @@ export default {
                     )
                     .catch();
 
-  
-            
           }else if (result.dismiss === Swal.DismissReason.cancel) {
           console.log('Vendor Stays');
           }

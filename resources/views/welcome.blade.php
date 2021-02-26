@@ -71,8 +71,9 @@
    
 <!--<ul onclick="closeNav()">-->
 
-    <button><router-link onclick="closeNav()" to="/PO">Purchase Order</router-link></button>
-    <button data-toggle="collapse" data-target="#setup">Data Setup</button>
+    <button><router-link to="/PO">Purchase Order</router-link></button>
+
+    <button data-toggle="collapse" data-target="#setup" class="btnMenu">Data Setup</button>
         <div id="setup" class="collapse">
             <ul>   
 	            <li><router-link onclick="closeNav()" to="/Vendor_Create">Vendor</router-link></li>
@@ -81,7 +82,7 @@
             </ul>
         </div>
 
-    <button data-toggle="collapse" data-target="#Sales">Sales</button>
+    <button data-toggle="collapse" data-target="#Sales" class="btnMenu">Sales</button>
         <div id="Sales" class="collapse">
             <ul>  
                 <li><router-link onclick="closeNav()" to="/Upcoming" class="notAvailable">Products</router-link></li>
@@ -90,7 +91,7 @@
             </ul>
         </div>
 
-    <button data-toggle="collapse" data-target="#Inventory">Inventory</button>
+    <button data-toggle="collapse" data-target="#Inventory" class="btnMenu">Inventory</button>
         <div id="Inventory" class="collapse">
             <ul>   
 	            <li><router-link onclick="closeNav()" to="/PO_list">Receiving</router-link></li>
@@ -99,7 +100,7 @@
             </ul>
         </div>
 
-        <button data-toggle="collapse" data-target="#Report">Report</button>
+        <button data-toggle="collapse" data-target="#Report" class="btnMenu">Report</button>
         <div id="Report" class="collapse">
             <ul>   
 	            <li><router-link onclick="closeNav()" to="/DeviceHistory">Device Repair History</router-link></li>
@@ -108,8 +109,7 @@
             </ul>
         </div>
 
-        <hr>
-    <button data-toggle="collapse" data-target="#Accounting">Accounting</button>
+        <button data-toggle="collapse" data-target="#Accounting" class="btnMenu">Accounting</button>
         <div id="Accounting" class="collapse">
             <ul>   
 	            <li><router-link onclick="closeNav()" to="/Upcoming" class="notAvailable">Journals</router-link></li>
@@ -119,7 +119,7 @@
         </div>
 
 
-<button data-toggle="collapse" data-target="#WareHouse">WareHouse</button>
+<button data-toggle="collapse" data-target="#WareHouse" class="btnMenu">WareHouse</button>
         <div id="WareHouse" class="collapse">
             <ul>   
 	            <li><router-link onclick="closeNav()" to="/Upcoming" class="notAvailable">Receiving</router-link></li>
@@ -161,10 +161,16 @@
 <footer class="footer-bs">
         <div class="row">
         	<div class="col-md-4 footer-brand animated fadeInLeft">
-                <h4><img src="../media/logobk.png" alt="logo" style="width:40px;"> barkSpider</h4>
+            <!----------------- di binabasa ------------------------>
+            <img src="../media/bs3.png" alt="logo" style="width:50%;">
+            <!----------------- pero eto binabasa ---------------------
+            <img src="../media/logo.png" alt="logo" style="width:40px;">--->
                 <br>
          
-                    <p id="bbb">The website footer is not to be neglected. According to research and different studies, it is a favourable place to capitalize on to increase conversions. Depending on the website type and the objectives of each page, the footer might include different elements of use for the visitors. The only thing you have to do is choose the RIGHT elements to put in the website footer, and organize them according to a clean structure, easy to browse and take benefit from.</p>
+                    <p id="bbb">Empowering enterprises to use technology innovations for growth and success,
+                         offering products for businesses and operations, and deliver effective IT solutions
+                        with quality service to enhance the competitive advantages.
+                        </p>
                 
                     <p>© 2014 BS3 UI Kit, All rights reserved</p>
             </div>
@@ -227,6 +233,9 @@ window.onclick = function(event) {
     }
     #bbb{
         padding:15px;
+    }
+    .btnMenu{
+        font-size:18px;
     }
 </style>
 

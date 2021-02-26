@@ -30,11 +30,12 @@
       <td>{{po_item.Total_Amount | numeral('0,0')}}</td>
       <td>{{po_item.Status}}</td>
       <td>
-        <button class="btn-sm">
+        <button class="btn-sm bg-light">
         <router-link :to="{ name:'PO', params:{PO_Load: po_item.PO }}">
           Purchase Order
         </router-link>
-        </button><button class="btn-sm"><router-link :to="{ name:'Receiving', params:{PO_Load: po_item.PO }}">
+        </button>
+        <button class="btn-sm bg-light"><router-link :to="{ name:'Receiving', params:{PO_Load: po_item.PO }}">
           Receiving
           </router-link></button></td>
     </tr>
@@ -151,4 +152,9 @@ text-align: center;
 .modal form label {
 	font-weight: normal;
 }	
+.btn-sm{
+  box-shadow: 0px 0px 5px lightgrey;
+  border-radius: 5px;
+}
+
 </style>

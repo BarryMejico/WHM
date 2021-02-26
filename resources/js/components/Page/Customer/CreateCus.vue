@@ -9,32 +9,32 @@
         <div class="col-lg-2">
         <MenuList></MenuList>
         </div>
-<div class="col-lg-10">
+<div class="col-lg-6">
 <div>
   
 
   
     <div class="form-group">
       <div class="alert alert-success" v-show="success">
-      The data has been saved!!
-  </div>
-      <label for="name">Name:</label>
-
+          The data has been saved!!
+      </div>
+      <label for="name" class="text-muted"><small>Name</small></label>
       <span class="alert-danger" v-if="errors && errors.Name">{{errors.Name[0]}}</span>
-
       <input   class="form-control" id="name" placeholder="Enter name" v-model="Name">
     </div>
+
     <div class="form-group">
-      <label for="pwd">Contact Number:</label>
+      <label for="pwd" class="text-muted"><small>Contact Number</small></label>
        <span class="alert-danger" v-if="errors && errors.Number">{{errors.Number[0]}}</span>
       <input v-model="CNumber" type="text" class="form-control" id="pwd" placeholder="Enter Number" name="pswd">
     </div>
+  
     <div class="form-group">
-      <label for="comment">Address:</label>
-      <textarea v-model="Address" class="form-control" rows="5" id="comment" name="text"></textarea>
+      <label for="comment" class="text-muted"><small>Address</small></label>
+      <textarea v-model="Address" class="form-control" rows="5" id="comment" name="text" placeholder="Enter Address"></textarea>
        <span class="alert-danger" v-if="errors.Address">{{errors.Address[0]}}</span>
     </div>
-    <button type="button" class="btn btn-primary" @click.prevent="SaveVendor">Submit</button>
+    <button type="button" class="btn btn-dark" @click.prevent="SaveVendor">Submit</button>
   </div>
 </div>
 </div>

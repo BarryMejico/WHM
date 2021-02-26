@@ -33,7 +33,8 @@
 </script>
 <style scoped>
 .menuList{
-  background-color: #4CAF50;
+  /* background-color: #4CAF50; */
+  background-color: #5bc0de;
   color: white;
   padding: 10px;
   border-radius: 3px;

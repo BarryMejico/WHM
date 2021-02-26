@@ -143,11 +143,11 @@ export default {
           .catch()},
 
       SelectItem(index){
-            
-            this.Name=this.POs[index]['Name'];
-            this.Cnum=this.POs[index]['Unit'];
-            this.Add=this.POs[index]['Code'];
-            this.id=this.POs[index]['id'];
+            console.log(index)
+            this.Name=this.POs.data[index]['Name'];
+            this.Cnum=this.POs.data[index]['Unit'];
+            this.Add=this.POs.data[index]['Code'];
+            this.id=this.POs.data[index]['id'];
           },
 
           SaveVendor(){

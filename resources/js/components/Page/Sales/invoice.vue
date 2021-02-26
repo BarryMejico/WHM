@@ -246,6 +246,7 @@ export default {
             if(this.po_items[i]['Icode']===code){
                meron = true;
                this.po_items[i]['Qty']=this.po_items[i]['Qty']+1;
+               this.checkQty(this.po_items[i]);
             }
         }
 
@@ -281,7 +282,7 @@ export default {
           )
         
         }
-        this.checkQty(this.po_items[this.po_items.length-1]);
+        
         this.closeModal();
       },
 

@@ -162,7 +162,7 @@
         <div class="row">
         	<div class="col-md-4 footer-brand animated fadeInLeft">
             <!----------------- di binabasa ------------------------>
-            <img src="../media/bs3.png" alt="logo" style="width:50%;">
+            <img src="../media/bs3.png" alt="logo" style="width:80%;">
             <!----------------- pero eto binabasa ---------------------
             <img src="../media/logo.png" alt="logo" style="width:40px;">--->
                 <br>
@@ -172,7 +172,7 @@
                         with quality service to enhance the competitive advantages.
                         </p>
                 
-                    <p>© 2014 BS3 UI Kit, All rights reserved</p>
+                    <p>© 2020 BS, All rights reserved</p>
             </div>
 
         	<div class="col-md-3 footer-nav animated fadeInUp">

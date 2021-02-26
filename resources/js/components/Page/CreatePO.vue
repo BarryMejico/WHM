@@ -473,7 +473,8 @@ export default {
                 this.errors=error.response.data.errors;
             Swal.fire({
               title: 'Error',
-              icon: error.response.data.errors,
+              text:error.response.data.errors,
+              icon: 'danger',
               showCancelButton: false,
               showConfirmButton: false 
             })

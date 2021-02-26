@@ -181,7 +181,7 @@
                 <br>
             	<div class="col-md-6">
                     <ul class="pages">
-                        <li><a href="#">About Us</a></li>
+                        <li><router-link to='/about'>About Us</router-link></li>
                         <li><a href="#">Terms & Condition</a></li>
                         <li><a href="#">Privacy Policy</a></li>
                     </ul>
@@ -193,10 +193,8 @@
                 <br>
                 <br>
             	<ul>
-                	<li><a href="#">Facebook</a></li>
-                	<li><a href="#">Twitter</a></li>
-                	<li><a href="#">Instagram</a></li>
-                	<li><a href="#">RSS</a></li>
+                	<li><a href="https://web.facebook.com/BarkSpider-108342387962280" target="_blank">BarkSpider Facebook</a></li>
+                	<li><a href="https://mail.google.com" target="_blank">barkspidersoft@gmail.com</a></li>
                 </ul>
             </div>
         

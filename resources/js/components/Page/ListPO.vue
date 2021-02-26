@@ -30,12 +30,12 @@
       <td>{{po_item.Total_Amount | numeral('0,0')}}</td>
       <td>{{po_item.Status}}</td>
       <td>
-        <button class="btn-sm bg-light">
+        <button class="btn-sm bg-light" @click="note()">
         <router-link :to="{ name:'PO', params:{PO_Load: po_item.PO }}">
           Purchase Order
         </router-link>
         </button>
-        <button class="btn-sm bg-light"><router-link :to="{ name:'Receiving', params:{PO_Load: po_item.PO }}">
+        <button class="btn-sm bg-light"  @click="note()"><router-link :to="{ name:'Receiving', params:{PO_Load: po_item.PO }}">
           Receiving
           </router-link></button></td>
     </tr>
@@ -54,6 +54,7 @@
 import MenuList from '../Page/MainPO'
 import CreatePO from '../Page/CreatePO'
 import Receiving from './Inventory/Receiving.vue'
+import Swal from 'sweetalert2'
 
 export default {
     components: {
@@ -76,7 +77,7 @@ export default {
     },
 
     methods:{
-      loadpos:function(){
+      loadpos:function(){   
           axios.get('/api/LoadPo')
           .then(
               (response)=>{
@@ -84,7 +85,16 @@ export default {
               }
           )
           .catch()
-}
+      },
+      note(){
+         Swal.fire({
+          icon:'info',
+          title:"Note",
+          text:"Approved Purchase Orders Cannot be edit",
+          showCancelButton: false,
+          showConfirmButton: true
+          }) 
+      }
        
     }   
 }

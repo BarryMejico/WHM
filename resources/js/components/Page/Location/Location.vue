@@ -141,6 +141,13 @@ else{
 
          if (meron){
              console.log("Item already Exist!!!")
+              Swal.fire({
+                icon:'warning',
+                title:'Oops !',
+                text:'Item already Exist',
+                showCancelButton: true,
+                showConfirmButton: false
+                }) 
           }
         else{
             

@@ -17,20 +17,24 @@
   <div class="col-xl-9">
 <div class="form-inline">
       <label for="po">PO#:</label>                     
-      <input class="form-control" v-model="po" id="po" type="text" required autocomplete="name" autofocus>
+      <input class="form-control" v-model="po" id="po" type="text" required autocomplete="name" disabled>
      
       <label for="mode">Mode:</label>                     
       <input id="mode" type="text" class="form-control" required autocomplete="name" autofocus>
 
        <div class="col-xl-5">
-    <button href="#addVendorModal" data-toggle="modal" type="button" class="btn btn-secondary btn-sm">Vendor</button>
+          <!--<VendorModal @SelectedVendor="Selected_ven" :disabled="disabled" ></VendorModal>    
+   <button href="#addVendorModal" data-toggle="modal" type="button" class="btn btn-secondary btn-sm">Vendor</button>-->
+   <label>Vendor</label>
                     <div>
                     <b>Name:</b><label class="text-muted"><i>{{Vendor}}</i></label><br>
                     <b>Address:</b><label class="text-muted"><i>{{add_Ven}}</i></label><br>
                     </div>
   </div>
   <div class="col-xl-5">
-    <button href="#addCustomerModal" data-toggle="modal" type="button" class="btn btn-secondary btn-sm">Ship to</button>
+     <!--<CustomerModal @SelectedCustomer="Selected_cus" :disabled="disabled" ></CustomerModal>
+   <button href="#addCustomerModal" data-toggle="modal" type="button" class="btn btn-secondary btn-sm">Ship to</button>-->
+   <label>Customer</label>
                     <div>
                    <b>Name: </b><label class="text-muted"><i>{{Customer}}</i></label><br>
                     <b>Address:</b><label class="text-muted"><i>{{add_Cus}}</i></label><br>
@@ -42,7 +46,7 @@
     <div class="col-xl-3">        
             
             <button type="button" class="btn btn-info">Print</button>
-            <items-modal @SelectedItems="Selected_Item"></items-modal>
+            <items-modal @SelectedItems="Selected_Item" :disabled="disabled == 1"></items-modal>
     </div>
 </div>
             
@@ -160,6 +164,8 @@
 <script>
 import ItemsModal from '../../Modals/ItemsModal';
 import MenuList from '../MainPO'
+import VendorModal from '../../Modals/VendorModal';
+import CustomerModal from '../../Modals/CustomerModal';
 import Swal from 'sweetalert2'
 
 function int_data(){
@@ -197,6 +203,7 @@ function int_data(){
         items:[],
         //try convert
         AmountCeiling:'',
+        disabled:0,
     }
     }
 
@@ -206,7 +213,9 @@ export default {
 
     components: {
      MenuList,
-        ItemsModal
+        ItemsModal,
+        VendorModal,
+    CustomerModal,
     }, 
 
     data:function(){
@@ -236,8 +245,7 @@ export default {
         var meron = false;
         var wala = false;
         //console.log(this.po_items);
-        if (this.po_items[0]['Icode']=="")
-        {this.po_items.splice(0, 1);}
+       
 
          for (i=0;i < this.po_items2.length; i++){
             if(this.po_items2[i]['Icode']==code){
@@ -247,14 +255,15 @@ export default {
         }
 
         if (meron==false){
-            //console.log("wala sa list!!!");
+            alert("wala sa list!!!");
         }
         else{
+            if (this.po_items[0]['Icode']=="")
+        {this.po_items.splice(0, 1);}
           var j;
           for (j=0;j<=this.po_items.length-1; j++){
             if(this.po_items[j]['Icode']==code || this.po_items[j]['Icode']==""){
               if(this.PO_total!= this.AmountCeiling){
-              //console.log("Pasok");
               var newQTY= parseFloat(this.po_items[j]['Qty'])+1;     
               this.po_items[j]['Qty']=newQTY;
               this.chckQty(this.po_items[j]);
@@ -408,9 +417,9 @@ export default {
           var i;
           for (i=0;i < this.po_items2.length; i++){
             if(this.po_items2[i]['Icode']==invoice_product.Icode){
-              if(this.po_items2[i]['Qty']<=invoice_product.Qty){
+              if( parseFloat(this.po_items2[i]['Qty'])<= parseFloat(invoice_product.Qty)){
                 invoice_product.Qty=this.po_items2[i]['Qty'];
-                console.log("Qty is greater than expected!")
+                alert("Qty is greater than expected!")
               }
               else{
               }
@@ -442,7 +451,8 @@ export default {
         },
 
         saveform(){
-           Swal.fire({
+          var i,j;
+ Swal.fire({
                 title: 'Confirmation',
                 text: 'Are you sure with the following details of your received purchase?',
                 icon: 'warning',
@@ -451,9 +461,20 @@ export default {
                 cancelButtonText: 'No'
               }).then((result) => {
                 if (result.value) {
+                   for(i=0;i<=this.po_items.length-1;i++) {console.log(i);
+                     for(j=0;j<=this.po_items2.length-1;j++) {console.log(j);
+                    if(this.po_items[i]['Icode']==this.po_items2[j]['Icode']){
+                      
+                     if(this.po_items[i]['Qty']!=this.po_items2[j]['Qty']){
+                       alert('items are lesthan expected cant be save!!')
+                       return 0;
+                     }
 
-                  if(1==1){}
+                     else{
 
+                     }
+              
+              }}}
              axios.post('/api/SaveReceived', {
               po_items:this.po_items, 
               PO_total:this.PO_total,
@@ -533,11 +554,16 @@ export default {
             (response)=>{
                   this.po_details = response.data;
                   if(this.po_details[0]['Status']!=="Approved"){
-                    //console.log("not approved PO")
+                    alert("not approved PO");
+                    this.clearData()
+                    }
+                    else if(this.po_details[0]['Status']=="Done"){
+                    alert("PO Already Done");
                     this.clearData()
                     }
                   else{
                   this.po = this.po_details[0]['PO'];
+                  
                   //this.PO_total = this.po_details[0]['Total_Amount'];
                   this.Vendor_code = this.po_details[0]['Vendor'];
                   this.Customer_code = this.po_details[0]['Ship_to'];

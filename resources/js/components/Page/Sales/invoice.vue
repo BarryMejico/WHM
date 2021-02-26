@@ -235,13 +235,12 @@ export default {
       },
 
       Selected_Item(event){
-        //console.log(event);
+  
          var code=event['Code'],Name=event['Name'],Unit=event['Unit'];
         var i;
         var meron = false;
 
-         if (this.po_items[0]['Icode']=="")
-        {this.po_items.splice(0, 1);}
+         
 
          for (i=0;i < this.po_items.length; i++){
             if(this.po_items[i]['Icode']===code){
@@ -255,8 +254,14 @@ export default {
             
         }
         else{
+          
+
           axios.get('/api/getitem',{params:{Code:code}})
           .then((res)=>{
+            if(res.data.length>0){
+            if (this.po_items[0]['Icode']=="")
+        {this.po_items.splice(0, 1);}
+
             this.po_items.push({
                  Icode:code,
                 idescription:Name,
@@ -266,12 +271,18 @@ export default {
                 
         });
 
-        
+        }
+        else{
+          alert('No available QTY');
+        }
           })
+          .catch(
+            
+          )
         
         }
         this.checkQty(this.po_items[this.po_items.length-1]);
-            this.closeModal();
+        this.closeModal();
       },
 
 
@@ -323,7 +334,7 @@ export default {
       
         addNewRow(code) {
           var codes=$('#code').val()
-          //console.log(codes);
+
             this.po_items.push({
                 Icode:codes,
                 idescription:'New Added Descriptopn',
@@ -338,7 +349,16 @@ export default {
             console.log(idx, code);
             if (idx > -1) {
                 this.po_items.splice(idx, 1);
+           
             }
+               if(this.po_items.length==0){
+                    this.po_items.push({
+                Icode:"",
+                idescription:'',
+                iunit:'',
+                Qty:0,
+                                  });
+                  }
             this.calculateTotal(sub);
         },
         
@@ -373,6 +393,7 @@ checkQty(product){
                 this.calculateLineTotal(product)
               }
               else{
+                  alert("Qty is greater than available!")
                   product.Qty=product.AvailableQty;
               }
         },

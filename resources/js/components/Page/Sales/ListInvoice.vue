@@ -81,6 +81,7 @@ export default {
              POs:[],
              pass:true,
              ItemStatus:true,
+            
     }},
 
     mounted(){
@@ -133,6 +134,7 @@ export default {
 
 checkQty(product,i,l,invoice){
   var Item;
+  
   console.log(product['Icode']);
           axios.get('/api/getitem',{params:{Code:product['Icode']}})
           .then(
@@ -140,8 +142,9 @@ checkQty(product,i,l,invoice){
               Item=res.data;
               if(parseFloat(Item[0]['Qty'])>=parseFloat(product['Qty']) ){
                 if (this.ItemStatus==false){
-                  console.log("Walang gagawin");
-                console.log(Item[0]['Qty']);}
+                  //console.log("Walang gagawin");
+                //console.log(Item[0]['Qty']);
+                }
                 else{
                   this.ItemStatus=true;}
               }
@@ -154,9 +157,7 @@ checkQty(product,i,l,invoice){
               i=i+1;
               
               pers=(i/l)*100;
-              console.log(pers +"%: "+ this.ItemStatus);
-
-              if (pers==100 && this.ItemStatus){
+              if (pers==100){
                 if(this.ItemStatus){
                         axios.post('/api/ApprovedInvoice',{params:{invoice:invoice}})
                       .then(
@@ -164,6 +165,9 @@ checkQty(product,i,l,invoice){
                       )
                       .catch()
                 }
+                else{
+                alert("Qty is greater than available!")
+              }
                 
               }
             }
@@ -192,7 +196,7 @@ if (status=="Open"){
 
   }
           else{
-            console.log("Already approved!!")
+            alert("Already approved!!")
           }
 },
        

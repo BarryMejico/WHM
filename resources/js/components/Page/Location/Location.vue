@@ -15,7 +15,7 @@
                         <div class="col-md-9">
                              
                             <h3>
-                                <label id="Namehead">/</label>
+                                <label id="Namehead">root</label>
                                 <label id="head" type="text"></label>
                             </h3>
                         </div>
@@ -187,14 +187,10 @@ savingNode(){
     var newId=e.id.slice(3,e.id.length);
     var eTarget = document.getElementById(newId);
 
-    
-
     if(eTarget.style.display=="none"){
         eTarget.style.display="inherit";
-        
     }else{
         eTarget.style.display="none"
-        
     }
 },
 

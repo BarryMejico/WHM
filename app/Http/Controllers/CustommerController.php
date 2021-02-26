@@ -29,6 +29,7 @@ class CustommerController extends Controller
 
     public function Delete(Request $request){  
         $input = $request->all();
+        //dd($input);
         $request->validate([
             'Ccode'=>['required', new inUseData],
         ]);
@@ -36,21 +37,7 @@ class CustommerController extends Controller
     }   
 
     public function update(Request $request){        
-        // $request->validate([
-        //     'Name'=>'required',
-        //     'Number'=>'required',
-        //     'Address'=>'required'  
-        // ]);
-
-        // $input = $request->all();
-        // $Code=Ucode();
-        // //dd($input);
-        // $customer = Customer::find($input['ids']);
-        // $customer ->Customer= $input['Name'];
-        // $customer ->Number= $input['Number'];
-        // $customer ->Address= $input['Address']; 
-               
-        // $customer->save(); 
+ 
         $request->validate([
             'Name'=>'required',
             'Number'=>'required',
@@ -71,9 +58,15 @@ class CustommerController extends Controller
 
     public function LoadCus(){
             $Vendors=Customer::all();
+            //$Vendors=Customer::paginate(5);
             return $Vendors;
-        
     }
+
+    public function LoadCusPagination(){
+        //$Vendors=Customer::all();
+        $Vendors=Customer::paginate(5);
+        return $Vendors;
+}
 
     public function Search(Request $request){
         $input = $request->all();

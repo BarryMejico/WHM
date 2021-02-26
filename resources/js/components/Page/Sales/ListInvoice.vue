@@ -23,7 +23,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr v-for="(po_item, k) in POs" :key="k">      
+    <tr v-for="(po_item, k) in POs.data" :key="k">      
       <th scope="row">{{k}}</th>
       <td>{{po_item.invoice}}</td>
       <td>{{po_item.Ccode}}</td>
@@ -47,6 +47,13 @@
     </tr>
   </tbody>
 </table>
+<ul class="pagination justify-content-end">
+    <li class="page-item"><a class="page-link bg-dark text-white" @click.prevent="prepAGE()">Previous</a></li>
+    <ul class="pagination justify-content-end" v-for="(pages, page) in POs.last_page" :key=page>
+    <li class="page-item"><a class="page-link bg-dark text-white" @click.prevent="changepAGE(pages)">{{pages}}</a></li>
+    </ul>
+    <li class="page-item"><a class="page-link bg-dark text-white" @click.prevent="nextpAGE()">Next</a></li>
+</ul>
     </div>
     </div>
 </div>
@@ -73,7 +80,8 @@ export default {
       return{
              POs:[],
              pass:true,
-             ItemStatus:"",
+             ItemStatus:true,
+            
     }},
 
     mounted(){
@@ -85,11 +93,40 @@ export default {
     },
 
     methods:{
+//pagination
+      changepAGE(page){
+        axios.get('/api/LoadInvoive?page='+page)
+        .then((res)=>{
+          this.POs=res.data;
+          })
+          .catch((errors)=>{
+          })
+      },
+     prepAGE(){
+        axios.get(this.POs.first_page_url)
+        .then((res)=>{
+          this.POs=res.data;
+          })
+          .catch((errors)=>{
+          })
+      },
+      nextpAGE(){
+        axios.get(this.POs.next_page_url)
+        .then((res)=>{
+          this.POs=res.data;
+          })
+          .catch((errors)=>{
+          })
+      },
+//end pagination
+
+
       loadpos:function(){
           axios.get('/api/LoadInvoive')
           .then(
               (response)=>{
                   this.POs=response.data;
+                  
               }
           )
           .catch()
@@ -97,25 +134,30 @@ export default {
 
 checkQty(product,i,l,invoice){
   var Item;
-          axios.get('/api/getitem',{params:{Code:product.Icode}})
+  
+  console.log(product['Icode']);
+          axios.get('/api/getitem',{params:{Code:product['Icode']}})
           .then(
             (res)=>{
               Item=res.data;
-              if(Item[0]['Qty']>=product.Qty){
-                if (this.ItemStatus==false){}
+              if(parseFloat(Item[0]['Qty'])>=parseFloat(product['Qty']) ){
+                if (this.ItemStatus==false){
+                  //console.log("Walang gagawin");
+                //console.log(Item[0]['Qty']);
+                }
                 else{
                   this.ItemStatus=true;}
               }
               else{
+                console.log(product['Qty']);
+                console.log(Item[0]['Qty']);
                   this.ItemStatus= false;
                 }
               var pers=100;
               i=i+1;
               
               pers=(i/l)*100;
-              console.log(pers +"%: "+ this.ItemStatus);
-
-              if (pers==100 && this.ItemStatus){
+              if (pers==100){
                 if(this.ItemStatus){
                         axios.post('/api/ApprovedInvoice',{params:{invoice:invoice}})
                       .then(
@@ -123,6 +165,9 @@ checkQty(product,i,l,invoice){
                       )
                       .catch()
                 }
+                else{
+                alert("Qty is greater than available!")
+              }
                 
               }
             }
@@ -151,7 +196,7 @@ if (status=="Open"){
 
   }
           else{
-            console.log("Already approved!!")
+            alert("Already approved!!")
           }
 },
        

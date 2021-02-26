@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\ReceivingDetails; 
 use App\ReceivingList;
 use App\StocksList;
+use App\po_list;
 use Illuminate\Support\Facades\DB;
 
 class receivingController extends Controller
@@ -82,6 +83,27 @@ class receivingController extends Controller
                    
                 } $PO->save();
 
+                $status = DB::table('po_lists')
+                ->where('PO',$input['PO'])
+                ->update(['Status'=>"Done"],['Reviewed_by'=>$UserIn]);
+
+}
+
+
+public function ChangeStatus(Request $request){
+    $input = $request->all();
+        //dd($input['PO']);
+        $UserIn=getUser()->id;
+        
+        $request->validate([
+        'PO'=>'required',
+        'Status'=>'required',
+        ]);
+
+        $PO = DB::table('po_lists')
+        ->where('PO',$input['PO'])
+        ->update(['Status'=>$input['Status']],['Reviewed_by'=>$UserIn]);
+        
 }
 
 public function item(Request $request){

@@ -76,45 +76,45 @@
     <button data-toggle="collapse" data-target="#setup" class="btnMenu">Data Setup</button>
         <div id="setup" class="collapse">
             <ul>   
-	            <li><router-link to="/Vendor_Create">Vendor</router-link></li>
-                <li><router-link to="/Customer_Create">Customer</router-link></li>
-                <li><router-link to="/Items_Create">Items</router-link></li>
+	            <li><router-link onclick="closeNav()" to="/Vendor_Create">Vendor</router-link></li>
+                <li><router-link onclick="closeNav()" to="/Customer_Create">Customer</router-link></li>
+                <li><router-link onclick="closeNav()" to="/Items_Create">Items</router-link></li>
             </ul>
         </div>
 
     <button data-toggle="collapse" data-target="#Sales" class="btnMenu">Sales</button>
         <div id="Sales" class="collapse">
             <ul>  
-                <li><router-link to="/Upcoming" class="notAvailable">Products</router-link></li>
-                <li><router-link to="/Upcoming" class="notAvailable">Service</router-link></li>
-                <li><router-link to="/invoice">Sales Invoice</router-link></li>
+                <li><router-link onclick="closeNav()" to="/Upcoming" class="notAvailable">Products</router-link></li>
+                <li><router-link onclick="closeNav()" to="/Upcoming" class="notAvailable">Service</router-link></li>
+                <li><router-link onclick="closeNav()" to="/invoice">Sales Invoice</router-link></li>
             </ul>
         </div>
 
     <button data-toggle="collapse" data-target="#Inventory" class="btnMenu">Inventory</button>
         <div id="Inventory" class="collapse">
             <ul>   
-	            <li><router-link to="/PO_list">Receiving</router-link></li>
-                <li><router-link to="/Upcoming" class="notAvailable">Dispatching</router-link></li>
-                <li><router-link to="/Upcoming" class="notAvailable">Returns</router-link></li>
+	            <li><router-link onclick="closeNav()" to="/PO_list">Receiving</router-link></li>
+                <li><router-link onclick="closeNav()" to="/Upcoming" class="notAvailable">Dispatching</router-link></li>
+                <li><router-link onclick="closeNav()" to="/Upcoming" class="notAvailable">Returns</router-link></li>
             </ul>
         </div>
 
         <button data-toggle="collapse" data-target="#Report" class="btnMenu">Report</button>
         <div id="Report" class="collapse">
             <ul>   
-	            <li><router-link to="/DeviceHistory">Device Repair History</router-link></li>
-                <li><router-link to="/SalesHistory">Sales History</router-link></li>
-                <li><router-link to="/Upcoming" class="notAvailable">???</router-link></li>
+	            <li><router-link onclick="closeNav()" to="/DeviceHistory">Device Repair History</router-link></li>
+                <li><router-link onclick="closeNav()" to="/SalesHistory">Sales History</router-link></li>
+                <li><router-link onclick="closeNav()" to="/Upcoming" class="notAvailable">???</router-link></li>
             </ul>
         </div>
 
         <button data-toggle="collapse" data-target="#Accounting" class="btnMenu">Accounting</button>
         <div id="Accounting" class="collapse">
             <ul>   
-	            <li><router-link to="/Upcoming" class="notAvailable">Journals</router-link></li>
-                <li><router-link to="/Upcoming" class="notAvailable">Cash Flow</router-link></li>
-                <li><router-link to="/Upcoming" class="notAvailable">Reports</router-link></li>
+	            <li><router-link onclick="closeNav()" to="/Upcoming" class="notAvailable">Journals</router-link></li>
+                <li><router-link onclick="closeNav()" to="/Upcoming" class="notAvailable">Cash Flow</router-link></li>
+                <li><router-link onclick="closeNav()" to="/Upcoming" class="notAvailable">Reports</router-link></li>
             </ul>
         </div>
 
@@ -122,16 +122,16 @@
 <button data-toggle="collapse" data-target="#WareHouse" class="btnMenu">WareHouse</button>
         <div id="WareHouse" class="collapse">
             <ul>   
-	            <li><router-link to="/Upcoming" class="notAvailable">Receiving</router-link></li>
-                <li><router-link to="/Upcoming" class="notAvailable">Placing/Put-Away</router-link></li>
-                <li><router-link to="/Upcoming" class="notAvailable">Picking</router-link></li>
-                <li><router-link to="/Upcoming" class="notAvailable">Added Value</router-link></li>
-                <li><router-link to="/Upcoming" class="notAvailable">Dispatching</router-link></li>
-                <li><router-link to="/Upcoming" class="notAvailable">Returns</router-link></li>
+	            <li><router-link onclick="closeNav()" to="/Upcoming" class="notAvailable">Receiving</router-link></li>
+                <li><router-link onclick="closeNav()" to="/Upcoming" class="notAvailable">Placing/Put-Away</router-link></li>
+                <li><router-link onclick="closeNav()" to="/Upcoming" class="notAvailable">Picking</router-link></li>
+                <li><router-link onclick="closeNav()" to="/Upcoming" class="notAvailable">Added Value</router-link></li>
+                <li><router-link onclick="closeNav()" to="/Upcoming" class="notAvailable">Dispatching</router-link></li>
+                <li><router-link onclick="closeNav()" to="/Upcoming" class="notAvailable">Returns</router-link></li>
             </ul>
         </div>
 
-<button data-toggle="collapse"><router-link  to="/Location">WareHouse Setup</router-link></button>
+<button data-toggle="collapse"><router-link onclick="closeNav()" to="/Location">WareHouse Setup</router-link></button>
 </div>
 <!--side bar End-->
 <div>

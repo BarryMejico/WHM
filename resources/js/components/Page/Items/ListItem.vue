@@ -26,7 +26,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr v-for="(po_item, k) in POs" :key="k">       
+    <tr v-for="(po_item, k) in POs.data" :key="k">       
       <th scope="row">{{k}}</th>
       <td>{{po_item.Code}}</td>
       <td>{{po_item.Name}}</td>
@@ -37,12 +37,15 @@
   </tbody>
 </table>
 
+<!--pagination vue-->
 <ul class="pagination justify-content-end">
-    <li class="page-item"><a class="page-link bg-dark text-white" href="javascript:void(0);">Previous</a></li>
-    <li class="page-item"><a class="page-link bg-dark text-white" href="javascript:void(0);">1</a></li>
-    <li class="page-item"><a class="page-link bg-dark text-white" href="javascript:void(0);">2</a></li>
-    <li class="page-item"><a class="page-link bg-dark text-white" href="javascript:void(0);">Next</a></li>
-  </ul>
+    <li class="page-item"><a class="page-link bg-dark text-white" @click.prevent="prepAGE()">Previous</a></li>
+    <ul class="pagination justify-content-end" v-for="(pages, page) in POs.last_page" :key=page>
+    <li class="page-item"><a class="page-link bg-dark text-white" @click.prevent="changepAGE(pages)">{{pages}}</a></li>
+    </ul>
+    <li class="page-item"><a class="page-link bg-dark text-white" @click.prevent="nextpAGE()">Next</a></li>
+</ul>
+<!--end pagination vue-->
 
     </div>
     </div>
@@ -104,8 +107,34 @@ export default {
     },
 
     methods:{
+       //pagination
+      changepAGE(page){
+        axios.get('/api/LoadItems2?page='+page)
+        .then((res)=>{
+          this.POs=res.data;
+          })
+          .catch((errors)=>{
+          })
+      },
+     prepAGE(){
+        axios.get(this.POs.first_page_url)
+        .then((res)=>{
+          this.POs=res.data;
+          })
+          .catch((errors)=>{
+          })
+      },
+      nextpAGE(){
+        axios.get(this.POs.next_page_url)
+        .then((res)=>{
+          this.POs=res.data;
+          })
+          .catch((errors)=>{
+          })
+      },
+//end pagination
       loadpos:function(){
-          axios.get('/api/LoadItems')
+          axios.get('/api/LoadItems2')
           .then(
               (response)=>{ 
                   this.POs=response.data;
@@ -157,7 +186,7 @@ export default {
                 if (result.value) {
 
                
-              axios.post('/api/DeleteItem',{ids:this.id})
+              axios.post('/api/DeleteItem',{Icode:this.Add})
           .then(
             ()=>{this.loadpos();
             
@@ -185,7 +214,7 @@ export default {
             closeModal() {
              document.getElementById('close').click();
 },
-       
+
     }   
 }
 </script>
@@ -253,3 +282,4 @@ text-align: center;
 	font-weight: normal;
 }	
 </style>
+

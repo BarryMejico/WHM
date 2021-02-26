@@ -109,7 +109,7 @@
 
 <script>
 import ItemsModal from '../../Modals/ItemsModal';
-import VendorModal from '../../Modals/VendorModal';
+//import VendorModal from '../../Modals/VendorModal';
 import CustomerModal from '../../Modals/CustomerModal';
 
 import MenuList from '../../Page/Sales/MainInvoice';
@@ -147,6 +147,7 @@ function int_data(){
         Qty:'',
         UnitCost:'',
         Tcost:0,
+        AvailableQty:0,
       }],
       //-----for loading items
         items:[],
@@ -162,7 +163,7 @@ export default {
     components: {
     MenuList,
     ItemsModal,
-    VendorModal,
+    //VendorModal,
     CustomerModal,
         DevicesModal,
     }, 
@@ -234,13 +235,12 @@ export default {
       },
 
       Selected_Item(event){
-        //console.log(event);
+  
          var code=event['Code'],Name=event['Name'],Unit=event['Unit'];
         var i;
         var meron = false;
 
-         if (this.po_items[0]['Icode']=="")
-        {this.po_items.splice(0, 1);}
+         
 
          for (i=0;i < this.po_items.length; i++){
             if(this.po_items[i]['Icode']===code){
@@ -251,17 +251,38 @@ export default {
 
         if (meron){
             //console.log("Item already Exist!!!")
+            
         }
         else{
           
-        this.po_items.push({
+
+          axios.get('/api/getitem',{params:{Code:code}})
+          .then((res)=>{
+            if(res.data.length>0){
+            if (this.po_items[0]['Icode']=="")
+        {this.po_items.splice(0, 1);}
+
+            this.po_items.push({
                  Icode:code,
                 idescription:Name,
                 iunit:Unit,
                 Qty:1, 
-                                  });
+                AvailableQty:res.data[0]['Qty'],
+                
+        });
+
         }
-            this.closeModal();
+        else{
+          alert('No available QTY');
+        }
+          })
+          .catch(
+            
+          )
+        
+        }
+        this.checkQty(this.po_items[this.po_items.length-1]);
+        this.closeModal();
       },
 
 
@@ -313,7 +334,7 @@ export default {
       
         addNewRow(code) {
           var codes=$('#code').val()
-          //console.log(codes);
+
             this.po_items.push({
                 Icode:codes,
                 idescription:'New Added Descriptopn',
@@ -328,7 +349,16 @@ export default {
             console.log(idx, code);
             if (idx > -1) {
                 this.po_items.splice(idx, 1);
+           
             }
+               if(this.po_items.length==0){
+                    this.po_items.push({
+                Icode:"",
+                idescription:'',
+                iunit:'',
+                Qty:0,
+                                  });
+                  }
             this.calculateTotal(sub);
         },
         
@@ -358,22 +388,14 @@ export default {
         },
 
 checkQty(product){
-  var Item;
-          axios.get('/api/getitem',{params:{Code:product.Icode}})
-          .then(
-            (res)=>{
-              Item=res.data;
 
-              if(Item[0]['Qty']>product.Qty){
+              if(parseFloat(product.AvailableQty)>=parseFloat(product.Qty)){
                 this.calculateLineTotal(product)
               }
               else{
-                  product.Qty=Item[0]['Qty'];
+                  alert("Qty is greater than available!")
+                  product.Qty=product.AvailableQty;
               }
-            }
-          )
-          .catch()
-          
         },
 
 
@@ -461,7 +483,7 @@ checkQty(product){
 
         clearData(){
           Object.assign(this.$data, this.$options.data.apply(this));
-               this.load_vendor();
+               //this.load_vendor();
                this.load_customer();
                this.load_item();
         },

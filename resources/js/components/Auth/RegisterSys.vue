@@ -111,6 +111,15 @@ export default {
                 this.message.head="Sucess!";
                 this.message.insdide="Sucess!";
                 this.message.visibility=true;
+
+                 Swal.fire({
+              title: 'User Added Successfully',
+              icon: 'success',
+              timer:1500,
+              showCancelButton: false,
+              showConfirmButton: false 
+            })
+
                 
                 
             }).catch((error)=>{
@@ -121,14 +130,7 @@ export default {
                 console.log(this.errors);
             })
   
-            Swal.fire({
-              title: 'User Added Successfully',
-              icon: 'success',
-              timer:1500,
-              showCancelButton: false,
-              showConfirmButton: false 
-            })
-
+           
           }else if (result.dismiss === Swal.DismissReason.cancel) {
           console.log('Back to Create PO');
           }

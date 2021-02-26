@@ -97,6 +97,7 @@ export default {
                 showConfirmButton:false
 
             })
+             })
         .catch((error)=>{
                 this.message.errors=error.response.data;
                 this.message.insdide="Please check these errors before proceeding!";
@@ -115,7 +116,7 @@ export default {
             })
 
 
-    })
+   
         }
     }
 }

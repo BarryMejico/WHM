@@ -33,6 +33,7 @@ Route::post('login','RegisterControl@login');
 Route::post('SaveVendor','VendorController@store');
 Route::post('DeleteVendor','VendorController@Delete');
 Route::get('LoadVen','VendorController@index');
+Route::get('LoadVen2','VendorController@indexPagination');
 Route::post('updateVendor','VendorController@update');
 Route::get('LiveSearchVen','VendorController@Search');
 
@@ -45,6 +46,7 @@ Route::post('ChangeStatus','PoDetailsControl@ChangeStatus');
 
 
 Route::get('LoadCus','CustommerController@LoadCus');
+Route::get('LoadCus2','CustommerController@LoadCusPagination');
 Route::post('SaveCus','CustommerController@store');
 Route::post('updateCus','CustommerController@update');
 Route::get('LiveSearchCus','CustommerController@Search');
@@ -53,6 +55,7 @@ Route::post('DeleteCustomer','CustommerController@Delete');
 Route::post('SaveItem','itemController@SaveItem');
 Route::get('LiveSearchItem','itemController@Search');
 Route::get('LoadItems','itemController@LoadItems');
+Route::get('LoadItems2','itemController@LoadItemsPagination');
 Route::post('updateItems','itemController@update');
 Route::post('DeleteItem','itemController@Delete');
 

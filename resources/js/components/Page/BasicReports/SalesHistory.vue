@@ -23,7 +23,7 @@
       <th scope="row">{{k}}</th>
       <td>{{item.updated_at}}</td>
       <td>{{item.invoice}}</td>
-      <td>{{item.Total_Amount}}</td>
+      <td>{{item.Total_Amount| numeral('0,0')}}</td>
       <td>{{item.Created_by}}</td>
       
        <!--<td>

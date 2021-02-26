@@ -5,7 +5,12 @@ namespace App\Rules;
 use Illuminate\Contracts\Validation\Rule;
 use App\Customer;
 use App\Cusstomer_Device;
+
 use App\po_list; 
+use App\poDetails;
+
+use App\Sales;
+use App\SalesDetails;
 
 class inUseData implements Rule
 {
@@ -29,9 +34,17 @@ class inUseData implements Rule
     public function passes($attribute, $value)
     {
         if ($attribute=="Ccode"){
-        $customer = Cusstomer_Device::where('Ccode',$value)->count();
-        //dd($customer);
-        if ($customer==0){
+           // dd($value);
+        $customerInDevice =Cusstomer_Device::where('Ccode',$value)->count();
+        $customerInSales =Sales::where('Ccode',$value)->count();
+        $customerInPO = po_list::where('Ship_to',$value)->count();
+        
+        
+        if ($customerInDevice==0 && 
+            $customerInSales==0 &&
+            $customerInPO==0
+        ){
+            
             return true;
         }
         }
@@ -43,6 +56,14 @@ class inUseData implements Rule
                 return true;
             }
             }
+
+            elseif ($attribute=="Icode"){
+                $Item = poDetails::where('Icode',$value)->count();
+                //dd($customer);
+                if ($Item==0){
+                    return true;
+                }
+                }
 
 
     }

@@ -102,9 +102,9 @@
                 <td>{{po_item.iunit}}</td>
                 <td class="in"><div class="qty"><input v-model="po_item.Qty" min="1" type="number" @change="calculateLineTotal(po_item)" :disabled="disabled == 1"></div></td>
                 <td class="in"><div class="qty"><input v-model="po_item.UnitCost"  @change="calculateLineTotal(po_item)" :disabled="disabled == 1"></div></td>
-                <td>{{po_item.Tcost}} Php</td>
+                <td>{{po_item.Tcost | numeral('0,0')}} Php</td>
                 <td>
-                  <button class="my_btn btn link" :disabled="disabled == 1" ><small>Recompute</small></button>
+                  <button class="my_btn btn link" :disabled="disabled == 1"><small>Recompute</small></button>
                   <button class="my_btn btn link" @click="deleteRow(k, po_item,po_item.Icode)" :disabled="disabled == 1"><small>X</small></button>
                 </td>
               </tr>
@@ -113,7 +113,7 @@
         </div>
         <div class="col-lg-2">
             <div class="total">
-              <span><b>Total:</b> {{PO_total}} Php</span><br>
+              <span><b>Total:</b> {{PO_total| numeral('0,0')}} Php</span><br>
               <hr>
               <button type="button" id="SaveBtn" class="btn btn-info" @click.prevent="saveform">Save</button>
               <button type="button" id="CanBtn" class="btn danger btn-danger" @click.prevent="clearData">Clear ALL</button>
@@ -127,26 +127,6 @@
    
 </div>
 
-
-   
-   
-<!-- <button href="#Loading" id="btnLoad"  data-toggle="modal" type="button" class="btn btn-primary btn-sm" >Loading</button> -->
-
-<!--modal Mod/Del-->
-<!-- <div id="Loading" class="modal fade">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			
-				<div class="modal-header">						
-					<h4 class="modal-title">Loading</h4>
-					<button type="button" id="close" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				</div>
-				<div class="modal-body">
-          loading img
-        </div>
-    </div>
-  </div>
-</div> -->
 
 </div>
 
@@ -247,27 +227,21 @@ export default {
 
       approvedStatus(status){
          document.getElementById("po").disabled = true;
-         console.log(status);
-        if (status=="Approved")
+        if (status=="Approved" || status=="Canceled" )
         {
           
-        CustomerModal.disabled;
-        ItemsModal.disabled;
-        VendorModal.disabled;
-
         document.getElementById("SaveBtn").disabled = true;//save btn
         document.getElementById("CanBtn").disabled = true;//clear btn 
-        this.disabled=1}
+        this.disabled=1
+        alert('cannot edit Po that already Approved');
+        }
       },
 
       Selected_Item(event){
         var code=event['Code'],Name=event['Name'],Unit=event['Unit'];
         var i;
         var meron = false;
-         
-         if (this.po_items[0]['Icode']=="")
-        {this.po_items.splice(0, 1);}
-         
+                  
          for (i=0;i < this.po_items.length; i++){
             if(this.po_items[i]['Icode']===code){
                meron = true;
@@ -279,6 +253,8 @@ export default {
             console.log("Item already Exist!!!")
         }
         else{
+          if (this.po_items[0]['Icode']=="")
+        {this.po_items.splice(0, 1);}
           
         this.po_items.push({
                 Icode:code,
@@ -392,9 +368,17 @@ export default {
                   if (idx > -1) {
                       this.po_items.splice(idx, 1);
                   }
+                  if(this.po_items.length==0){
+                    this.po_items.push({
+                Icode:"",
+                idescription:'',
+                iunit:'',
+                Qty:0,
+                                  });
+                  }
                   this.calculateTotal(sub);
 
-  
+
             Swal.fire({
               title: 'Item Removed Successfully',
               icon: 'success',

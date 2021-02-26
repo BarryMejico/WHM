@@ -162,12 +162,14 @@ export default {
                 this.closeModal();
               }
           )
-          .catch(error => {
-            if (error.response.status=422){
-            this.errors = error.response.data.errors;
-            console.log(this.errors);
-            }
-            
+          .catch((error)=>{
+                 Swal.fire({
+                    icon:'danger',
+                    title:"Oops!",
+                    text:error.response.data.errors,
+                    showCancelButton: false,
+                    showConfirmButton: true
+                    }) 
             })
           
             },
@@ -188,23 +190,31 @@ export default {
                
               axios.post('/api/DeleteItem',{Icode:this.Add})
           .then(
-            ()=>{this.loadpos();
-            
-            }
-          )
-          .catch();
+            ()=>{
+              this.loadpos();
 
-  
-            Swal.fire({
+              Swal.fire({
               title: 'Item Removed Successfully',
               icon: 'success',
               timer:1500,
               showCancelButton: false,
               showConfirmButton: false 
             })
+            
+            }
+          )
+          .catch((error)=>{
+                 Swal.fire({
+                    icon:'danger',
+                    title:"Oops!",
+                    text:error.response.data.errors,
+                    showCancelButton: false,
+                    showConfirmButton: true
+                    }) 
+            });
 
           }else if (result.dismiss === Swal.DismissReason.cancel) {
-          console.log('Item Stays');
+          //console.log('Item Stays'); //inshort do nothing
           }
         })
 

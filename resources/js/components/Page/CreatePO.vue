@@ -56,19 +56,19 @@
          <div class="col-lg-2">
              <button type="button" class="btn btn-info">Print</button>
             <items-modal @SelectedItems="Selected_Item" :disabled="disabled"></items-modal>
-    <!--Status-->        
-    <div class="dropdown">
-    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-    <span class="caret">{{status}}</span>
-    <p>{{last_update}}</p>
-    </button>
-    <ul class="dropdown-menu">
-      <li><button @click="changeStatus('Open')" class="my_btn btn">Open</button></li>
-      <li><button @click="changeStatus('Approved')" class="success my_btn">Approved</button></li>
-      <li><button @click="changeStatus('Canceled')" class="my_btn btn-danger">Canceled</button></li>
-    </ul>
-    </div>
-         </div>
+          <!--Status-->        
+          <div class="dropdown">
+          <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+          <span class="caret">{{status}}</span>
+          <p>{{last_update}}</p>
+          </button>
+          <ul class="dropdown-menu">
+            <li><button @click="changeStatus('Open')" class="my_btn btn">Open</button></li>
+            <li><button @click="changeStatus('Approved')" class="success my_btn">Approved</button></li>
+            <li><button @click="changeStatus('Canceled')" class="my_btn btn-danger">Canceled</button></li>
+          </ul>
+          </div>
+              </div>
       </div>
     
     
@@ -102,10 +102,10 @@
                 <td>{{po_item.iunit}}</td>
                 <td class="in"><div class="qty"><input v-model="po_item.Qty" min="1" type="number" @change="calculateLineTotal(po_item)" :disabled="disabled == 1"></div></td>
                 <td class="in"><div class="qty"><input v-model="po_item.UnitCost"  @change="calculateLineTotal(po_item)" :disabled="disabled == 1"></div></td>
-                <td>{{po_item.Tcost | numeral('0,0')}} Php</td>
+                <td>{{po_item.Tcost}} Php</td>
                 <td>
-                  <button class="my_btn btn link" :disabled="disabled == 1"><small>Recompute</small></button>
-                  <button class="my_btn btn link" @click="deleteRow(k, po_item,po_item.Icode)" :disabled="disabled == 1"><small>X</small></button>
+                  <span class="badge badge-info" :disabled="disabled == 1" >Recompute</span>
+                  <span class="badge badge-danger" @click="deleteRow(k, po_item,po_item.Icode)" :disabled="disabled == 1">X</span>
                 </td>
               </tr>
             </tbody>
@@ -113,7 +113,7 @@
         </div>
         <div class="col-lg-2">
             <div class="total">
-              <span><b>Total:</b> {{PO_total| numeral('0,0')}} Php</span><br>
+              <span><b>Total:</b> {{PO_total}} Php</span><br>
               <hr>
               <button type="button" id="SaveBtn" class="btn btn-info" @click.prevent="saveform">Save</button>
               <button type="button" id="CanBtn" class="btn danger btn-danger" @click.prevent="clearData">Clear ALL</button>
@@ -127,6 +127,26 @@
    
 </div>
 
+
+   
+   
+<!-- <button href="#Loading" id="btnLoad"  data-toggle="modal" type="button" class="btn btn-primary btn-sm" >Loading</button> -->
+
+<!--modal Mod/Del-->
+<!-- <div id="Loading" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			
+				<div class="modal-header">						
+					<h4 class="modal-title">Loading</h4>
+					<button type="button" id="close" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body">
+          loading img
+        </div>
+    </div>
+  </div>
+</div> -->
 
 </div>
 
@@ -201,6 +221,12 @@ export default {
       //this.load();
       var $POL = this.$route.params.PO_Load;      
       if(typeof this.$route.params.PO_Load === "undefined" ){
+        //  Swal.fire({
+        //       title: 'PO Undefined',
+        //       icon: 'Warning',
+        //       showCancelButton: false,
+        //       showConfirmButton: true
+        //     })
         console.log("PO Undefied")
         console.log(".");
       }else{
@@ -227,21 +253,27 @@ export default {
 
       approvedStatus(status){
          document.getElementById("po").disabled = true;
-        if (status=="Approved" || status=="Canceled" )
+         console.log(status);
+        if (status=="Approved")
         {
           
+        CustomerModal.disabled;
+        ItemsModal.disabled;
+        VendorModal.disabled;
+
         document.getElementById("SaveBtn").disabled = true;//save btn
         document.getElementById("CanBtn").disabled = true;//clear btn 
-        this.disabled=1
-        alert('cannot edit Po that already Approved');
-        }
+        this.disabled=1}
       },
 
       Selected_Item(event){
         var code=event['Code'],Name=event['Name'],Unit=event['Unit'];
         var i;
         var meron = false;
-                  
+         
+         if (this.po_items[0]['Icode']=="")
+        {this.po_items.splice(0, 1);}
+         
          for (i=0;i < this.po_items.length; i++){
             if(this.po_items[i]['Icode']===code){
                meron = true;
@@ -250,11 +282,16 @@ export default {
         }
 
         if (meron){
-            console.log("Item already Exist!!!")
+            //console.log("Item already Exist!!!")
+             Swal.fire({
+              title: 'Item already Exist!!!',
+              icon: 'warning',
+              timer:1500,
+              showCancelButton: false,
+              showConfirmButton: false 
+            })
         }
         else{
-          if (this.po_items[0]['Icode']=="")
-        {this.po_items.splice(0, 1);}
           
         this.po_items.push({
                 Icode:code,
@@ -344,7 +381,7 @@ export default {
           //console.log(codes);
             this.po_items.push({
                 Icode:codes,
-                idescription:'New Added Descriptopn',
+                idescription:'New Added Description',
                 iunit:'ea',
             });
             this.closeModal()
@@ -368,17 +405,9 @@ export default {
                   if (idx > -1) {
                       this.po_items.splice(idx, 1);
                   }
-                  if(this.po_items.length==0){
-                    this.po_items.push({
-                Icode:"",
-                idescription:'',
-                iunit:'',
-                Qty:0,
-                                  });
-                  }
                   this.calculateTotal(sub);
 
-
+  
             Swal.fire({
               title: 'Item Removed Successfully',
               icon: 'success',
@@ -388,7 +417,7 @@ export default {
             })
 
           }else if (result.dismiss === Swal.DismissReason.cancel) {
-          console.log('Item Stays');
+          console.log('Item Stays');//just do nothing
           }
         })
         },
@@ -459,7 +488,13 @@ export default {
             })
 
           }else if (result.dismiss === Swal.DismissReason.cancel) {
-          console.log('Back to Create PO');
+           Swal.fire({
+              title: 'Back to Create PO',
+              icon: 'info',
+              timer:1500,
+              showCancelButton: false,
+              showConfirmButton: false 
+            })
           }
         })
 
@@ -543,6 +578,13 @@ export default {
 
         deleteItem(code){
           axios.post('/api/DeletePOItem',{params:{PO:this.po,code:code}})
+           Swal.fire({
+              title: 'Item Deleted',
+              icon: 'success',
+              timer:1500,
+              showCancelButton: false,
+              showConfirmButton: false
+            })
         },
 
         changeStatus(NewStatus){
@@ -556,7 +598,13 @@ export default {
           .catch()
           }
           else{
-            console.log("PO already reviewed");
+             Swal.fire({
+              title: 'PO already reviewed',
+              icon: 'info',
+              showCancelButton: false,
+              showConfirmButton: true
+            })
+            // console.log("PO already reviewed");
           }
         },
     }

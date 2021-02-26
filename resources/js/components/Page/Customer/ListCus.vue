@@ -249,6 +249,15 @@ closeModal() {
             if (error.response.status=422){
             this.errors = error.response.data.errors;
             console.log(this.errors);
+             Swal.fire({
+                title: 'Oops!',
+                text: this.errors,
+                icon: 'danger',
+                showCancelButton: false,
+                showConfirmButton: true,
+              
+              })
+            
             }
             
             })
@@ -303,7 +312,7 @@ closeModal() {
 
             })
           }else if (result.dismiss === Swal.DismissReason.cancel) {
-          console.log('Customer Info Stays');
+          console.log('Customer Info Stays');//inshort do nothing
           }
         })
             },

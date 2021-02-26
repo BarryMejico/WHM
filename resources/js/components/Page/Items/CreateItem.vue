@@ -91,8 +91,9 @@ export default {
             console.log(this.errors);
 
               Swal.fire({
-              title: 'Error',
-              icon: error.response.data.errors,
+              title: 'Oops!',
+              icon: 'danger',
+              text: this.errors,
               showCancelButton: false,
               showConfirmButton: false 
             })

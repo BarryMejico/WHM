@@ -165,7 +165,14 @@ export default {
           .catch(error => {
             if (error.response.status=422){
             this.errors = error.response.data.errors;
-            console.log(this.errors);
+            //console.log(this.errors);
+             Swal.fire({
+                title: 'Oops!',
+                text: this.errors,
+                icon: 'danger',
+                showCancelButton: false,
+                showConfirmButton: true
+              })
             }
             
             })
@@ -189,12 +196,13 @@ export default {
                     .then(
                       ()=>{    
                       this.loadpos();
+
                      Swal.fire({
-                     title: 'Vendor Removed',
+                      title: 'Vendor Removed',
                       icon: 'success',
                       timer:1500,
                       showCancelButton: false,
-                       showConfirmButton: false 
+                      showConfirmButton: false 
             })
 
                       }
@@ -202,7 +210,7 @@ export default {
                     .catch();
 
           }else if (result.dismiss === Swal.DismissReason.cancel) {
-          console.log('Vendor Stays');
+          console.log('Vendor Stays');//inshort do nothing
           }
         })
 

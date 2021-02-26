@@ -172,7 +172,7 @@
                         with quality service to enhance the competitive advantages.
                         </p>
                 
-                    <p>© 2014 BS3 UI Kit, All rights reserved</p>
+                    <p>© 2020 BS, All rights reserved</p>
             </div>
 
         	<div class="col-md-3 footer-nav animated fadeInUp">

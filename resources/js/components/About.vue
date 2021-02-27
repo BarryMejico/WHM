@@ -23,11 +23,10 @@
                    <br>
 
                    <div class="row">
-        
-                       <div class="col-md-6">
+                       <div class="col-md-5">
                            <img class="displayed" src="../media/SaaS.png" alt="logo">
                        </div>
-                       <div class="col-md-6 a">
+                       <div class="col-md-7 a">
                            <h5>Software as a Service</h5>
                            <small class="text-muted">Software delivery and licensing in which software is accessed online via a subscription</small>
                        </div>
@@ -35,10 +34,10 @@
                <br>
 
                    <div class="row">
-                       <div class="col-md-6">
+                       <div class="col-md-5">
                            <img class="displayed" src="../media/online platform copy.png" alt="logo">
                        </div>
-                       <div class="col-md-6 a">
+                       <div class="col-md-7 a">
                            <h5>Online Platform for Business and Marketing</h5>
                            <small class="text-muted">Leveraging web-based channels to spread a message about a company's brand, products, or services to its potential customers</small>
                        </div>
@@ -47,10 +46,10 @@
                 <br>
 
                    <div class="row">
-                       <div class="col-md-6">
+                       <div class="col-md-5">
                            <img class="displayed" src="../media/business solutions copy.png" alt="logo">
                        </div>
-                       <div class="col-md-6 a">
+                       <div class="col-md-7 a">
                            <h5>Modern Approach of Business Solutions</h5>
                            <small class="text-muted">Modern workforce management solution helps a business organization to be both more efficient </small>
                        </div>
@@ -59,10 +58,10 @@
                <br>
 
                    <div class="row">
-                       <div class="col-md-6">
+                       <div class="col-md-5">
                            <img class="displayed" src="../media/business subscription plan copy.png" alt="logo">
                        </div>
-                       <div class="col-md-6 a">
+                       <div class="col-md-7 a">
                            <h5>Taylored Fit Description Plan for the Needs of Different Businesses</h5>
                            <small class="text-muted">A roadmap that gives you a step by step guide to creating ongoing value for your customers</small>
                        </div>
@@ -82,8 +81,8 @@
 .displayed{
     display: block;
    
-    margin:auto auto auto 60%;
-    width:30%;
+    margin:auto auto auto 50%;
+    width:140px;
 }
 .a{
     margin:auto;

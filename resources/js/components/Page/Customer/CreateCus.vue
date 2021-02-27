@@ -87,7 +87,15 @@ export default {
           .catch(error => {
             if (error.response.status=422){
             this.errors = error.response.data.errors;
-            console.log(this.errors);
+            //console.log(this.errors);
+             Swal.fire({
+                icon:'danger',
+                title:"Oops!",
+                text:this.errors,
+                // timer:2000,
+                showCancelButton: false,
+                showConfirmButton: true
+                }) 
             }
             
             })

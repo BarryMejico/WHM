@@ -79,8 +79,8 @@
                     <td class="in"><div class="qty"><input  v-model="po_item.UnitCost"  @change="calculateLineTotal(po_item)" :disabled="disabled == 1"></div></td>
                     <td>{{po_item.Tcost}} Php</td>
                     <td :disabled="disabled == 1">
-                    <badge class="my_btn btn link" @click="calculateLineTotal(po_item)"><small>Recompute</small></badge>
-                    <badge class="my_btn btn link" @click="deleteRow(k, po_item,po_item.Icode)" :disabled="disabled == 1"><small>X</small></badge></td>
+                    <span class="badge badge-info" @click="calculateLineTotal(po_item)">Recompute</span>
+                    <span class="badge badge-danger" @click="deleteRow(k, po_item,po_item.Icode)" :disabled="disabled == 1"><small>X</small></span></td>
                   </tr>
                 </tbody>
               </table>
@@ -111,6 +111,7 @@
 import ItemsModal from '../../Modals/ItemsModal';
 //import VendorModal from '../../Modals/VendorModal';
 import CustomerModal from '../../Modals/CustomerModal';
+import Swal from 'sweetalert2'
 
 import MenuList from '../../Page/Sales/MainInvoice';
 import DevicesModal from '../../Modals/DevicesModal.vue';
@@ -251,7 +252,16 @@ export default {
         }
 
         if (meron){
-            //console.log("Item already Exist!!!")
+            console.log("Item already Exist!!!")
+
+            //  Swal.fire({
+            //     icon:'warning',
+            //     title:"Oops!",
+            //     text:"Item already Exist!!!",
+            //     timer:2000,
+            //     showCancelButton: false,
+            //     showConfirmButton: false
+            //     }) 
             
         }
         else{
@@ -274,10 +284,26 @@ export default {
 
         }
         else{
-          alert('No available QTY');
+          //alert('No available QTY');
+           Swal.fire({
+                icon:'warning',
+                title:"Oops!",
+                text:"No More Available Item",
+                showCancelButton: false,
+                showConfirmButton: true
+                }) 
         }
+
           })
-          .catch(
+          .catch((error)=>{
+                 Swal.fire({
+                    icon:'danger',
+                    title:"Oops!",
+                    text:error.response.data.errors,
+                    showCancelButton: false,
+                    showConfirmButton: true
+                    }) 
+            }
             
           )
         
@@ -349,18 +375,43 @@ export default {
             var sub=0-invoice_product.Tcost;
             console.log(idx, code);
             if (idx > -1) {
-                this.po_items.splice(idx, 1);
-           
-            }
-               if(this.po_items.length==0){
-                    this.po_items.push({
+
+              Swal.fire({
+                title: 'Confirmation',
+                text: 'Are you sure to remove this Item?',
+                icon: 'warning',
+                showCancelButton: true,
+                showConfirmButton: true,
+              }).then((result) => {
+                if (result.value) {
+
+               
+             this.po_items.splice(idx, 1)
+             if(this.po_items.length==0){
+              this.po_items.push({
                 Icode:"",
                 idescription:'',
                 iunit:'',
                 Qty:0,
-                                  });
-                  }
+              });
+            }
             this.calculateTotal(sub);
+
+              Swal.fire({
+              title: 'Item Removed Successfully',
+              icon: 'success',
+              timer:1500,
+              showCancelButton: false,
+              showConfirmButton: false 
+            })
+            
+       
+
+          }else if (result.dismiss === Swal.DismissReason.cancel) {
+                  console.log("Cancel remove")// inshort do nothing on the UI
+          }
+        })
+      }
         },
         
         
@@ -394,8 +445,15 @@ checkQty(product){
                 this.calculateLineTotal(product)
               }
               else{
-                  alert("Qty is greater than available!")
                   product.Qty=product.AvailableQty;
+                   //alert("Qty is greater than available!")
+                   Swal.fire({
+                    icon:'warning',
+                    title:"Oops!",
+                    text:"Quantity is Greater than Available",
+                    showCancelButton: false,
+                    showConfirmButton: true
+                    }) 
               }
         },
 
@@ -413,7 +471,13 @@ checkQty(product){
                this.clearData();
             })
             .catch((error)=>{
-                this.errors=error.response.data.errors;
+                 Swal.fire({
+                    icon:'danger',
+                    title:"Oops!",
+                    text:error.response.data.errors,
+                    showCancelButton: false,
+                    showConfirmButton: true
+                    }) 
             })
         },
 
@@ -437,7 +501,13 @@ checkQty(product){
                   }
           )
          .catch((error)=>{
-                this.errors=error.response.data.errors;
+                 Swal.fire({
+                    icon:'danger',
+                    title:"Oops!",
+                    text:error.response.data.errors,
+                    showCancelButton: false,
+                    showConfirmButton: true
+                    }) 
             })
         },
 

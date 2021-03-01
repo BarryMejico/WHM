@@ -12,7 +12,7 @@ class DeviceController extends Controller
         //$input=$REQUEST->all();
         //dd($REQUEST[0]);
         $REQUEST->validate([
-            'Code' => ['required', 'string'],
+            'Code' => ['required', 'string','unique:cusstomer__devices'],
             'DeciveName' => ['required', 'string'],
             'Model' => ['required', 'string'],
             'Ccode' => ['required', 'string'],

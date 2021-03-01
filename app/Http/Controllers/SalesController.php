@@ -43,7 +43,7 @@ class SalesController extends Controller
                     'Qty' => $input['po_items'][$i]['Qty'],
                     'UnitCost' => $input['po_items'][$i]['UnitCost'],
                     'invoice' => $input['PO'],
-                    'description' => $input['po_items'][$i]['idescription'],
+                    'description' => $input['po_items'][$i]['description'],
                     'Remarks' => ""
         ]);
         
@@ -73,19 +73,24 @@ class SalesController extends Controller
         
         for($i=0;$i<=$countarray;$i++){
             
+            $strng =$invoiceDetails->Icode;
+            dd($strng);
+            if(substr($strng,0,2)=="pc"){
 
+            }
+            else{
             $item=DB::table('stocks_lists')
         ->where('Icode', [$invoiceDetails[$i]->Icode])
         ->get();
         //dd($invoiceDetails[$i]->Qty);
             $NewQty=$item[0]->Qty-$invoiceDetails[$i]->Qty;
-            
             $updateStocks=StocksList::updateOrCreate(['Icode' => $invoiceDetails[$i]->Icode],[
                 'Qty' => $NewQty,
                 
             ]);
             $updateStocks->save();
         }
+    }
 
         $PO = sales::updateOrCreate(['invoice'=> $REQUEST['params']['invoice']],[
             'Status'=>'Approved',

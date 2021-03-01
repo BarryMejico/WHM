@@ -33,7 +33,7 @@
                 <items-modal @SelectedItems="Selected_Item" :disabled="disabled"></items-modal>
 
                 <div>
-                    <devices-modal @SelectedDevice="Selected_Item" v-bind:selectedCus="ccode" :disabled="disabled"></devices-modal> 
+                    <devices-modal @SelectedDevice="Selected_Device" v-bind:selectedCus="ccode" :disabled="disabled"></devices-modal> 
                 </div> 
 
                 <div class="dropdown">
@@ -73,7 +73,7 @@
                   <tr  v-for="(po_item, k) in po_items" :key="k">      
                     <th scope="row" class="in">{{k}}</th>
                     <td>{{po_item.Icode}}</td>
-                    <td>{{po_item.idescription}}</td>
+                    <td>{{po_item.description}}</td>
                     <td>{{po_item.iunit}}</td>
                     <td class="in"><div class="qty"><input  v-model="po_item.Qty" min="1" type="number" @change="checkQty(po_item)" :disabled="disabled == 1"></div></td>
                     <td class="in"><div class="qty"><input  v-model="po_item.UnitCost"  @change="calculateLineTotal(po_item)" :disabled="disabled == 1"></div></td>
@@ -154,6 +154,8 @@ function int_data(){
         items:[],
         //--disable
         disabled:0,
+        //device
+        listDevice:[],
     }
     }
 
@@ -186,20 +188,17 @@ export default {
     },
 
     mounted(){
-      
-    },
-
-    updated(){
       if(typeof this.$route.params.PO_Load === "undefined" ){
         
         //console.log("PO Undefied")
       }else{
         this.Load_Details();
-        
-        
-      
-        
+        this.Load_DeviceDescription();
       }
+    },
+
+    updated(){
+      
     },
 
     methods:{
@@ -236,13 +235,10 @@ export default {
       },
 
       Selected_Item(event){
-  
+  console.log(event);
          var code=event['Code'],Name=event['Name'],Unit=event['Unit'];
         var i;
         var meron = false;
-
-         
-
          for (i=0;i < this.po_items.length; i++){
             if(this.po_items[i]['Icode']===code){
                meron = true;
@@ -275,7 +271,7 @@ export default {
 
             this.po_items.push({
                  Icode:code,
-                idescription:Name,
+                description:Name,
                 iunit:Unit,
                 Qty:1, 
                 AvailableQty:res.data[0]['Qty'],
@@ -308,6 +304,21 @@ export default {
           )
         
         }
+        
+        this.closeModal();
+      },
+
+      Selected_Device(event){
+  console.log(event);
+         var code=event['Code'],Name=event['Name'],Unit=event['Unit'];
+         if (this.po_items[0]['Icode']=="")
+        {this.po_items.splice(0, 1);}
+           this.po_items.push({
+                 Icode:code,
+                idescription:Name,
+                iunit:Unit,
+                Qty:1,                 
+        });
         
         this.closeModal();
       },
@@ -357,6 +368,8 @@ export default {
               }
           )
           .catch()
+
+          
       },
       
         addNewRow(code) {
@@ -494,10 +507,10 @@ checkQty(product){
                       this.po_items2[i]['Tcost']=this.po_items2[i]['Qty']*this.po_items2[i]['UnitCost'];
                       this.calculateTotal(this.po_items2[i]['Tcost']);
                   }
-
                   this.po_items=this.po_items2;
                   
                   this.Load_idescription();
+                  
                   }
           )
          .catch((error)=>{
@@ -512,16 +525,29 @@ checkQty(product){
         },
 
         Load_idescription(){
-         
-          var i,j;
-                  for (i=0; i < this.po_items.length; i++){   
-                      
+          var i,j,e;
+                  for (i=0; i < this.po_items.length; i++){  
                     for (j=0; j < this.items.length; j++){
-                      
                       if (this.po_items[i]['Icode']===this.items[j]['Code']){
                       this.po_items[i]['idescription']=this.items[j]['Name'];  
                       this.po_items[i]['iunit']=this.items[j]['Unit']; 
                   }}}
+        
+        },
+
+        Load_DeviceDescription(){
+         
+          var i,j,e;
+                  for (i=0; i < this.po_items.length; i++){  
+                     for (e=0; e <= this.listDevice.length-1; e++){
+                       console.log(this.listDevice[e]['Code']);
+                       if (this.po_items[i]['Icode']===this.listDevice[e]['Code']){
+                         console.log(this.listDevice[e]['DeciveName']);
+                         this.po_items[i]['idescription']=this.listDevice[e]['DeciveName'];  
+                         this.po_items[i]['iunit']=this.listDevice[e]['Model']; 
+                       }
+                     }    
+                   }
         
         },
 
@@ -535,6 +561,17 @@ checkQty(product){
                   this.Customer_code =this.po_details[0]['Ccode'];
                   this.Selected_cus2(this.po_details[0]['Ccode']);
                   this.approvedStatus(this.po_details[0]['Status']);
+                  axios.get('/api/getDevices',{params:{ccode:this.po_details[0]['Ccode']}})
+          .then(
+              (response)=>{
+                  this.listDevice=response.data;
+                  console.log("Device done loading");
+                  this.Load_DeviceDescription();
+              }
+          )
+          .catch()
+
+                   
               });
         },
 

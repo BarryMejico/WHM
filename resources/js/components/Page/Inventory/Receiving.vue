@@ -64,17 +64,19 @@
                   <button type="button" class="btn btn-info">Print</button>
                   <items-modal @SelectedItems="Selected_Item" :disabled="disabled == 1"></items-modal>
               
-                <div class="dropdown">
-                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                <span class="caret">{{status}}</span>
-                <p>{{last_update}}</p>
-                </button>
-                <ul class="dropdown-menu">
-                  <li><button @click="changeStatus('Open')" class="my_btn btn">Open</button></li>
-                  <li><button @click="changeStatus('Approved')" class="success my_btn">Approved</button></li>
-                  <li><button @click="changeStatus('Canceled')" class="my_btn btn-danger">Canceled</button></li>
-                </ul>
-                </div>
+                <!--Status-->        
+          <div class="dropdown">
+          <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+          <!--<span class="caret">{{status}}</span>
+           <p>{{last_update}}</p>-->
+          </button>
+          <ul class="dropdown-menu">
+            <li><button @click="changeStatus('Open')" class="my_btn btn">Open</button></li>
+            <li><button @click="changeStatus('Approved')" class="success my_btn">Approved</button></li>
+            <li><button @click="changeStatus('Canceled')" class="my_btn btn-danger">Canceled</button></li>
+          </ul>
+          </div>   
+<!--End Status-->
               </div>
       </div>
       <br>
@@ -235,12 +237,15 @@ function int_data(){
         Qty:'',
         UnitCost:'',
         Tcost:0,
+        status:'Open',
+       last_update:'',
       }],
       //-----for loading items
         items:[],
         //try convert
         AmountCeiling:'',
         disabled:0,
+        
     }
     }
 
@@ -613,40 +618,37 @@ export default {
           .then(
             (response)=>{
                   this.po_details = response.data;
-                  if(this.po_details[0]['Status']!=="Approved"){
+                  if(this.po_details[0]['Status']=="Open" || this.po_details[0]['Status']=="Canceled" || this.po_details[0]['Status']=="Done"){
                     //alert("not approved PO");
+                    var a=this.po_details[0]['Status'] + " P.O. is not accessible";
+                    
                     Swal.fire({
-                      title: "This P.O. has not yet Approved",
+                      
+                      title: a,
                       icon: 'info',
                       showCancelButton: true,
                       showConfirmButton: false 
                     })
                     this.clearData()
                     }
-                    else if(this.po_details[0]['Status']=="Done"){
-                    //alert("PO Already Done");
-                     Swal.fire({
-                      title: "PO Already Done",
-                      icon: 'info',
-                      showCancelButton: true,
-                      showConfirmButton: false 
-                    })
-                    this.clearData()
-                    }
-                  else{
-                  this.po = this.po_details[0]['PO'];
                   
-                  //this.PO_total = this.po_details[0]['Total_Amount'];
-                  this.Vendor_code = this.po_details[0]['Vendor'];
-                  this.Customer_code = this.po_details[0]['Ship_to'];
-                  this.load_Selected_customer(this.Customer_code);
-                  this.load_Selected_vendor(this.Vendor_code);
+                  else{
+                  this.loadingMethod();
                   }
               }
           )
           .catch((error)=>{
                 this.errors=error.response.data.errors;
             })
+        },
+
+        loadingMethod(){
+                  this.po = this.po_details[0]['PO'];
+                  //this.PO_total = this.po_details[0]['Total_Amount'];
+                  this.Vendor_code = this.po_details[0]['Vendor'];
+                  this.Customer_code = this.po_details[0]['Ship_to'];
+                  this.load_Selected_customer(this.Customer_code);
+                  this.load_Selected_vendor(this.Vendor_code);
         },
 
         clearData(){

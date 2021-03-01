@@ -80,7 +80,7 @@ export default {
       return{
              POs:[],
              pass:true,
-             ItemStatus:true,
+             ItemStatus:false,
             
     }},
 
@@ -134,8 +134,25 @@ export default {
 
 checkQty(product,i,l,invoice){
   var Item;
-  
-  console.log(product['Icode']);
+   var c=product['Icode'].substr(0,2);
+    
+        if(c=="cp"){
+         console.log("in")
+          this.ItemStatus=true;
+          var pers=100;
+              i=i+1;
+              pers=(i/l)*100;
+              if (pers==100){
+                if(this.ItemStatus){
+                       this.appInvoice(invoice);
+                }
+                else{
+                alert("Qty is greater than available!")
+              }
+                
+              }   
+          }
+else{
           axios.get('/api/getitem',{params:{Code:product['Icode']}})
           .then(
             (res)=>{
@@ -153,17 +170,14 @@ checkQty(product,i,l,invoice){
                 console.log(Item[0]['Qty']);
                   this.ItemStatus= false;
                 }
+
               var pers=100;
               i=i+1;
               
               pers=(i/l)*100;
               if (pers==100){
                 if(this.ItemStatus){
-                        axios.post('/api/ApprovedInvoice',{params:{invoice:invoice}})
-                      .then(
-                       this.loadpos()
-                      )
-                      .catch()
+                       this.appInvoice(invoice);
                 }
                 else{
                 alert("Qty is greater than available!")
@@ -174,8 +188,22 @@ checkQty(product,i,l,invoice){
 
             
           )
-          .catch()
-          
+          .catch(
+
+            (err)=>{
+                 
+            }
+          )
+}
+        
+        },
+
+        appInvoice(invoice){
+ axios.post('/api/ApprovedInvoice',{params:{invoice:invoice}})
+                      .then(
+                       this.loadpos()
+                      )
+                      .catch()
         },
 
 approve(invoice,status){

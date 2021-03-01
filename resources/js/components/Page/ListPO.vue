@@ -35,7 +35,7 @@
           Purchase Order
         </router-link>
         </button>
-        <button class="btn-sm bg-light"  @click="note()"><router-link :to="{ name:'Receiving', params:{PO_Load: po_item.PO }}">
+        <button v-if="po_item.Status=='Approved'" class="btn-sm bg-light"  @click="note()"><router-link :to="{ name:'Receiving', params:{PO_Load: po_item.PO }}">
           Receiving
           </router-link></button></td>
     </tr>
@@ -87,13 +87,13 @@ export default {
           .catch()
       },
       note(){
-         Swal.fire({
-          icon:'info',
-          title:"Note",
-          text:"Approved Purchase Orders Cannot be edit",
-          showCancelButton: false,
-          showConfirmButton: true
-          }) 
+         //Swal.fire({
+         // icon:'info',
+         // title:"Note",
+         // text:"Approved Purchase Orders Cannot be edit",
+         // showCancelButton: false,
+         // showConfirmButton: true
+         // }) 
       }
        
     }   

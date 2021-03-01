@@ -68,7 +68,7 @@
           
           <div class="form-group">	
             <input type="text" v-model="DeviceForm.Code" placeholder="Code">
-            <input type="text" v-model="DeviceForm.DeciveName" placeholder="DeciveName">
+            <input type="text" v-model="DeviceForm.DeciveName" placeholder="Decive Name">
             <input type="text" v-model="DeviceForm.Model" placeholder="Model">	
 <ul class="list-group">
  <hr>
@@ -142,10 +142,10 @@ export default {
              success:false,
              //for Devices
              DeviceForm:{
-               Code:'1',
-               DeciveName:'1',
-               Model:'1',
-               Ccode:'1',
+               Code:'',
+               DeciveName:'',
+               Model:'',
+               Ccode:'',
                
              },
              //list oh cus list
@@ -204,14 +204,25 @@ closeModal() {
       },
 
       SaveCusDevice(){
+        var c=this.DeviceForm.Code.substr(0,2);
+        if(c=="cp"){
+
+        }
+        else{
+          this.DeviceForm.Code= "cp" + this.DeviceForm.Code;
+        }
         
         axios.post('/api/SaveCusDevice',this.DeviceForm)
         .then(
          ()=>{
            this.closeModal();
+           console.log(this.DeviceForm);
+            this.DeviceForm.splice(0, 1)
          } 
         )
         .catch()
+
+        
       },
 
       loadpos:function(){

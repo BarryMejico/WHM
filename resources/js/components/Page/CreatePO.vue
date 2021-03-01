@@ -68,11 +68,12 @@
             <li><button @click="changeStatus('Canceled')" class="my_btn btn-danger">Canceled</button></li>
           </ul>
           </div>
+          <!--End Status-->
               </div>
       </div>
     
     
-<!--End Status-->
+
     <br>
     <br>
     <br>
@@ -104,8 +105,8 @@
                 <td class="in"><div class="qty"><input v-model="po_item.UnitCost"  @change="calculateLineTotal(po_item)" :disabled="disabled == 1"></div></td>
                 <td>{{po_item.Tcost}} Php</td>
                 <td>
-                  <span class="badge badge-info" :disabled="disabled == 1" >Recompute</span>
-                  <span class="badge badge-danger" @click="deleteRow(k, po_item,po_item.Icode)" :disabled="disabled == 1">X</span>
+                  <span class="badge badge-info" :disabled="disabled == 1">Recompute</span>
+                  <a class="badge badge-danger" @click="deleteRow(k, po_item,po_item.Icode)" :disabled="disabled == 1">X</a>
                 </td>
               </tr>
             </tbody>
@@ -253,14 +254,9 @@ export default {
 
       approvedStatus(status){
          document.getElementById("po").disabled = true;
-         console.log(status);
-        if (status=="Approved")
-        {
-          
-        CustomerModal.disabled;
-        ItemsModal.disabled;
-        VendorModal.disabled;
 
+        if (status=="Approved" || status=="Done" || status=="Canceled")
+        {
         document.getElementById("SaveBtn").disabled = true;//save btn
         document.getElementById("CanBtn").disabled = true;//clear btn 
         this.disabled=1}
@@ -388,7 +384,7 @@ export default {
         },
 
         deleteRow(index,invoice_product,code) {
-
+          if (this.disabled){return 0}
              Swal.fire({
                 title: 'Confirmation',
                 text: 'Are you sure to remove this Item?',

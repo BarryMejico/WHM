@@ -31,6 +31,8 @@ import SalesHistory from './components/Page/BasicReports/SalesHistory';
 
 import Products from './components/Page/Product/CreateProduct';
 
+import invoice2 from './components/Page/Sales/invoice2';
+
 import { before } from 'lodash';
 export default{
     mode: 'history',
@@ -294,6 +296,19 @@ export default{
         path:'/Products',
         component: Products,
         name: 'Products',
+        beforeEnter:(to,from,next)=>{
+            axios.get('api/Authenticated').then(()=>{
+                next()
+                
+            }).catch(()=>{
+                return next({name: '/login_'})
+            })
+        }
+    },
+    {
+        path:'/invoice2',
+        component: invoice2,
+        name: 'invoice2',
         beforeEnter:(to,from,next)=>{
             axios.get('api/Authenticated').then(()=>{
                 next()

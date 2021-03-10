@@ -15,21 +15,14 @@
                     <label>Device Code</label>	
                     <input type="text" id='Vcode' v-model="Customer">
           </div>
-
-<div class="dropdown">
-    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-    <span class="caret">{{status}}</span></button>
-<ul class="dropdown-menu">
+  <ul class="list-group">
   <li class="list-group-item d-flex justify-content-between align-items-center" 
     v-for="(Device, k) in List_Customer" :key="k">
     <a @click="Selected_cus(k)">{{Device.DeciveName}}</a>
     <span class="badge badge-primary badge-pill">{{Device.Model}}</span>
   </li>
-</ul> 
-</div>
-
-
-
+  <a  href="#NewEmployee" data-toggle="modal" type="button" class="my_btn btn link tn-secondary">New Employee</a>
+</ul>
           </div>
 				
 				<div class="modal-footer">

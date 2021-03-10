@@ -1,214 +1,70 @@
 <template>
     <div>
     <div class="container">
-      
-     <br>
-      <br>
-      <br>
-      
       <div class="row">
-        <div class="col-md-5"></div>
-        <div class="col-md-3">
-          <b class="text-muted">Date</b> 
-          <input class="form-control" type="date" required autofocus>
-        </div>
-
-        <div class="col-md-4">
-          <b class="text-muted">Received by</b>
-              <!-- <select name="employee" id="receivedByDropDown">
-                <option value="abi tolentino">abi tolentino</option>
-                <option value="barry mejico">barry mejico</option>
-                <option value="james reid">james reid</option>
-                <option value="john doe">john doe</option>
-              </select> -->
-              <select v-model="selected" style="width:100%;height:40px;">
-                <option v-for="option in options" :key="option" v-bind:value="option.value">
-                  {{ option.text }}
-                </option>
-              </select>
-          </div>
       </div>
-    <br>
-    <br>
-    <br>
+
     <h3 class="text-muted">Customer Details</h3>
       <br>
        <div class="row" style="margin-bottom:50px;">
           <div class="col-md-5">
             <br>
              <CustomerModal id="CusModal" @SelectedCustomer="Selected_cus" :disabled="disabled"></CustomerModal>
-              <b class="text-muted">Name</b><br>
-              <input class="form-control" type="text" :value="Customer" required autofocus>
+              <label class="text-muted">Name</label><br>
+              <input class="form-control" type="text" :value="Customer" required autofocus disabled>
             
-              <b class="text-muted">Contact Number</b>
-            <input class="form-control" type="text" required autofocus> 
+              <label class="text-muted">Contact Number</label>
+            <input class="form-control" v-model="Num" type="text" required disabled> 
           </div>
         
            <div class="col-md-7"> 
-              <b class="text-muted">Address</b>
-              <textarea class="form-control" type="text" :value="add_Cus" style="height:210px;" required autofocus></textarea>
+              <label class="text-muted">Address</label>
+              <textarea class="form-control" type="text" :value="add_Cus" style="height:210px;" required disabled></textarea>
               <br>
             </div>
        </div>
      
       <h3 class="text-muted"> Device details</h3>
+       <devices-modal @SelectedDevice="Selected_Item" v-bind:selectedCus="ccode" :disabled="disabled"></devices-modal> 
       <br>
-       <div class="row">
-          <div class="col-md-8"><b>Description</b><textarea class="form-control" type="text" style="height:210px;" required autofocus></textarea></div>
-          <div class="col-md-4">
-            <b class="text-muted">Amount/Cost of repair</b><input class="form-control" type="number" required autofocus>
-            <br>
-            <b class="text-muted">Deposit</b><input class="form-control" type="number" required autofocus>
-            <br>
-            <b class="text-muted">Balance</b><input class="form-control" type="number" required autofocus>
-          </div>
-      </div>
-       <button class="btn btn-outline-info" style="margin-bottom:110px;">Save Job Order</button>
-     
-      <h3 class="text-muted"> End Report</h3>
-      <br>
-       <div class="row">
-          <div class="col-md-5"> 
-            <b class="text-muted">Repaired by</b><br>
-          <!-- <select name="employee" id="repairedByDropDown">
-              <option value="abi tolentino">abi tolentino</option>
-              <option value="barry mejico">barry mejico</option>
-              <option value="james reid">james reid</option>
-              <option value="john doe">john doe</option>
-            </select> -->
-             <select v-model="selected" style="width:100%;height:40px;">
-                <option v-for="option in options" :key="option" v-bind:value="option.value">
-                  {{ option.text }}
-                </option>
-              </select>
-            <br>
-            <br>
-            <b class="text-muted">Date claimed</b>
-            <input class="form-control" type="date" required autofocus>
-          </div>
-          <div class="col-md-7">
-            <b class="text-muted">Note</b>
-          <textarea class="form-control" type="text" required autofocus style="height:125px;"></textarea>
-          </div>
-      </div>
-      <button class="btn btn-outline-success">Sumbit Report</button>
-
-
-     
-      
-       <!-- <div class="row">
-          <div class="col-md-3"><b>Received by</b>
-            <select name="employee" id="receivedByDropDown">
-              <option value="abi tolentino">abi tolentino</option>
-              <option value="barry mejico">barry mejico</option>
-              <option value="james reid">james reid</option>
-              <option value="john doe">john doe</option>
-            </select>
-        </div>
-          <div class="col-md-3"><b>Repaired by</b><br>
-          <select name="employee" id="repairedByDropDown">
-              <option value="abi tolentino">abi tolentino</option>
-              <option value="barry mejico">barry mejico</option>
-              <option value="james reid">james reid</option>
-              <option value="john doe">john doe</option>
-            </select>
-          </div>
-          <div class="col-md-3"><b>Date claimed</b><input class="form-control" type="date" required autofocus></div>
-          <div class="col-md-3"><b>Note</b><textarea class="form-control" type="text" required autofocus></textarea></div>
-      </div> -->
-  
-
-        <!------------------------------------------------------------------------------------------------------->
-      <!-- <div class="row">
-          <div class="col-lg-2">
-            <MenuList></MenuList>
-          </div>
-          <div class="col-lg-1"></div>
-
-            <div class="col-lg-6">
-
-              <label for="po">Invoice#: </label>                     
-              <input class="form-control" v-model="po" id="po" type="text" required autocomplete="name" autofocus>
-             
-                <CustomerModal id="CusModal" @SelectedCustomer="Selected_cus" :disabled="disabled"></CustomerModal>
-                <div>
-                  <br>
-                  <b>Name: </b><br><label class="text-muted"><i>{{Customer}}</i></label><br>
-                  <b>Address:</b><br><label class="text-muted"><i>{{add_Cus}}</i></label><br>
-                </div>             
-          
-              </div> 
-               <div class="col-lg-1"></div>
-
-            <div class="col-lg-2">
-               <button type="button" class="btn btn-info">Print</button>
-                <items-modal @SelectedItems="Selected_Item" :disabled="disabled"></items-modal>
-
-                <div>
-                    <devices-modal @SelectedDevice="Selected_Item" v-bind:selectedCus="ccode" :disabled="disabled"></devices-modal> 
-                </div> 
-
-                <div class="dropdown">
-                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                    <span class="caret">{{status}}</span></button>
-                    <ul class="dropdown-menu">
-                      <li><button @click="changeStatus('Open')" class="my_btn btn">Open</button></li>
-                      <li><button @click="changeStatus('Approved')" class="success my_btn">Approved</button></li>
-                      <li><button @click="changeStatus('Canceled')" class="my_btn btn-danger">Canceled</button></li>
-                    </ul>
-                </div>
-            </div>
-     
-        </div>
-      
-        <br>
-        <br>
-        <br>
-      
-
-         <div class="row">
-              <div class="col-lg-10">
-                <table id="tbl" class="table table-responsive">
+       <table id="tbl" class="table table-responsive">
                 <thead class="thead-dark">
                   <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Item Code</th>
+                     <th scope="col">Model</th>
                     <th scope="col">Description</th>
-                    <th scope="col">Unit</th>
-                    <th scope="col">Qty</th>
-                    <th scope="col">Unit Cost</th>
-                    <th scope="col">Total Cost</th>
+                    <th scope="col">Cost</th>
+                    <th scope="col">Prepared By</th>    
                     <th scope="col">Action</th>    
                   </tr>
                 </thead>
                 <tbody v-if="po_items">
                   <tr  v-for="(po_item, k) in po_items" :key="k">      
                     <th scope="row" class="in">{{k}}</th>
-                    <td>{{po_item.Icode}}</td>
-                    <td>{{po_item.idescription}}</td>
                     <td>{{po_item.iunit}}</td>
-                    <td class="in"><div class="qty"><input  v-model="po_item.Qty" min="1" type="number" @change="checkQty(po_item)" :disabled="disabled == 1"></div></td>
+                    <td><input  v-model="po_item.idescription"  @change="calculateLineTotal(po_item)" :disabled="disabled == 1"></td>
                     <td class="in"><div class="qty"><input  v-model="po_item.UnitCost"  @change="calculateLineTotal(po_item)" :disabled="disabled == 1"></div></td>
-                    <td>{{po_item.Tcost}} Php</td>
+                    <td><employee-modal @SelectedCustomer="Selected_cus" :disabled="disabled"/>
+              </td>
                     <td :disabled="disabled == 1">
-                    <badge class="my_btn btn link" @click="calculateLineTotal(po_item)"><small>Recompute</small></badge>
-                    <badge class="my_btn btn link" @click="deleteRow(k, po_item,po_item.Icode)" :disabled="disabled == 1"><small>X</small></badge></td>
+                    <a class="my_btn btn link" @click="calculateLineTotal(po_item)"><small>Recompute</small></a>
+                    <a class="my_btn btn link" @click="deleteRow(k, po_item,po_item.Icode)" :disabled="disabled == 1"><small>X</small></a></td>
                   </tr>
                 </tbody>
               </table>
-              </div>
-
-              <div class="col-lg-2">
+       <div class="row">
+         
+      </div>
+      <div class="col-lg-5">
                 <div class="total"> 
-                    <span><b>Total:</b> {{PO_total}} Php</span><br>
-                    <hr>
+                    <Label><b>Total:</b> {{PO_total}} Php</Label><br>
+                    <Label for="Deposit"><b>Deposit:</b></Label>
+                    <input type="number" id="Deposit" /><hr>
+                    <Label><b>Balance:</b> {{PO_total}} Php</Label><br>
                     <button type="button" id="btnSave" class="btn btn-info" @click.prevent="saveform">Save</button>
-                    <button type="button" id="btnClear" class="btn danger btn-danger" @click.prevent="clearData">Clear ALL</button>
                 </div>
               </div>
-             
-         </div> -->
- 
+      
     
     </div>
 </div>
@@ -222,6 +78,7 @@ import CustomerModal from '../../Modals/CustomerModal';
 
 import MenuList from '../../Page/Sales/MainInvoice';
 import DevicesModal from '../../Modals/DevicesModal.vue';
+import EmployeeModal from '../../Modals/EmployeeModal.vue';
 
 function int_data(){
   return{
@@ -244,6 +101,7 @@ function int_data(){
       // List_Customer:[],
        Customer:'',
        add_Cus:'',
+       Num:'',
       
       //---for details of po
       po_items2:[],
@@ -261,15 +119,6 @@ function int_data(){
         items:[],
         //--disable
         disabled:0,
-
-        ///////////////////////for select box
-        selected: 'A',
-        options: [
-          { text: 'Repair Man 1', value: 'Repair Man 1' },
-          { text: 'Repair Man 2', value: 'Repair Man 2' },
-          { text: 'Repair Man 3', value: 'Repair Man 3' }
-        ]
-
     }
     }
 
@@ -283,6 +132,7 @@ export default {
     //VendorModal,
     CustomerModal,
         DevicesModal,
+        EmployeeModal,
     }, 
 
     data:function(){
@@ -416,6 +266,7 @@ export default {
                 this.Customer=event['Customer'];
                 this.Customer_code=event['id'];
                 this.ccode=event['Ccode'];
+                this.Num=event['Number'];
       },
 
       load_vendor(){

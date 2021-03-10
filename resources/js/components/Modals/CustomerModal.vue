@@ -22,13 +22,36 @@
     <a @click="Selected_cus(k)">{{Customer.Customer}}</a>
     <span class="badge badge-primary badge-pill">{{Customer.id}}</span>
   </li>
-  <a class="link">New Customer</a>
+  <a  href="#NewCustomer" data-toggle="modal" type="button" class="my_btn btn link tn-secondary">New Employee</a>
 </ul>
 
           </div>
 				
 				<div class="modal-footer">
           <button  type="button" class="btn btn-light" data-dismiss="modal" aria-hidden="true">Select Vendor</button>
+				</div>
+			
+		</div>
+	</div>
+</div>
+<!--modal Add-->
+<div id="NewCustomer" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			
+				<div class="modal-header">						
+					<h4 class="modal-title">Employees</h4>
+					<button type="button" id="closeCus" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body">	
+          <div class="form-group">		
+                    <label>Name</label>	
+                    <input type="text" v-on:input="liveSearch" v-model="Search">
+          </div>
+
+          </div>			
+				<div class="modal-footer">
+          <button  type="button" class="btn btn-light" data-dismiss="modal" aria-hidden="true">Save</button>
 				</div>
 			
 		</div>

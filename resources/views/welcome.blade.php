@@ -88,6 +88,7 @@
                 <li><router-link onclick="closeNav()" to="/Upcoming" class="notAvailable">Products</router-link></li>
                 <li><router-link onclick="closeNav()" to="/Upcoming" class="notAvailable">Service</router-link></li>
                 <li><router-link onclick="closeNav()" to="/invoice">Sales Invoice</router-link></li>
+                <li><router-link onclick="closeNav()" to="/invoice2">Sales Invoice2</router-link></li>
             </ul>
         </div>
 
@@ -162,7 +163,7 @@
         <div class="row">
         	<div class="col-md-4 footer-brand animated fadeInLeft">
             <!----------------- di binabasa ------------------------>
-            <img src="../media/bs3.png" alt="logo" style="width:50%;">
+            <img src="../media/bs3.png" alt="logo" style="width:80%;">
             <!----------------- pero eto binabasa ---------------------
             <img src="../media/logo.png" alt="logo" style="width:40px;">--->
                 <br>

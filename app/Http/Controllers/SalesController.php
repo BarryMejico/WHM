@@ -121,4 +121,21 @@ class SalesController extends Controller
         //dd($PO);
         return $PO;
     }
+
+    public function SearchTrans(Request $request){
+       //dd($request);
+
+        $search = DB::table('sales_details')
+        ->join('sales', function($join)use($request)
+        {
+            $join->on('sales.invoice', '=', 'sales_details.invoice')
+                    ->where('sales.Status', 'like', "%{$request['Status']}%")
+                    ->where('sales.Ccode', 'like', "%{$request['Ccode']}%")
+                    ->where('sales.Created_by', 'like', "%{$request['Createdby']}%")
+                    ->where('sales_details.Icode', 'like', "%{$request['Icode']}%");
+        })
+        ->get();
+        
+        return $search;
+    }
 }

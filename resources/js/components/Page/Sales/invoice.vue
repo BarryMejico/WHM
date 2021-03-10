@@ -309,7 +309,7 @@ export default {
       },
 
       Selected_Device(event){
-  console.log(event);
+          console.log(event);
          var code=event['Code'],Name=event['Name'],Unit=event['Unit'];
          if (this.po_items[0]['Icode']=="")
         {this.po_items.splice(0, 1);}

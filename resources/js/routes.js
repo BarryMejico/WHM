@@ -28,6 +28,7 @@ import listInvoice from './components/Page/Sales/ListInvoice';
 
 import DeviceHistory from './components/Page/BasicReports/DeviceHistory';
 import SalesHistory from './components/Page/BasicReports/SalesHistory';
+import TransactionHistory from './components/Page/BasicReports/TransactionHistory';
 
 import Products from './components/Page/Product/CreateProduct';
 
@@ -294,6 +295,20 @@ export default{
         path:'/Products',
         component: Products,
         name: 'Products',
+        beforeEnter:(to,from,next)=>{
+            axios.get('api/Authenticated').then(()=>{
+                next()
+                
+            }).catch(()=>{
+                return next({name: '/login_'})
+            })
+        }
+    },
+
+    {
+        path:'/TransactionHistory',
+        component: TransactionHistory,
+        name: 'TransactionHistory',
         beforeEnter:(to,from,next)=>{
             axios.get('api/Authenticated').then(()=>{
                 next()

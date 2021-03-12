@@ -25,7 +25,7 @@
        </div>
      
       <h3 class="text-muted"> Device details</h3>
-       <devices-modal @SelectedDevice="Selected_Item" v-bind:selectedCus="ccode" :disabled="disabled"></devices-modal> 
+       <devices-modal @SelectedDevice="Selected_Item" v-bind:selectedCus="ccode" :disabled="disabled">ss</devices-modal> 
       <br>
        <table id="tbl" class="table table-responsive">
                 <thead class="thead-dark">
@@ -44,7 +44,7 @@
                     <td>{{po_item.iunit}}</td>
                     <td><input  v-model="po_item.idescription"  @change="calculateLineTotal(po_item)" :disabled="disabled == 1"></td>
                     <td class="in"><div class="qty"><input  v-model="po_item.UnitCost"  @change="calculateLineTotal(po_item)" :disabled="disabled == 1"></div></td>
-                    <td><employee-modal @SelectedCustomer="Selected_cus" :disabled="disabled"/>
+                    <td><employee-modal @SelectedCustomer="Selected_employee" :disabled="disabled"/>
               </td>
                     <td :disabled="disabled == 1">
                     <a class="my_btn btn link" @click="calculateLineTotal(po_item)"><small>Recompute</small></a>
@@ -223,32 +223,33 @@ export default {
         else{
           
 
-          axios.get('/api/getitem',{params:{Code:code}})
-          .then((res)=>{
-            if(res.data.length>0){
-            if (this.po_items[0]['Icode']=="")
-        {this.po_items.splice(0, 1);}
+        //   axios.get('/api/getitem',{params:{Code:code}})
+        //   .then((res)=>{
+        //     if(res.data.length>0){
+        //     if (this.po_items[0]['Icode']=="")
+        // {this.po_items.splice(0, 1);}
 
-            this.po_items.push({
-                 Icode:code,
-                idescription:Name,
-                iunit:Unit,
-                Qty:1, 
-                AvailableQty:res.data[0]['Qty'],
+             this.po_items.push({
+                  Icode:code,
+               idescription:Name,
+                 iunit:Unit,
+                 Qty:1, 
+                 //AvailableQty:res.data[0]['Qty'],
                 
-        });
+         });
 
-        }
-        else{
-          alert('No available QTY');
-        }
-          })
-          .catch(
+        // }
+        // else{
+        //   alert('No available QTY');
+        // }
+        //   })
+        //   .catch(
             
-          )
+        //   )
         
         }
-        this.checkQty(this.po_items[this.po_items.length-1]);
+
+        // this.checkQty(this.po_items[this.po_items.length-1]);
         this.closeModal();
       },
 
@@ -267,6 +268,11 @@ export default {
                 this.Customer_code=event['id'];
                 this.ccode=event['Ccode'];
                 this.Num=event['Number'];
+      },
+
+       Selected_employee(event){        
+                //this.add_Cus=event['Address'];
+
       },
 
       load_vendor(){

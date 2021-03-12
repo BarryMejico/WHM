@@ -8,7 +8,7 @@
 			
 				<div class="modal-header">						
 					<h4 class="modal-title">Employees</h4>
-					<button type="button" id="closeCus" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<button type="button" id="closeGetEmployee" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
 				<div class="modal-body">	
           <div class="form-group">		
@@ -38,7 +38,7 @@
 			
 				<div class="modal-header">						
 					<h4 class="modal-title">Employees</h4>
-					<button type="button" id="closeCus" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<button type="button" id="closeEmployee" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
 				<div class="modal-body">	
           <div class="form-group">		
@@ -91,13 +91,15 @@ methods:{
 
   Selected_cus(index){
         this.$emit("SelectedCustomer",this.List_Customer[index]);
+        this.selected=this.List_Customer[index]['Employee']
         this.closeModal();
+
     },
 
     closeModal() {
-      document.getElementById('closeCus').click();
+      document.getElementById('closeGetEmployee').click();
+      document.getElementById('closeEmployee').click();
               this.List_Customer=[];
-             
              this.load_customer();
              
 },
@@ -117,7 +119,8 @@ methods:{
       SaveEmployee(){
         axios('/api/SaveEmployee',{params:{Name_:this.Name_}})
         .then((res)=>{
-            
+            this.load_customer();
+              this.closeModal();
         })
       },
 

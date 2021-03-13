@@ -35,8 +35,10 @@
                     <th scope="col">Description</th>
                     <th scope="col">Cost</th>
                     <th scope="col">Prepared By</th>  
-                     <th scope="col"></th>  
-                    <th scope="col">Action</th>    
+                    <th scope="col"></th>  
+                    <th scope="col">Remarks</th>
+                    <th scope="col">Status</th>
+                    <th scope="col"></th>            
                   </tr>
                 </thead>
                 <tbody v-if="po_items">
@@ -50,6 +52,15 @@
                     <td>
                       <employee-modal @loadindex="indext" @SelectedEmployee="Selected_employee" v-bind:index="k" :disabled="disabled"/>                     
                     </td>
+                      <td>
+                        <input  v-model="po_item.Remarks"  @change="calculateLineTotal(po_item)" :disabled="disabled == 1">
+                        </td>
+               
+                    <td>
+                      DropDown
+                    </td>
+                    <td>
+                      </td>
                     <td :disabled="disabled == 1">
                     <a class="my_btn btn link" @click="calculateLineTotal(po_item)"><small>Recompute</small></a>
                     <a class="my_btn btn link" @click="deleteRow(k, po_item,po_item.Icode)" :disabled="disabled == 1"><small>X</small></a></td>
@@ -60,11 +71,17 @@
          
       </div>
       <div class="col-lg-5">
-                <div class="total"> 
+                   
+                    <div class="total"> 
+                    
                     <Label><b>Total:</b> {{PO_total}} Php</Label><br>
-                    <Label for="Deposit"><b>Deposit:</b></Label>
-                    <input type="number" id="Deposit" /><hr>
-                    <Label><b>Balance:</b> {{PO_total}} Php</Label><br>
+                    <Label for="Deposit"><b>Deposit/Payment:</b></Label>
+                    <input type="number" id="Deposit" v-model="Deposit"/><hr>
+                    <Label><b>Balance:</b> {{PO_Balance}} Php</Label><br>
+                    <Label><b>Change:</b> {{PO_Change}} Php</Label><br>
+                    <Label for="status"><b> Status: </b></Label>
+                    <Label>{{status}}</Label>
+                    <br>
                     <button type="button" id="btnSave" class="btn btn-info" @click.prevent="saveform">Save</button>
                 </div>
               </div>
@@ -90,6 +107,8 @@ function int_data(){
        datacollection: null,
        po:'',
        PO_total:0,
+       PO_Balance:0,
+        PO_Change:0,
        Vendor_code:'',
        Customer_code:'',
        Ship_to:'Ship',
@@ -119,6 +138,7 @@ function int_data(){
         UnitCost:'',
         Tcost:0,
         AvailableQty:0,
+        Remarks:'',
       }],
       //-----for loading items
         items:[],
@@ -126,6 +146,9 @@ function int_data(){
         disabled:0,
         //selected index
         ins:0,
+        //Deposit
+        Deposit:'',
+        
     }
     }
 
@@ -160,6 +183,21 @@ export default {
 
     mounted(){
       
+    },
+
+    watch:{
+        Deposit: function(val){
+            this.PO_Balance=this.PO_total-val;
+            if( this.PO_Balance<=0){
+                this.PO_Change=this.PO_Balance;
+                this.PO_Balance=0;
+                this.status="Fully Paid"
+            }
+            else{
+              this.PO_Change=0;
+              this.status="Open"
+            }
+        }
     },
 
     updated(){

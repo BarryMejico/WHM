@@ -1,6 +1,7 @@
 <template>
     <div>
-        <a id="cus" href="#EmployeeModal" data-toggle="modal" type="button" class="my_btn btn link tn-secondary" :disabled="disabled == 1">{{selected}}</a>
+        <a id="cus" href="#EmployeeModal" @click="loadindex" data-toggle="modal" type="button" class="my_btn btn link tn-secondary" :disabled="disabled == 1">
+          E</a>
         <!--modal Employee-->
 <div id="EmployeeModal" class="modal fade">
 	<div class="modal-dialog">
@@ -72,12 +73,14 @@ function int_data(){
         Search:'',
         //forselection
         selected: 'A',
+        ins:null,
     }
     }
 export default {
 
   props:{
-    disabled: 0
+    disabled: Number,
+    index:Number
   },
 
     data:function(){
@@ -85,28 +88,32 @@ export default {
       }, 
 mounted(){
 this.load_customer();
-
 },
 methods:{
 
-  Selected_cus(index){
-        this.$emit("SelectedCustomer",this.List_Customer[index]);
-        this.selected=this.List_Customer[index]['Employee']
-        this.closeModal();
+  loadindex(){
+    this.ins=this.index;
+    this.$emit("loadindex",this.ins);
+    console.log("inside: " + this.ins)
+  },
 
+  Selected_cus(index){
+        this.$emit("SelectedEmployee",this.List_Customer[index]);
+        console.log(this.List_Customer[index])
+        this.closeModal();
     },
 
     closeModal() {
       document.getElementById('closeGetEmployee').click();
       document.getElementById('closeEmployee').click();
               this.List_Customer=[];
-             this.load_customer();
+              this.load_customer();
              
 },
 
    load_customer(){
         //this.cus=""
-        console.log(this.selectedCus);
+        //console.log(this.selectedCus);
           axios.get('/api/LoadEmployee')
           .then(
               (response)=>{

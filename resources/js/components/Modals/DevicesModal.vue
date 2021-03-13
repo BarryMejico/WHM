@@ -8,7 +8,7 @@
 			
 				<div class="modal-header">						
 					<h4 class="modal-title">Add Device</h4>
-					<button type="button" id="closeCus2" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<button type="button" id="closedevice" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
 				<div class="modal-body">	
           <div class="form-group">		
@@ -72,7 +72,7 @@ methods:{
       
                 this.Cus=[];
                 this.Cus.Code=this.List_Customer[index]['Code'];
-                this.Cus.Name=this.List_Customer[index]['DeciveName']  + "--" + this.Customer;
+                this.Cus.Name=this.List_Customer[index]['DeciveName'] + this.Customer;
                 this.Cus.Unit= this.List_Customer[index]['Model'];
         this.closeModal();
         this.$emit("SelectedDevice",this.Cus);
@@ -80,14 +80,12 @@ methods:{
     },
 
     closeModal() {
-      document.getElementById('closeCus2').click();
+      document.getElementById('closedevice').click();
               this.List_Customer=[];
               this.load_customer();
 },
 
     load_customer(){
-        //this.cus=""
-        console.log(this.selectedCus);
           axios.get('/api/getDevices',{params:{ccode:this.selectedCus}})
           .then(
               (response)=>{

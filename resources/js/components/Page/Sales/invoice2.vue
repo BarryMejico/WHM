@@ -34,18 +34,22 @@
                      <th scope="col">Model</th>
                     <th scope="col">Description</th>
                     <th scope="col">Cost</th>
-                    <th scope="col">Prepared By</th>    
+                    <th scope="col">Prepared By</th>  
+                     <th scope="col"></th>  
                     <th scope="col">Action</th>    
                   </tr>
                 </thead>
                 <tbody v-if="po_items">
                   <tr  v-for="(po_item, k) in po_items" :key="k">      
                     <th scope="row" class="in">{{k}}</th>
-                    <td>{{po_item.iunit}}</td>
-                    <td><input  v-model="po_item.idescription"  @change="calculateLineTotal(po_item)" :disabled="disabled == 1"></td>
+                    <td>{{po_item.idescription}}-{{po_item.iunit}}</td>
+                    <td><input @change="calculateLineTotal(po_item)" :disabled="disabled == 1"></td>
                     <td class="in"><div class="qty"><input  v-model="po_item.UnitCost"  @change="calculateLineTotal(po_item)" :disabled="disabled == 1"></div></td>
-                    <td><employee-modal @SelectedCustomer="Selected_employee" :disabled="disabled"/>
-              </td>
+                    <td>{{po_item.preparedby}}
+                    </td>
+                    <td>
+                      <employee-modal @loadindex="indext" @SelectedEmployee="Selected_employee" v-bind:index="k" :disabled="disabled"/>                     
+                    </td>
                     <td :disabled="disabled == 1">
                     <a class="my_btn btn link" @click="calculateLineTotal(po_item)"><small>Recompute</small></a>
                     <a class="my_btn btn link" @click="deleteRow(k, po_item,po_item.Icode)" :disabled="disabled == 1"><small>X</small></a></td>
@@ -107,6 +111,7 @@ function int_data(){
       po_items2:[],
       po_details:[],
       po_items:[{
+        preparedby:'',
         Icode:'',
         idescription:'',
         iunit:'',
@@ -119,6 +124,8 @@ function int_data(){
         items:[],
         //--disable
         disabled:0,
+        //selected index
+        ins:0,
     }
     }
 
@@ -170,6 +177,10 @@ export default {
 
     methods:{
 
+      indext(event){
+        this.ins=event
+      },
+
       approvedStatus(status){
          document.getElementById("po").disabled = true;
         if (status=="Approved")
@@ -193,6 +204,7 @@ export default {
 
       addService(){
         this.po_items.push({
+                preparedby:'s',
                 Icode:'service-001',
                 idescription:'asd',
                 iunit:'asd',
@@ -225,13 +237,14 @@ export default {
 
         //   axios.get('/api/getitem',{params:{Code:code}})
         //   .then((res)=>{
-        //     if(res.data.length>0){
-        //     if (this.po_items[0]['Icode']=="")
-        // {this.po_items.splice(0, 1);}
+           //if(res.data.length>0){
+            if (this.po_items[0]['Icode']=="")
+         {this.po_items.splice(0, 1);}
 
              this.po_items.push({
-                  Icode:code,
-               idescription:Name,
+                preparedby:'s',
+                 Icode:code,
+                 idescription:Name,
                  iunit:Unit,
                  Qty:1, 
                  //AvailableQty:res.data[0]['Qty'],
@@ -270,8 +283,9 @@ export default {
                 this.Num=event['Number'];
       },
 
-       Selected_employee(event){        
-                //this.add_Cus=event['Address'];
+       Selected_employee(event){  
+        this.po_items[this.ins].preparedby=event['Employee'];
+        console.log("selected: " + this.po_items[this.ins].preparedby)
 
       },
 
@@ -351,7 +365,7 @@ export default {
         },
 
         closeModal() {
-             document.getElementById('close').click();
+            // document.getElementById('close').click();
 },
 
         calculateTotal(Sub) {
@@ -442,7 +456,7 @@ checkQty(product){
         },
 
         Selected_cus2(Ccode){
-          var i;
+          var i; 
           
             for(i=0;i<=this.List_Customer.length-1;i++){
               

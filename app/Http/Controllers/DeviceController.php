@@ -25,6 +25,9 @@ class DeviceController extends Controller
             'Ccode'=>$REQUEST['Ccode'],
             ]);
             $Device->save();
+
+            $Device = Cusstomer_Device::where('Code',$REQUEST['Code'])->get();
+            return $Device;
         
     }
 

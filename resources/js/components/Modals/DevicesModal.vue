@@ -21,7 +21,7 @@
     <a @click="Selected_cus(k)">{{Device.DeciveName}}</a>
     <span class="badge badge-primary badge-pill">{{Device.Model}}</span>
   </li>
-  <a  href="#NewEmployee" data-toggle="modal" type="button" class="my_btn btn link tn-secondary">New Employee</a>
+  <a  href="#addDeviceModal" data-toggle="modal" type="button" class="my_btn btn link tn-secondary">Add Device</a>
 </ul>
           </div>
 				
@@ -32,10 +32,40 @@
 		</div>
 	</div>
 </div>
+
+<!--modal Mod/Del-->
+<div id="addDeviceModal" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			
+				<div class="modal-header">						
+					<h4 class="modal-title">Devices</h4>
+					<button type="button" id="close2" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body">	
+          
+          <div class="form-group">	
+            <input type="text" v-model="DeviceForm.Code" placeholder="Code">
+            <input type="text" v-model="DeviceForm.DeciveName" placeholder="Decive Name">
+            <input type="text" v-model="DeviceForm.Model" placeholder="Model">	
+
+          </div>
+				</div>
+				<div class="modal-footer">
+         <button type="button" class="btn btn-primary" @click.prevent="SaveCusDevice">Save</button>
+         <button  type="button" class="btn btn-light" @click.prevent="Delete">Delete</button>
+				</div>
+			
+		</div>
+	</div>
+</div>
+<!--modal Mod/Del-->
+
     </div>
     
 </template>
 <script>
+
 function int_data(){
   return{
   status:'',
@@ -50,6 +80,25 @@ function int_data(){
                 Unit:'',
                 
        }],
+
+       //--------
+                 POs:[],
+             Name:'',
+             Cnum:'',
+             Add:'',
+             id:'',
+             success:false,
+             //for Devices
+             DeviceForm:{
+               Code:'',
+               DeciveName:'',
+               Model:'',
+               Ccode:'',
+               
+             },
+             //list oh cus list
+               DevList:[],
+                
 
     }
     }
@@ -67,6 +116,33 @@ this.load_customer();
 },
 methods:{
 
+        SaveCusDevice(){
+        var c=this.DeviceForm.Code.substr(0,2);
+        if(c=="cp"){
+
+        }
+        else{
+          this.DeviceForm.Code= "cp" + this.DeviceForm.Code;
+        }
+        
+        axios.post('/api/SaveCusDevice',this.DeviceForm)
+        .then(
+         (res)=>{
+           this.closeModal();
+           //this.DeviceForm.splice(0, 1);
+            this.Cus=[];
+            this.Cus.Code=res.data[0]['Code'];
+            this.Cus.Name=res.data[0]['DeciveName'] + this.Customer;
+            this.Cus.Unit=res.data[0]['Model'];
+          this.$emit("SelectedDevice",this.Cus);
+          
+         } 
+        )
+        .catch()
+
+        
+      },
+
   Selected_cus(index){
       //console.log(this.List_Customer[index]['Ccode']);
       
@@ -81,8 +157,10 @@ methods:{
 
     closeModal() {
       document.getElementById('closedevice').click();
+      document.getElementById('close2').click();
               this.List_Customer=[];
               this.load_customer();
+              
 },
 
     load_customer(){
@@ -90,9 +168,12 @@ methods:{
           .then(
               (response)=>{
                   this.List_Customer=response.data;
+                  
               }
           )
           .catch()
+
+          this.DeviceForm.Ccode=this.selectedCus;
       },
 },
 

@@ -300,7 +300,6 @@ export default{
         beforeEnter:(to,from,next)=>{
             axios.get('api/Authenticated').then(()=>{
                 next()
-                
             }).catch(()=>{
                 return next({name: '/login_'})
             })

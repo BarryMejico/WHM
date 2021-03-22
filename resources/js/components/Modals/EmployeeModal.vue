@@ -1,7 +1,13 @@
 <template>
     <div>
-        <a id="cus" href="#EmployeeModal" @click="loadindex" data-toggle="modal" type="button" class="my_btn btn link tn-secondary" :disabled="disabled == 1">
-          E</a>
+
+          <!-- <select>
+                      <option v-for="(Customer, k) in List_Customer" :key="k">{{Customer.Employee}}</option>
+          </select> -->
+
+          <a id="cus" href="#EmployeeModal" @click="loadindex" data-toggle="modal" type="button" class="my_btn btn link tn-secondary" :disabled="disabled == 1">
+                       &laquo;</a>
+
         <!--modal Employee-->
 <div id="EmployeeModal" class="modal fade">
 	<div class="modal-dialog">
@@ -13,7 +19,7 @@
 				</div>
 				<div class="modal-body">	
           <div class="form-group">		
-                    <label>Item Code</label>	
+                    <label>Search Employee</label>	
                     <input type="text" v-on:input="liveSearch" v-model="Search">
           </div>
 <ul class="list-group">
@@ -22,10 +28,22 @@
     <a @click="Selected_cus(k)">{{Customer.Employee}}</a>
     <span class="badge badge-primary badge-pill">{{Customer.id}}</span>
   </li>
-  <a  href="#NewEmployee" data-toggle="modal" type="button" class="my_btn btn link tn-secondary">New Employee</a>
+  
+ 
 </ul>
+
+<ul class="pagination justify-content-end">
+    <li class="page-item"><a class="page-link bg-dark text-white" @click.prevent="prepAGE()">Previous</a></li>
+    <ul class="pagination justify-content-end" v-for="(pages, page) in pages.last_page" :key=page>
+    <li class="page-item"><a class="page-link bg-dark text-white" @click.prevent="changepAGE(pages)">{{pages}}</a></li>
+    </ul>
+    <li class="page-item"><a class="page-link bg-dark text-white" @click.prevent="nextpAGE()">Next</a></li>
+</ul>
+
+
           </div>			
 				<div class="modal-footer">
+           <a  href="#NewEmployee" data-toggle="modal" type="button" class="my_btn btn link tn-secondary">New Employee</a>
           <button  type="button" class="btn btn-light" data-dismiss="modal" aria-hidden="true">Select Vendor</button>
 				</div>
 			
@@ -74,6 +92,7 @@ function int_data(){
         //forselection
         selected: 'A',
         ins:null,
+        pages:'',
     }
     }
 export default {
@@ -90,6 +109,37 @@ mounted(){
 this.load_customer();
 },
 methods:{
+
+  //pagination
+
+      changepAGE(page){
+        axios.get('/api/LoadEmployee?page='+page)
+        .then((res)=>{
+          this.List_Customer=res.data.data;
+          this.pages=res.data
+          })
+          .catch((errors)=>{
+          })
+      },
+     prepAGE(){
+        axios.get(this.pages.first_page_url)
+        .then((res)=>{
+          this.List_Customer=res.data.data;
+          this.pages=res.data
+          })
+          .catch((errors)=>{
+          })
+      },
+      nextpAGE(){
+        axios.get(this.pages.next_page_url)
+        .then((res)=>{
+          this.List_Customer=res.data.data;
+          this.pages=res.data
+          })
+          .catch((errors)=>{
+          })
+      },
+//end pagination
 
   loadindex(){
     this.ins=this.index;
@@ -117,7 +167,8 @@ methods:{
           axios.get('/api/LoadEmployee')
           .then(
               (response)=>{
-                  this.List_Customer=response.data;
+                  this.List_Customer=response.data.data;
+                  this.pages=response.data;
               }
           )
           .catch()
@@ -132,12 +183,11 @@ methods:{
       },
 
       liveSearch(){
-        axios.get('/api/LiveSearchCus',{params:{Search:this.Search}})
+        axios.get('/api/searchEmployee',{params:{Search:this.Search}})
           .then(
               (response)=>{
-                //console.log(response.data);
-              this.List_Customer=response.data;
-              console.log(this.disabled);
+              this.List_Customer=response.data.data;
+              this.pages=response.data;
               }
           )
           .catch()

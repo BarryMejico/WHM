@@ -94,6 +94,7 @@ export default {
 
     methods:{
 //pagination
+
       changepAGE(page){
         axios.get('/api/LoadInvoive?page='+page)
         .then((res)=>{

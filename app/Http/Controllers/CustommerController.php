@@ -25,6 +25,9 @@ class CustommerController extends Controller
             'Ccode'=>$Code,
         ]);
         $Vendor->save();
+
+        $customer = Customer::where('Ccode',$Code)->get();
+        return $customer;
     }
 
     public function Delete(Request $request){  
@@ -57,8 +60,8 @@ class CustommerController extends Controller
 
 
     public function LoadCus(){
-            $Vendors=Customer::all();
-            //$Vendors=Customer::paginate(5);
+            //$Vendors=Customer::all();
+            $Vendors=Customer::paginate(5);
             return $Vendors;
     }
 
@@ -74,7 +77,7 @@ class CustommerController extends Controller
         $s= $input['Search'];
         $search = DB::table('customers')
                 ->where('Customer', 'like', "%{$s}%")
-                ->get();
+                ->paginate(5);
         
         //dd($input);
         return $search;

@@ -34,7 +34,7 @@
                      <th scope="col">Model</th>
                     <th scope="col">Description</th>
                     <th scope="col">Cost</th>
-                    <th scope="col">Prepared By</th>  
+                    <th scope="col">Repaired By</th>  
                     <th scope="col"></th>  
                     <th scope="col">Remarks</th>
                     <th scope="col">Status</th>
@@ -47,7 +47,7 @@
                     <td>{{po_item.idescription}}-{{po_item.iunit}}</td>
                     <td><input @change="calculateLineTotal(po_item)" :disabled="disabled == 1"></td>
                     <td class="in"><div class="qty"><input  v-model="po_item.UnitCost"  @change="calculateLineTotal(po_item)" :disabled="disabled == 1"></div></td>
-                    <td>{{po_item.preparedby}}
+                    <td>{{po_item.Repairedby}}
                     </td>
                     <td>
                       <employee-modal @loadindex="indext" @SelectedEmployee="Selected_employee" v-bind:index="k" :disabled="disabled"/>                     
@@ -57,7 +57,12 @@
                         </td>
                
                     <td>
-                      DropDown
+                     <select v-model="po_item.status">
+                      <option>Claimed</option>
+                      <option>RTO</option>
+                      <option>Open</option>
+                      
+                    </select>
                     </td>
                     <td>
                       </td>
@@ -71,9 +76,7 @@
          
       </div>
       <div class="col-lg-5">
-                   
                     <div class="total"> 
-                    
                     <Label><b>Total:</b> {{PO_total}} Php</Label><br>
                     <Label for="Deposit"><b>Deposit/Payment:</b></Label>
                     <input type="number" id="Deposit" v-model="Deposit"/><hr>
@@ -130,7 +133,7 @@ function int_data(){
       po_items2:[],
       po_details:[],
       po_items:[{
-        preparedby:'',
+        Repairedby:'',
         Icode:'',
         idescription:'',
         iunit:'',
@@ -139,6 +142,7 @@ function int_data(){
         Tcost:0,
         AvailableQty:0,
         Remarks:'',
+        status:'',
       }],
       //-----for loading items
         items:[],
@@ -242,7 +246,7 @@ export default {
 
       addService(){
         this.po_items.push({
-                preparedby:'s',
+                Repairedby:'s',
                 Icode:'service-001',
                 idescription:'asd',
                 iunit:'asd',
@@ -280,11 +284,12 @@ export default {
          {this.po_items.splice(0, 1);}
 
              this.po_items.push({
-                preparedby:'s',
+                Repairedby:'',
                  Icode:code,
                  idescription:Name,
                  iunit:Unit,
                  Qty:1, 
+                 status:"",
                  //AvailableQty:res.data[0]['Qty'],
                 
          });
@@ -319,12 +324,11 @@ export default {
                 this.Customer_code=event['id'];
                 this.ccode=event['Ccode'];
                 this.Num=event['Number'];
+                  // this.po_items="";
       },
 
        Selected_employee(event){  
-        this.po_items[this.ins].preparedby=event['Employee'];
-        console.log("selected: " + this.po_items[this.ins].preparedby)
-
+        this.po_items[this.ins].Repairedby=event['Employee'];
       },
 
       load_vendor(){

@@ -115,7 +115,7 @@ function int_data(){
        Vendor_code:'',
        Customer_code:'',
        Ship_to:'Ship',
-       status:'',
+       status:'Open',
        ccode:'',
        //---for loading Vendors
        // List_Vendor:[],
@@ -443,7 +443,7 @@ checkQty(product){
               Ship_to:this.ccode,
               PO:this.po,
               payment:this.Deposit,
-
+              Status:this.status,
               })
             .then(()=>{
                this.clearData();

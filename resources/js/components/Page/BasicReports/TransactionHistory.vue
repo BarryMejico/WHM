@@ -14,10 +14,6 @@
          <label for="dateto">date to:</label>
           <input type="date" id="dateto" name="dateto"  v-model="dateto">
           <hr>
-          <span>Created by</span><hr>
-          <span>Repaired by</span><hr>
-
-          
           <!--Status-->        
           <div class="dropdown">
               <label>Status</label> 
@@ -44,12 +40,15 @@
                 </div>
               </div>
           <hr>
-          <div class="col-lg-6">
+          <div class="col-lg-12">
           <devices-modal @SelectedDevice="Selected_Device" v-bind:selectedCus="Ccode" :disabled="disabled"/><br>
           <b>Device: </b><label class="text-muted"><i>{{Device}}</i></label><br>
           </div>
           <hr>
-          <button @click.prevent="Search()">Load</button>
+          <label>Repaired By <i>Employee Modal</i></label><br>
+          <label>Model <i>type text</i></label><br>
+          <label>Device Status <i>Dropdown</i></label><br>
+          <button @click.prevent="Search()">Load</button><br>
           
   <table class="table table-responsive">
   <thead class="thead-dark">
@@ -67,6 +66,7 @@
       <th scope="col">
          <thead style="max-width:100px">
         <tr>
+            <th scope="col">Model</th>
             <th scope="col">Description</th>
             <th scope="col">Repaired By</th>
             <th scope="col">Remarks</th>
@@ -81,11 +81,11 @@
     <tr v-for="(item, k) in stocks" :key="k">      
       <th scope="row">{{k}}</th>
       <td>{{item.updated_at}}</td>
-      <td>{{item.invoice}}</td>
+      <td>{{item.Customer}}</td>
       <td>{{item.Total_Amount| numeral('0,0')}}</td>
-      <td><i>Deposit</i></td>
+      <td><i>{{item.payment| numeral('0,0')}}</i></td>
       <td><i>Balance</i></td>
-      <td>{{item.Created_by}}</td>
+      <td>{{item.name}}</td>
       <td>{{item.Status}}</td>
       <td class="subTable2">
         <table>
@@ -98,11 +98,13 @@
         </tr>
         </thead>
         <tr v-for="(details,d) in item.items" :key="d">
-         <td>{{ item.items[d][0].Icode }}  Description</td>
-         <td><i>Name</i></td>
+         <td>{{ item.items[d][0].Icode }}</td>
+         <td>{{ item.items[d][0].description }}</td>
+         <td><i>{{item.items[d][0].Repairedby}}</i></td>
           <td>{{item.items[d][0].Remarks}}</td>
-         <td>Date</td>
+         <td>{{item.items[d][0].updated_at}}</td>
         </tr>
+       
         </table>
       </td>
       
@@ -115,6 +117,14 @@
           Receiving
           </router-link></button></td>-->
     </tr>
+     <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>Total</td>
+          <td>Total of payment</td>
+          <td>Total of Balance</td>
+          </tr>
   </tbody>
 </table>
       </div>
@@ -206,8 +216,8 @@ export default {
               Icode:this.Devcode,
               }})
             .then((response)=>{
-                //console.log(response.data);
-                this.stocks=response.data;
+                console.log(response.data);
+               this.stocks=response.data;
                this.PresentationLoop();
             })
             .catch((err)=>{
@@ -247,9 +257,14 @@ export default {
                         for(i=0;i<=this.stocks.length-1;i++){
                            if(this.stocks2[j].invoice==this.stocks[i].invoice){
                                laman.push([{
-                                Icode:this.stocks[i].Icode,
+                                Icode:this.stocks[i].DeciveName + this.stocks[i].Model,
                                 Remarks:this.stocks[i].Remarks,
                                 ligaw:this.stocks[i].invoice,
+                                Repairedby:this.stocks[i].Employee,
+                                UnitCost:this.stocks[i].UnitCost,
+                                description:this.stocks[i].description,
+                                Status:this.stocks[i].Status,
+                                updated_at:this.stocks[i].updated_at,
                       }])
                               } }
 
@@ -274,6 +289,7 @@ export default {
             axios.get('/api/Saleshistory',{params:{Status:"Approved"}})
             .then((res)=>{
                 this.stocks=res.data;
+                this.PresentationLoop();
             })
         },
 

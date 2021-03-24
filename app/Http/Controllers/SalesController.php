@@ -26,7 +26,7 @@ class SalesController extends Controller
         'invoice'=> $SalesCode,
         'Total_Amount'=>$input['PO_total'],
         'Created_by'=>$UserIn,
-        'Status'=>'Open',
+        'Status'=>$input['Status'],
         'Reviewed_by'=>'',
         'Ccode'=>$input['Ship_to'],
         ]);
@@ -127,19 +127,36 @@ class SalesController extends Controller
     }
 
     public function SearchTrans(Request $request){
-       //dd($request);
-
         $search = DB::table('sales_details')
-        ->join('sales', function($join)use($request)
-        {
-            $join->on('sales.invoice', '=', 'sales_details.invoice')
-                    ->where('sales.Status', 'like', "%{$request['Status']}%")
-                    ->where('sales.Ccode', 'like', "%{$request['Ccode']}%")
-                    ->where('sales.Created_by', 'like', "%{$request['Createdby']}%")
-                    ->where('sales_details.Icode', 'like', "%{$request['Icode']}%");
-        })
-        ->get();
+        ->join('sales', 'sales.invoice', '=', 'sales_details.invoice')
+        ->join('employees', 'employees.Ecode', '=', 'sales_details.Repairedby')
+        ->join('cusstomer__devices', 'cusstomer__devices.Code', '=', 'sales_details.Icode')
+        ->join('users', 'users.id', '=', 'sales.Created_by')
+        ->join('payments', 'payments.invoice', '=', 'sales_details.invoice')
+        ->join('customers', 'customers.Ccode', '=', 'sales.Ccode')
         
+        ->where('sales.Status', 'like', "%{$request['Status']}%")
+        ->where('sales.Ccode', 'like', "%{$request['Ccode']}%")
+        ->where('sales.Created_by', 'like', "%{$request['Createdby']}%")
+        ->where('sales_details.Icode', 'like', "%{$request['Icode']}%")
+        
+        ->select('sales.updated_at',
+                    'customers.Customer',
+                    'sales.Total_Amount',
+                    'payments.payment',
+                    //'payments.Balance',
+                    'users.name',
+                    'sales.Status',
+                    'cusstomer__devices.Code',
+                    'cusstomer__devices.DeciveName',
+                    'cusstomer__devices.Model',
+                    'employees.Employee',
+                    'sales_details.Remarks',
+                    'sales_details.updated_at',
+                    'sales_details.description',
+                    'sales.invoice'
+)
+        ->get();
         return $search;
     }
 }

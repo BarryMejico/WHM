@@ -57,7 +57,7 @@
 		<div class="modal-content">
 			
 				<div class="modal-header">						
-					<h4 class="modal-title">Vendor</h4>
+					<h4 class="modal-title">Items</h4>
 					<button type="button" id="close" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
 				<div class="modal-body">	

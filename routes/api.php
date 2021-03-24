@@ -46,6 +46,7 @@ Route::post('ChangeStatus','PoDetailsControl@ChangeStatus');
 
 
 Route::get('LoadCus','CustommerController@LoadCus');
+Route::get('LoadlistCus','CustommerController@LoadlistCus');
 Route::get('LoadCus2','CustommerController@LoadCusPagination');
 Route::post('SaveCus','CustommerController@store');
 Route::post('updateCus','CustommerController@update');

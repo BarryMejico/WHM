@@ -14,14 +14,17 @@ class CreateSalesTable extends Migration
     public function up()
     {
         Schema::create('sales', function (Blueprint $table) {
-            $table->id();
+            $table->string('id')->nullable();
             $table->timestamps();
             $table->string('invoice'); 
+            $table->primary('invoice'); 
             $table->string('Total_Amount'); 
             $table->string('Created_by'); 
             $table->string('Status'); 
             $table->string('Reviewed_by'); 
             $table->string('Ccode');
+            
+            $table->foreign('Ccode')->references('Ccode')->on('customers')->onDelete('cascade');
         });
     }
 

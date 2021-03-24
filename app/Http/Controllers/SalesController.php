@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Sales;
 use App\SalesDetails;
 use App\StocksList;
+use App\payment;
 use Illuminate\Support\Facades\DB;
 
 class SalesController extends Controller
@@ -13,24 +14,24 @@ class SalesController extends Controller
     public function SaveInvoice(request $REQUEST){
         $input = $REQUEST->all();
         //dd($input);
-
+        $SalesCode=Ucode();
         $UserIn=getUser()->id;
+
         $REQUEST->validate([
-        'PO'=>'required',
         'PO_total'=>'required',
         'Ship_to'=>'required',
         ]);
-
+        //saving to list of JO
         $PO = sales::updateOrCreate(['invoice'=> $input['PO']],[
-        'invoice'=> $input['PO'],
+        'invoice'=> $SalesCode,
         'Total_Amount'=>$input['PO_total'],
         'Created_by'=>$UserIn,
         'Status'=>'Open',
-        'Reviewed_by'=>'test1',
+        'Reviewed_by'=>'',
         'Ccode'=>$input['Ship_to'],
         ]);
         $countarray = count($input['po_items'])-1;
-        //dd($countarray);
+        //dd($input['po_items']);
         
         DB::table('sales_details')->where('invoice',$input['PO'])->delete();
 
@@ -39,17 +40,26 @@ class SalesController extends Controller
                         'Icode' => $input['po_items'][$i]['Icode'],
                         'invoice' => $input['PO']
                      ],[
-                    'Icode' => $input['po_items'][$i]['Icode'],
-                    'Qty' => $input['po_items'][$i]['Qty'],
-                    'UnitCost' => $input['po_items'][$i]['UnitCost'],
-                    'invoice' => $input['PO'],
-                    'description' => $input['po_items'][$i]['description'],
-                    'Remarks' => ""
+                    'invoice' => $SalesCode,
+                    'Icode' => $input['po_items'][$i]['Icode'],//                 "Icode" => "cp123"
+                    'Qty' => $input['po_items'][$i]['Qty'], //                 "Qty" => 1
+                    'UnitCost' => $input['po_items'][$i]['UnitCost'],//                 "UnitCost" => "500"
+                    'description' => $input['po_items'][$i]['description'], //                 "idescription" => "123"
+                    'Remarks' => $input['po_items'][$i]['Remarks'],  //                 "Remarks" => "asd"
+                    'Status' => $input['po_items'][$i]['status'],       //                 "status" => null
+                    'Repairedby' => $input['po_items'][$i]['RepairedbyCode'],   //                 "Repairedby" => "Employee - 001"
         ]);
         
                     $newData->save();
                    
                 } 
+
+                //saving payment
+                $payment=payment::updateOrCreate([
+                    'invoice'=>$SalesCode,
+                    'payment'=>$input['payment']
+                ]);
+                $payment->save();
         $PO->save();
 
 
@@ -68,28 +78,22 @@ class SalesController extends Controller
         $invoiceDetails=DB::table('sales_details')
         ->where('invoice', [$REQUEST['params']['invoice']])
         ->get();
-        
+        //dd($invoiceDetails);
         $countarray=count($invoiceDetails)-1;
-        
-        for($i=0;$i<=$countarray;$i++){
-            
-            $strng =$invoiceDetails->Icode;
-            dd($strng);
-            if(substr($strng,0,2)=="pc"){
+        //dd($countarray);
 
-            }
-            else{
+        for($i=0;$i<=$countarray;$i++){
             $item=DB::table('stocks_lists')
-        ->where('Icode', [$invoiceDetails[$i]->Icode])
-        ->get();
-        //dd($invoiceDetails[$i]->Qty);
+            ->where('Icode', [$invoiceDetails[$i]->Icode])
+            ->get();
+                //dd($invoiceDetails[$i]->Qty);
             $NewQty=$item[0]->Qty-$invoiceDetails[$i]->Qty;
             $updateStocks=StocksList::updateOrCreate(['Icode' => $invoiceDetails[$i]->Icode],[
                 'Qty' => $NewQty,
                 
             ]);
             $updateStocks->save();
-        }
+        
     }
 
         $PO = sales::updateOrCreate(['invoice'=> $REQUEST['params']['invoice']],[

@@ -149,6 +149,10 @@ function int_data(){
         UnitCost:'',
         Tcost:0,
         AvailableQty:0,
+        Remarks:null,
+        status:null,
+        RepairedbyCode:null,
+
       }],
       //-----for loading items
         items:[],
@@ -156,6 +160,8 @@ function int_data(){
         disabled:0,
         //device
         listDevice:[],
+        //remarks
+        Remarks:null,
     }
     }
 
@@ -275,6 +281,9 @@ export default {
                 iunit:Unit,
                 Qty:1, 
                 AvailableQty:res.data[0]['Qty'],
+                 Remarks:null,
+                status:null,
+                RepairedbyCode:null,
                 
         });
 
@@ -317,7 +326,10 @@ export default {
                  Icode:code,
                 idescription:Name,
                 iunit:Unit,
-                Qty:1,                 
+                Qty:1, 
+                 Remarks:null,
+                status:null,
+                RepairedbyCode:null,                
         });
         
         this.closeModal();
@@ -361,7 +373,7 @@ export default {
 
 
       load_customer(){
-          axios.get('/api/LoadCus')
+          axios.get('/api/LoadlistCus')
           .then(
               (response)=>{
                   this.List_Customer=response.data;
@@ -479,6 +491,8 @@ checkQty(product){
               //Created_by:this.userId['id'],       //'Created_by' => 'required',
               //Vendor:this.Vendor_code,         //'Vendor'=>'required',
               Ship_to:this.ccode,            //'Ship_to'=>'required',
+              Remarks:this.Remarks,
+              payment:0,
               })
             .then(()=>{
                this.clearData();

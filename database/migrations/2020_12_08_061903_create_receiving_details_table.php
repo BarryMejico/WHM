@@ -17,9 +17,11 @@ class CreateReceivingDetailsTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('Icode');
+            $table->foreign('Icode')->references('Code')->on('items')->onDelete('cascade');
             $table->string('Qty');
             $table->string('UnitCost');
             $table->string('PO');
+            $table->foreign('PO')->references('PO')->on('po_lists')->onDelete('cascade');
             $table->string('ReceivingCode');
         });
     }

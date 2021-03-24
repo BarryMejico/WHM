@@ -14,11 +14,13 @@ class CreateVendorModelsTable extends Migration
     public function up()
     {
         Schema::create('vendor_models', function (Blueprint $table) {
-            $table->id();
+            //$table->id();
             $table->timestamps();
             $table->string('Vendor');
             $table->string('Number');
             $table->string('Address');
+            $table->string('Vcode');
+            $table->primary('Vcode');
         });
     }
 

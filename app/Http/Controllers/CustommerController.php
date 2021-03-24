@@ -18,7 +18,7 @@ class CustommerController extends Controller
         $input = $request->all();
         $Code=Ucode();
         //dd($input);
-        $Vendor = Customer::updateOrCreate(['id'=> $input['ids']],[
+        $Vendor = Customer::updateOrCreate([
             'Customer'=> $input['Name'],
             'Number'=> $input['Number'],
             'Address'=> $input['Address'], 
@@ -64,6 +64,12 @@ class CustommerController extends Controller
             $Vendors=Customer::paginate(5);
             return $Vendors;
     }
+
+    public function LoadlistCus(){
+        $Vendors=Customer::all();
+        //$Vendors=Customer::paginate(5);
+        return $Vendors;
+}
 
     public function LoadCusPagination(){
         //$Vendors=Customer::all();

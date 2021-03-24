@@ -45,7 +45,7 @@
                   <tr  v-for="(po_item, k) in po_items" :key="k">      
                     <th scope="row" class="in">{{k}}</th>
                     <td>{{po_item.idescription}}-{{po_item.iunit}}</td>
-                    <td><input @change="calculateLineTotal(po_item)" :disabled="disabled == 1"></td>
+                    <td><input v-model="po_item.description" :disabled="disabled == 1"></td>
                     <td class="in"><div class="qty"><input  v-model="po_item.UnitCost"  @change="calculateLineTotal(po_item)" :disabled="disabled == 1"></div></td>
                     <td>{{po_item.Repairedby}}
                     </td>
@@ -134,8 +134,10 @@ function int_data(){
       po_details:[],
       po_items:[{
         Repairedby:'',
+        RepairedbyCode:'',
         Icode:'',
         idescription:'',
+        description:'',
         iunit:'',
         Qty:'',
         UnitCost:'',
@@ -144,6 +146,8 @@ function int_data(){
         Remarks:'',
         status:'',
       }],
+      
+     
       //-----for loading items
         items:[],
         //--disable
@@ -151,7 +155,8 @@ function int_data(){
         //selected index
         ins:0,
         //Deposit
-        Deposit:'',
+        //----and payment
+        Deposit:0,
         
     }
     }
@@ -266,7 +271,7 @@ export default {
          for (i=0;i < this.po_items.length; i++){
             if(this.po_items[i]['Icode']===code){
                meron = true;
-               this.po_items[i]['Qty']=this.po_items[i]['Qty']+1;
+               //this.po_items[i]['Qty']=this.po_items[i]['Qty']+1;
             }
         }
 
@@ -290,6 +295,7 @@ export default {
                  iunit:Unit,
                  Qty:1, 
                  status:"",
+                 Remarks:null,
                  //AvailableQty:res.data[0]['Qty'],
                 
          });
@@ -328,7 +334,9 @@ export default {
       },
 
        Selected_employee(event){  
+         console.log(event)
         this.po_items[this.ins].Repairedby=event['Employee'];
+        this.po_items[this.ins].RepairedbyCode=event['Ecode'];
       },
 
       load_vendor(){
@@ -336,7 +344,6 @@ export default {
           .then(
               (response)=>{
                   this.List_Vendor=response.data;
-                  
               }
           )
           .catch()
@@ -433,10 +440,10 @@ checkQty(product){
             axios.post('/api/SaveInvoice', {
               po_items:this.po_items, 
               PO_total:this.PO_total,
+              Ship_to:this.ccode,
               PO:this.po,
-              //Created_by:this.userId['id'],       //'Created_by' => 'required',
-              //Vendor:this.Vendor_code,         //'Vendor'=>'required',
-              Ship_to:this.ccode,            //'Ship_to'=>'required',
+              payment:this.Deposit,
+
               })
             .then(()=>{
                this.clearData();

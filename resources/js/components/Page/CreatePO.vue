@@ -166,21 +166,21 @@ function int_data(){
        datacollection: null,
        po:'',
        PO_total:0,
-       Vendor_code:'x',
-       Customer_code:'x',
+       Vendor_code:null,
+       Customer_code:null,
        Ship_to:'Ship',
        status:'Open',
        last_update:'',
        //---for loading Vendors
        // List_Vendor:[],
-        Vendor:'x',
-        add_Ven:'x',
+        Vendor:null,
+        add_Ven:null,
   
       //---for loading Ship to
       // Ship:'',
       // List_Customer:[],
-       Customer:'x',
-       add_Cus:'x',
+       Customer:null,
+       add_Cus:null,
       
       //---for details of po
       po_items2:[],

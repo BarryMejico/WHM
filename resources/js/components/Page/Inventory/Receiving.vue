@@ -395,7 +395,7 @@ export default {
 
 
       load_customer(){
-          axios.get('/api/LoadCus')
+          axios.get('/api/LoadlistCus')
           .then(
               (response)=>{
                   this.List_Customer=response.data;

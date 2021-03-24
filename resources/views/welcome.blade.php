@@ -88,7 +88,7 @@
                 <li><router-link onclick="closeNav()" to="/Upcoming" class="notAvailable">Products</router-link></li>
                 <li><router-link onclick="closeNav()" to="/Upcoming" class="notAvailable">Service</router-link></li>
                 <li><router-link onclick="closeNav()" to="/invoice">Sales Invoice</router-link></li>
-                <li><router-link onclick="closeNav()" to="/invoice2">Sales Invoice2</router-link></li>
+                <li><router-link onclick="closeNav()" to="/JobOrder">Job Order</router-link></li>
             </ul>
         </div>
 

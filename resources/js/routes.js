@@ -313,9 +313,9 @@ export default{
     },
 
     {
-        path:'/invoice2',
+        path:'/JobOrder',
         component: invoice2,
-        name: 'invoice2',
+        name: 'JobOrder',
         beforeEnter:(to,from,next)=>{
             axios.get('api/Authenticated').then(()=>{
                 next()

@@ -49,13 +49,14 @@ class itemController extends Controller
             'Code' => ['required', 'string'],
             'Unit' => ['required', 'string'],
         ]);
-
-        $item = item::find($input['ids']);
-        $item ->Name= $input['Name'];
+ 
+        $item = item::where('Code',$input['Code'])
+        ->update([
+        'Name'=> $input['Name'],
         //$item ->Code= $input['Code'];
-        $item ->Unit= $input['Unit']; 
+        'Unit'=> $input['Unit'],
                
-        $item->save(); 
+        ]);
         
     }
 

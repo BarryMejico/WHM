@@ -33,7 +33,7 @@ class VendorController extends Controller
         $input = $request->all();
         $Code=Ucode();
         //dd($input);
-        $Vendor = VendorModel::updateOrCreate(['id'=> $input['ids']],[
+        $Vendor = VendorModel::updateOrCreate([
             'Vendor'=> $input['Name'],
             'Number'=> $input['Number'],
             'Address'=> $input['Address'], 

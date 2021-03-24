@@ -14,14 +14,17 @@ class CreateReceivingListsTable extends Migration
     public function up()
     {
         Schema::create('receiving_lists', function (Blueprint $table) {
-            $table->id();
+            //$table->id();
             $table->timestamps();
             $table->string('PO');
             $table->string('Total_Amount');
-            $table->string('Created_by');
+            $table->unsignedBigInteger('Created_by');
+            $table->foreign('Created_by')->references('id')->on('users')->onDelete('cascade');
             $table->string('Status');
-            $table->string('Reviewed_by');
+            $table->unsignedBigInteger('Reviewed_by')->nullable();
+            $table->foreign('Reviewed_by')->references('id')->on('users')->onDelete('cascade');
             $table->string('ReceivingCode');
+            $table->primary('ReceivingCode');
 
         });
     }

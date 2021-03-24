@@ -19,6 +19,8 @@ class CreateCusstomerDevicesTable extends Migration
             $table->string('Code'); 
             $table->string('DeciveName'); 
             $table->string('Model'); 
+            $table->string('Ccode');
+            $table->foreign('Ccode')->references('Ccode')->on('customers')->onDelete('cascade');
 
         });
     }

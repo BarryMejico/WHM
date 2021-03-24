@@ -135,60 +135,33 @@ export default {
 
 checkQty(product,i,l,invoice){
   var Item;
-   var c=product['Icode'].substr(0,2);
-    
-        if(c=="cp"){
-         console.log("in")
           this.ItemStatus=true;
           var pers=100;
               i=i+1;
               pers=(i/l)*100;
-              if (pers==100){
+
+if (pers==100){
                 if(this.ItemStatus){
                        this.appInvoice(invoice);
                 }
                 else{
                 alert("Qty is greater than available!")
               }
-                
-              }   
-          }
+}   
 else{
           axios.get('/api/getitem',{params:{Code:product['Icode']}})
           .then(
             (res)=>{
               Item=res.data;
               if(parseFloat(Item[0]['Qty'])>=parseFloat(product['Qty']) ){
-                if (this.ItemStatus==false){
-                  //console.log("Walang gagawin");
-                //console.log(Item[0]['Qty']);
-                }
-                else{
-                  this.ItemStatus=true;}
+                //walng gagawin
               }
               else{
                 console.log(product['Qty']);
                 console.log(Item[0]['Qty']);
-                  this.ItemStatus= false;
+                this.ItemStatus= false;
                 }
-
-              var pers=100;
-              i=i+1;
-              
-              pers=(i/l)*100;
-              if (pers==100){
-                if(this.ItemStatus){
-                       this.appInvoice(invoice);
-                }
-                else{
-                alert("Qty is greater than available!")
-              }
-                
-              }
-            }
-
-            
-          )
+            })
           .catch(
 
             (err)=>{
@@ -199,8 +172,10 @@ else{
         
         },
 
+
+
         appInvoice(invoice){
- axios.post('/api/ApprovedInvoice',{params:{invoice:invoice}})
+                    axios.post('/api/ApprovedInvoice',{params:{invoice:invoice}})
                       .then(
                        this.loadpos()
                       )

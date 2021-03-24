@@ -30,7 +30,7 @@ class receivingController extends Controller
         'Total_Amount'=>$input['PO_total'],
         'Created_by'=>$UserIn,
         'Status'=>'Open',
-        'Reviewed_by'=>'test1',
+        'Reviewed_by'=>null,
         'ReceivingCode'=>$ReceivingCode,
         ]);
         

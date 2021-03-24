@@ -15,19 +15,20 @@ class PoDetailsControl extends Controller
         $input = $request->all();
         //dd($input);
         $UserIn=getUser()->id;
+        
+
         $request->validate([
         'PO'=>'required',
         'PO_total'=>'required',
-        'Vendor'=>'required',
-        'Ship_to'=>'required',
         ]);
 
         $PO = po_list::updateOrCreate(['PO'=> $input['PO']],[
-        'PO'=> $input['PO'],
+            'id'=> null,
+            'PO'=> $input['PO'],
         'Total_Amount'=>$input['PO_total'],
         'Created_by'=>$UserIn,
         'Status'=>$input['status'],
-        'Reviewed_by'=>'test1',
+        'Reviewed_by'=>null,
         'Vendor'=>$input['Vendor'],
         'Ship_to'=>$input['Ship_to'],
         ]);

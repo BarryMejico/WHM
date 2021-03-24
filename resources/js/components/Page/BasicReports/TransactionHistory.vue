@@ -45,10 +45,19 @@
           <b>Device: </b><label class="text-muted"><i>{{Device}}</i></label><br>
           </div>
           <hr>
-          <label>Repaired By <i>Employee Modal</i></label><br>
+          <label>Repaired By:{{RepairedBy}} <employee-modal @SelectedEmployee="Selected_employee" /></label><br>
           <label>Model <i>type text</i></label><br>
-          <label>Device Status <i>Dropdown</i></label><br>
+          <label>Device Status 
+            </label>
+             <select v-model="Status">
+                      <option>Claimed</option>
+                      <option>RTO</option>
+                      <option>Open</option>
+                      
+                    </select>
+            <br>
           <button @click.prevent="Search()">Load</button><br>
+          <button class="btn-danger" @click.prevent="">Clear Filters</button><br>
           
   <table class="table table-responsive">
   <thead class="thead-dark">
@@ -80,7 +89,7 @@
   <tbody>
     <tr v-for="(item, k) in stocks" :key="k">      
       <th scope="row">{{k}}</th>
-      <td>{{item.updated_at}}</td>
+      <td><a href="#load">{{item.updated_at}}</a></td>
       <td>{{item.Customer}}</td>
       <td>{{item.Total_Amount| numeral('0,0')}}</td>
       <td><i>{{item.payment| numeral('0,0')}}</i></td>
@@ -108,14 +117,7 @@
         </table>
       </td>
       
-       <!--<td>
-        <button class="btn-sm">
-       <router-link :to="{ name:'PO', params:{PO_Load: po_item.PO }}">
-          Purchase Order
-        </router-link>
-        </button><button class="btn-sm"><router-link :to="{ name:'Receiving', params:{PO_Load: po_item.PO }}">
-          Receiving
-          </router-link></button></td>-->
+       
     </tr>
      <tr>
           <td></td>
@@ -135,11 +137,13 @@
 <script>
 import CustomerModal from '../../Modals/CustomerModal.vue';
 import DevicesModal from '../../Modals/DevicesModal.vue';
+import EmployeeModal from '../../Modals/EmployeeModal.vue';
 
 export default {
     components: {
         CustomerModal,
         DevicesModal,
+        EmployeeModal,
     },
 
     data(){
@@ -163,9 +167,9 @@ export default {
             //filtration
             datefrom:new Date().toISOString().substr(0, 10),
             dateto:new Date().toISOString().substr(0, 10),
-            Createdby:'Barry',
+            Createdby:'',
             CreatedbyCode:'',
-            Repairedby:'',
+    
             Status:'',
             Customer:'',
             add_Cus:'',
@@ -173,6 +177,9 @@ export default {
             Device:'',
             Devcode:'',
             DevUnit:'',
+            RepairedBy:'',
+            RepairedByCode:'',
+            Status:'',
             
         }
     },
@@ -186,11 +193,26 @@ export default {
     },
 
     mounted(){
-        
-        
+      var FDate=new Date();
+      var month =FDate.getMonth()+1;
+      var newMonth
+      if (month>10){
+        newMonth=month.toString();}
+      else{newMonth="0" + month.toString();}
+
+      var newDate= FDate.getFullYear().toString() +"-"+ newMonth + "-"+ "01"
+      var FromDate = new Date(newDate).toISOString().substr(0, 10);
+      this.datefrom=FromDate;
+
     },
 
     methods:{
+      Selected_employee(event){
+        console.log(event);
+          this.RepairedBy=event['Employee'];
+          this.RepairedByCode=event['Ecode'];
+      },
+
       Selected_Device(event){
          this.Devcode=event['Code'];
          this.Device=event['Name'];
@@ -214,6 +236,7 @@ export default {
               Status:this.Status,
               Ccode:this.Ccode,
               Icode:this.Devcode,
+              RepairedBy:this.RepairedByCode,
               }})
             .then((response)=>{
                 console.log(response.data);

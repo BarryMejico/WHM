@@ -139,7 +139,8 @@ class SalesController extends Controller
         ->where('sales.Ccode', 'like', "%{$request['Ccode']}%")
         ->where('sales.Created_by', 'like', "%{$request['Createdby']}%")
         ->where('sales_details.Icode', 'like', "%{$request['Icode']}%")
-        
+        ->where('sales_details.Repairedby', 'like', "%{$request['RepairedBy']}%")
+
         ->select('sales.updated_at',
                     'customers.Customer',
                     'sales.Total_Amount',

@@ -8,6 +8,7 @@ use App\SalesDetails;
 use App\StocksList;
 use App\payment;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class SalesController extends Controller
 {
@@ -130,6 +131,8 @@ class SalesController extends Controller
     }
 
     public function SearchTrans(Request $request){
+        $dt = Carbon::create($request['dateto']);
+        
         $search = DB::table('sales_details')
         ->join('sales', 'sales.invoice', '=', 'sales_details.invoice')
         ->join('employees', 'employees.Ecode', '=', 'sales_details.Repairedby')
@@ -146,6 +149,9 @@ class SalesController extends Controller
         ->where('sales_details.DeviceStatus', 'like', "%{$request['DeviceStatus']}%")
         ->where('cusstomer__devices.Model', 'like', "%{$request['model']}%")
         ->where('cusstomer__devices.DeciveName', 'like', "%{$request['DeviceName']}%")
+        ->whereDate('sales_details.created_at',"<=" ,$request['dateto'])
+        ->whereDate('sales_details.created_at',">=" ,$request['datefrom'])
+        
 
         ->select('sales.updated_at',
                     'customers.Customer',

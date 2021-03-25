@@ -9,10 +9,10 @@
       <div class="col-lg-12">
 <h3>Transaction Filter</h3>
           <label for="datefrom">date from:</label>
-          <input type="date" id="datefrom" name="datefrom" v-model="datefrom">
+          <input type="date" id="datefrom" @change="DatDiff()" name="datefrom" v-model="datefrom">
           
          <label for="dateto">date to:</label>
-          <input type="date" id="dateto" name="dateto"  v-model="dateto">
+          <input type="date" id="dateto" name="dateto" @change="DatDiff()" v-model="dateto">
           <hr>
           <!--Status-->        
           <div class="dropdown">
@@ -67,7 +67,7 @@
       <th scope="col">Date</th>
       <th scope="col">Customer</th>
       <th scope="col">Amount</th>
-      <th scope="col">Deposit</th>
+      <th scope="col">Payment</th>
       <th scope="col">Balance</th>
       <th scope="col">Created by</th>
       <th scope="col">Status</th>
@@ -92,7 +92,10 @@
     <tr v-for="(item, k) in stocks" :key="k">      
       <th scope="row">{{k}}</th>
       <td><a href="#load">{{item.updated_at}}</a></td>
-      <td>{{item.Customer}}</td>
+      <td>
+        <router-link :to="{ name:'JobOrder', params:{PO_Load: item.invoice}}">
+          {{item.Customer}}
+        </router-link></td>
       <td>{{item.Total_Amount| numeral('0,0')}}</td>
       <td><i>{{item.payment| numeral('0,0')}}</i></td>
       <td><i>{{item.Balance| numeral('0,0')}}</i></td>
@@ -171,21 +174,22 @@ export default {
             //filtration
             datefrom:new Date().toISOString().substr(0, 10),
             dateto:new Date().toISOString().substr(0, 10),
-            Createdby:'',
-            CreatedbyCode:'',
+            Createdby:null,
+            CreatedbyCode:null,
     
-            Status:'',
-            Customer:'',
-            add_Cus:'',
-            Ccode:'',
-            Device:'',
-            Devcode:'',
-            DevUnit:'',
-            RepairedBy:'',
-            RepairedByCode:'',
-            DeviceStatus:'',
-            model:'',
-            DeviceName:'',
+            Status:null,
+            Customer:null,
+            add_Cus:null,
+            Ccode:null,
+            Device:null,
+            Devcode:null,
+            DevUnit:null,
+            RepairedBy:null,
+            RepairedByCode:null,
+            DeviceStatus:null,
+            model:null,
+            DeviceName:null,
+            DifDay:0,
             
         }
     },
@@ -199,7 +203,24 @@ export default {
     },
 
     mounted(){
-      var FDate=new Date();
+     this.firstDate()
+
+    },
+
+    methods:{
+      DatDiff(){
+        var D1=new Date(this.dateto)
+        var D2=new Date(this.datefrom)
+        this.DifDay=Math.floor((D1 - D2) / (1000*60*60*24))
+        if(this.DifDay<0){
+          this.firstDate()
+          alert("Date Should not greater than from date!");
+        }
+
+      },
+
+      firstDate(){
+ var FDate=new Date();
       var month =FDate.getMonth()+1;
       var newMonth
       if (month>10){
@@ -209,10 +230,9 @@ export default {
       var newDate= FDate.getFullYear().toString() +"-"+ newMonth + "-"+ "01"
       var FromDate = new Date(newDate).toISOString().substr(0, 10);
       this.datefrom=FromDate;
+      this.dateto=new Date().toISOString().substr(0, 10);
+      },
 
-    },
-
-    methods:{
       reloadthis(){
         location.reload()
       },
@@ -249,6 +269,9 @@ export default {
               DeviceStatus:this.DeviceStatus,
               model:this.model,
               DeviceName:this.DeviceName,
+              datefrom:this.datefrom,
+              dateto:this.dateto,
+              DifDay:this.DifDay,
               }})
             .then((response)=>{
                 console.log(response.data);

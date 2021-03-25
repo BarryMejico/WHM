@@ -142,8 +142,9 @@ function int_data(){
         UnitCost:'',
         Tcost:0,
         AvailableQty:0,
-        Remarks:'',
-        status:'',
+        Remarks:"",
+        status:"Open",
+        invoiceLoad:'',
       }],
       
      
@@ -180,12 +181,12 @@ export default {
     beforeMount(){
       this.clearData();
 
-      var $POL = this.$route.params.PO_Load;      
+      this.invoiceLoad = this.$route.params.PO_Load;      
       if(typeof this.$route.params.PO_Load === "undefined" ){
-        //console.log("PO Undefied")
+        console.log("PO Undefied")
       }else{
         this.Load_PO();
-         
+         console.log(this.invoiceLoad)
       }
     },
 

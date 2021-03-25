@@ -1,32 +1,43 @@
 <template>
+
     <div class="container">
- 
-      <h1> Create Purchase </h1>
-      <hr>
+     
+    <div class="row" >
+      <div class="col-md-12">
+            <div class="jumbotron" style="background-color:white; ">
+              <h1 class="display-4 text-muted">Create Purchase</h1>
+              
+              <MenuList></MenuList>
+            </div>
+      </div>
+    </div>
+    
       <br>
       <br>
       <div class="row">
-        <div class="col-lg-2">
-           <MenuList></MenuList>
-        </div>
-
-        <div class="col-lg-8">
+        
+        <div class="col-lg-10">
           <div class="row">
             <div class="col-lg-6">
+
               <div class="form-inline">
-                  <label for="po">PO#: </label>                     
-                  <input class="form-control" v-model="po" id="po" type="text" required autocomplete="name" autofocus>
+                  <small class="text-muted">PO #</small>
+                  <br>                     
+                  <input v-model="po" id="po" type="text" required autocomplete="name" autofocus>
                   <br>  
-                    <VendorModal @SelectedVendor="Selected_ven" :disabled="disabled" ></VendorModal>    
-              </div>     
+                    <VendorModal @SelectedVendor="Selected_ven" :disabled="disabled" style="width:100%;"></VendorModal>    
+              </div>  
+                 
             </div>
+
             <div class="col-lg-6">
               <div class="form-inline">
-                <label for="mode">Mode:</label>                     
-              <input id="mode" type="text" class="form-control" required autocomplete="name" autofocus>
+               <small class="text-muted">Mode</small>
+               <br>                     
+              <input id="mode" type="text" required autocomplete="name" autofocus>
               <br>
                   
-                  <CustomerModal @SelectedCustomer="Selected_cus" :disabled="disabled" ></CustomerModal>
+                  <CustomerModal @SelectedCustomer="Selected_cus" :disabled="disabled" style="width:100%;"></CustomerModal>
                   
               </div>     
             </div>
@@ -35,18 +46,18 @@
         
               <div class="row">
               <div class="col-lg-6">
-                  <div class="form-inline"> 
+                  <div > 
                   <div>
-                    <b>Name:</b><label class="text-muted"><i>{{Vendor}}</i></label><br>
-                    <b>Address:</b><label class="text-muted"><i>{{add_Ven}}</i></label><br>
+                    <b>Name:</b><h4 class="text-muted" id="indent1">{{Vendor}}</h4><br>
+                    <b>Address:</b><h4 class="text-muted" id="indent2">{{add_Ven}}</h4><br>
                   </div>
                 </div>     
               </div>
               <div class="col-lg-6">
-                <div class="form-inline">    
+                <div>    
                   <div>
-                    <b>Name: </b><label class="text-muted"><i>{{Customer}}</i></label><br>
-                    <b>Address: </b><label class="text-muted"><i>{{add_Cus}}</i></label><br>
+                    <b>Name: </b><h4 class="text-muted" id="indent3">{{Customer}}</h4><br>
+                    <b>Address: </b><h4 class="text-muted" id="indent4">{{add_Cus}}</h4><br>
                   </div>
                 </div>
               </div>
@@ -54,7 +65,9 @@
           
         </div>
          <div class="col-lg-2">
-             <button type="button" class="btn btn-info">Print</button>
+           <br>
+             <button id="printBtn" type="button" class="btn btn-info">Print</button>
+              <br>
             <items-modal @SelectedItems="Selected_Item" :disabled="disabled"></items-modal>
           <!--Status-->        
           <div class="dropdown">
@@ -77,11 +90,11 @@
     <br>
     <br>
     <br>
-
+    
             
-    <div class="sc">
+   
       <div class="row">
-        <div class="col-lg-10">
+        <div class="col-lg-12">
            <table class="table table-responsive">
               <thead class="thead-dark">
                 <tr>
@@ -112,7 +125,10 @@
             </tbody>
           </table>
         </div>
-        <div class="col-lg-2">
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-lg-12">
             <div class="total">
               <span><b>Total:</b> {{PO_total}} Php</span><br>
               <hr>
@@ -122,11 +138,8 @@
 
         </div>
       </div>
-     
-  
-  
    
-</div>
+
 
 
    
@@ -150,6 +163,7 @@
 </div> -->
 
 </div>
+
 
 </template>
 
@@ -677,18 +691,28 @@ text-align: center;
   padding: 0% !important;
   margin:0% !important;
 }
-#po,#mode{
-  margin:10px;
-}
-table{
-  text-align:center;
-}
-th{
-  width:150px
-}
+
 tr:hover{
   cursor: pointer;
+  background-color: #eee;
 }
+div #indent1,#indent2,#indent3,#indent4{
+  text-indent: 15%;
+  text-transform: capitalize;
+}
+.thead-dark{
+  border-radius: 10px;
+}
+h1{
+  font-weight: 600;
+}
+#SaveBtn{
+  margin-bottom:10px;
+}
+#printBtn{
+  margin-bottom:10px;
+}
+
 
 /**
 

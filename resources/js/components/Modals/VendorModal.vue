@@ -1,6 +1,6 @@
 <template>
 <div>
-    <button id="ven" href="#addVendorModal" data-toggle="modal" type="button" class="btn btn-secondary btn-sm" :disabled="disabled == 1">Vendor</button>
+    <button id="ven" href="#addVendorModal" data-toggle="modal" type="button" class="btn btn-outline-secondary" :disabled="disabled == 1">Select Vendor</button>
     <!--modal Vendor-->
 <div id="addVendorModal" class="modal fade">
 	<div class="modal-dialog">
@@ -139,8 +139,5 @@ closeModal() {
 .modal form label {
 	font-weight: normal;
 }	
-#ven{
-  width:288px;
- 
-}
+
 </style>

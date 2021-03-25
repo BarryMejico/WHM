@@ -14,10 +14,6 @@
          <label for="dateto">date to:</label>
           <input type="date" id="dateto" name="dateto"  v-model="dateto">
           <hr>
-          <span>Created by</span><hr>
-          <span>Repaired by</span><hr>
-
-          
           <!--Status-->        
           <div class="dropdown">
               <label>Status</label> 
@@ -44,12 +40,25 @@
                 </div>
               </div>
           <hr>
-          <div class="col-lg-6">
+          <div class="col-lg-12">
           <devices-modal @SelectedDevice="Selected_Device" v-bind:selectedCus="Ccode" :disabled="disabled"/><br>
           <b>Device: </b><label class="text-muted"><i>{{Device}}</i></label><br>
           </div>
           <hr>
-          <button @click.prevent="Search()">Load</button>
+          <label>Repaired By:{{RepairedBy}} <employee-modal @SelectedEmployee="Selected_employee" /></label><br>
+          <label>Model: <input type="text" v-model="model"/></label><br>
+          <label>Device Name: <input type="text" v-model="DeviceName"/></label><br>
+          <label>Device Status 
+            </label>
+             <select v-model="DeviceStatus">
+                      <option>Claimed</option>
+                      <option>RTO</option>
+                      <option>Open</option>
+                      
+                    </select>
+            <br>
+          <button @click.prevent="Search()">Load</button><br>
+          <button class="btn-danger" @click.prevent="reloadthis()">Clear Filters</button><br>
           
   <table class="table table-responsive">
   <thead class="thead-dark">
@@ -67,9 +76,11 @@
       <th scope="col">
          <thead style="max-width:100px">
         <tr>
+            <th scope="col">Model</th>
             <th scope="col">Description</th>
             <th scope="col">Repaired By</th>
             <th scope="col">Remarks</th>
+            <th scope="col">Status</th>
             <th scope="col">date update</th>
         </tr>
         </thead>
@@ -80,12 +91,12 @@
   <tbody>
     <tr v-for="(item, k) in stocks" :key="k">      
       <th scope="row">{{k}}</th>
-      <td>{{item.updated_at}}</td>
-      <td>{{item.invoice}}</td>
+      <td><a href="#load">{{item.updated_at}}</a></td>
+      <td>{{item.Customer}}</td>
       <td>{{item.Total_Amount| numeral('0,0')}}</td>
-      <td><i>Deposit</i></td>
-      <td><i>Balance</i></td>
-      <td>{{item.Created_by}}</td>
+      <td><i>{{item.payment| numeral('0,0')}}</i></td>
+      <td><i>{{item.Balance| numeral('0,0')}}</i></td>
+      <td>{{item.name}}</td>
       <td>{{item.Status}}</td>
       <td class="subTable2">
         <table>
@@ -94,27 +105,32 @@
             <th class="subTable" scope="col">Description</th>
             <th class="subTable" scope="col">Repaired By</th>
             <th class="subTable" scope="col">Remarks</th>
+            <th class="subTable" scope="col">Status</th>
             <th class="subTable" scope="col">date update</th>
         </tr>
         </thead>
         <tr v-for="(details,d) in item.items" :key="d">
-         <td>{{ item.items[d][0].Icode }}  Description</td>
-         <td><i>Name</i></td>
-          <td>{{item.items[d][0].Remarks}}</td>
-         <td>Date</td>
+         <td>{{item.items[d][0].Icode }}</td>
+         <td>{{item.items[d][0].description }}</td>
+         <td><i>{{item.items[d][0].Repairedby}}</i></td>
+         <td>{{item.items[d][0].Remarks}}</td>
+         <td>{{item.items[d][0].Status}}</td>
+         <td>{{item.items[d][0].updated_at}}</td>
         </tr>
+       
         </table>
       </td>
       
-       <!--<td>
-        <button class="btn-sm">
-       <router-link :to="{ name:'PO', params:{PO_Load: po_item.PO }}">
-          Purchase Order
-        </router-link>
-        </button><button class="btn-sm"><router-link :to="{ name:'Receiving', params:{PO_Load: po_item.PO }}">
-          Receiving
-          </router-link></button></td>-->
+       
     </tr>
+     <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>Total</td>
+          <td>Total of payment</td>
+          <td>Total of Balance</td>
+          </tr>
   </tbody>
 </table>
       </div>
@@ -125,11 +141,13 @@
 <script>
 import CustomerModal from '../../Modals/CustomerModal.vue';
 import DevicesModal from '../../Modals/DevicesModal.vue';
+import EmployeeModal from '../../Modals/EmployeeModal.vue';
 
 export default {
     components: {
         CustomerModal,
         DevicesModal,
+        EmployeeModal,
     },
 
     data(){
@@ -153,9 +171,9 @@ export default {
             //filtration
             datefrom:new Date().toISOString().substr(0, 10),
             dateto:new Date().toISOString().substr(0, 10),
-            Createdby:'Barry',
+            Createdby:'',
             CreatedbyCode:'',
-            Repairedby:'',
+    
             Status:'',
             Customer:'',
             add_Cus:'',
@@ -163,6 +181,11 @@ export default {
             Device:'',
             Devcode:'',
             DevUnit:'',
+            RepairedBy:'',
+            RepairedByCode:'',
+            DeviceStatus:'',
+            model:'',
+            DeviceName:'',
             
         }
     },
@@ -176,11 +199,29 @@ export default {
     },
 
     mounted(){
-        
-        
+      var FDate=new Date();
+      var month =FDate.getMonth()+1;
+      var newMonth
+      if (month>10){
+        newMonth=month.toString();}
+      else{newMonth="0" + month.toString();}
+
+      var newDate= FDate.getFullYear().toString() +"-"+ newMonth + "-"+ "01"
+      var FromDate = new Date(newDate).toISOString().substr(0, 10);
+      this.datefrom=FromDate;
+
     },
 
     methods:{
+      reloadthis(){
+        location.reload()
+      },
+      Selected_employee(event){
+        console.log(event);
+          this.RepairedBy=event['Employee'];
+          this.RepairedByCode=event['Ecode'];
+      },
+
       Selected_Device(event){
          this.Devcode=event['Code'];
          this.Device=event['Name'];
@@ -204,10 +245,14 @@ export default {
               Status:this.Status,
               Ccode:this.Ccode,
               Icode:this.Devcode,
+              RepairedBy:this.RepairedByCode,
+              DeviceStatus:this.DeviceStatus,
+              model:this.model,
+              DeviceName:this.DeviceName,
               }})
             .then((response)=>{
-                //console.log(response.data);
-                this.stocks=response.data;
+                console.log(response.data);
+               this.stocks=response.data;
                this.PresentationLoop();
             })
             .catch((err)=>{
@@ -247,9 +292,14 @@ export default {
                         for(i=0;i<=this.stocks.length-1;i++){
                            if(this.stocks2[j].invoice==this.stocks[i].invoice){
                                laman.push([{
-                                Icode:this.stocks[i].Icode,
+                                Icode:this.stocks[i].DeciveName + this.stocks[i].Model,
                                 Remarks:this.stocks[i].Remarks,
                                 ligaw:this.stocks[i].invoice,
+                                Repairedby:this.stocks[i].Employee,
+                                UnitCost:this.stocks[i].UnitCost,
+                                description:this.stocks[i].description,
+                                Status:this.stocks[i].DeviceStatus,
+                                updated_at:this.stocks[i].updated_at,
                       }])
                               } }
 
@@ -274,6 +324,7 @@ export default {
             axios.get('/api/Saleshistory',{params:{Status:"Approved"}})
             .then((res)=>{
                 this.stocks=res.data;
+                this.PresentationLoop();
             })
         },
 

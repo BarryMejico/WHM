@@ -19,6 +19,7 @@ class CreatePaymentsTable extends Migration
             $table->string('invoice');
             $table->foreign('invoice')->references('invoice')->on('sales')->onDelete('cascade');
             $table->string('payment');
+            $table->string('Balance');
         });
     }
 

@@ -1,9 +1,7 @@
 <template>
     <div>
     <div class="container">
-      <div class="row">
-      </div>
-
+     
     <h3 class="text-muted">Customer Details</h3>
       <br>
        <div class="row" style="margin-bottom:50px;">
@@ -61,7 +59,6 @@
                       <option>Claimed</option>
                       <option>RTO</option>
                       <option>Open</option>
-                      
                     </select>
                     </td>
                     <td>
@@ -115,7 +112,7 @@ function int_data(){
        Vendor_code:'',
        Customer_code:'',
        Ship_to:'Ship',
-       status:'',
+       status:'Open',
        ccode:'',
        //---for loading Vendors
        // List_Vendor:[],
@@ -443,7 +440,8 @@ checkQty(product){
               Ship_to:this.ccode,
               PO:this.po,
               payment:this.Deposit,
-
+              Status:this.status,
+              Balance:this.PO_Balance,
               })
             .then(()=>{
                this.clearData();

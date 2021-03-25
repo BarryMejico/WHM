@@ -46,10 +46,11 @@
           </div>
           <hr>
           <label>Repaired By:{{RepairedBy}} <employee-modal @SelectedEmployee="Selected_employee" /></label><br>
-          <label>Model <i>type text</i></label><br>
+          <label>Model: <input type="text" v-model="model"/></label><br>
+          <label>Device Name: <input type="text" v-model="DeviceName"/></label><br>
           <label>Device Status 
             </label>
-             <select v-model="Status">
+             <select v-model="DeviceStatus">
                       <option>Claimed</option>
                       <option>RTO</option>
                       <option>Open</option>
@@ -57,7 +58,7 @@
                     </select>
             <br>
           <button @click.prevent="Search()">Load</button><br>
-          <button class="btn-danger" @click.prevent="">Clear Filters</button><br>
+          <button class="btn-danger" @click.prevent="reloadthis()">Clear Filters</button><br>
           
   <table class="table table-responsive">
   <thead class="thead-dark">
@@ -79,6 +80,7 @@
             <th scope="col">Description</th>
             <th scope="col">Repaired By</th>
             <th scope="col">Remarks</th>
+            <th scope="col">Status</th>
             <th scope="col">date update</th>
         </tr>
         </thead>
@@ -93,7 +95,7 @@
       <td>{{item.Customer}}</td>
       <td>{{item.Total_Amount| numeral('0,0')}}</td>
       <td><i>{{item.payment| numeral('0,0')}}</i></td>
-      <td><i>Balance</i></td>
+      <td><i>{{item.Balance| numeral('0,0')}}</i></td>
       <td>{{item.name}}</td>
       <td>{{item.Status}}</td>
       <td class="subTable2">
@@ -103,14 +105,16 @@
             <th class="subTable" scope="col">Description</th>
             <th class="subTable" scope="col">Repaired By</th>
             <th class="subTable" scope="col">Remarks</th>
+            <th class="subTable" scope="col">Status</th>
             <th class="subTable" scope="col">date update</th>
         </tr>
         </thead>
         <tr v-for="(details,d) in item.items" :key="d">
-         <td>{{ item.items[d][0].Icode }}</td>
-         <td>{{ item.items[d][0].description }}</td>
+         <td>{{item.items[d][0].Icode }}</td>
+         <td>{{item.items[d][0].description }}</td>
          <td><i>{{item.items[d][0].Repairedby}}</i></td>
-          <td>{{item.items[d][0].Remarks}}</td>
+         <td>{{item.items[d][0].Remarks}}</td>
+         <td>{{item.items[d][0].Status}}</td>
          <td>{{item.items[d][0].updated_at}}</td>
         </tr>
        
@@ -179,7 +183,9 @@ export default {
             DevUnit:'',
             RepairedBy:'',
             RepairedByCode:'',
-            Status:'',
+            DeviceStatus:'',
+            model:'',
+            DeviceName:'',
             
         }
     },
@@ -207,6 +213,9 @@ export default {
     },
 
     methods:{
+      reloadthis(){
+        location.reload()
+      },
       Selected_employee(event){
         console.log(event);
           this.RepairedBy=event['Employee'];
@@ -237,6 +246,9 @@ export default {
               Ccode:this.Ccode,
               Icode:this.Devcode,
               RepairedBy:this.RepairedByCode,
+              DeviceStatus:this.DeviceStatus,
+              model:this.model,
+              DeviceName:this.DeviceName,
               }})
             .then((response)=>{
                 console.log(response.data);
@@ -286,7 +298,7 @@ export default {
                                 Repairedby:this.stocks[i].Employee,
                                 UnitCost:this.stocks[i].UnitCost,
                                 description:this.stocks[i].description,
-                                Status:this.stocks[i].Status,
+                                Status:this.stocks[i].DeviceStatus,
                                 updated_at:this.stocks[i].updated_at,
                       }])
                               } }

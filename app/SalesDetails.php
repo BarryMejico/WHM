@@ -13,7 +13,7 @@ class SalesDetails extends Model
         'invoice',
         'Remarks',
         'description',
-        'Status',
+        'DeviceStatus',
         'Repairedby',
     ];
 }

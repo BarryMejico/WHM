@@ -20,6 +20,7 @@ class SalesController extends Controller
         $REQUEST->validate([
         'PO_total'=>'required',
         'Ship_to'=>'required',
+        
         ]);
         //saving to list of JO
         $PO = sales::updateOrCreate(['invoice'=> $input['PO']],[
@@ -29,6 +30,7 @@ class SalesController extends Controller
         'Status'=>$input['Status'],
         'Reviewed_by'=>'',
         'Ccode'=>$input['Ship_to'],
+        
         ]);
         $countarray = count($input['po_items'])-1;
         //dd($input['po_items']);
@@ -46,7 +48,7 @@ class SalesController extends Controller
                     'UnitCost' => $input['po_items'][$i]['UnitCost'],//                 "UnitCost" => "500"
                     'description' => $input['po_items'][$i]['description'], //                 "idescription" => "123"
                     'Remarks' => $input['po_items'][$i]['Remarks'],  //                 "Remarks" => "asd"
-                    'Status' => $input['po_items'][$i]['status'],       //                 "status" => null
+                    'DeviceStatus' => $input['po_items'][$i]['status'],       //                 "status" => null
                     'Repairedby' => $input['po_items'][$i]['RepairedbyCode'],   //                 "Repairedby" => "Employee - 001"
         ]);
         
@@ -57,7 +59,8 @@ class SalesController extends Controller
                 //saving payment
                 $payment=payment::updateOrCreate([
                     'invoice'=>$SalesCode,
-                    'payment'=>$input['payment']
+                    'payment'=>$input['payment'],
+                    'Balance'=>$input['Balance'],
                 ]);
                 $payment->save();
         $PO->save();
@@ -140,12 +143,15 @@ class SalesController extends Controller
         ->where('sales.Created_by', 'like', "%{$request['Createdby']}%")
         ->where('sales_details.Icode', 'like', "%{$request['Icode']}%")
         ->where('sales_details.Repairedby', 'like', "%{$request['RepairedBy']}%")
+        ->where('sales_details.DeviceStatus', 'like', "%{$request['DeviceStatus']}%")
+        ->where('cusstomer__devices.Model', 'like', "%{$request['model']}%")
+        ->where('cusstomer__devices.DeciveName', 'like', "%{$request['DeviceName']}%")
 
         ->select('sales.updated_at',
                     'customers.Customer',
                     'sales.Total_Amount',
                     'payments.payment',
-                    //'payments.Balance',
+                    'payments.Balance',
                     'users.name',
                     'sales.Status',
                     'cusstomer__devices.Code',
@@ -155,6 +161,7 @@ class SalesController extends Controller
                     'sales_details.Remarks',
                     'sales_details.updated_at',
                     'sales_details.description',
+                    'sales_details.DeviceStatus',
                     'sales.invoice'
 )
         ->get();

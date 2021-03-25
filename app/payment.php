@@ -8,6 +8,7 @@ class payment extends Model
 {
     protected $fillable = [
         'invoice',
-        'payment'
+        'payment',
+        'Balance'
     ];
 }

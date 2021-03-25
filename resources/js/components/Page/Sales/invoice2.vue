@@ -61,7 +61,6 @@
                       <option>Claimed</option>
                       <option>RTO</option>
                       <option>Open</option>
-                      
                     </select>
                     </td>
                     <td>
@@ -444,6 +443,7 @@ checkQty(product){
               PO:this.po,
               payment:this.Deposit,
               Status:this.status,
+              Balance:this.PO_Balance,
               })
             .then(()=>{
                this.clearData();

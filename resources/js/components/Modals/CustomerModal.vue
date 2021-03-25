@@ -1,7 +1,7 @@
 <template>
     <div>
       
-        <button id="cus" href="#addCustomerModal" data-toggle="modal" type="button" class="btn btn-secondary" :disabled="disabled == 1">Customer List</button>
+        <button id="cus" href="#addCustomerModal" data-toggle="modal" type="button" class="btn btn-outline-secondary" :disabled="disabled == 1">Customer</button>
         <!--modal Customer-->
 <div id="addCustomerModal" class="modal fade">
 	<div class="modal-dialog">

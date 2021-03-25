@@ -1,9 +1,7 @@
 <template>
     <div>
     <div class="container">
-      <div class="row">
-      </div>
-
+     
     <h3 class="text-muted">Customer Details</h3>
       <br>
        <div class="row" style="margin-bottom:50px;">

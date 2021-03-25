@@ -14,9 +14,9 @@
 <img src="media/logo.png" alt="logo" style="width:40px;">
   <label class="navbar-brand">{{ config('app.name', 'Araneus') }}</label>
 </router-link>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+  <li class="navbar-toggler" type="li" data-toggle="collapse" data-target="#collapsibleNavbar">
     <span class="navbar-toggler-icon"></span>
-  </button> 
+  </li> 
   <div class="collapse navbar-collapse" id="collapsibleNavbar">
     <ul class="navbar-nav">
       <li class="nav-item">
@@ -44,7 +44,8 @@
                             @endif
                         @else
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="li" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    Araneus Here Bago ni user |  
                                     {{ Auth::user()->name }}
                                 </a>
 
@@ -65,74 +66,86 @@
   </div>  
 </nav>
 </div>
+
+
+
+
 <!--side bar-->
 <div id="mySidenav" class="sidenav">
-  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-   
-<!--<ul onclick="closeNav()">-->
+  <a href="javascript:void(0)" class="closeli" onclick="closeNav()"><b-icon icon="x" font-scale="2"></b-icon></a>
+ 
+    <ul>
+        <li class="Menu2"><router-link to="/PO"> <b-icon icon="cart-x" font-scale="2"></b-icon> Purchase Order</router-link></li>  
 
-    <button><router-link to="/PO">Purchase Order</router-link></button>
-
-    <button data-toggle="collapse" data-target="#setup" class="btnMenu">Data Setup</button>
-        <div id="setup" class="collapse">
-            <ul>   
-	            <li><router-link onclick="closeNav()" to="/Vendor_Create">Vendor</router-link></li>
-                <li><router-link onclick="closeNav()" to="/Customer_Create">Customer</router-link></li>
-                <li><router-link onclick="closeNav()" to="/Items_Create">Items</router-link></li>
-            </ul>
-        </div>
-
-    <button data-toggle="collapse" data-target="#Sales" class="btnMenu">Sales</button>
-        <div id="Sales" class="collapse">
-            <ul>  
-                <li><router-link onclick="closeNav()" to="/Upcoming" class="notAvailable">Products</router-link></li>
-                <li><router-link onclick="closeNav()" to="/Upcoming" class="notAvailable">Service</router-link></li>
-                <li><router-link onclick="closeNav()" to="/invoice">Sales Invoice</router-link></li>
-                <li><router-link onclick="closeNav()" to="/JobOrder">Job Order</router-link></li>
-            </ul>
-        </div>
-
-    <button data-toggle="collapse" data-target="#Inventory" class="btnMenu">Inventory</button>
-        <div id="Inventory" class="collapse">
-            <ul>   
-	            <li><router-link onclick="closeNav()" to="/PO_list">Receiving</router-link></li>
-                <li><router-link onclick="closeNav()" to="/Upcoming" class="notAvailable">Dispatching</router-link></li>
-                <li><router-link onclick="closeNav()" to="/Upcoming" class="notAvailable">Returns</router-link></li>
-            </ul>
-        </div>
-
-        <button data-toggle="collapse" data-target="#Report" class="btnMenu">Report</button>
+        <!-- <button data-toggle="collapse" data-target="#Report" class="btnMenu">Report</button>
         <div id="Report" class="collapse">
             <ul>   
 	            <li><router-link onclick="closeNav()" to="/DeviceHistory">Device Repair History</router-link></li>
                 <li><router-link onclick="closeNav()" to="/SalesHistory">Sales History</router-link></li>
                 <li><router-link onclick="closeNav()" to="/TransactionHistory">Job Order History</router-link></li>
             </ul>
-        </div>
+        </div> -->
+        <li data-toggle="collapse" data-target="#setup" class="Menu"> <b-icon icon="clipboard" font-scale="2"></b-icon> Data Setup</li>
+            <div id="setup" class="collapse">
+                <ul>   
+                    <li class="subMenus"><router-link onclick="closeNav()" to="/Vendor_Create">Vendor</router-link></li>
+                    <li class="subMenus"><router-link onclick="closeNav()" to="/Customer_Create">Customer</router-link></li>
+                    <li class="subMenus"><router-link onclick="closeNav()" to="/Items_Create">Items</router-link></li>
+                </ul>
+                <br>
+            </div>
 
-        <button data-toggle="collapse" data-target="#Accounting" class="btnMenu">Accounting</button>
-        <div id="Accounting" class="collapse">
-            <ul>   
-	            <li><router-link onclick="closeNav()" to="/Upcoming" class="notAvailable">Journals</router-link></li>
-                <li><router-link onclick="closeNav()" to="/Upcoming" class="notAvailable">Cash Flow</router-link></li>
-                <li><router-link onclick="closeNav()" to="/Upcoming" class="notAvailable">Reports</router-link></li>
-            </ul>
-        </div>
+        <li data-toggle="collapse" data-target="#Sales" class="Menu"><b-icon icon="tags" font-scale="2"></b-icon> Sales</li>
+            <div id="Sales" class="collapse">
+                <ul>  
+                    <li class="notAvailable"><router-link onclick="closeNav()" to="/Upcoming">Products</router-link></li>
+                    <li class="notAvailable"><router-link onclick="closeNav()" to="/Upcoming">Service</router-link></li>
+                    <li class="subMenus"><router-link onclick="closeNav()" to="/invoice">Sales Invoice</router-link></li>
+                    <li class="subMenus"><router-link onclick="closeNav()" to="/JobOrder">Job Order</router-link></li>
+                </ul>
+            </div>
 
+        <li data-toggle="collapse" data-target="#Inventory" class="Menu"><b-icon icon="clipboard-check" font-scale="2"></b-icon> Inventory</li>
+            <div id="Inventory" class="collapse">
+                <ul>   
+                    <li class="subMenus"><router-link onclick="closeNav()" to="/PO_list">Receiving</router-link></li>
+                    <li class="notAvailable"><router-link onclick="closeNav()" to="/Upcoming">Dispatching</router-link></li>
+                    <li class="notAvailable"><router-link onclick="closeNav()" to="/Upcoming">Returns</router-link></li>
+                </ul>
+            </div>
 
-<button data-toggle="collapse" data-target="#WareHouse" class="btnMenu">WareHouse</button>
-        <div id="WareHouse" class="collapse">
-            <ul>   
-	            <li><router-link onclick="closeNav()" to="/Upcoming" class="notAvailable">Receiving</router-link></li>
-                <li><router-link onclick="closeNav()" to="/Upcoming" class="notAvailable">Placing/Put-Away</router-link></li>
-                <li><router-link onclick="closeNav()" to="/Upcoming" class="notAvailable">Picking</router-link></li>
-                <li><router-link onclick="closeNav()" to="/Upcoming" class="notAvailable">Added Value</router-link></li>
-                <li><router-link onclick="closeNav()" to="/Upcoming" class="notAvailable">Dispatching</router-link></li>
-                <li><router-link onclick="closeNav()" to="/Upcoming" class="notAvailable">Returns</router-link></li>
-            </ul>
-        </div>
+        <li data-toggle="collapse" data-target="#Report" class="Menu"><b-icon icon="clipboard-data" font-scale="2"></b-icon> Report</li>
+            <div id="Report" class="collapse">
+                <ul>   
+                    <li class="subMenus"><router-link onclick="closeNav()" to="/DeviceHistory">Device Repair History</router-link></li>
+                    <li class="subMenus"><router-link onclick="closeNav()" to="/SalesHistory">Sales History</router-link></li>
+                    <li class="notAvailable"><router-link onclick="closeNav()" to="/Upcoming">???</router-link></li>
+                </ul>
+            </div>
 
-<button data-toggle="collapse"><router-link onclick="closeNav()" to="/Location">WareHouse Setup</router-link></button>
+        <li data-toggle="collapse" data-target="#Accounting" class="Menu"><b-icon icon="calculator" font-scale="2"></b-icon> Accounting</li>
+            <div id="Accounting" class="collapse">
+                <ul>   
+                    <li class="notAvailable"><router-link onclick="closeNav()" to="/Upcoming">Journals</router-link></li>
+                    <li class="notAvailable"><router-link onclick="closeNav()" to="/Upcoming">Cash Flow</router-link></li>
+                    <li class="notAvailable"><router-link onclick="closeNav()" to="/Upcoming">Reports</router-link></li>
+                </ul>
+            </div>
+
+        <li data-toggle="collapse" data-target="#WareHouse" class="Menu"><b-icon icon="house-door" font-scale="2"></b-icon> WareHouse</li>
+            <div id="WareHouse" class="collapse">
+                <ul>   
+                    <li class="notAvailable"><router-link onclick="closeNav()" to="/Upcoming">Receiving</router-link></li>
+                    <li class="notAvailable"><router-link onclick="closeNav()" to="/Upcoming">Placing/Put-Away</router-link></li>
+                    <li class="notAvailable"><router-link onclick="closeNav()" to="/Upcoming">Picking</router-link></li>
+                    <li class="notAvailable"><router-link onclick="closeNav()" to="/Upcoming">Added Value</router-link></li>
+                    <li class="notAvailable"><router-link onclick="closeNav()" to="/Upcoming">Dispatching</router-link></li>
+                    <li class="notAvailable"><router-link onclick="closeNav()" to="/Upcoming">Returns</router-link></li>
+                </ul>
+            </div>
+
+        <li data-toggle="collapse" class="Menu2"><router-link onclick="closeNav()" to="/Location"><b-icon icon="menu-button-wide" font-scale="2"></b-icon> WareHouse Setup</router-link></li>
+    </ul>
 </div>
 <!--side bar End-->
 <div>
@@ -141,24 +154,7 @@
 <div>
 
 <!----------- Footer ------------>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+
 <footer class="footer-bs">
         <div class="row">
         	<div class="col-md-4 footer-brand animated fadeInLeft">
@@ -226,16 +222,67 @@ window.onclick = function(event) {
     }
 }
 </script>
-<style>
-    .notAvailable{
+<style scoped>
+    .notAvailable{ /* empty link/components */
+        text-decoration: line-through;
         background-color:grey;
+        padding:5px;
+        margin:3px;
+        border-radius:5px;
+        
     }
-    #bbb{
+   
+    .footer-bs{
+        margin-top:500px;
+    }
+    .Menu{ /* menus */
         padding:15px;
+        text-indent:10%;
+        margin:10px;
+        border-radius:5px;
+       
     }
-    .btnMenu{
-        font-size:18px;
+    .Menu2{ /* menus: PO & Warehouse Setup only*/
+        padding:15px;
+        margin:10px;
+        border-radius:5px;
+       
     }
+
+    .subMenus{ /* submenus */
+        padding:5px;
+        margin:3px;
+        border-radius:5px;
+        color:#5bc0de;
+       
+    }
+    .closeli{  /* close btn */
+        text-align:right;
+        margin-bottom:50px;
+    }
+
+    /* hover effects*/
+    .Menu:hover{
+        color:#5bc0de;
+        cursor:pointer;
+    }
+    .Menu2:hover{
+        color:#5bc0de;
+        text-decoration:none;
+        list-style:none;
+    }
+    /* active effects*/
+    .Menu:active{
+        color:#5bc0de;
+       
+        
+    }
+    .Menu2:active{
+        color:#5bc0de;
+        font-weight: 700;
+       
+    }
+    
 </style>
 
 

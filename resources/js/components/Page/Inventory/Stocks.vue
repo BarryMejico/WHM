@@ -1,15 +1,17 @@
 <template>
     <div class="container">
-      <h1> Stocks </h1>
-      <hr>
-      <br>
-      <br>
-      <div class='row'>
-         <div class="col-lg-2">
-           <MenuList></MenuList>
-         </div>
 
-          <div class="col-lg-10">
+      <div class="row" >
+        <div class="col-md-12">
+          <div class="jumbotron" style="background-color:white; ">
+            <h1 class="display-4 text-muted">PO: <b>Stocks</b></h1>
+            <MenuList></MenuList>
+          </div>
+        </div>
+      </div>
+
+      <div class='row'>
+          <div class="col-lg-12">
             <table class="table table-responsive">
               <thead class="thead-dark">
                 <tr>
@@ -108,3 +110,6 @@ export default {
     }
 }
 </script>
+<style scoped>
+
+</style>

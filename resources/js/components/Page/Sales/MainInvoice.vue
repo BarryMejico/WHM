@@ -1,38 +1,38 @@
 <template>
-    <div>
-            <div class="PO">
-                <!-- <div class=""><router-link to="/PO">Invoice</router-link></div> -->
-<div id="collapsibleNavbar2">
-  <ul class="nav flex-column">
-   
-    <li class="nav-item">
+<div>
+
+    <!-- <div class="PO">         
+      <div id="collapsibleNavbar2">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <keep-alive>
+            <router-link class="nav-link" to='/invoice'><button class="menuList">Create</button></router-link>
+            </keep-alive>
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link" to='/listInvoice'><button class="menuList">List</button></router-link>
+          </li>
+        </ul>
+      </div>
+    </div> -->
+
+     <a>
       <keep-alive>
-      <router-link class="nav-link" to='/invoice'><button class="menuList">Create</button></router-link>
+        <router-link class="nav-link" to='/invoice'><span class="btn btn-outline-secondary btn-lg"><b-icon icon="pencil-square" font-scale="1"></b-icon> <b>Create</b></span></router-link>
       </keep-alive>
-    </li>
+    </a>
+    <a>
+        <router-link class="nav-link" to='/listInvoice'><span class="btn btn-outline-secondary btn-lg"> <b-icon icon="list-ol" font-scale="1"></b-icon> <b>List</b></span></router-link>
+    </a>
 
-     <li class="nav-item">
-      <router-link class="nav-link" to='/listInvoice'><button class="menuList">List</button></router-link>
-    </li>
-
-
-    <!-- <li class="nav-item">
-      <keep-alive>
-      <router-link class="nav-link" to='/Stocks'>Stocks</router-link>
-      </keep-alive>
-    </li> -->
-    
-  </ul></div>
-            </div>
 </div>
-
 </template>
 
 <script>
 
 </script>
 <style scoped>
-.menuList{
+/* .menuList{
   background-color: #4CAF50;
   color: white;
   padding: 10px;
@@ -40,6 +40,11 @@
   border: none;
   cursor: pointer;
   width: 100%;
+} */
+a{
+  display: inline-block;
+  padding:5px;
+  font-weight: 500;
 }
 
 </style>

@@ -39,7 +39,7 @@
 </ul>
 				</div>
 				<div class="modal-footer">
-          <button  type="button" class="btn btn-light"  @click="addNewRow('code')">Add Item</button>
+          <button type="button" class="btn btn-light"  @click="addNewRow('code')">Add Item</button>
 				</div>
 			
 		</div>

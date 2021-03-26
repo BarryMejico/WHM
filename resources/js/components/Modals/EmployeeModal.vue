@@ -4,9 +4,10 @@
           <!-- <select>
                       <option v-for="(Customer, k) in List_Customer" :key="k">{{Customer.Employee}}</option>
           </select> -->
+         
 
           <a id="cus" href="#EmployeeModal" @click="loadindex" data-toggle="modal" type="button" class="my_btn btn link tn-secondary" :disabled="disabled == 1">
-                       &laquo;</a>
+                       <b-icon icon="search"></b-icon></a>
 
         <!--modal Employee-->
 <div id="EmployeeModal" class="modal fade">

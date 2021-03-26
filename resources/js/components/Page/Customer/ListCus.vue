@@ -1,126 +1,119 @@
 <template>
-    <div>
+<div>
     <div class="container">
-      <h1> Customers</h1>
-      <hr>
-      <br>
-      <br>
+
+    <div class="row" >
+      <div class="col-md-12">
+            <div class="jumbotron" style="background-color:white; ">
+              <h1 class="display-4 text-muted">Customer: <b>List</b></h1>
+              <MenuList></MenuList>
+            </div>
+      </div>
+    </div>
+     
     <div class="row">
-        <div class="col-lg-2">
-        <MenuList></MenuList>
+        <div class="col-md-2"></div>
+        <div class="col-md-10">
+          <span class="alert alert-success" v-show="success">The data has been saved!!</span>	
+          <div class="row">
+            <table class="table table-responsive">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Contact Number</th>
+                  <th scope="col">Address</th>
+                  
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(po_item, k) in POs.data" :key="k">       
+                  <th scope="row">{{k}}</th>
+                  <td>{{po_item.Customer}}</td>
+                  <td>{{po_item.Number}}</td>
+                  <td>{{po_item.Address}}</td>
+                  <td><button href="#addVendorModal"  data-toggle="modal" id="mod" class="btn btn-primary btn-sm" 
+                  @click="SelectItem(po_item.Customer,po_item.Number,po_item.Address,po_item.Ccode)"><small>Modify</small></button>
+                  
+                  <button href="#addDeviceModal"  data-toggle="modal" id="dev" class="btn btn-primary btn-sm" 
+                  @click="ccode(po_item.Ccode)"><small>Devices</small></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <!--pagination vue-->
+              <ul class="pagination justify-content-end">
+                  <li class="page-item"><a class="page-link bg-dark text-white" @click.prevent="prepAGE()">Previous</a></li>
+                  <ul class="pagination justify-content-end" v-for="(pages, page) in POs.last_page" :key=page>
+                  <li class="page-item"><a class="page-link bg-dark text-white" @click.prevent="changepAGE(pages)">{{pages}}</a></li>
+                  </ul>
+                  <li class="page-item"><a class="page-link bg-dark text-white" @click.prevent="nextpAGE()">Next</a></li>
+              </ul>
+              <!--end pagination vue-->
+          </div>
+      </div>
+    </div>
+</div>
+        <!--modal Mod/Del-->
+        <div id="addDeviceModal" class="modal fade">
+          <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">						
+                  <h4 class="modal-title">Devices</h4>
+                  <button type="button" id="close2" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">	
+                    <div class="form-group">	
+                      <input type="text" v-model="DeviceForm.Code" placeholder="Code">
+                      <input type="text" v-model="DeviceForm.DeciveName" placeholder="Decive Name">
+                      <input type="text" v-model="DeviceForm.Model" placeholder="Model">	
+                      <ul class="list-group">
+                        <hr>
+                        List of Devices
+                        <li class="list-group-item d-flex justify-content-between align-items-center" 
+                          v-for="(Device, k) in DevList" :key="k">
+                          <a @click="Selected_cus(k)">{{Device.DeciveName}}</a>
+                          <span class="badge badge-primary badge-pill">{{Device.Model}}</span>
+                        </li>
+                      </ul> 
+                    </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" @click.prevent="SaveCusDevice">Save</button>
+                  <button  type="button" class="btn btn-light" @click.prevent="Delete">Delete</button>
+                </div>
+            </div>
+          </div>
         </div>
-<div class="col-lg-10">
-   <span class="alert alert-success" v-show="success">
-        The data has been saved!!
-      </span>	
-<div class="row">
-   <table class="table table-responsive">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Name</th>
-      <th scope="col">Contact Number</th>
-      <th scope="col">Address</th>
-      
-      <th scope="col">Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr v-for="(po_item, k) in POs.data" :key="k">       
-      <th scope="row">{{k}}</th>
-      <td>{{po_item.Customer}}</td>
-      <td>{{po_item.Number}}</td>
-      <td>{{po_item.Address}}</td>
-      <td><button href="#addVendorModal"  data-toggle="modal" type="button" class="btn btn-primary btn-sm" 
-      @click="SelectItem(po_item.Customer,po_item.Number,po_item.Address,po_item.Ccode)"><small>Modify</small></button>
-      
-      <button href="#addDeviceModal"  data-toggle="modal" type="button" class="btn btn-primary btn-sm" 
-      @click="ccode(po_item.Ccode)"><small>Devices</small></button>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<!--pagination vue-->
-<ul class="pagination justify-content-end">
-    <li class="page-item"><a class="page-link bg-dark text-white" @click.prevent="prepAGE()">Previous</a></li>
-    <ul class="pagination justify-content-end" v-for="(pages, page) in POs.last_page" :key=page>
-    <li class="page-item"><a class="page-link bg-dark text-white" @click.prevent="changepAGE(pages)">{{pages}}</a></li>
-    </ul>
-    <li class="page-item"><a class="page-link bg-dark text-white" @click.prevent="nextpAGE()">Next</a></li>
-</ul>
-<!--end pagination vue-->
-
-    </div>
-    </div>
-</div>
-</div>
-<!--modal Mod/Del-->
-<div id="addDeviceModal" class="modal fade">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			
-				<div class="modal-header">						
-					<h4 class="modal-title">Devices</h4>
-					<button type="button" id="close2" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				</div>
-				<div class="modal-body">	
-          
-          <div class="form-group">	
-            <input type="text" v-model="DeviceForm.Code" placeholder="Code">
-            <input type="text" v-model="DeviceForm.DeciveName" placeholder="Decive Name">
-            <input type="text" v-model="DeviceForm.Model" placeholder="Model">	
-<ul class="list-group">
- <hr>
- List of Devices
-  <li class="list-group-item d-flex justify-content-between align-items-center" 
-    v-for="(Device, k) in DevList" :key="k">
-    <a @click="Selected_cus(k)">{{Device.DeciveName}}</a>
-    <span class="badge badge-primary badge-pill">{{Device.Model}}</span>
-  </li>
-</ul> 
-
-
-          </div>
-				</div>
-				<div class="modal-footer">
-         <button type="button" class="btn btn-primary" @click.prevent="SaveCusDevice">Save</button>
-         <button  type="button" class="btn btn-light" @click.prevent="Delete">Delete</button>
-				</div>
-			
-		</div>
-	</div>
-</div>
-<!--modal Mod/Del-->
-<div id="addVendorModal" class="modal fade">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			
-				<div class="modal-header">						
-					<h4 class="modal-title">Customer</h4>
-					<button type="button" id="close" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				</div>
-				<div class="modal-body">	
-          
-          <div class="form-group">		
+        <!--modal Mod/Del-->
+        <div id="addVendorModal" class="modal fade">
+          <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">						
+                  <h4 class="modal-title">Customer</h4>
+                  <button type="button" id="close" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">	
+                  <div class="form-group">		
                     <label>Name</label>		
-										<input type="text" id='name' @keyup.enter="addNewRow('code','po')" v-model="Name">
+                    <input type="text" id='name' @keyup.enter="addNewRow('code','po')" v-model="Name">
                     <label>Number</label>		
-										<input type="text" id='number' v-model="Cnum">
+                    <input type="text" id='number' v-model="Cnum">
                     <label>Address</label>		
-										<textarea v-model="Add" class="form-control" rows="5" id="comment" name="text"></textarea>
+                    <textarea v-model="Add" class="form-control" rows="5" id="comment" name="text"></textarea>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" @click.prevent="SaveVendor">Save</button>
+                  <button  type="button" class="btn btn-light" @click.prevent="Delete">Delete</button>
+                </div>
+            </div>
           </div>
-				</div>
-				<div class="modal-footer">
-         <button type="button" class="btn btn-primary" @click.prevent="SaveVendor">Save</button>
-         <button  type="button" class="btn btn-light" @click.prevent="Delete">Delete</button>
-				</div>
-			
-		</div>
-	</div>
-</div>
-</div>
+        </div>
 
+</div>
 </template>
 
 <script>
@@ -399,4 +392,7 @@ text-align: center;
 .modal form label {
 	font-weight: normal;
 }	
+#mod,#dev{
+  margin:3px;
+}
 </style>

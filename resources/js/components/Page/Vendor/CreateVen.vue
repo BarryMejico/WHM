@@ -1,44 +1,42 @@
-<template>
-    <div>
-    <div class="container">
-       <h1> Create Vendor </h1>
-      <hr>
-      <br>
-      <br>
-    <div class="row">
-        <div class="col-lg-2">
+<template>  
+<div class="container">
+     
+  <div class="row" >
+    <div class="col-md-12">
+      <div class="jumbotron" style="background-color:white; ">
+        <h1 class="display-4 text-muted">Vendor: <b>Create</b></h1>
         <MenuList></MenuList>
-        </div>
-<div class="col-lg-6">
-<div>
-    <div class="form-group">
-          <div class="alert alert-success" v-show="success">
-            The data has been saved!!
-          </div>
-          <label for="name" class="text-muted"><small>Name</small></label>
-          <span class="alert-danger" v-if="errors && errors.Name">{{errors.Name[0]}}</span>
-          <input   class="form-control" id="name" placeholder="Enter Name" v-model="Name">
+      </div>
     </div>
-
-    <div class="form-group">
-      <label for="pwd" class="text-muted"><small>Contact Number</small></label>
-       <span class="alert-danger" v-if="errors && errors.Number">{{errors.Number[0]}}</span>
-      <input v-model="CNumber" type="text" class="form-control" id="pwd" placeholder="Enter Number" name="pswd">
-    </div>
-    
-    <div class="form-group">
-      <label for="comment" class="text-muted"><small>Address</small></label>
-      <textarea v-model="Address" class="form-control" rows="5" id="comment" name="text" placeholder="Enter Address"></textarea>
-       <span class="alert-danger" v-if="errors.Address">{{errors.Address[0]}}</span>
-    </div>
-    <button type="button" class="btn btn-dark" @click.prevent="SaveVendor">Submit</button>
   </div>
-</div>
-</div>
-</div>
+  
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-6">
+        <div class="form-group">
+              <div class="alert alert-success" v-show="success">
+                The data has been saved!!
+              </div>
+              <label for="name" class="text-muted"><small>Name</small></label>
+              <span class="alert-danger" v-if="errors && errors.Name">{{errors.Name[0]}}</span>
+              <input   class="form-control" id="name" placeholder="Enter Name" v-model="Name">
+        </div>
+        <div class="form-group">
+          <label for="pwd" class="text-muted"><small>Contact Number</small></label>
+          <span class="alert-danger" v-if="errors && errors.Number">{{errors.Number[0]}}</span>
+          <input v-model="CNumber" type="text" class="form-control" id="pwd" placeholder="Enter Number" name="pswd">
+        </div>
+        <div class="form-group">
+          <label for="comment" class="text-muted"><small>Address</small></label>
+          <textarea v-model="Address" class="form-control" rows="5" id="comment" name="text" placeholder="Enter Address"></textarea>
+          <span class="alert-danger" v-if="errors.Address">{{errors.Address[0]}}</span>
+        </div>
+        <button type="button" class="btn btn-dark" @click.prevent="SaveVendor">Submit</button>
+    </div>
+    <div class="col"></div>
+  </div>
 
 </div>
-
 </template>
 
 <script>

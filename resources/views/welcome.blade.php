@@ -14,6 +14,7 @@
 <img src="media/logo.png" alt="logo" style="width:40px;">
   <label class="navbar-brand">{{ config('app.name', 'Araneus') }}</label>
 </router-link>
+
   <li class="navbar-toggler" type="li" data-toggle="collapse" data-target="#collapsibleNavbar">
     <span class="navbar-toggler-icon"></span>
   </li> 
@@ -45,7 +46,6 @@
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="li" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    Araneus Here Bago ni user |  
                                     {{ Auth::user()->name }}
                                 </a>
 
@@ -119,11 +119,11 @@
                 <ul>   
                     <li class="subMenus"><router-link onclick="closeNav()" to="/DeviceHistory">Device Repair History</router-link></li>
                     <li class="subMenus"><router-link onclick="closeNav()" to="/SalesHistory">Sales History</router-link></li>
-                    <li><router-link onclick="closeNav()" to="/TransactionHistory">Job Order History</router-link></li>
+                    <li class="subMenus"><router-link onclick="closeNav()" to="/TransactionHistory">Job Order History</router-link></li>
                 </ul>
             </div>
 
-        <li data-toggle="collapse" data-target="#Accounting" class="Menu"><b-icon icon="calculator" font-scale="2"></b-icon> Accounting</li>
+        <li data-toggle="collapse" data-target="#Accounting" class="Menu" id="account"><b-icon icon="calculator" font-scale="2"></b-icon> Accounting</li>
             <div id="Accounting" class="collapse">
                 <ul>   
                     <li class="notAvailable"><router-link onclick="closeNav()" to="/Upcoming">Journals</router-link></li>
@@ -132,7 +132,7 @@
                 </ul>
             </div>
 
-        <li data-toggle="collapse" data-target="#WareHouse" class="Menu"><b-icon icon="house-door" font-scale="2"></b-icon> WareHouse</li>
+        <li data-toggle="collapse" data-target="#WareHouse" class="Menu" id="WH"><b-icon icon="house-door" font-scale="2"></b-icon> WareHouse</li>
             <div id="WareHouse" class="collapse">
                 <ul>   
                     <li class="notAvailable"><router-link onclick="closeNav()" to="/Upcoming">Receiving</router-link></li>
@@ -144,7 +144,7 @@
                 </ul>
             </div>
 
-        <li data-toggle="collapse" class="Menu2"><router-link onclick="closeNav()" to="/Location"><b-icon icon="menu-button-wide" font-scale="2"></b-icon> WareHouse Setup</router-link></li>
+        <li data-toggle="collapse" class="Menu2" id="WHsetup"><router-link onclick="closeNav()" to="/Location"><b-icon icon="menu-button-wide" font-scale="2"></b-icon> WareHouse Setup</router-link></li>
     </ul>
 </div>
 <!--side bar End-->
@@ -229,6 +229,8 @@ window.onclick = function(event) {
         padding:5px;
         margin:3px;
         border-radius:5px;
+        border-top-left-radius:100px;
+        border-bottom-left-radius:100px;
         
     }
    
@@ -239,20 +241,23 @@ window.onclick = function(event) {
         padding:15px;
         text-indent:10%;
         margin:10px;
-        border-radius:5px;
+        border-top-left-radius:100px;
+        border-bottom-left-radius:100px;
        
     }
     .Menu2{ /* menus: PO & Warehouse Setup only*/
         padding:15px;
         margin:10px;
-        border-radius:5px;
+        border-top-left-radius:100px;
+        border-bottom-left-radius:100px;
        
     }
 
     .subMenus{ /* submenus */
         padding:5px;
         margin:3px;
-        border-radius:5px;
+        border-top-left-radius:100px;
+        border-bottom-left-radius:100px;
         color:#5bc0de;
        
     }
@@ -281,6 +286,9 @@ window.onclick = function(event) {
         color:#5bc0de;
         font-weight: 700;
        
+    }
+    #account,#WH,#WHsetup{
+        text-decoration: line-through;
     }
     
 </style>

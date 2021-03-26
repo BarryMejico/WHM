@@ -1,53 +1,53 @@
 <template>
     <div>
     <div class="container">
-       <h1>Sales Invoice</h1>
-      <hr>
-      <br>
-      <br>
-
+      
         <!------------------------------------------------------------------------------------------------------->
-      <div class="row">
-          <div class="col-lg-2">
-            <MenuList></MenuList>
-          </div>
-          <div class="col-lg-1"></div>
-
-            <div class="col-lg-6">
-
-              <label for="po">Invoice#: </label>                     
-              <input class="form-control" v-model="po" id="po" type="text" required autocomplete="name" autofocus>
-             
-                <CustomerModal id="CusModal" @SelectedCustomer="Selected_cus" :disabled="disabled"></CustomerModal>
-                <div>
-                  <br>
-                  <b>Name: </b><br><label class="text-muted"><i>{{Customer}}</i></label><br>
-                  <b>Address:</b><br><label class="text-muted"><i>{{add_Cus}}</i></label><br>
-                </div>             
-          
-              </div> 
-               <div class="col-lg-1"></div>
-
-            <div class="col-lg-2">
-               <button type="button" class="btn btn-info">Print</button>
-                <items-modal @SelectedItems="Selected_Item" :disabled="disabled"></items-modal>
-
-                <div>
-                    <devices-modal @SelectedDevice="Selected_Device" v-bind:selectedCus="ccode" :disabled="disabled"></devices-modal> 
-                </div> 
-
-                <div class="dropdown">
-                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                    <span class="caret">{{status}}</span></button>
-                    <ul class="dropdown-menu">
-                      <li><button @click="changeStatus('Open')" class="my_btn btn">Open</button></li>
-                      <li><button @click="changeStatus('Approved')" class="success my_btn">Approved</button></li>
-                      <li><button @click="changeStatus('Canceled')" class="my_btn btn-danger">Canceled</button></li>
-                    </ul>
-                </div>
+         <div class="row" >
+      <div class="col-md-12">
+            <div class="jumbotron" style="background-color:white; ">
+              <h1 class="display-4 text-muted"><b-icon icon="tag" font-scale="1"></b-icon>Sales: <b>Invoice</b></h1>
+              <MenuList></MenuList>
             </div>
-     
+      </div>
+    </div>
+
+
+      <div class="row">
+
+        <div class="col-lg-1"></div>
+        <div class="col-lg-7">
+          <label for="po">Invoice#: </label>                     
+          <input class="form-control" v-model="po" id="po" type="text" required autocomplete="name" autofocus>
+          
+          <CustomerModal id="CusModal" @SelectedCustomer="Selected_cus" :disabled="disabled"></CustomerModal>
+          <div style="text-transform:capitalize;">
+            <br>
+            <b>Name: </b><br><h4 class="text-muted"><i>{{Customer}}</i></h4><br>
+            <b>Address:</b><br><h4 class="text-muted"><i>{{add_Cus}}</i></h4><br>
+          </div>                    
+        </div> 
+              
+        <div class="col-lg-4">
+          <br>
+          <br>
+            <button type="button" class="btn btn-info">Print</button>
+            <items-modal @SelectedItems="Selected_Item" :disabled="disabled" style="margin:5px;"></items-modal>
+            <div>
+                <devices-modal @SelectedDevice="Selected_Device" v-bind:selectedCus="ccode" :disabled="disabled"></devices-modal> 
+            </div> 
+            <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                <span class="caret">{{status}}</span></button>
+                <ul class="dropdown-menu">
+                  <li><button @click="changeStatus('Open')" class="my_btn btn">Open</button></li>
+                  <li><button @click="changeStatus('Approved')" class="success my_btn">Approved</button></li>
+                  <li><button @click="changeStatus('Canceled')" class="my_btn btn-danger">Canceled</button></li>
+                </ul>
+            </div>
         </div>
+     
+      </div>
       
         <br>
         <br>
@@ -55,7 +55,7 @@
       
 
          <div class="row">
-              <div class="col-lg-10">
+              <div class="col-lg-12">
                 <table id="tbl" class="table table-responsive">
                 <thead class="thead-dark">
                   <tr>
@@ -84,17 +84,18 @@
                   </tr>
                 </tbody>
               </table>
-              </div>
-
-              <div class="col-lg-2">
-                <div class="total"> 
-                    <span><b>Total:</b> {{PO_total}} Php</span><br>
-                    <hr>
-                    <button type="button" id="btnSave" class="btn btn-info" @click.prevent="saveform">Save</button>
-                    <button type="button" id="btnClear" class="btn danger btn-danger" @click.prevent="clearData">Clear ALL</button>
-                </div>
-              </div>
-             
+              </div>     
+         </div>
+         <div class="row">
+           <div class="col-lg-10"></div>
+           <div class="col-lg-2">
+            <div class="total"> 
+                <span><b>Total:</b> {{PO_total}} Php</span><br>
+                <hr>
+                <button type="button" id="btnSave" class="btn btn-info" @click.prevent="saveform">Save</button>
+                <button type="button" id="btnClear" class="btn danger btn-danger" @click.prevent="clearData">Clear ALL</button>
+            </div>
+          </div> 
          </div>
       
 
@@ -625,6 +626,8 @@ checkQty(product){
 
 .table{
   width: 100% !important;
+  border-top-left-radius:20px;
+  border-top-right-radius:20px;
 }
  
 .qty{
@@ -691,6 +694,9 @@ tr:hover{
   box-shadow: 0px 0px 2px grey;
   border-radius:5px;
   padding:20px;
+}
+#btnSave,#btnClear{
+  margin:3px;
 }
 
 /**try for input table

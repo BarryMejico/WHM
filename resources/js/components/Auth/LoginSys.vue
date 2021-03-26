@@ -91,7 +91,7 @@ export default {
 
                 Swal.fire({
                 title: 'Login Successfully',
-                icon: 'warning',
+                icon: 'success',
                 timer:2000,
                 showCancelButton: false,
                 showConfirmButton:false

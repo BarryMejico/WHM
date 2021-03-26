@@ -1,7 +1,8 @@
 <template>
     <div>
       
-        <button id="cus" href="#addCustomerModal" data-toggle="modal" type="button" class="btn btn-outline-secondary" :disabled="disabled == 1">Customer</button>
+        <button id="cus" href="#addCustomerModal" data-toggle="modal" type="button" class="btn btn-outline-secondary" :disabled="disabled == 1">
+          <b-icon icon="cursor"></b-icon> Select Customer</button>
         <!--modal Customer-->
 <div id="addCustomerModal" class="modal fade">
 	<div class="modal-dialog">

@@ -1,47 +1,45 @@
 <template>
-    <div>
-    <div class="container">
-      <h1> Create Item </h1>
-      <hr>
-      <br>
-      <br>
-    <div class="row">
-        <div class="col-lg-2">
-        <MenuList></MenuList>
+  <div class="container">
+
+    <div class="row" >
+      <div class="col-md-12">
+        <div class="jumbotron" style="background-color:white; ">
+          <h1 class="display-4 text-muted">Items: <b>Create</b></h1>
+          <MenuList></MenuList>
         </div>
-<div class="col-lg-6">
-<div>
-  
-    <div class="form-group">
-      <div class="alert alert-success" v-show="success">
-      The data has been saved!!
       </div>
-      
-      <label for="name" class="text-muted"><small>Item Code</small></label>
-      <span class="alert-danger" v-if="errors && errors.Code">{{errors.Code[0]}}</span>
-      <input   class="form-control" id="name" placeholder="Enter Code" v-model="ItemCode">
     </div>
 
-    <div class="form-group">
-      <label for="pwd" class="text-muted"><small>Item Name</small></label>
-       <span class="alert-danger" v-if="errors && errors.Name">{{errors.Name[0]}}</span>
-      <input v-model="Name" type="text" class="form-control" id="pwd" placeholder="Enter Name">
+    <div class="row">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-6">
+            <div class="form-group">
+              <div class="alert alert-success" v-show="success">
+              The data has been saved!!
+              </div>
+              
+              <label for="name" class="text-muted"><small>Item Code</small></label>
+              <span class="alert-danger" v-if="errors && errors.Code">{{errors.Code[0]}}</span>
+              <input   class="form-control" id="name" placeholder="Enter Code" v-model="ItemCode">
+            </div>
+
+            <div class="form-group">
+              <label for="pwd" class="text-muted"><small>Item Name</small></label>
+              <span class="alert-danger" v-if="errors && errors.Name">{{errors.Name[0]}}</span>
+              <input v-model="Name" type="text" class="form-control" id="pwd" placeholder="Enter Name">
+            </div>
+
+            <div class="form-group">
+              <label for="comment" class="text-muted"><small>Unit</small></label>
+              <input v-model="Unit" type="text" class="form-control" id="pwd" placeholder="Enter Unit" name="Unit">
+              <span class="alert-danger" v-if="errors.Unit">{{errors.Unit[0]}}</span>
+            </div>
+
+            <button type="button" class="btn btn-dark" @click.prevent="SaveVendor">Submit</button>
+        </div>
     </div>
 
-    <div class="form-group">
-      <label for="comment" class="text-muted"><small>Unit</small></label>
-      <input v-model="Unit" type="text" class="form-control" id="pwd" placeholder="Enter Unit" name="Unit">
-      <span class="alert-danger" v-if="errors.Unit">{{errors.Unit[0]}}</span>
-    </div>
-
-    <button type="button" class="btn btn-dark" @click.prevent="SaveVendor">Submit</button>
   </div>
-</div>
-</div>
-</div>
-
-</div>
-
 </template>
 
 <script>

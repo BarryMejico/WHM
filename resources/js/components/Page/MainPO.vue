@@ -50,7 +50,6 @@ a{
   font-weight: 500;
 }
 
-
 /* .btn{
   width:100%;
 }  */

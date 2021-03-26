@@ -1,21 +1,16 @@
 <template>
+  <div class="container">
 
-    <div class="container">
-     
     <div class="row" >
       <div class="col-md-12">
             <div class="jumbotron" style="background-color:white; ">
-              <h1 class="display-4 text-muted">Create Purchase</h1>
-              
+              <h1 class="display-4 text-muted"><b-icon icon="cart-x-fill" font-scale="1"></b-icon>PO: <b>Create</b></h1>
               <MenuList></MenuList>
             </div>
       </div>
     </div>
-    
-      <br>
-      <br>
+   
       <div class="row">
-        
         <div class="col-lg-10">
           <div class="row">
             <div class="col-lg-6">
@@ -635,6 +630,8 @@ export default {
 
 .table{
   width: 100% !important;
+   border-top-left-radius:20px;
+  border-top-right-radius:20px;
 }
 
 .qty{
@@ -703,9 +700,7 @@ div #indent1,#indent2,#indent3,#indent4{
 .thead-dark{
   border-radius: 10px;
 }
-h1{
-  font-weight: 600;
-}
+
 #SaveBtn{
   margin-bottom:10px;
 }

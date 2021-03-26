@@ -1,86 +1,88 @@
 <template>
-    <div>
+  <div>
+
     <div class="container">
-       <h1> Items</h1>
-      <hr>
-      <br>
-      <br>
-    <div class="row">
-        <div class="col-lg-2">
-        <MenuList></MenuList>
-        </div>
-<div class="col-lg-10">
-   <span class="alert alert-success" v-show="success">
-        The data has been saved!!
-      </span>	
-<div class="row">
-   <table class="table table-responsive">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Code</th>
-      <th scope="col">Name</th>
-      <th scope="col">Unit</th>
-      
-      <th scope="col">Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr v-for="(po_item, k) in POs.data" :key="k">       
-      <th scope="row">{{k}}</th>
-      <td>{{po_item.Code}}</td>
-      <td>{{po_item.Name}}</td>
-      <td>{{po_item.Unit}}</td>
-      <td><button href="#addVendorModal"  data-toggle="modal" type="button" class="btn btn-primary btn-sm" 
-      @click="SelectItem(k)">Modify</button></td>
-    </tr>
-  </tbody>
-</table>
-
-<!--pagination vue-->
-<ul class="pagination justify-content-end">
-    <li class="page-item"><a class="page-link bg-dark text-white" @click.prevent="prepAGE()">Previous</a></li>
-    <ul class="pagination justify-content-end" v-for="(pages, page) in POs.last_page" :key=page>
-    <li class="page-item"><a class="page-link bg-dark text-white" @click.prevent="changepAGE(pages)">{{pages}}</a></li>
-    </ul>
-    <li class="page-item"><a class="page-link bg-dark text-white" @click.prevent="nextpAGE()">Next</a></li>
-</ul>
-<!--end pagination vue-->
-
-    </div>
-    </div>
-</div>
-</div>
-<!--modal Mod/Del-->
-<div id="addVendorModal" class="modal fade" >
-	<div class="modal-dialog">
-		<div class="modal-content">
-			
-				<div class="modal-header">						
-					<h4 class="modal-title">Items</h4>
-					<button type="button" id="close" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				</div>
-				<div class="modal-body">	
-          
-          <div class="form-group">		
-                    <label>Name</label>		
-										<input type="text" id='name' @keyup.enter="addNewRow('code','po')" v-model="Name">
-                    <label>Unit</label>		
-										<input type="text" id='number' v-model="Cnum">
-                    <label>Code</label>		
-										<textarea v-model="Add" class="form-control" rows="5" id="comment" name="text"></textarea>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="jumbotron" style="background-color:white; ">
+              <h1 class="display-4 text-muted">Items: <b>List</b></h1>
+              <MenuList></MenuList>
+            </div>
           </div>
-				</div>
-				<div class="modal-footer">
-         <button type="button" class="btn btn-primary" @click.prevent="SaveVendor">Save</button>
-         <button  type="button" class="btn btn-light" @click.prevent="Delete">Delete</button>
-				</div>
-			
-		</div>
-	</div>
-</div>
-</div>
+        </div>
 
+        <div class="row">
+          <div class="col-lg-2"></div>
+          <div class="col-lg-10">
+            <span class="alert alert-success" v-show="success">The data has been saved!!</span>	
+            <div class="row">
+              <table class="table table-responsive">
+                <thead class="thead-dark">
+                  <tr>
+                    <th>#</th>
+                    <th>Code</th>
+                    <th>Name</th>
+                    <th>Unit</th>
+                    
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(po_item, k) in POs.data" :key="k">       
+                    <th scope="row">{{k}}</th>
+                    <td>{{po_item.Code}}</td>
+                    <td>{{po_item.Name}}</td>
+                    <td>{{po_item.Unit}}</td>
+                    <td><button href="#addVendorModal"  data-toggle="modal" type="button" class="btn btn-primary btn-sm" 
+                    @click="SelectItem(k)">Modify</button></td>
+                  </tr>
+                </tbody>
+              </table>
+
+               <!--pagination vue-->
+              <ul class="pagination justify-content-end">
+                  <li class="page-item"><a class="page-link bg-dark text-white" @click.prevent="prepAGE()">Previous</a></li>
+                  <ul class="pagination justify-content-end" v-for="(pages, page) in POs.last_page" :key=page>
+                    <li class="page-item"><a class="page-link bg-dark text-white" @click.prevent="changepAGE(pages)">{{pages}}</a></li>
+                  </ul>
+                  <li class="page-item"><a class="page-link bg-dark text-white" @click.prevent="nextpAGE()">Next</a></li>
+              </ul>
+              <!--end pagination vue-->
+            </div>
+
+          </div>
+        </div>
+
+    </div>
+
+
+        <!--modal Mod/Del-->
+        <div id="addVendorModal" class="modal fade" >
+          <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">						
+                  <h4 class="modal-title">Items</h4>
+                  <button type="button" id="close" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">	
+                  <div class="form-group">		
+                    <label>Name</label>		
+                    <input type="text" id='name' @keyup.enter="addNewRow('code','po')" v-model="Name">
+                    <label>Unit</label>		
+                    <input type="text" id='number' v-model="Cnum">
+                    <label>Code</label>		
+                    <textarea v-model="Add" class="form-control" rows="5" id="comment" name="text"></textarea>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" @click.prevent="SaveVendor">Save</button>
+                  <button  type="button" class="btn btn-light" @click.prevent="Delete">Delete</button>
+                </div>
+            </div>
+          </div>
+        </div>
+
+</div>
 </template>
 
 <script>
@@ -228,7 +230,7 @@ export default {
     }   
 }
 </script>
-<style>
+<style scoped>
 .total{
   float:right;
 }
@@ -291,5 +293,6 @@ text-align: center;
 .modal form label {
 	font-weight: normal;
 }	
+
 </style>
 

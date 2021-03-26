@@ -14,6 +14,7 @@ class SalesDetails extends Model
         'Remarks',
         'description',
         'DeviceStatus',
-        'Repairedby',
+        'RepairedbyCode',
+        
     ];
 }

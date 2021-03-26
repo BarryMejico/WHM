@@ -130,8 +130,30 @@ class SalesController extends Controller
         return $PO;
     }
 
+    public function GetJointInvoice(Request $request){
+        $search=DB::table('sales_details')
+        ->join('sales', 'sales.invoice', '=', 'sales_details.invoice')
+        ->join('employees', 'employees.Ecode', '=', 'sales_details.Repairedby')
+        ->join('users', 'users.id', '=', 'sales.Created_by')
+        ->join('payments', 'payments.invoice', '=', 'sales_details.invoice')
+        ->join('customers', 'customers.Ccode', '=', 'sales.Ccode')
+
+        ->where('sales_details.invoice', $request['invoice'])
+
+        ->select('sales_details.*',
+                 'sales.*',
+                 'customers.Ccode',
+                 'payments.payment',
+        )
+
+        ->get();
+
+        
+        return $search;
+
+    }
+
     public function SearchTrans(Request $request){
-        $dt = Carbon::create($request['dateto']);
         
         $search = DB::table('sales_details')
         ->join('sales', 'sales.invoice', '=', 'sales_details.invoice')

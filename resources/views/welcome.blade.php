@@ -119,7 +119,7 @@
                 <ul>   
                     <li class="subMenus"><router-link onclick="closeNav()" to="/DeviceHistory">Device Repair History</router-link></li>
                     <li class="subMenus"><router-link onclick="closeNav()" to="/SalesHistory">Sales History</router-link></li>
-                    <li class="notAvailable"><router-link onclick="closeNav()" to="/Upcoming">???</router-link></li>
+                    <li><router-link onclick="closeNav()" to="/TransactionHistory">Job Order History</router-link></li>
                 </ul>
             </div>
 

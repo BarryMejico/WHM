@@ -179,17 +179,17 @@ export default {
     beforeMount(){
       this.clearData();
 
+      
+    },
+
+    mounted(){
       this.invoiceLoad = this.$route.params.PO_Load;      
       if(typeof this.$route.params.PO_Load === "undefined" ){
         console.log("PO Undefied")
       }else{
         this.Load_PO();
-         console.log(this.invoiceLoad)
+         
       }
-    },
-
-    mounted(){
-      
     },
 
     watch:{
@@ -208,16 +208,7 @@ export default {
     },
 
     updated(){
-      if(typeof this.$route.params.PO_Load === "undefined" ){
-        
-        //console.log("PO Undefied")
-      }else{
-        this.Load_Details();
-        
-        
-      
-        
-      }
+     
     },
 
     methods:{
@@ -269,20 +260,12 @@ export default {
          for (i=0;i < this.po_items.length; i++){
             if(this.po_items[i]['Icode']===code){
                meron = true;
-               //this.po_items[i]['Qty']=this.po_items[i]['Qty']+1;
             }
         }
 
         if (meron){
-            //console.log("Item already Exist!!!")
-            
         }
         else{
-          
-
-        //   axios.get('/api/getitem',{params:{Code:code}})
-        //   .then((res)=>{
-           //if(res.data.length>0){
             if (this.po_items[0]['Icode']=="")
          {this.po_items.splice(0, 1);}
 
@@ -294,22 +277,8 @@ export default {
                  Qty:1, 
                  status:"",
                  Remarks:null,
-                 //AvailableQty:res.data[0]['Qty'],
-                
          });
-
-        // }
-        // else{
-        //   alert('No available QTY');
-        // }
-        //   })
-        //   .catch(
-            
-        //   )
-        
         }
-
-        // this.checkQty(this.po_items[this.po_items.length-1]);
         this.closeModal();
       },
 
@@ -358,9 +327,10 @@ export default {
 
 
       load_customer(){
-          axios.get('/api/LoadCus')
+          axios.get('/api/LoadlistCus')
           .then(
               (response)=>{
+                
                   this.List_Customer=response.data;
               }
           )
@@ -454,21 +424,15 @@ checkQty(product){
 
         Load_PO(){
           
-          axios.get('/api/GetInvoice', {params:{PO:this.$route.params.PO_Load}})
+          axios.get('/api/GetInvoiceWithDetails', {params:{invoice:this.$route.params.PO_Load}})
           .then(
               (response)=>{
 
                   this.po_items2=response.data;
-                  
-                  var i;
-                  for (i=0; i < this.po_items2.length; i++){
-                      this.po_items2[i]['Tcost']=this.po_items2[i]['Qty']*this.po_items2[i]['UnitCost'];
-                      this.calculateTotal(this.po_items2[i]['Tcost']);
-                  }
-
-                  this.po_items=this.po_items2;
-                  
-                  this.Load_idescription();
+                  this.Selected_cus2(this.po_items2[0]['Ccode']);
+                  this.Deposit=this.po_items2[0]['payment'];
+                  this.PO_total=this.po_items2[0]['Total_Amount'];
+                  this.po_items=response.data
                   }
           )
          .catch((error)=>{
@@ -505,14 +469,16 @@ checkQty(product){
 
         Selected_cus2(Ccode){
           var i; 
-          
+          console.log(this.List_Customer);
             for(i=0;i<=this.List_Customer.length-1;i++){
               
               if (this.List_Customer[i]['Ccode']==Ccode){
+                
                 this.add_Cus=this.List_Customer[i]['Address'];
                 this.Customer=this.List_Customer[i]['Customer'];
                 this.Customer_code=this.List_Customer[i]['id'];
                 this.ccode=this.List_Customer[i]['Ccode'];
+                this.Num=this.List_Customer[i]['Number'];
               }
             }
         },

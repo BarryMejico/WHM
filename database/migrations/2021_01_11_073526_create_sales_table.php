@@ -14,7 +14,7 @@ class CreateSalesTable extends Migration
     public function up()
     {
         Schema::create('sales', function (Blueprint $table) {
-            $table->string('id')->nullable();
+           
             $table->timestamps();
             $table->string('invoice'); 
             $table->primary('invoice'); 
@@ -23,7 +23,7 @@ class CreateSalesTable extends Migration
             $table->string('Status'); 
             $table->string('Reviewed_by'); 
             $table->string('Ccode');
-            
+            //$table->increments('id')->nullable();
             $table->foreign('Ccode')->references('Ccode')->on('customers')->onDelete('cascade');
         });
     }

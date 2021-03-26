@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Sales extends Model
 {
+    protected $primaryKey = 'invoice';
     protected $fillable = [
         'invoice',
         'Total_Amount',

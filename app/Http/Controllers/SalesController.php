@@ -14,14 +14,8 @@ class SalesController extends Controller
 {
     public function SaveInvoice(request $REQUEST){
         $input = $REQUEST->all();
-
-        if($input['Invoice']=="NEW"){
+        //dd($input);
         $SalesCode=Ucode();
-        }
-        else{
-            $SalesCode=$input['Invoice'];
-        }
-
         $UserIn=getUser()->id;
 
         $REQUEST->validate([
@@ -30,24 +24,24 @@ class SalesController extends Controller
         
         ]);
         //saving to list of JO
-        $PO = sales::updateOrCreate([
-            'invoice'=> $SalesCode
-        ],[
+        $PO = sales::updateOrCreate(['invoice'=> $input['PO']],[
         'invoice'=> $SalesCode,
         'Total_Amount'=>$input['PO_total'],
         'Created_by'=>$UserIn,
         'Status'=>$input['Status'],
         'Reviewed_by'=>'',
-        'Ccode'=>$input['Ship_to'],          
+        'Ccode'=>$input['Ship_to'],
+        
         ]);
-        $PO->save();
-
         $countarray = count($input['po_items'])-1;
-    
+        //dd($input['po_items']);
+        
+        DB::table('sales_details')->where('invoice',$input['PO'])->delete();
+
             for($i=0;$i<=$countarray;$i++){          
                      $newData = SalesDetails::updateOrCreate([
                         'Icode' => $input['po_items'][$i]['Icode'],
-                        'invoice' => $SalesCode
+                        'invoice' => $input['PO']
                      ],[
                     'invoice' => $SalesCode,
                     'Icode' => $input['po_items'][$i]['Icode'],//                 "Icode" => "cp123"
@@ -55,24 +49,22 @@ class SalesController extends Controller
                     'UnitCost' => $input['po_items'][$i]['UnitCost'],//                 "UnitCost" => "500"
                     'description' => $input['po_items'][$i]['description'], //                 "idescription" => "123"
                     'Remarks' => $input['po_items'][$i]['Remarks'],  //                 "Remarks" => "asd"
-                    'DeviceStatus' => $input['po_items'][$i]['DeviceStatus'],       //                 "status" => null
-                    'RepairedbyCode' => $input['po_items'][$i]['RepairedbyCode'],   //                 "Repairedby" => "Employee - 001"
+                    'DeviceStatus' => $input['po_items'][$i]['status'],       //                 "status" => null
+                    'Repairedby' => $input['po_items'][$i]['RepairedbyCode'],   //                 "Repairedby" => "Employee - 001"
         ]);
         
                     $newData->save();
                    
                 } 
-                
+
                 //saving payment
                 $payment=payment::updateOrCreate([
-                    'invoice' => $SalesCode
-                ],[
                     'invoice'=>$SalesCode,
                     'payment'=>$input['payment'],
                     'Balance'=>$input['Balance'],
                 ]);
                 $payment->save();
-       
+        $PO->save();
 
 
     }
@@ -141,8 +133,7 @@ class SalesController extends Controller
     public function GetJointInvoice(Request $request){
         $search=DB::table('sales_details')
         ->join('sales', 'sales.invoice', '=', 'sales_details.invoice')
-        ->join('employees', 'employees.Ecode', '=', 'sales_details.RepairedbyCode')
-        ->join('cusstomer__devices', 'cusstomer__devices.Code', '=', 'sales_details.Icode')
+        ->join('employees', 'employees.Ecode', '=', 'sales_details.Repairedby')
         ->join('users', 'users.id', '=', 'sales.Created_by')
         ->join('payments', 'payments.invoice', '=', 'sales_details.invoice')
         ->join('customers', 'customers.Ccode', '=', 'sales.Ccode')
@@ -153,10 +144,6 @@ class SalesController extends Controller
                  'sales.*',
                  'customers.Ccode',
                  'payments.payment',
-                 'employees.Employee',
-                 'cusstomer__devices.Code',
-                 'cusstomer__devices.DeciveName',
-                 'cusstomer__devices.Model',
         )
 
         ->get();
@@ -170,7 +157,7 @@ class SalesController extends Controller
         
         $search = DB::table('sales_details')
         ->join('sales', 'sales.invoice', '=', 'sales_details.invoice')
-        ->join('employees', 'employees.Ecode', '=', 'sales_details.RepairedbyCode')
+        ->join('employees', 'employees.Ecode', '=', 'sales_details.Repairedby')
         ->join('cusstomer__devices', 'cusstomer__devices.Code', '=', 'sales_details.Icode')
         ->join('users', 'users.id', '=', 'sales.Created_by')
         ->join('payments', 'payments.invoice', '=', 'sales_details.invoice')
@@ -180,7 +167,7 @@ class SalesController extends Controller
         ->where('sales.Ccode', 'like', "%{$request['Ccode']}%")
         ->where('sales.Created_by', 'like', "%{$request['Createdby']}%")
         ->where('sales_details.Icode', 'like', "%{$request['Icode']}%")
-        ->where('sales_details.RepairedbyCode', 'like', "%{$request['RepairedBy']}%")
+        ->where('sales_details.Repairedby', 'like', "%{$request['RepairedBy']}%")
         ->where('sales_details.DeviceStatus', 'like', "%{$request['DeviceStatus']}%")
         ->where('cusstomer__devices.Model', 'like', "%{$request['model']}%")
         ->where('cusstomer__devices.DeciveName', 'like', "%{$request['DeviceName']}%")
@@ -203,9 +190,7 @@ class SalesController extends Controller
                     'sales_details.updated_at',
                     'sales_details.description',
                     'sales_details.DeviceStatus',
-                    'sales_details.RepairedbyCode',
                     'sales.invoice'
-
 )
         ->get();
         return $search;

@@ -96,68 +96,6 @@
                   <Label>{{status}}</Label>
                   <br>
                   <button type="button" id="btnSave" class="btn btn-info" @click.prevent="saveform">Save</button>
-     
-      <h3 class="text-muted"> Device details</h3>
-       <devices-modal @SelectedDevice="Selected_Item" v-bind:selectedCus="ccode" :disabled="disabled">ss</devices-modal> 
-      <br>
-       <table id="tbl" class="table table-responsive">
-                <thead class="thead-dark">
-                  <tr>
-                    <th scope="col">#</th>
-                     <th scope="col">Model</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Cost</th>
-                    <th scope="col">Repaired By</th>  
-                    <th scope="col"></th>  
-                    <th scope="col">Remarks</th>
-                    <th scope="col">Status</th>
-                    <th scope="col"></th>            
-                  </tr>
-                </thead>
-                <tbody v-if="po_items">
-                  <tr  v-for="(po_item, k) in po_items" :key="k">      
-                    <th scope="row" class="in">{{k}}</th>
-                    <td>{{po_item.DeciveName}}-{{po_item.Model}}</td>
-                    <td><input v-model="po_item.description" :disabled="disabled == 1"></td>
-                    <td class="in"><div class="qty"><input  v-model="po_item.UnitCost"  @change="calculateLineTotal(po_item)" :disabled="disabled == 1"></div></td>
-                    <td>{{po_item.Employee}}
-                    </td>
-                    <td>
-                      <employee-modal @loadindex="indext" @SelectedEmployee="Selected_employee" v-bind:index="k" :disabled="disabled"/>                     
-                    </td>
-                      <td>
-                        <input  v-model="po_item.Remarks"  @change="calculateLineTotal(po_item)" :disabled="disabled == 1">
-                        </td>
-                    <td>
-                     <select v-model="po_item.DeviceStatus">
-                      <option>Claimed</option>
-                      <option>RTO</option>
-                      <option>Open</option>
-                    </select>
-                    </td>
-                    <td>
-                      </td>
-                    <td :disabled="disabled == 1">
-                    <a class="my_btn btn link" @click="calculateLineTotal(po_item)"><small>Recompute</small></a>
-                    <a class="my_btn btn link" @click="deleteRow(k, po_item,po_item.Code)" :disabled="disabled == 1"><small>X</small></a></td>
-                  </tr>
-                </tbody>
-              </table>
-       <div class="row">
-         
-      </div>
-      <div class="col-lg-5">
-                    <div class="total"> 
-                    <Label><b>Total:</b> {{PO_total}} Php</Label><br>
-                    <Label for="Deposit"><b>Deposit/Payment:</b></Label>
-                    <input type="number" id="Deposit" v-model="Deposit"/><hr>
-                    <Label><b>Balance:</b> {{PO_Balance}} Php</Label><br>
-                    <Label><b>Change:</b> {{PO_Change}} Php</Label><br>
-                    <Label for="status"><b> Status: </b></Label>
-                    <Label>{{status}}</Label>
-                    <br>
-                    <button type="button" id="btnSave" class="btn btn-info" @click.prevent="saveform">Save</button>
-                </div>
               </div>
             </div>
             <div class="col-md-1"></div>
@@ -193,7 +131,14 @@ function int_data(){
        Ship_to:'Ship',
        status:'Open',
        ccode:'',
+       //---for loading Vendors
+       // List_Vendor:[],
+       // Vendor:'',
+       // add_Ven:'',
   
+      //---for loading Ship to
+      // Ship:'',
+      // List_Customer:[],
        Customer:'',
        add_Cus:'',
        Num:'',
@@ -202,20 +147,19 @@ function int_data(){
       po_items2:[],
       po_details:[],
       po_items:[{
-        Employee:'',
+        Repairedby:'',
         RepairedbyCode:'',
         Icode:'',
-        DeciveName:'',
+        idescription:'',
         description:'',
-        Code:'',
+        iunit:'',
         Qty:'',
         UnitCost:'',
         Tcost:0,
         AvailableQty:0,
         Remarks:"",
-        DeviceStatus:"Open",
-        invoiceLoad:'NEW',
-        Model:'',
+        status:"Open",
+        invoiceLoad:'',
       }],
       
      
@@ -256,21 +200,19 @@ export default {
     },
 
     mounted(){
-      
-
+      this.invoiceLoad = this.$route.params.PO_Load;      
       if(typeof this.$route.params.PO_Load === "undefined" ){
         console.log("PO Undefied")
-        this.invoiceLoad ="NEW";    
       }else{
         this.Load_PO();
-         this.invoiceLoad = this.$route.params.PO_Load;    
+         
       }
     },
 
     watch:{
         Deposit: function(val){
             this.PO_Balance=this.PO_total-val;
-            if( this.PO_Balance<=0 && this.Deposit>0){
+            if( this.PO_Balance<=0){
                 this.PO_Change=this.PO_Balance;
                 this.PO_Balance=0;
                 this.status="Fully Paid"
@@ -315,10 +257,10 @@ export default {
 
       addService(){
         this.po_items.push({
-                Employee:'s',
+                Repairedby:'s',
                 Icode:'service-001',
-                DeciveName:'asd',
-                Model:'asd',
+                idescription:'asd',
+                iunit:'asd',
                 Qty:'1',
                 UnitCost:'5',});
         
@@ -345,12 +287,12 @@ export default {
          {this.po_items.splice(0, 1);}
 
              this.po_items.push({
-                Employee:'',
+                Repairedby:'',
                  Icode:code,
-                 DeciveName:Name,
-                 Model:Unit,
+                 idescription:Name,
+                 iunit:Unit,
                  Qty:1, 
-                 DeviceStatus:"",
+                 status:"",
                  Remarks:null,
          });
         }
@@ -376,10 +318,20 @@ export default {
       },
 
        Selected_employee(event){  
-        this.po_items[this.ins].Employee=event['Employee'];
+         console.log(event)
+        this.po_items[this.ins].Repairedby=event['Employee'];
         this.po_items[this.ins].RepairedbyCode=event['Ecode'];
-        
       },
+
+      load_vendor(){
+          axios.get('/api/LoadVen')
+          .then(
+              (response)=>{
+                  this.List_Vendor=response.data;
+              }
+          )
+          .catch()
+      }, 
 
       load_item(){
         axios.get('/api/LoadItems')
@@ -407,8 +359,8 @@ export default {
 
             this.po_items.push({
                 Icode:codes,
-                DeciveName:'New Added Descriptopn',
-                Code:'ea',
+                idescription:'New Added Descriptopn',
+                iunit:'ea',
             });
             this.closeModal()
         },
@@ -424,8 +376,8 @@ export default {
                if(this.po_items.length==0){
                     this.po_items.push({
                 Icode:"",
-                DeciveName:'',
-                Code:'',
+                idescription:'',
+                iunit:'',
                 Qty:0,
                                   });
                   }
@@ -470,20 +422,17 @@ checkQty(product){
 
 
         saveform(){
-          console.log(this.po_items)
             axios.post('/api/SaveInvoice', {
               po_items:this.po_items, 
               PO_total:this.PO_total,
               Ship_to:this.ccode,
-              Invoice:this.invoiceLoad,
+              PO:this.po,
               payment:this.Deposit,
               Status:this.status,
               Balance:this.PO_Balance,
               })
             .then(()=>{
-              
                this.clearData();
-               
             })
             .catch((error)=>{
                 this.errors=error.response.data.errors;
@@ -508,13 +457,16 @@ checkQty(product){
             })
         },
 
-        Load_DeciveName(){
+        Load_idescription(){
+         
           var i,j;
                   for (i=0; i < this.po_items.length; i++){   
+                      
                     for (j=0; j < this.items.length; j++){
+                      
                       if (this.po_items[i]['Icode']===this.items[j]['Code']){
-                      this.po_items[i]['DeciveName']=this.items[j]['Name'];  
-                      this.po_items[i]['Code']=this.items[j]['Unit']; 
+                      this.po_items[i]['idescription']=this.items[j]['Name'];  
+                      this.po_items[i]['iunit']=this.items[j]['Unit']; 
                   }}}
         
         },
@@ -527,7 +479,6 @@ checkQty(product){
                   this.po = this.po_details[0]['invoice'];
                   this.PO_total = this.po_details[0]['Total_Amount'];
                   this.Customer_code =this.po_details[0]['Ccode'];
-                  this.RepairedbyCode=this.po_details[0]['RepairedbyCode'];
                   this.Selected_cus2(this.po_details[0]['Ccode']);
                   this.approvedStatus(this.po_details[0]['Status']);
               });
@@ -537,7 +488,9 @@ checkQty(product){
           var i; 
           console.log(this.List_Customer);
             for(i=0;i<=this.List_Customer.length-1;i++){
+              
               if (this.List_Customer[i]['Ccode']==Ccode){
+                
                 this.add_Cus=this.List_Customer[i]['Address'];
                 this.Customer=this.List_Customer[i]['Customer'];
                 this.Customer_code=this.List_Customer[i]['id'];
@@ -549,6 +502,7 @@ checkQty(product){
 
         clearData(){
           Object.assign(this.$data, this.$options.data.apply(this));
+               //this.load_vendor();
                this.load_customer();
                this.load_item();
         },

@@ -29,8 +29,8 @@ class CreateSalesDetailsTable extends Migration
             $table->string('Remarks')->nullable();
             $table->string('DeviceStatus')->nullable();
 
-            $table->string('RepairedbyCode')->nullable();
-            $table->foreign('RepairedbyCode')->references('Ecode')->on('employees')->onDelete('cascade');
+            $table->string('Repairedby')->nullable();
+            $table->foreign('Repairedby')->references('Ecode')->on('employees')->onDelete('cascade');
 
             
 

@@ -99,6 +99,7 @@
      
       <h3 class="text-muted"> Device details</h3>
        <devices-modal @SelectedDevice="Selected_Item" v-bind:selectedCus="ccode" :disabled="disabled">ss</devices-modal> 
+       </div>
       <br>
        <table id="tbl" class="table table-responsive">
                 <thead class="thead-dark">
@@ -162,13 +163,13 @@
             </div>
             <div class="col-md-1"></div>
           </div>
-      
+          
         </div>
          <div class="col"></div>
       </div>
     </div>
 </div>
-
+    
 </template>
 
 <script>
@@ -256,8 +257,6 @@ export default {
     },
 
     mounted(){
-      
-
       if(typeof this.$route.params.PO_Load === "undefined" ){
         console.log("PO Undefied")
         this.invoiceLoad ="NEW";    
@@ -470,7 +469,7 @@ checkQty(product){
 
 
         saveform(){
-          console.log(this.po_items)
+          console.log(this.invoiceLoad)
             axios.post('/api/SaveInvoice', {
               po_items:this.po_items, 
               PO_total:this.PO_total,

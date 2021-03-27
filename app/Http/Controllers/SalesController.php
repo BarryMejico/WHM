@@ -14,7 +14,7 @@ class SalesController extends Controller
 {
     public function SaveInvoice(request $REQUEST){
         $input = $REQUEST->all();
-
+        //dd($input);
         if($input['Invoice']=="NEW"){
         $SalesCode=Ucode();
         }

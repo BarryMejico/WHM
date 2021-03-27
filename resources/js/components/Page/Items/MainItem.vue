@@ -43,4 +43,8 @@ a{
   padding:5px;
   font-weight: 500;
 }
+.btn{
+  border-radius:50px;
+} 
+
 </style>

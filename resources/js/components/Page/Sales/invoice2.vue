@@ -1,5 +1,5 @@
 <template>
-    <div>
+  <div>
     <div class="container">
      
     <div class="row" >
@@ -101,74 +101,11 @@
                   <Label>{{status}}</Label>
                   <br>
                   <button type="button" id="btnSave" class="btn btn-info" @click.prevent="saveform">Save</button>
-     
-      <h3 class="text-muted"> Device details</h3>
-       <devices-modal @SelectedDevice="Selected_Item" v-bind:selectedCus="ccode" :disabled="disabled">ss</devices-modal> 
-       </div>
-      <br>
-       <table id="tbl" class="table table-responsive">
-                <thead class="thead-dark">
-                  <tr>
-                    <th scope="col">#</th>
-                     <th scope="col">Model</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Cost</th>
-                    <th scope="col">Repaired By</th>  
-                    <th scope="col"></th>  
-                    <th scope="col">Remarks</th>
-                    <th scope="col">Status</th>
-                    <th scope="col"></th>            
-                  </tr>
-                </thead>
-                <tbody v-if="po_items">
-                  <tr  v-for="(po_item, k) in po_items" :key="k">      
-                    <th scope="row" class="in">{{k}}</th>
-                    <td>{{po_item.DeciveName}}-{{po_item.Model}}</td>
-                    <td><input v-model="po_item.description" :disabled="disabled == 1"></td>
-                    <td class="in"><div class="qty"><input  v-model="po_item.UnitCost"  @change="calculateLineTotal(po_item)" :disabled="disabled == 1"></div></td>
-                    <td>{{po_item.Employee}}
-                    </td>
-                    <td>
-                      <employee-modal @loadindex="indext" @SelectedEmployee="Selected_employee" v-bind:index="k" :disabled="disabled"/>                     
-                    </td>
-                      <td>
-                        <input  v-model="po_item.Remarks"  @change="calculateLineTotal(po_item)" :disabled="disabled == 1">
-                        </td>
-                    <td>
-                     <select v-model="po_item.DeviceStatus">
-                      <option>Claimed</option>
-                      <option>RTO</option>
-                      <option>Open</option>
-                    </select>
-                    </td>
-                    <td>
-                      </td>
-                    <td :disabled="disabled == 1">
-                    <a class="my_btn btn link" @click="calculateLineTotal(po_item)"><small>Recompute</small></a>
-                    <a class="my_btn btn link" @click="deleteRow(k, po_item,po_item.Code)" :disabled="disabled == 1"><small>X</small></a></td>
-                  </tr>
-                </tbody>
-              </table>
-       <div class="row">
-         
-      </div>
-      <div class="col-lg-5">
-                    <div class="total"> 
-                      <Label><b>Total:</b> {{PO_total}} Php</Label><br>
-                      <Label for="Deposit"><b>Deposit/Payment:</b></Label>
-                      <input type="number" id="Deposit" v-model="Deposit"/><hr>
-                      <Label><b>Balance:</b> {{PO_Balance}} Php</Label><br>
-                      <Label><b>Change:</b> {{PO_Change}} Php</Label><br>
-                      <Label for="status"><b> Status: </b></Label>
-                      <Label>{{status}}</Label>
-                      <br>
-                      <button type="button" id="btnSave" class="btn btn-info" @click.prevent="saveform">Save</button>
-                    </div>
-                </div>
-                <div class="col-md-1"></div>
-            </div> 
-
               </div>
+      <br>
+                <div class="col-md-1"></div>
+              </div> 
+          </div>
             </div>
             <div class="col-md-1"></div>
           </div>
@@ -178,12 +115,11 @@
       </div>
       <div class="col"></div>
     </div>
+
+
+
+
 </div>
-
-
-
-    </div>
-    
 </template>
 
 <script>

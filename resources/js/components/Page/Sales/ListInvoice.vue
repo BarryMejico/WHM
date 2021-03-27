@@ -261,4 +261,8 @@ text-align: center;
 .modal form label {
 	font-weight: normal;
 }	
+.btn-sm{
+  margin:3px;
+} 
+
 </style>

@@ -50,9 +50,10 @@ a{
   font-weight: 500;
 }
 
-/* .btn{
-  width:100%;
-}  */
+.btn{
+  border-radius:50px;
+} 
+
 
 
 

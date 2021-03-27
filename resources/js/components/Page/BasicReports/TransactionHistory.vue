@@ -1,146 +1,186 @@
 <template>
-<div class="container">
-  <h1>Transaction History</h1>
-  <hr>
-  <br>
-  <br>
-    <div class="row">
-      <div class="col"></div>
-      <div class="col-lg-12">
-<h3>Transaction Filter</h3>
-          <label for="datefrom">date from:</label>
-          <input type="date" id="datefrom" @change="DatDiff()" name="datefrom" v-model="datefrom">
-          
-         <label for="dateto">date to:</label>
-          <input type="date" id="dateto" name="dateto" @change="DatDiff()" v-model="dateto">
-          <hr>
-          <!--Status-->        
-          <div class="dropdown">
-              <label>Status</label> 
-          <button class="btn btn-default dropdown-toggle btn-sm" type="button" data-toggle="dropdown">
-          <span class="caret">{{Status}}</span>
-          </button>
-          <ul class="dropdown-menu">
-            <li><a @click="changeStatus('Open')" class="my_btn btn">Open</a></li>
-            <li><a @click="changeStatus('Approved')" class="success btn">Approved</a></li>
-            <li><a @click="changeStatus('Canceled')" class="btn">Canceled</a></li>
-            <li><a @click="changeStatus('All')" class="btn">All</a></li>
-          </ul>
+<div>
+      <div class="container">
+
+        <div class="row" >
+            <div class="col-md-12">
+                  <div class="jumbotron" style="background-color:white; ">
+                    <h1 class="display-4 text-muted"><b-icon icon="clipboard-data" font-scale="1"></b-icon> Report: <b>JO Transaction History</b></h1>
+                  </div>
+            </div>
+        </div>
+     
+        
+          <div class="row">
+            <div class="col-md-2">
+              <b-form-group label="From" label-for="datefrom">
+                <input type="date" id="datefrom" @change="DatDiff()" name="datefrom" v-model="datefrom">
+              </b-form-group>
+            </div>
+            <div class="col-md-2">
+              <b-form-group label="To" label-for="dateto">
+                <input type="date" id="dateto" name="dateto" @change="DatDiff()" v-model="dateto">
+              </b-form-group>
+            </div>
+            <div class="col-md-2">
+               <!--Status-->        
+            <div class="dropdown">
+               <b-form-group label="Status" label-for="x">
+                 <button class="btn btn-secondary dropdown-toggle btn-sm" id="x" type="button" data-toggle="dropdown">
+                    <span class="caret">{{Status}}</span>
+                </button>
+                <ul class="dropdown-menu">
+                  <li><a @click="changeStatus('Open')" class="my_btn btn">Open</a></li>
+                  <li><a @click="changeStatus('Approved')" class="success btn">Approved</a></li>
+                  <li><a @click="changeStatus('Canceled')" class="btn">Canceled</a></li>
+                  <li><a @click="changeStatus('All')" class="btn">All</a></li>
+                </ul>
+              </b-form-group>
+            </div>
+            <!--End Status-->
+            </div>
+            <div class="col"></div>
           </div>
-          <!--End Status--><hr>
+          <hr>
+          <br>
 
-
-          <div class="col-lg-6">
-              <customer-modal id="CusModal" @SelectedCustomer="Selected_cus" :disabled="disabled"></customer-modal>
+          <div class="row">
+            <div class="col">
+              <customer-modal id="CusModal" @SelectedCustomer="Selected_cus" :disabled="disabled"/><br>
                 <div class="form-inline">    
                   <div>
-                    <b>Name: </b><label class="text-muted"><i>{{Customer}}</i></label><br>
-                    <b>Address: </b><label class="text-muted"><i>{{add_Cus}}</i></label><br>
+                    <b class="text-muted">Name:</b>
+                    <h4>{{Customer}}</h4>
+                    <br>
+                    <b class="text-muted">Address: </b>
+                    <h4>{{add_Cus}}</h4>
+                    <br>
                   </div>
                 </div>
               </div>
-          <hr>
-          <div class="col-lg-12">
-          <devices-modal @SelectedDevice="Selected_Device" v-bind:selectedCus="Ccode" :disabled="disabled"/><br>
-          <b>Device: </b><label class="text-muted"><i>{{Device}}</i></label><br>
+              <div class="col">
+                <devices-modal @SelectedDevice="Selected_Device" v-bind:selectedCus="Ccode" :disabled="disabled"/><br>
+                <b class="text-muted">Device: </b>
+                <br>
+                <h3>{{Device}}</h3>
+                <br>
+              </div>
+              <div class="col"></div>
           </div>
-          <hr>
-          <label>Repaired By:{{RepairedBy}} <employee-modal @SelectedEmployee="Selected_employee" /></label><br>
-          <label>Model: <input type="text" v-model="model"/></label><br>
-          <label>Device Name: <input type="text" v-model="DeviceName"/></label><br>
-          <label>Device Status 
-            </label>
-             <select v-model="DeviceStatus">
-                      <option>Claimed</option>
-                      <option>RTO</option>
-                      <option>Open</option>
-                      
-                    </select>
-            <br>
-          <button @click.prevent="Search()">Load</button><br>
-          <button class="btn-danger" @click.prevent="reloadthis()">Clear Filters</button><br>
-          
-  <table class="table table-responsive">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Date</th>
-      <th scope="col">Customer</th>
-      <th scope="col">Amount</th>
-      <th scope="col">Payment</th>
-      <th scope="col">Balance</th>
-      <th scope="col">Created by</th>
-      <th scope="col">Status</th>
 
+          <div class="row">
+            <div class="col"><small class="text-muted">Repaired By</small></div>
+            <div class="col-md-1"></div>
+            <div class="col"><small class="text-muted">Model</small></div>
+            <div class="col"><small class="text-muted">Device Name</small></div>
+            <div class="col"><small class="text-muted">Device Status</small> </div>
+          </div>
+          <div class="row">
+            <div class="col"><input type="text" :value="RepairedBy" disabled/></div>
+            <div class="col-md-1" style="padding:15px 0px 0px 0px;"><employee-modal @SelectedEmployee="Selected_employee" /></div>
+            <div class="col"><input type="text" v-model="model"/></div>
+            <div class="col"><input type="text" v-model="DeviceName"/></div>
+            <div class="col">
+              <b-select v-model="DeviceStatus" style="margin-top:7px;">
+                <option>Claimed</option>
+                <option>RTO</option>
+                <option>Open</option>
+              </b-select> 
+            </div>
+          </div>
+            
+  
+              <br>
+              <br>
+              <br>
 
-      <th scope="col">
-         <thead style="max-width:100px">
-        <tr>
-            <th scope="col">Model</th>
-            <th scope="col">Description</th>
-            <th scope="col">Repaired By</th>
-            <th scope="col">Remarks</th>
-            <th scope="col">Status</th>
-            <th scope="col">date update</th>
-        </tr>
-        </thead>
-      </th>
-      
-    </tr>
-  </thead>
-  <tbody>
-    <tr v-for="(item, k) in stocks" :key="k">      
-      <th scope="row">{{k}}</th>
-      <td><a href="#load">{{item.updated_at}}</a></td>
-      <td>
-        <router-link :to="{ name:'JobOrder', params:{PO_Load: item.invoice}}">
-          {{item.Customer}}
-        </router-link></td>
-      <td>{{item.Total_Amount| numeral('0,0')}}</td>
-      <td><i>{{item.payment| numeral('0,0')}}</i></td>
-      <td><i>{{item.Balance| numeral('0,0')}}</i></td>
-      <td>{{item.name}}</td>
-      <td>{{item.Status}}</td>
-      <td class="subTable2">
-        <table>
-          <thead>
-        <tr >
-            <th class="subTable" scope="col">Description</th>
-            <th class="subTable" scope="col">Repaired By</th>
-            <th class="subTable" scope="col">Remarks</th>
-            <th class="subTable" scope="col">Status</th>
-            <th class="subTable" scope="col">date update</th>
-        </tr>
-        </thead>
-        <tr v-for="(details,d) in item.items" :key="d">
-         <td>{{item.items[d][0].Icode }}</td>
-         <td>{{item.items[d][0].description }}</td>
-         <td><i>{{item.items[d][0].Repairedby}}</i></td>
-         <td>{{item.items[d][0].Remarks}}</td>
-         <td>{{item.items[d][0].Status}}</td>
-         <td>{{item.items[d][0].updated_at}}</td>
-        </tr>
-       
-        </table>
-      </td>
-      
-       
-    </tr>
-     <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td>Total</td>
-          <td>Total of payment</td>
-          <td>Total of Balance</td>
-          </tr>
-  </tbody>
-</table>
+              <div class="row">
+                <div class="col">
+                  <button class="btn btn-outline-info" @click.prevent="Search()">Load</button>
+                </div>
+                <div class="col">
+                  <button class="btn btn-outline-danger" @click.prevent="reloadthis()">Clear Filters</button>
+                </div>
+              </div>
+
+              <br>
+              <br>
       </div>
-       <div class="col"></div>
+
+       <div class="container-fluid">
+         <table class="table table-responsive">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Date</th>
+              <th scope="col">Customer</th>
+              <th scope="col">Amount</th>
+              <th scope="col">Payment</th>
+              <th scope="col">Balance</th>
+              <th scope="col">Created by</th>
+              <th scope="col">Status</th>
+
+
+              <th scope="col">
+                <thead style="width:100%">
+                <tr>
+                    <th scope="col">Model</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Repaired By</th>
+                    <th scope="col">Remarks</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">date update</th>
+                </tr>
+                </thead>
+              </th>
+              
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(item, k) in stocks" :key="k">      
+              <th scope="row">{{k}}</th>
+              <td><a href="#load">{{item.updated_at}}</a></td>
+              <td>
+                <router-link :to="{ name:'JobOrder', params:{PO_Load: item.invoice}}">
+                  {{item.Customer}}
+                </router-link>
+              </td>
+              <td>{{item.Total_Amount| numeral('0,0')}}</td>
+              <td><i>{{item.payment| numeral('0,0')}}</i></td>
+              <td><i>{{item.Balance| numeral('0,0')}}</i></td>
+              <td>{{item.name}}</td>
+              <td>{{item.Status}}</td>
+
+              <td class="subTable2" style="width:45%;">
+                <tr v-for="(details,d) in item.items" :key="d">
+                <td>{{item.items[d][0].Icode }}</td>
+                <td>{{item.items[d][0].description }}</td>
+                <td><i>{{item.items[d][0].Repairedby}}</i></td>
+                <td>{{item.items[d][0].Remarks}}</td>
+                <td>{{item.items[d][0].Status}}</td>
+                <td>{{item.items[d][0].updated_at}}</td>
+                </tr>
+            </td>
+          </tr>
+          <!-- <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Total</td>
+                <td>Total of payment</td>
+                <td>Total of Balance</td>
+                </tr> -->
+        </tbody>
+      </table>
+
     </div>
+
+
+  
+
 </div>
 </template>
+
 <script>
 import CustomerModal from '../../Modals/CustomerModal.vue';
 import DevicesModal from '../../Modals/DevicesModal.vue';
@@ -395,6 +435,25 @@ padding-top: 0 !important;
 padding-bottom: 0 !important;
 height:3px !important;
 width:inherit;
+
+}
+#x{
+  height: 30px;
+}
+.btn{
+  border-radius:5px;
+}
+#table1{
+  border-top-left-radius:20px;
+  border-top-right-radius:0px;
+  border-bottom-left-radius:0px;
+  border-bottom-right-radius:0px;
+}
+#table2{
+  border-top-left-radius:0px;
+  border-top-right-radius:20px;
+  border-bottom-left-radius:0px;
+  border-bottom-right-radius:0px;
 
 }
 </style>

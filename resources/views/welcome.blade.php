@@ -92,7 +92,6 @@
                     <li class="subMenus"><router-link onclick="closeNav()" to="/Customer_Create">Customer</router-link></li>
                     <li class="subMenus"><router-link onclick="closeNav()" to="/Items_Create">Items</router-link></li>
                 </ul>
-                <br>
             </div>
 
         <li data-toggle="collapse" data-target="#Sales" class="Menu"><b-icon icon="tags" font-scale="2"></b-icon> Sales</li>

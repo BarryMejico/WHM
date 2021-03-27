@@ -1,49 +1,69 @@
 <template>
-    <div>
-    <div class="container">
-        <h1>Device Repair History</h1>
-        <hr>
-        <br>
-        <br>
-    <div class="row justify-content-center">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">Device History Report</div>
+<div>
 
-                <div class="card-body">
-                    <input type="text" v-model="deviceCode">
-                    <button @click.prevent="LoadHistory">load</button>
-                    <table class="table table-responsive">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Date</th>
-      <th scope="col">Created by</th>
-      <th scope="col">Description</th>
-      <th scope="col">Invoice Number</th>
-      <th scope="col">Remarks</th>
-      <th scope="col">Status</th>
-      <th scope="col">Reviewed by</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr v-for="(item, k) in stocks" :key="k">      
-      <th scope="row">{{k}}</th>
-      <td>{{item.created_at}}</td>
-      <td>{{item.Created_by}}</td>
-      <td>{{item.description}}</td>
-      <td>{{item.invoice}}</td>
-      <td>{{item.Remarks}}</td>
-      <td>{{item.Status}}</td>
-      <td>{{item.Reviewed_by}}</td>
-    </tr>
-  </tbody>
-</table>
-                </div>
+    <div class="container">
+
+       <div class="row" >
+            <div class="col-md-12">
+                  <div class="jumbotron" style="background-color:white; ">
+                    <h1 class="display-4 text-muted"><b-icon icon="clipboard-data" font-scale="1"></b-icon> Report: <b>Device Repair History</b></h1>
+                  </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <input type="text" v-model="deviceCode">       
+            </div>
+            <div class="col" style="padding-top:10px;">
+                <button @click.prevent="LoadHistory">load</button>
             </div>
         </div>
     </div>
-</div>
+
+    <div class="container-fluid">
+
+
+        <div class="row justify-content-center">
+            <div class="col"></div>
+            <div class="col-md-9">
+                        <table class="table table-responsive">
+                            <thead class="thead-dark">
+                                <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Created by</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Invoice Number</th>
+                                <th scope="col">Remarks</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Reviewed by</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr v-for="(item, k) in stocks" :key="k">      
+                                <th scope="row">{{k}}</th>
+                                <td>{{item.created_at}}</td>
+                                <td>{{item.Created_by}}</td>
+                                <td>{{item.description}}</td>
+                                <td>{{item.invoice}}</td>
+                                <td>{{item.Remarks}}</td>
+                                <td>{{item.Status}}</td>
+                                <td>{{item.Reviewed_by}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                
+             
+            </div>
+            <div class="col"></div>
+
+        </div>
+
+    </div>
+
+
+
 </div>
 </template>
 <script>
@@ -104,3 +124,6 @@ axios.get('/api/LoadInvoive')
      }
  }
 </script>
+<style scoped>
+
+</style>

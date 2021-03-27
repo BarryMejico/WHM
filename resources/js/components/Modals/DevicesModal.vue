@@ -1,7 +1,6 @@
 <template>
     <div>
-        <button href="#addDevice" data-toggle="modal" type="button" class="btn btn-outline-secondary" @click="load_customer" :disabled="disabled == 1">
-          <b-icon icon="cursor-fill"></b-icon> Customer's Device</button>
+        <button href="#addDevice" data-toggle="modal" type="button" class="btn btn-outline-secondary" @click="load_customer" :disabled="disabled == 1">Customer's Device</button>
         <!--modal Customer-->
 <div id="addDevice" class="modal fade">
 	<div class="modal-dialog">

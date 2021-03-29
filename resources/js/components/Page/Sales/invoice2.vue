@@ -5,11 +5,12 @@
     <div class="row" >
       <div class="col-md-12">
             <div class="jumbotron" style="background-color:white; ">
-              <h1 class="display-4 text-muted">JO: <b>Customer Details</b></h1>
-              <hr>
+              <h1 class="display-4 text-muted"><b-icon icon="clipboard-check" font-scale="1"></b-icon> JO: <b>Create</b></h1>
+              <MenuList></MenuList>
             </div>
       </div>
     </div>
+
 
      
        <div class="row" style="margin-bottom:50px;">
@@ -127,7 +128,7 @@ import ItemsModal from '../../Modals/ItemsModal';
 //import VendorModal from '../../Modals/VendorModal';
 import CustomerModal from '../../Modals/CustomerModal';
 
-import MenuList from '../../Page/Sales/MainInvoice';
+import MenuList from '../../Page/Sales/MainInvoice2';
 import DevicesModal from '../../Modals/DevicesModal.vue';
 import EmployeeModal from '../../Modals/EmployeeModal.vue';
 

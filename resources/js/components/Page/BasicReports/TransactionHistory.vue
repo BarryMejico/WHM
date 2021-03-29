@@ -5,7 +5,8 @@
         <div class="row" >
             <div class="col-md-12">
                   <div class="jumbotron" style="background-color:white; ">
-                    <h1 class="display-4 text-muted"><b-icon icon="clipboard-data" font-scale="1"></b-icon> Report: <b>JO Transaction History</b></h1>
+                    <h1 class="display-4 text-muted"><b-icon icon="clock-history" font-scale="1"></b-icon> JO: <b>Transaction History</b></h1>
+                    <MenuList></MenuList>
                   </div>
             </div>
         </div>
@@ -121,9 +122,101 @@
               <th scope="col">Status</th>
 
 
-              <th scope="col">
-                <thead style="width:100%">
+              <th scope="col" style="text-align:center;">
+               Device Information
+              </th>
+              
+            </tr>
+          </thead>
+          <tbody>
+            
+            <tr v-for="(item, k) in stocks" :key="k">   
+              <th scope="row"><br><br>{{k}}</th>
+              <td><a href="#load"><br><br>{{item.updated_at}}</a></td>
+              <td>
+                <router-link :to="{ name:'JobOrder', params:{PO_Load: item.invoice}}">
+                  <br><br>{{item.Customer}}
+                </router-link>
+              </td>
+              <td><br><br>{{item.Total_Amount| numeral('0,0')}}</td>
+              <td><br><br>{{item.payment| numeral('0,0')}}</td>
+              <td><br><br><i>{{item.Balance| numeral('0,0')}}</i></td>
+              <td><br><br>{{item.name}}</td>
+              <td><br><br>{{item.Status}}</td>
+              <td class="subTable2" style="width:45%;">
+                <thead>
+                    <tr>
+                      <th scope="col"><small><b>Model</b></small></th>
+                      <th scope="col"><small><b>Description</b></small></th>
+                      <th scope="col"><small><b>Repaired By</b></small></th>
+                      <th scope="col"><small><b>Remarks</b></small></th>
+                      <th scope="col"><small><b>Status</b></small></th>
+                      <th scope="col"><small><b>Date Update</b></small></th>
+                    </tr>
+                </thead>
+            
+                <tr v-for="(details,d) in item.items" :key="d">
+                  <td>{{item.items[d][0].Icode }}</td>
+                  <td>{{item.items[d][0].description }}</td>
+                  <td>{{item.items[d][0].Repairedby}}</td>
+                  <td>{{item.items[d][0].Remarks}}</td>
+                  <td>{{item.items[d][0].Status}}</td>
+                  <td>{{item.items[d][0].updated_at}}</td>
+                </tr>
+              </td>
+            </tr>
+
+
+          <!-- <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>Total</td>
+          <td>Total of payment</td>
+          <td>Total of Balance</td>
+          </tr> -->
+        </tbody>
+      </table>
+
+      <!------------------------------------- sample table ------------------------------------------>
+      <!-- <div class='row'>
+        <div class="col">
+          <table class="table table-responsive">
+              <thead class="thead-dark">
                 <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Customer</th>
+                  <th scope="col">Amount</th>
+                  <th scope="col">Payment</th>
+                  <th scope="col">Balance</th>
+                  <th scope="col">Created by</th>
+                  <th scope="col">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <br>
+                <tr v-for="(item, k) in stocks" :key="k">      
+                  <th scope="row">{{k}}</th>
+                  <td><a href="#load">{{item.updated_at}}</a></td>
+                  <td>
+                    <router-link :to="{ name:'JobOrder', params:{PO_Load: item.invoice}}">
+                      {{item.Customer}}
+                    </router-link>
+                  </td>
+                  <td>{{item.Total_Amount| numeral('0,0')}}</td>
+                  <td><i>{{item.payment| numeral('0,0')}}</i></td>
+                  <td><i>{{item.Balance| numeral('0,0')}}</i></td>
+                  <td>{{item.name}}</td>
+                  <td>{{item.Status}}</td>
+                </tr>
+              </tbody>
+          </table>
+        </div>
+        <div class="col">
+           <table class="table table-responsive">
+              <thead class="thead-dark">
+                 <tr>
                     <th scope="col">Model</th>
                     <th scope="col">Description</th>
                     <th scope="col">Repaired By</th>
@@ -132,46 +225,13 @@
                     <th scope="col">date update</th>
                 </tr>
                 </thead>
-              </th>
-              
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(item, k) in stocks" :key="k">      
-              <th scope="row">{{k}}</th>
-              <td><a href="#load">{{item.updated_at}}</a></td>
-              <td>
-                <router-link :to="{ name:'JobOrder', params:{PO_Load: item.invoice}}">
-                  {{item.Customer}}
-                </router-link>
-              </td>
-              <td>{{item.Total_Amount| numeral('0,0')}}</td>
-              <td><i>{{item.payment| numeral('0,0')}}</i></td>
-              <td><i>{{item.Balance| numeral('0,0')}}</i></td>
-              <td>{{item.name}}</td>
-              <td>{{item.Status}}</td>
+                <tbody>
+                  
+                </tbody>
+           </table>
 
-              <td class="subTable2" style="width:45%;">
-                <tr v-for="(details,d) in item.items" :key="d">
-                <td>{{item.items[d][0].Icode }}</td>
-                <td>{{item.items[d][0].description }}</td>
-                <td><i>{{item.items[d][0].Repairedby}}</i></td>
-                <td>{{item.items[d][0].Remarks}}</td>
-                <td>{{item.items[d][0].Status}}</td>
-                <td>{{item.items[d][0].updated_at}}</td>
-                </tr>
-            </td>
-          </tr>
-          <!-- <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>Total</td>
-                <td>Total of payment</td>
-                <td>Total of Balance</td>
-                </tr> -->
-        </tbody>
-      </table>
+        </div>
+      </div> -->
 
     </div>
 
@@ -182,12 +242,15 @@
 </template>
 
 <script>
+
+import MenuList from '../../Page/Sales/MainInvoice2';
 import CustomerModal from '../../Modals/CustomerModal.vue';
 import DevicesModal from '../../Modals/DevicesModal.vue';
 import EmployeeModal from '../../Modals/EmployeeModal.vue';
 
 export default {
     components: {
+        MenuList,
         CustomerModal,
         DevicesModal,
         EmployeeModal,
@@ -456,4 +519,9 @@ width:inherit;
   border-bottom-right-radius:0px;
 
 }
+
+small{
+  font-weight: bold;
+}
+
 </style>

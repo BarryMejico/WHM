@@ -69,7 +69,7 @@
                 <td><employee-modal @loadindex="indext" @SelectedEmployee="Selected_employee" v-bind:index="k" :disabled="disabled"/></td>
                 <td><textarea v-model="po_item.Remarks"  @change="calculateLineTotal(po_item)" :disabled="disabled == 1"></textarea></td>
                 <td>
-                <select v-model="po_item.status">
+                <select v-model="po_item.DeviceStatus">
                     <option>Claimed</option>
                     <option>RTO</option>
                     <option>Open</option>

@@ -79,7 +79,12 @@ class SalesController extends Controller
 
     public function LoadInvoive(){
         //$invoice= Sales::all()->paginate(2);
-        $invoice= Sales::paginate(3);
+        $invoice= DB::table('sales_details') 
+        ->join('sales', 'sales.invoice', '=', 'sales_details.invoice')
+        ->join('customers', 'customers.Ccode', '=', 'sales.Ccode')
+
+        ->whereNull('sales_details.DeviceStatus')
+        ->paginate(10);
         return $invoice;
     }
 
@@ -115,9 +120,24 @@ class SalesController extends Controller
     }
 
     public function GetInvoice(Request $request){
-        $PO= DB::connection('mysql')->select("SELECT * FROM `sales_details` where invoice=?",[$request['PO']]);
-        //dd($PO);
-        return $PO;
+        $search=DB::table('sales_details')
+        ->join('sales', 'sales.invoice', '=', 'sales_details.invoice')
+        ->join('users', 'users.id', '=', 'sales.Created_by')
+        ->join('payments', 'payments.invoice', '=', 'sales_details.invoice')
+        ->join('customers', 'customers.Ccode', '=', 'sales.Ccode')
+        ->join('items', 'items.Code', '=', 'sales_details.Icode')
+
+        ->where('sales_details.invoice', $request['invoice'])
+
+        ->select('sales_details.*',
+                 'sales.*',
+                 'customers.Ccode',
+                 'payments.payment',
+                 'items.Unit'
+        )
+
+        ->get();
+        return $search;
     }
 
     public function GetInvoiceHead(Request $request){
@@ -160,8 +180,6 @@ class SalesController extends Controller
         )
 
         ->get();
-
-        
         return $search;
 
     }
@@ -186,7 +204,7 @@ class SalesController extends Controller
         ->where('cusstomer__devices.DeciveName', 'like', "%{$request['DeviceName']}%")
         ->whereDate('sales_details.created_at',"<=" ,$request['dateto'])
         ->whereDate('sales_details.created_at',">=" ,$request['datefrom'])
-        
+        ->whereNotNull('sales_details.DeviceStatus')
 
         ->select('sales.updated_at',
                     'customers.Customer',

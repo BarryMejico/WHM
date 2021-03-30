@@ -33,9 +33,6 @@
           <br>
             <button type="button" class="btn btn-info">Print</button>
             <items-modal @SelectedItems="Selected_Item" :disabled="disabled" style="margin:5px;"></items-modal>
-            <div>
-                <devices-modal @SelectedDevice="Selected_Device" v-bind:selectedCus="ccode" :disabled="disabled"></devices-modal> 
-            </div> 
             <div class="dropdown">
                 <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
                 <span class="caret">{{status}}</span></button>
@@ -72,15 +69,15 @@
                 <tbody v-if="po_items">
                   <tr  v-for="(po_item, k) in po_items" :key="k">      
                     <th scope="row" class="in">{{k}}</th>
-                    <td>{{po_item.Icode}}</td>
-                    <td>{{po_item.description}}</td>
-                    <td>{{po_item.iunit}}</td>
+                   <td>{{po_item.Icode}}</td>    <!-- Code -->
+                    <td>{{po_item.description}}</td>   <!--Name-->
+                    <td>{{po_item.Unit}}</td>
                     <td class="in"><div class="qty"><input  v-model="po_item.Qty" min="1" type="number" @change="checkQty(po_item)" :disabled="disabled == 1"></div></td>
                     <td class="in"><div class="qty"><input  v-model="po_item.UnitCost"  @change="calculateLineTotal(po_item)" :disabled="disabled == 1"></div></td>
                     <td>{{po_item.Tcost}} Php</td>
                     <td :disabled="disabled == 1">
                     <span class="badge badge-info" @click="calculateLineTotal(po_item)">Recompute</span>
-                    <span class="badge badge-danger" @click="deleteRow(k, po_item,po_item.Icode)" :disabled="disabled == 1"><small>X</small></span></td>
+                    <span class="badge badge-danger" @click="deleteRow(k, po_item,po_item.Code)" :disabled="disabled == 1"><small>X</small></span></td>
                   </tr>
                 </tbody>
               </table>
@@ -110,12 +107,12 @@
 
 <script>
 import ItemsModal from '../../Modals/ItemsModal';
-//import VendorModal from '../../Modals/VendorModal';
+
 import CustomerModal from '../../Modals/CustomerModal';
 import Swal from 'sweetalert2'
 
 import MenuList from '../../Page/Sales/MainInvoice';
-import DevicesModal from '../../Modals/DevicesModal.vue';
+
 
 function int_data(){
   return{
@@ -123,7 +120,7 @@ function int_data(){
        datacollection: null,
        po:'',
        PO_total:0,
-       Vendor_code:'',
+
        Customer_code:'',
        Ship_to:'Ship',
        status:'',
@@ -153,14 +150,19 @@ function int_data(){
         Remarks:null,
         status:null,
         RepairedbyCode:null,
-
+        Employee:'',
+        RepairedbyCode:'',
+        DeciveName:'',
+        Code:'',
+        DeviceStatus:"Open",
+        invoiceLoad:'NEW',
+        Model:'',
       }],
       //-----for loading items
         items:[],
         //--disable
         disabled:0,
-        //device
-        listDevice:[],
+       
         //remarks
         Remarks:null,
     }
@@ -173,9 +175,9 @@ export default {
     components: {
     MenuList,
     ItemsModal,
-    //VendorModal,
+
     CustomerModal,
-        DevicesModal,
+       
     }, 
 
     data:function(){
@@ -184,23 +186,18 @@ export default {
 
     beforeMount(){
       this.clearData();
-
-      var $POL = this.$route.params.PO_Load;      
-      if(typeof this.$route.params.PO_Load === "undefined" ){
-        //console.log("PO Undefied")
-      }else{
-        this.Load_PO();
-         
-      }
     },
 
     mounted(){
+
       if(typeof this.$route.params.PO_Load === "undefined" ){
-        
+         this.invoiceLoad ="NEW";  
+         this.status="Open"  
         //console.log("PO Undefied")
       }else{
+        this.invoiceLoad = this.$route.params.PO_Load;   
         this.Load_Details();
-        this.Load_DeviceDescription();
+        
       }
     },
 
@@ -216,30 +213,21 @@ export default {
         {
         CustomerModal.disabled
         ItemsModal.disabled//add item
-        DevicesModal.disabled//device
+       
         document.getElementById("btnSave").disabled = true;//save btn
         document.getElementById("btnClear").disabled = true;//clear btn 
-        VendorModal.disabled
+
         this.disabled=1}
       },
 
-      changeStatus(){
-
+      changeStatus(stat){
+            this.status=stat
       },
 
       passCus(){
         
       },
 
-      addService(){
-        this.po_items.push({
-                Icode:'service-001',
-                idescription:'asd',
-                iunit:'asd',
-                Qty:'1',
-                UnitCost:'5',});
-        
-      },
 
       Selected_Item(event){
   console.log(event);
@@ -255,16 +243,6 @@ export default {
         }
 
         if (meron){
-            console.log("Item already Exist!!!")
-
-            //  Swal.fire({
-            //     icon:'warning',
-            //     title:"Oops!",
-            //     text:"Item already Exist!!!",
-            //     timer:2000,
-            //     showCancelButton: false,
-            //     showConfirmButton: false
-            //     }) 
             
         }
         else{
@@ -278,14 +256,18 @@ export default {
 
             this.po_items.push({
                  Icode:code,
-                description:Name,
-                iunit:Unit,
-                Qty:1, 
-                AvailableQty:res.data[0]['Qty'],
+                 description:Name,
+                 iunit:Unit,
+                 Qty:1, 
+                 AvailableQty:res.data[0]['Qty'],
                  Remarks:null,
-                status:null,
-                RepairedbyCode:null,
-                
+                 status:null,
+                 RepairedbyCode:null,
+                  Employee:'',
+                  RepairedbyCode:'',
+                  DeciveName:'',
+                  DeviceStatus:null,
+                  Model:'',
         });
 
         }
@@ -299,7 +281,6 @@ export default {
                 showConfirmButton: true
                 }) 
         }
-
           })
           .catch((error)=>{
                  Swal.fire({
@@ -318,32 +299,7 @@ export default {
         this.closeModal();
       },
 
-      Selected_Device(event){
-          console.log(event);
-         var code=event['Code'],Name=event['Name'],Unit=event['Unit'];
-         if (this.po_items[0]['Icode']=="")
-        {this.po_items.splice(0, 1);}
-           this.po_items.push({
-                 Icode:code,
-                idescription:Name,
-                iunit:Unit,
-                Qty:1, 
-                 Remarks:null,
-                status:null,
-                RepairedbyCode:null,                
-        });
-        
-        this.closeModal();
-      },
 
-
-      Selected_ven(event){  
-                this.add_Ven=event['Address'];
-                this.Vendor=event['Vendor'];
-                this.Vendor_code=event['id'];
-                
-  
-      },
 
        Selected_cus(event){        
                 this.add_Cus=event['Address'];
@@ -352,16 +308,7 @@ export default {
                 this.ccode=event['Ccode'];
       },
 
-      load_vendor(){
-          axios.get('/api/LoadVen')
-          .then(
-              (response)=>{
-                  this.List_Vendor=response.data;
-                  
-              }
-          )
-          .catch()
-      }, 
+ 
 
       load_item(){
         axios.get('/api/LoadItems')
@@ -389,7 +336,7 @@ export default {
           var codes=$('#code').val()
 
             this.po_items.push({
-                Icode:codes,
+                Code:codes,
                 idescription:'New Added Descriptopn',
                 iunit:'ea',
             });
@@ -415,7 +362,7 @@ export default {
              this.po_items.splice(idx, 1)
              if(this.po_items.length==0){
               this.po_items.push({
-                Icode:"",
+                Code:"",
                 idescription:'',
                 iunit:'',
                 Qty:0,
@@ -488,12 +435,14 @@ checkQty(product){
             axios.post('/api/SaveInvoice', {
               po_items:this.po_items, 
               PO_total:this.PO_total,
-              PO:this.po,
+              Invoice:this.invoiceLoad,
               //Created_by:this.userId['id'],       //'Created_by' => 'required',
               //Vendor:this.Vendor_code,         //'Vendor'=>'required',
               Ship_to:this.ccode,            //'Ship_to'=>'required',
               Remarks:this.Remarks,
               payment:0,
+              Status:this.status,
+              Balance:0,
               })
             .then(()=>{
                this.clearData();
@@ -550,44 +499,33 @@ checkQty(product){
         
         },
 
-        Load_DeviceDescription(){
-         
-          var i,j,e;
-                  for (i=0; i < this.po_items.length; i++){  
-                     for (e=0; e <= this.listDevice.length-1; e++){
-                       console.log(this.listDevice[e]['Code']);
-                       if (this.po_items[i]['Icode']===this.listDevice[e]['Code']){
-                         console.log(this.listDevice[e]['DeciveName']);
-                         this.po_items[i]['idescription']=this.listDevice[e]['DeciveName'];  
-                         this.po_items[i]['iunit']=this.listDevice[e]['Model']; 
-                       }
-                     }    
-                   }
-        
-        },
 
       Load_Details(){
-                  axios.get('/api/GetInvoiceHead', {params:{PO:this.$route.params.PO_Load}})
+      axios.get('/api/GetInvoice', {params:{invoice:this.$route.params.PO_Load}})
           .then(
               (response)=>{
                   this.po_details=response.data;
                   this.po = this.po_details[0]['invoice'];
-                  this.PO_total = this.po_details[0]['Total_Amount'];
+                  //this.PO_total = this.po_details[0]['Total_Amount'];
                   this.Customer_code =this.po_details[0]['Ccode'];
                   this.Selected_cus2(this.po_details[0]['Ccode']);
-                  this.approvedStatus(this.po_details[0]['Status']);
-                  axios.get('/api/getDevices',{params:{ccode:this.po_details[0]['Ccode']}})
-          .then(
-              (response)=>{
-                  this.listDevice=response.data;
-                  console.log("Device done loading");
-                  this.Load_DeviceDescription();
-              }
-          )
-          .catch()
+                  this.approvedStatus(this.po_details[0]['Status']); 
+              this.invoiceLoad=this.po_details[0]['invoice'];
+              this.Remarks=this.po_details[0]['Remarks'];
+              this.payment=this.po_details[0]['payment'];
+              this.status=this.po_details[0]['Status'];
+              this.Balance=0,//=this.po_details[0]['invoice'];
 
-                   
+                  this.po_items=response.data;
+
+                  var i;
+                  for (i=0; i < this.po_items.length; i++){
+                      this.po_items[i]['Tcost']=this.po_items[i]['Qty']*this.po_items[i]['UnitCost'];
+                      this.calculateTotal(this.po_items[i]['Tcost']);
+                  }
               });
+
+              
         },
 
         Selected_cus2(Ccode){

@@ -26,7 +26,7 @@
                   <tr v-for="(po_item, k) in POs.data" :key="k">      
                     <th scope="row">{{k}}</th>
                     <td>{{po_item.invoice}}</td>
-                    <td>{{po_item.Ccode}}</td>
+                    <td>{{po_item.Customer}}</td>
                     <td>{{po_item.Total_Amount}}</td>
                     <td>{{po_item.Status}}</td>
                     <td>
@@ -118,7 +118,6 @@ export default {
           .then(
               (response)=>{
                   this.POs=response.data;
-                  
               }
           )
           .catch()
@@ -176,7 +175,7 @@ else{
 approve(invoice,status){
 if (status=="Open"){
   var inVoiceDetails;
-  axios.get('/api/GetInvoice',{params:{PO:invoice}})
+  axios.get('/api/GetInvoice',{params:{invoice:invoice}})
   .then(
     (res)=>{
       inVoiceDetails=res.data;

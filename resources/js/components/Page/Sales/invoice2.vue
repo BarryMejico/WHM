@@ -263,25 +263,11 @@ export default {
         
       },
 
-      addService(){
-        this.po_items.push({
-                Employee:'s',
-                Icode:'service-001',
-                DeciveName:'asd',
-                Model:'asd',
-                Qty:'1',
-                UnitCost:'5',});
-        
-      },
 
       Selected_Item(event){
-  
          var code=event['Code'],Name=event['Name'],Unit=event['Unit'];
         var i;
         var meron = false;
-
-         
-
          for (i=0;i < this.po_items.length; i++){
             if(this.po_items[i]['Icode']===code){
                meron = true;
@@ -296,12 +282,12 @@ export default {
 
              this.po_items.push({
                 Employee:'',
-                 Icode:code,
-                 DeciveName:Name,
-                 Model:Unit,
-                 Qty:1, 
-                 DeviceStatus:"",
-                 Remarks:null,
+                Icode:code,
+                DeciveName:Name,
+                Model:Unit,
+                Qty:1, 
+                DeviceStatus:"",
+                Remarks:"",
          });
         }
         this.closeModal();
@@ -445,7 +431,6 @@ checkQty(product){
           axios.get('/api/GetInvoiceWithDetails', {params:{invoice:this.$route.params.PO_Load}})
           .then(
               (response)=>{
-
                   this.po_items2=response.data;
                   this.Selected_cus2(this.po_items2[0]['Ccode']);
                   this.Deposit=this.po_items2[0]['payment'];

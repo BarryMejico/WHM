@@ -458,46 +458,7 @@ checkQty(product){
             })
         },
 
-        Load_PO(){
-          
-          axios.get('/api/GetInvoice', {params:{PO:this.$route.params.PO_Load}})
-          .then(
-              (response)=>{
 
-                  this.po_items2=response.data;
-                  
-                  var i;
-                  for (i=0; i < this.po_items2.length; i++){
-                      this.po_items2[i]['Tcost']=this.po_items2[i]['Qty']*this.po_items2[i]['UnitCost'];
-                      this.calculateTotal(this.po_items2[i]['Tcost']);
-                  }
-                  this.po_items=this.po_items2;
-                  
-                  this.Load_idescription();
-                  
-                  }
-          )
-         .catch((error)=>{
-                 Swal.fire({
-                    icon:'danger',
-                    title:"Oops!",
-                    text:error.response.data.errors,
-                    showCancelButton: false,
-                    showConfirmButton: true
-                    }) 
-            })
-        },
-
-        Load_idescription(){
-          var i,j,e;
-                  for (i=0; i < this.po_items.length; i++){  
-                    for (j=0; j < this.items.length; j++){
-                      if (this.po_items[i]['Icode']===this.items[j]['Code']){
-                      this.po_items[i]['idescription']=this.items[j]['Name'];  
-                      this.po_items[i]['iunit']=this.items[j]['Unit']; 
-                  }}}
-        
-        },
 
 
       Load_Details(){
@@ -517,16 +478,20 @@ checkQty(product){
               this.Balance=0,//=this.po_details[0]['invoice'];
 
                   this.po_items=response.data;
-
-                  var i;
-                  for (i=0; i < this.po_items.length; i++){
-                      this.po_items[i]['Tcost']=this.po_items[i]['Qty']*this.po_items[i]['UnitCost'];
-                      this.calculateTotal(this.po_items[i]['Tcost']);
-                  }
+          this.calculateTotalInArray()
+                  
               });
 
               
         },
+
+        calculateTotalInArray(){
+          var i;
+                  for (i=0; i < this.po_items.length; i++){
+                      this.po_items[i]['Tcost']=this.po_items[i]['Qty']*this.po_items[i]['UnitCost'];
+                      this.calculateTotal(this.po_items[i]['Tcost']);
+                  }
+},
 
         Selected_cus2(Ccode){
           var i;

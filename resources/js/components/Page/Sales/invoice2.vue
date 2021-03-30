@@ -70,14 +70,14 @@
                 <td><employee-modal @loadindex="indext" @SelectedEmployee="Selected_employee" v-bind:index="k" :disabled="disabled"/></td>
                 <td><textarea v-model="po_item.Remarks"  @change="calculateLineTotal(po_item)" :disabled="disabled == 1"></textarea></td>
                 <td>
-                <select v-model="po_item.DeviceStatus">
+                <select @change="StatCheck(k)" v-model="po_item.DeviceStatus">
                     <option>Claimed</option>
                     <option>RTO</option>
                     <option>Open</option>
                   </select>
                 </td>
                 <td :disabled="disabled == 1">
-                  <b-badge variant="info" @click="calculateLineTotal(po_item)">Recompute</b-badge>
+                  <b-badge variant="info" @click="calculateTotalInArray()">Recompute</b-badge>
                   <b-badge variant="danger" @click="deleteRow(k, po_item,po_item.Icode)" :disabled="disabled == 1">X</b-badge>
                 </td>
               </tr>
@@ -203,9 +203,9 @@ export default {
 
     beforeMount(){
       this.clearData();
-
-      
     },
+
+
 
     mounted(){
       if(typeof this.$route.params.PO_Load === "undefined" ){
@@ -238,6 +238,12 @@ export default {
 
     methods:{
 
+      StatCheck(i){
+          if(this.po_items[i]['']="RTO"){
+            
+          }
+      },
+
       indext(event){
         this.ins=event
       },
@@ -255,13 +261,6 @@ export default {
         this.disabled=1}
       },
 
-      changeStatus(){
-
-      },
-
-      passCus(){
-        
-      },
 
 
       Selected_Item(event){
@@ -386,6 +385,16 @@ export default {
             // document.getElementById('close').click();
 },
 
+  calculateTotalInArray(){
+
+          var i;
+          this.PO_total =0;
+                  for (i=0; i < this.po_items.length; i++){
+
+                      this.po_items[i]['Tcost']=this.po_items[i]['Qty']*this.po_items[i]['UnitCost'];
+                      this.calculateTotal(this.po_items[i]['Tcost']);
+                  }
+},
         calculateTotal(Sub) {
             var total =parseFloat(this.PO_total) + parseFloat(Sub);
             if (!isNaN(total)) {
@@ -441,31 +450,6 @@ checkQty(product){
          .catch((error)=>{
                 this.errors=error.response.data.errors;
             })
-        },
-
-        Load_DeciveName(){
-          var i,j;
-                  for (i=0; i < this.po_items.length; i++){   
-                    for (j=0; j < this.items.length; j++){
-                      if (this.po_items[i]['Icode']===this.items[j]['Code']){
-                      this.po_items[i]['DeciveName']=this.items[j]['Name'];  
-                      this.po_items[i]['Code']=this.items[j]['Unit']; 
-                  }}}
-        
-        },
-
-      Load_Details(){
-                  axios.get('/api/GetInvoiceHead', {params:{PO:this.$route.params.PO_Load}})
-          .then(
-              (response)=>{
-                  this.po_details=response.data;
-                  this.po = this.po_details[0]['invoice'];
-                  this.PO_total = this.po_details[0]['Total_Amount'];
-                  this.Customer_code =this.po_details[0]['Ccode'];
-                  this.RepairedbyCode=this.po_details[0]['RepairedbyCode'];
-                  this.Selected_cus2(this.po_details[0]['Ccode']);
-                  this.approvedStatus(this.po_details[0]['Status']);
-              });
         },
 
         Selected_cus2(Ccode){

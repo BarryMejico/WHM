@@ -167,14 +167,15 @@
             </tr>
 
 
-          <!-- <tr>
+          <tr>
           <td></td>
           <td></td>
           <td></td>
-          <td>Total</td>
-          <td>Total of payment</td>
-          <td>Total of Balance</td>
-          </tr> -->
+          <td><b>Total</b></td>
+          <td><b>{{GTPayment| numeral('0,0')}}</b></td>
+          <td><b>{{GTBalance| numeral('0,0')}}</b></td>
+          
+          </tr>
         </tbody>
       </table>
 
@@ -258,6 +259,8 @@ export default {
 
     data(){
         return{
+          GTBalance:0,
+          GTPayment:0,
               stocks:[{
                 idescription:'',
                  items:{},
@@ -307,10 +310,22 @@ export default {
 
     mounted(){
      this.firstDate()
-
+      
     },
 
     methods:{
+
+      CalculateGT(){
+          this.GTBalance=0;
+          this.GTPayment=0;
+          var i;
+          for(i=0;i<=this.stocks.length-1;i++){
+             this.GTBalance= parseFloat(this.stocks[i]['Balance'])+this.GTBalance;
+             this.GTPayment=parseFloat(this.stocks[i]['payment'])+this.GTPayment;
+          }
+      },
+
+
       DatDiff(){
         var D1=new Date(this.dateto)
         var D2=new Date(this.datefrom)
@@ -380,6 +395,7 @@ export default {
                 console.log(response.data);
                this.stocks=response.data;
                this.PresentationLoop();
+               this.CalculateGT();
             })
             .catch((err)=>{
                 console.log(err)

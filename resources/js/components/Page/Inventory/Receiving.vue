@@ -282,7 +282,11 @@ export default {
     methods:{
       
       Selected_Item(event){
-         var code=event['Code'],Name=event['Name'],Unit=event['Unit'];
+        var code=event['Code'],
+        Name=event['Name'],
+        Unit=event['Unit'];
+        console.log(event);
+
         var i,unitCost;
         var meron = false;
         var wala = false;
@@ -404,16 +408,7 @@ export default {
           .catch()
       },
       
-        addNewRow(code) {
-          var codes=$('#code').val()
-          //console.log(codes);
-            this.po_items.push({
-                Icode:codes,
-                idescription:'New Added Descriptopn',
-                iunit:'ea',
-            });
-            this.closeModal()
-        },
+
 
         deleteRow(index,invoice_product) {
             Swal.fire({
@@ -464,9 +459,8 @@ export default {
           var i;
           for (i=0;i < this.po_items2.length; i++){
             if(this.po_items2[i]['Icode']==invoice_product.Icode){
-              if( parseFloat(this.po_items2[i]['Qty'])<= parseFloat(invoice_product.Qty)){
-                invoice_product.Qty=this.po_items2[i]['Qty'];
-               // alert("Qty is greater than expected!")
+              if( parseFloat(this.po_items2[i]['Qty'])< parseFloat(invoice_product.Qty)){
+                invoice_product.Qty=this.po_items2[i]['Qty'];              
 
                  Swal.fire({
                           title: 'Qty is greater than expected',

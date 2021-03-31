@@ -265,6 +265,7 @@ export default {
 
       Selected_Item(event){
          var code=event['Code'],Name=event['Name'],Unit=event['Unit'];
+         console.log(event);
         var i;
         var meron = false;
          for (i=0;i < this.po_items.length; i++){

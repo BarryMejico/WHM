@@ -8,9 +8,9 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			
-				<div class="modal-header">						
+				<div class="modal-header">					
 					<h4 class="modal-title">Search Customer</h4>
-					<button type="button" id="closeCus" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<button id="closeCus" class="close" data-dismiss="modal" aria-hidden="true" style="margin-top:10px;">&times;</button>
 				</div>
 				<div class="modal-body">	
           <div class="form-group">		
@@ -25,6 +25,7 @@
   </li>
  
 </ul>
+<br>
 
 <ul class="pagination justify-content-end">
     <li class="page-item"><a class="page-link bg-dark text-white" @click.prevent="prepAGE()">Previous</a></li>
@@ -37,7 +38,7 @@
           </div>
 				
 				<div class="modal-footer">
-           <a  href="#NewCustomer" data-toggle="modal" type="button" class="my_btn btn link tn-secondary">New Customer</a>
+           <a href="#NewCustomer" data-toggle="modal" type="button" class="my_btn btn link tn-secondary">New Customer</a>
           <button  type="button" class="btn btn-light" data-dismiss="modal" aria-hidden="true">Select Customer</button>
 				</div>
 			
@@ -54,29 +55,27 @@
 					<button type="button" id="closeCus2" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
 				<div class="modal-body">	
-         <div class="form-group">
-      <div class="alert alert-success" v-show="success">
-          The data has been saved!!
-      </div>
-      <label for="name" class="text-muted"><small>Name</small></label>
-      <span class="alert-danger" v-if="errors && errors.Name">{{errors.Name[0]}}</span>
-      <input   class="form-control" id="name" placeholder="Enter name" v-model="Name">
-    </div>
-
-    <div class="form-group">
-      <label for="pwd" class="text-muted"><small>Contact Number</small></label>
-       <span class="alert-danger" v-if="errors && errors.Number">{{errors.Number[0]}}</span>
-      <input v-model="CNumber" type="text" class="form-control" id="pwd" placeholder="Enter Number" name="pswd">
-    </div>
-  
-    <div class="form-group">
-      <label for="comment" class="text-muted"><small>Address</small></label>
-      <textarea v-model="Address" class="form-control" rows="5" id="comment" name="text" placeholder="Enter Address"></textarea>
-       <span class="alert-danger" v-if="errors.Address">{{errors.Address[0]}}</span>
-    </div>
-   
-
-          </div>			
+          
+            <div class="alert alert-success" v-show="success">
+                The data has been saved!!
+            </div>
+            <small class="text-muted">Name</small><br>
+            <span class="alert-danger" v-if="errors && errors.Name">{{errors.Name[0]}}</span>
+            <input class="form-control" placeholder="Enter name" v-model="Name" style="width:100%;">
+            <br>
+            <br>
+            <small  class="text-muted">Contact Number</small>
+            <br>
+            <span class="alert-danger" v-if="errors && errors.Number">{{errors.Number[0]}}</span>
+            <input v-model="CNumber" type="number" class="form-control" id="pwd" placeholder="Enter Number" style="width:100%;">
+            <br>
+            <br>
+            <small class="text-muted">Address</small>
+            <br>
+            <textarea v-model="Address" class="form-control" rows="4" placeholder="Enter Address" style="width:100%;"></textarea>
+            <span class="alert-danger" v-if="errors.Address">{{errors.Address[0]}}</span>
+      
+        </div>			
 				<div class="modal-footer">
            <button type="button" class="btn btn-dark" @click.prevent="SaveVendor">Submit</button>
 				</div>
@@ -221,7 +220,7 @@ methods:{
 
 }
 </script>
-<style>
+<style scoped>
 /* Modal styles */
 /* this is class for dialog itself*/
 .modal {
@@ -260,5 +259,16 @@ methods:{
 .modal form label {
 	font-weight: normal;
 }	
+ul li:hover{
+  cursor:pointer;
+  background-color: #eee;
+}
+a:hover{
+  color:#5bc0de;
+}
+.close{
+  text-align:right;
+}
+
 
 </style>

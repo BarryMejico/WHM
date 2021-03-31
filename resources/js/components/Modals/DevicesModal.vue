@@ -46,7 +46,7 @@
           
           <div class="form-group">	
             <input type="text" v-model="DeviceForm.Code" placeholder="Code">
-            <input type="text" v-model="DeviceForm.DeciveName" placeholder="Decive Name">
+            <input type="text" v-model="DeviceForm.DeciveName" placeholder="Device Name">
             <input type="text" v-model="DeviceForm.Model" placeholder="Model">	
 
           </div>
@@ -135,15 +135,16 @@ methods:{
            //this.DeviceForm.splice(0, 1);
             this.Cus=[];
             this.Cus.Code=res.data[0]['Code'];
-            this.Cus.Name=res.data[0]['DeciveName'] + this.Customer;
+            this.Cus.Name=res.data[0]['DeviceName'] + this.Customer;
             this.Cus.Unit=res.data[0]['Model'];
           this.$emit("SelectedDevice",this.Cus);
+
+          
           
          } 
         )
         .catch()
 
-        
       },
 
   Selected_cus(index){
@@ -151,7 +152,7 @@ methods:{
       
                 this.Cus=[];
                 this.Cus.Code=this.List_Customer[index]['Code'];
-                this.Cus.Name=this.List_Customer[index]['DeciveName'] + this.Customer;
+                this.Cus.Name=this.List_Customer[index]['DeviceName'] + this.Customer;
                 this.Cus.Unit= this.List_Customer[index]['Model'];
         this.closeModal();
         this.$emit("SelectedDevice",this.Cus);

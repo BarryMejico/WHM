@@ -110,7 +110,7 @@
                 <td>{{po_item.idescription}}</td>
                 <td>{{po_item.iunit}}</td>
                 <td class="in"><div class="qty"><input v-model="po_item.Qty" min="1" type="number" @change="calculateLineTotal(po_item)" :disabled="disabled == 1"></div></td>
-                <td class="in"><div class="qty"><input v-model="po_item.UnitCost"  @change="calculateLineTotal(po_item)" :disabled="disabled == 1"></div></td>
+                <td class="in"><div class="qty"><input v-model="po_item.UnitCost"  type="number" @change="calculateLineTotal(po_item)" :disabled="disabled == 1"></div></td>
                 <td>{{po_item.Tcost}} Php</td>
                 <td>
                   <span class="badge badge-info" :disabled="disabled == 1">Recompute</span>
@@ -473,24 +473,23 @@ export default {
               })
             .then(()=>{
                this.clearData();
-            })
-            .catch((error)=>{
-                this.errors=error.response.data.errors;
-            Swal.fire({
-              title: 'Error',
-              text:error.response.data.errors,
-              icon: 'danger',
-              showCancelButton: false,
-              showConfirmButton: false 
-            })
-            })
-  
-            Swal.fire({
+
+               Swal.fire({
               title: 'Order is placed Successfully',
               icon: 'success',
               timer:1500,
               showCancelButton: false,
               showConfirmButton: false 
+            })
+            }).catch((error)=>{
+                this.errors=error.response.data.errors;
+                Swal.fire({
+                  title: 'Error',
+                  text:error.response.data.errors,
+                  icon: 'danger',
+                  showCancelButton: false,
+                  showConfirmButton: false 
+                })
             })
 
           }else if (result.dismiss === Swal.DismissReason.cancel) {

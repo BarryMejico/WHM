@@ -73,7 +73,7 @@
                     <td>{{po_item.description}}</td>   <!--Name-->
                     <td>{{po_item.Unit}}</td>
                     <td class="in"><div class="qty"><input  v-model="po_item.Qty" min="1" type="number" @change="checkQty(po_item)" :disabled="disabled == 1"></div></td>
-                    <td class="in"><div class="qty"><input  v-model="po_item.UnitCost"  @change="calculateLineTotal(po_item)" :disabled="disabled == 1"></div></td>
+                    <td class="in"><div class="qty"><input  v-model="po_item.UnitCost"  type="number" @change="calculateLineTotal(po_item)" :disabled="disabled == 1"></div></td>
                     <td>{{po_item.Tcost}} Php</td>
                     <td :disabled="disabled == 1">
                     <span class="badge badge-info" @click="calculateLineTotal(po_item)">Recompute</span>

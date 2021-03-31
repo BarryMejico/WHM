@@ -196,23 +196,31 @@ export default {
                 cancelButtonText: 'No'
               }).then((result) => {
                 if (result.value) {
-
                   axios.post('/api/DeleteVendor',{Vcode:this.id})
-                    .then(
-                      ()=>{    
-                      this.loadpos();
+                .then(
+                  ()=>{    
+                  this.loadpos();
 
-                     Swal.fire({
-                      title: 'Vendor Removed',
-                      icon: 'success',
-                      timer:1500,
-                      showCancelButton: false,
-                      showConfirmButton: false 
-            })
+                  Swal.fire({
+                  title: 'Vendor Removed',
+                  icon: 'success',
+                  timer:1500,
+                  showCancelButton: false,
+                  showConfirmButton: false 
+                })
+                }).catch(()=>{
+                //var error2 = error.response.data;  
 
-                      }
-                    )
-                    .catch();
+                Swal.fire({
+                title: 'Oops!',
+                text: this.Name + ' has been used from previous transactions, can`t be deleted for business documentation.',
+                icon: 'warning',
+                showCancelButton: false,
+                showConfirmButton:true
+            
+              })
+
+            });
 
           }else if (result.dismiss === Swal.DismissReason.cancel) {
           console.log('Vendor Stays');//inshort do nothing

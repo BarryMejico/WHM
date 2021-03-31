@@ -65,7 +65,7 @@
                 <th class="in">{{k}}</th>
                 <td>{{po_item.DeciveName}}-{{po_item.Model}}</td>
                 <td><textarea v-model="po_item.description" :disabled="disabled == 1"></textarea></td>
-                <td class="in"><div class="qty"><input  v-model="po_item.UnitCost"  @change="calculateLineTotal(po_item)" :disabled="disabled == 1"></div></td>
+                <td class="in"><div class="qty"><input  v-model="po_item.UnitCost"  type="number" @change="calculateLineTotal(po_item)" :disabled="disabled == 1"></div></td>
                 <td>{{po_item.Employee}}</td>
                 <td><employee-modal @loadindex="indext" @SelectedEmployee="Selected_employee" v-bind:index="k" :disabled="disabled"/></td>
                 <td><textarea v-model="po_item.Remarks"  @change="calculateLineTotal(po_item)" :disabled="disabled == 1"></textarea></td>

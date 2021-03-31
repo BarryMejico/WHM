@@ -23,7 +23,6 @@
                   <th scope="col">Name</th>
                   <th scope="col">Contact Number</th>
                   <th scope="col">Address</th>
-                  
                   <th scope="col">Action</th>
                 </tr>
               </thead>
@@ -67,7 +66,7 @@
                 <div class="modal-body">	
                     <div class="form-group">	
                       <input type="text" v-model="DeviceForm.Code" placeholder="Code">
-                      <input type="text" v-model="DeviceForm.DeciveName" placeholder="Decive Name">
+                      <input type="text" v-model="DeviceForm.DeciveName" placeholder="Device Name">
                       <input type="text" v-model="DeviceForm.Model" placeholder="Model">	
                       <ul class="list-group">
                         <hr>
@@ -209,13 +208,33 @@ closeModal() {
         .then(
          ()=>{
            this.closeModal();
-           console.log(this.DeviceForm);
-            this.DeviceForm.splice(0, 1)
-         } 
-        )
-        .catch()
 
-        
+            Swal.fire({
+                  title: this.DeviceForm.DeciveName + ' is Added as Device',
+                  icon: 'success',
+                  timer:1500,
+                  showCancelButton: false,
+                  showConfirmButton: false 
+                }) 
+
+           console.log(this.DeviceForm);
+            //this.DeviceForm.splice(0, 1)
+            this.DeviceForm.Code = "";
+            this.DeviceForm.DeciveName = "";
+            this.DeviceForm.Model = "";
+
+         }).catch((error)=>{
+                
+                Swal.fire({
+                title: 'Oops!',
+                text: error.response.data,
+                icon: 'warning',
+                showCancelButton: false,
+                showConfirmButton:true
+            
+              })
+
+            })
       },
 
       loadpos:function(){
@@ -269,13 +288,6 @@ closeModal() {
             },
             
             Delete(){
-          //     axios.post('/api/DeleteCustomer',{Ccode:this.id})
-          // .then(
-          //   ()=>{this.loadpos();
-          //   this.closeModal();
-          //   }
-          // )
-          // .catch();
           this.closeModal();
              Swal.fire({
                 title: 'Confirmation',
@@ -292,16 +304,14 @@ closeModal() {
                 ()=>{this.loadpos();
                 this.closeModal();
 
-                   Swal.fire({
+              Swal.fire({
               title: 'Customer Removed Successfully',
               icon: 'success',
               timer:1500,
               showCancelButton: false,
               showConfirmButton: false 
-            })
-
-                })
-              .catch((error)=>{
+              })
+              }).catch((error)=>{
                 var error2;
                 error2=error.response.data;
 

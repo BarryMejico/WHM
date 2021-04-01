@@ -5,7 +5,7 @@
     <div class="row" >
       <div class="col-md-12">
             <div class="jumbotron" style="background-color:white; ">
-              <h1 class="display-4 text-muted"><b-icon icon="clipboard-check" font-scale="1"></b-icon> JO: <b>Create</b></h1>
+              <h1 class="display-4 text-muted"><b-icon icon="clipboard-check" font-scale="1"></b-icon> Job Order: <b>Create</b></h1>
               <MenuList></MenuList>
             </div>
       </div>
@@ -46,7 +46,7 @@
       <div class="row">
         <div class="col"></div>
         <div class="col-md-10">
-          <table id="tbl" class="table table-responsive">
+          <table class="table" style="width:100%;">
             <thead class="thead-dark">
               <tr>
                 <th scope="col">#</th>
@@ -89,32 +89,26 @@
             <div class="row">
                 <div class="col"></div>
                 <div class="col-md-2">
-          <div class="row">
-            <div class="col"></div>
-            <div class="col-md-2">
-                <div class="total"> 
-                  <Label><b>Total:</b> {{PO_total}} Php</Label><br>
-                  <Label for="Deposit"><b>Deposit/Payment:</b></Label>
-                  <input type="number" id="Deposit" v-model="Deposit"/><hr>
-                  <Label><b>Balance:</b> {{PO_Balance}} Php</Label><br>
-                  <Label><b>Change:</b> {{PO_Change}} Php</Label><br>
-                  <Label for="status"><b> Status: </b></Label>
-                  <Label>{{status}}</Label>
+                  <div class="total"> 
+                      <Label><b>Total:</b> {{PO_total}} Php</Label><br>
+                      <Label for="Deposit"><b>Deposit/Payment:</b></Label>
+                      <input type="number" id="Deposit" v-model="Deposit"/><hr>
+                      <Label><b>Balance:</b> {{PO_Balance}} Php</Label><br>
+                      <Label><b>Change:</b> {{PO_Change}} Php</Label><br>
+                      <Label for="status"><b> Status: </b></Label>
+                      <Label>{{status}}</Label>
+                      <br>
+                      <button type="button" id="btnSave" class="btn btn-info" @click.prevent="saveform">Save</button>
+                  </div>
                   <br>
-                  <button type="button" id="btnSave" class="btn btn-info" @click.prevent="saveform">Save</button>
+                </div>
               </div>
-      <br>
-                <div class="col-md-1"></div>
-              </div> 
-          </div>
-            </div>
-            <div class="col-md-1"></div>
-          </div>
           
         </div>
+
          <div class="col"></div>
+
       </div>
-      <div class="col"></div>
     </div>
 
 
@@ -181,7 +175,7 @@ function int_data(){
         ins:0,
         //Deposit
         //----and payment
-        Deposit:0,
+        Deposit:null,
         
     }
     }
@@ -596,14 +590,11 @@ th{
 tr:hover{
   cursor: pointer;
 }
-.table{
-  width: 100% !important;
-}
 .total{
-   float:right;
+  
   box-shadow: 0px 0px 2px grey;
   border-radius:5px;
-  padding:20px;
+  padding:30px;
 }
 
 #repairedByDropDown,#receivedByDropDown{
@@ -613,6 +604,7 @@ tr:hover{
 tr:hover{
   background-color: #eee;
 }
+
 
 
 /**try for input table

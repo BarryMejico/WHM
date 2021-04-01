@@ -90,7 +90,7 @@
    
       <div class="row">
         <div class="col-lg-12">
-           <table class="table table-responsive">
+           <table class="table" style="width:100%;">
               <thead class="thead-dark">
                 <tr>
                   <th scope="col">#</th>
@@ -156,6 +156,8 @@
     </div>
   </div>
 </div> -->
+
+
 
 </div>
 
@@ -629,7 +631,7 @@ export default {
 
 .table{
   width: 100% !important;
-   border-top-left-radius:20px;
+  border-top-left-radius:20px;
   border-top-right-radius:20px;
 }
 
@@ -706,6 +708,7 @@ div #indent1,#indent2,#indent3,#indent4{
 #printBtn{
   margin-bottom:10px;
 }
+
 
 
 /**

@@ -16,7 +16,7 @@
           <div class="col-lg-10">
             <span class="alert alert-success" v-show="success">The data has been saved!!</span>	
             <div class="row">
-              <table class="table table-responsive">
+              <table class="table" style="width:100%;">
                 <thead class="thead-dark">
                   <tr>
                     <th>#</th>

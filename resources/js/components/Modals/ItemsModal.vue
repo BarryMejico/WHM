@@ -21,25 +21,25 @@
 			
 				<div class="modal-header">						
 					<h4 class="modal-title">Add Item</h4>
-					<button type="button" id="close" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<button type="button" id="close" class="close" data-dismiss="modal" aria-hidden="true" style="margin-top:10px;">&times;</button>
 				</div>
 				<div class="modal-body">	
           <div class="form-group">		
-                    <label>Item Code</label>		
-										<input type="text" v-on:input="liveSearch" v-model="Search">
+            <label>Item Code</label>		
+            <input type="text" v-on:input="liveSearch" v-model="Search">
           </div>
 
-<ul class="list-group">
-  <li class="list-group-item d-flex justify-content-between align-items-center" 
-    v-for="(item, k) in items" :key="k">
-    <a @click="Selected_Item(k)">{{item.Name}}</a>
-    <span class="badge badge-primary badge-pill">{{item.Unit}}</span>
-  </li>
-  <a class="link">New Vendor</a>
-</ul>
+          <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-center" 
+              v-for="(item, k) in items" :key="k">
+              <a @click="Selected_Item(k)">{{item.Name}}</a>
+              <span class="badge badge-primary badge-pill">{{item.Unit}}</span>
+            </li>
+          </ul>
 				</div>
-				<div class="modal-footer">
-          <button type="button" class="btn btn-light"  @click="addNewRow('code')">Add Item</button>
+
+				<div class="modal-footer" style="text-align:right;" >
+          <a @click="addNewRow('code')" type="button" class="my_btn btn link tn-secondary" id="addItemBtn">Add Item</a>
 				</div>
 			
 		</div>
@@ -202,4 +202,14 @@ load_item(){
 .modal form label {
 	font-weight: normal;
 }	
+ul li:hover{
+  background-color: #eee;
+  cursor: pointer;
+}
+.addItemBtn:hover{
+  color:#5bc0de;
+}
+.close{
+  text-align: right;
+}
 </style>

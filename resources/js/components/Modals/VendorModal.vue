@@ -8,7 +8,7 @@
 			
 				<div class="modal-header">						
 					<h4 class="modal-title">Add Vendor</h4>
-					<button type="button" id="closeVen" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<button type="button" id="closeVen" class="close" data-dismiss="modal" aria-hidden="true" style="margin-top:10px;">&times;</button>
 				</div>
 				<div class="modal-body">	
           <div class="form-group">		
@@ -102,7 +102,7 @@ closeModal() {
     
 }
 </script>
-<style>
+<style scoped>
 /* Modal styles */
 /* this is class for dialog itself*/
 .modal {
@@ -141,5 +141,11 @@ closeModal() {
 .modal form label {
 	font-weight: normal;
 }	
-
+ul li:hover{
+  background-color: #eee;
+  cursor: pointer;
+}
+.close{
+  text-align: right;
+}
 </style>

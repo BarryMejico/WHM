@@ -5,7 +5,7 @@
         <div class="row" >
             <div class="col-md-12">
                   <div class="jumbotron" style="background-color:white; ">
-                    <h1 class="display-4 text-muted"><b-icon icon="clock-history" font-scale="1"></b-icon> JO: <b>Transaction History</b></h1>
+                    <h1 class="display-4 text-muted"><b-icon icon="clock-history" font-scale="1"></b-icon> JOb Order: <b>Transaction History</b></h1>
                     <MenuList></MenuList>
                   </div>
             </div>
@@ -109,7 +109,7 @@
       </div>
 
        <div class="container-fluid">
-         <table class="table table-responsive">
+         <table class="table" style="width:100%;">
           <thead class="thead-dark">
             <tr>
               <th scope="col">#</th>
@@ -143,7 +143,8 @@
               <td><br><br><i>{{item.Balance| numeral('0,0')}}</i></td>
               <td><br><br>{{item.name}}</td>
               <td><br><br>{{item.Status}}</td>
-              <td class="subTable2" style="width:45%;">
+              <td class="subTable2">
+                <table style="width:100%;">
                 <thead>
                     <tr>
                       <th scope="col"><small><b>Model</b></small></th>
@@ -163,6 +164,7 @@
                   <td>{{item.items[d][0].Status}}</td>
                   <td>{{item.items[d][0].updated_at}}</td>
                 </tr>
+                </table>
               </td>
             </tr>
 
@@ -179,65 +181,8 @@
         </tbody>
       </table>
 
-      <!------------------------------------- sample table ------------------------------------------>
-      <!-- <div class='row'>
-        <div class="col">
-          <table class="table table-responsive">
-              <thead class="thead-dark">
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Date</th>
-                  <th scope="col">Customer</th>
-                  <th scope="col">Amount</th>
-                  <th scope="col">Payment</th>
-                  <th scope="col">Balance</th>
-                  <th scope="col">Created by</th>
-                  <th scope="col">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <br>
-                <tr v-for="(item, k) in stocks" :key="k">      
-                  <th scope="row">{{k}}</th>
-                  <td><a href="#load">{{item.updated_at}}</a></td>
-                  <td>
-                    <router-link :to="{ name:'JobOrder', params:{PO_Load: item.invoice}}">
-                      {{item.Customer}}
-                    </router-link>
-                  </td>
-                  <td>{{item.Total_Amount| numeral('0,0')}}</td>
-                  <td><i>{{item.payment| numeral('0,0')}}</i></td>
-                  <td><i>{{item.Balance| numeral('0,0')}}</i></td>
-                  <td>{{item.name}}</td>
-                  <td>{{item.Status}}</td>
-                </tr>
-              </tbody>
-          </table>
-        </div>
-        <div class="col">
-           <table class="table table-responsive">
-              <thead class="thead-dark">
-                 <tr>
-                    <th scope="col">Model</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Repaired By</th>
-                    <th scope="col">Remarks</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">date update</th>
-                </tr>
-                </thead>
-                <tbody>
-                  
-                </tbody>
-           </table>
-
-        </div>
-      </div> -->
-
+   
     </div>
-
-
-  
 
 </div>
 </template>
@@ -522,7 +467,7 @@ width:inherit;
 .btn{
   border-radius:5px;
 }
-#table1{
+/* #table1{
   border-top-left-radius:20px;
   border-top-right-radius:0px;
   border-bottom-left-radius:0px;
@@ -534,13 +479,15 @@ width:inherit;
   border-bottom-left-radius:0px;
   border-bottom-right-radius:0px;
 
-}
+} */
 
 small{
   font-weight: bold;
 }
-table{
-  height: 800px;
+tr:hover{
+  background-color: #eee;
+  cursor:pointer;
 }
+
 
 </style>

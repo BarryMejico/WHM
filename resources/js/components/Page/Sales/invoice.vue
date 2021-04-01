@@ -53,7 +53,7 @@
 
          <div class="row">
               <div class="col-lg-12">
-                <table id="tbl" class="table table-responsive">
+                <table class="table" style="width:100%;">
                 <thead class="thead-dark">
                   <tr>
                     <th scope="col">#</th>
@@ -528,7 +528,6 @@ checkQty(product){
 }
 
 .table{
-  width: 100% !important;
   border-top-left-radius:20px;
   border-top-right-radius:20px;
 }

@@ -12,7 +12,7 @@
     <div class="row">
             <div class="col"></div>
             <div class="col-lg-10">
-              <table class="table table-responsive">
+              <table class="table" style="width:100%">
                 <thead class="thead-dark">
                   <tr>
                     <th scope="col">#</th>

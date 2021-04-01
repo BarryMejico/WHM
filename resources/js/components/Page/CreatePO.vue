@@ -630,9 +630,9 @@ export default {
 }
 
 .table{
-  width: 100% !important;
   border-top-left-radius:20px;
   border-top-right-radius:20px;
+ 
 }
 
 .qty{
@@ -697,9 +697,6 @@ tr:hover{
 div #indent1,#indent2,#indent3,#indent4{
   text-indent: 15%;
   text-transform: capitalize;
-}
-.thead-dark{
-  border-radius: 10px;
 }
 
 #SaveBtn{

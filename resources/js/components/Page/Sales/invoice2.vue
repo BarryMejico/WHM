@@ -85,37 +85,32 @@
           </table>
           <br>
           <br>
-
-            <div class="row">
-                <div class="col"></div>
-                <div class="col-md-2">
-          <div class="row">
-            <div class="col"></div>
-            <div class="col-md-2">
-                <div class="total"> 
-                  <Label><b>Total:</b> {{PO_total| numeral('0,0')}} Php</Label><br>
-                  <Label for="Deposit"><b>Deposit/Payment:</b></Label>
-                  <input type="number" id="Deposit" v-model="Deposit"/><hr>
-                  <Label><b>Balance:</b> {{PO_Balance| numeral('0,0')}} Php</Label><br>
-                  <Label><b>Change:</b> {{PO_Change| numeral('0,0')}} Php</Label><br>
-                  <Label for="status"><b> Status: </b></Label>
-                  <Label>{{status}}</Label>
-                  <br>
-                </div>
-              </div>
-          
         </div>
-
          <div class="col"></div>
-
       </div>
-    </div>
 
-
-
+        <div class="row">
+          <div class="col"></div>
+          <div class="col-md-2">
+              <div class="total"> 
+                <Label><b>Total:</b> {{PO_total| numeral('0,0')}} Php</Label><br>
+                <Label for="Deposit"><b>Deposit/Payment:</b></Label>
+                <input type="number" id="Deposit" v-model="Deposit"/><hr>
+                <Label><b>Balance:</b> {{PO_Balance| numeral('0,0')}} Php</Label><br>
+                <Label><b>Change:</b> {{PO_Change| numeral('0,0')}} Php</Label><br>
+                <Label for="status"><b> Status: </b></Label>
+                <Label>{{status}}</Label>
+                <br>
+                <br>
+                <button class="btn btn-info" @click="saveform()">Save</button>
+              </div>
+            </div>
+             <div class="col-md-1"></div>
         </div>
-      </div>
+      
     </div>
+
+
 </div>
 </template>
 

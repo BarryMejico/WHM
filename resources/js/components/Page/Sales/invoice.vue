@@ -142,7 +142,7 @@ function int_data(){
       po_items:[{
         Icode:'',
         idescription:'',
-        Unit:'',
+        iunit:'',
         Qty:'',
         UnitCost:'',
         Tcost:0,
@@ -257,7 +257,7 @@ export default {
             this.po_items.push({
                  Icode:code,
                  description:Name,
-                 Unit:Unit,
+                 iunit:Unit,
                  Qty:1, 
                  AvailableQty:res.data[0]['Qty'],
                  Remarks:null,
@@ -332,7 +332,16 @@ export default {
           
       },
       
+        addNewRow(code) {
+          var codes=$('#code').val()
 
+            this.po_items.push({
+                Code:codes,
+                idescription:'New Added Descriptopn',
+                iunit:'ea',
+            });
+            this.closeModal()
+        },
 
         deleteRow(index,invoice_product,code) {
             var idx = this.po_items.indexOf(invoice_product);
@@ -355,7 +364,7 @@ export default {
               this.po_items.push({
                 Code:"",
                 idescription:'',
-                Unit:'',
+                iunit:'',
                 Qty:0,
               });
             }

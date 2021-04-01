@@ -39,7 +39,7 @@
 				
 				<div class="modal-footer">
            <a href="#NewCustomer" data-toggle="modal" type="button" class="my_btn btn link tn-secondary">New Customer</a>
-          <button  type="button" class="btn btn-light" data-dismiss="modal" aria-hidden="true">Select Customer</button>
+          <!-- <button  type="button" class="btn btn-light" data-dismiss="modal" aria-hidden="true">Select Customer</button> -->
 				</div>
 			
 		</div>

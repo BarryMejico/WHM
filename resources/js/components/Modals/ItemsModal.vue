@@ -163,7 +163,7 @@ load_item(){
 }
 </script>
 
-<style>
+<style scoped>
 /* Modal styles */
 /* this is class for dialog itself*/
 .modal {

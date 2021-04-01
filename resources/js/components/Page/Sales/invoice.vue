@@ -6,7 +6,7 @@
          <div class="row" >
             <div class="col-md-12">
                   <div class="jumbotron" style="background-color:white; ">
-                    <h1 class="display-4 text-muted"><b-icon icon="tag" font-scale="1"></b-icon>Sales: <b>Invoice</b></h1>
+                    <h1 class="display-4 text-muted"><b-icon icon="tag" font-scale="1"></b-icon>Sales Invoice: <b>Create</b></h1>
                     <MenuList></MenuList>
                   </div>
             </div>
@@ -511,7 +511,7 @@ checkQty(product){
     }
 }
 </script>
-<style>
+<style scoped>
 
 .PO{
   color:gray;

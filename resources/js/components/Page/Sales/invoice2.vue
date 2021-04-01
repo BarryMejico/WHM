@@ -27,10 +27,10 @@
            <div class="col-md-6"> 
              <br>
              <br>
-             <br>
+             
 
               <small class="text-muted">Address</small>
-              <input class="form-control" type="text" :value="add_Cus" style="height:60px;" required disabled>
+              <input class="form-control" type="text" :value="add_Cus" style="height:50px;" required disabled>
               <br>
               <br>
             
@@ -127,10 +127,12 @@
 import ItemsModal from '../../Modals/ItemsModal';
 //import VendorModal from '../../Modals/VendorModal';
 import CustomerModal from '../../Modals/CustomerModal';
+import Swal from 'sweetalert2'
 
 import MenuList from '../../Page/Sales/MainInvoice2';
 import DevicesModal from '../../Modals/DevicesModal.vue';
 import EmployeeModal from '../../Modals/EmployeeModal.vue';
+
 
 function int_data(){
   return{
@@ -416,8 +418,37 @@ checkQty(product){
 
 
         saveform(){
-          console.log(this.invoiceLoad)
-            axios.post('/api/SaveInvoice', {
+          // console.log(this.invoiceLoad)
+          //   axios.post('/api/SaveInvoice', {
+          //     po_items:this.po_items, 
+          //     PO_total:this.PO_total,
+          //     Ship_to:this.ccode,
+          //     Invoice:this.invoiceLoad,
+          //     payment:this.Deposit,
+          //     Status:this.status,
+          //     Balance:this.PO_Balance,
+          //     })
+          //   .then(()=>{
+              
+          //      this.clearData();
+               
+          //   })
+          //   .catch((error)=>{
+          //       this.errors=error.response.data.errors;
+          //   })
+
+
+            Swal.fire({
+                title: 'Confirmation',
+                text: 'Are you sure with the following details of your Job Order?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No'
+              }).then((result) => {
+                if (result.value) {
+
+              axios.post('/api/SaveInvoice', {
               po_items:this.po_items, 
               PO_total:this.PO_total,
               Ship_to:this.ccode,
@@ -426,14 +457,36 @@ checkQty(product){
               Status:this.status,
               Balance:this.PO_Balance,
               })
+            
             .then(()=>{
-              
                this.clearData();
-               
+
+               Swal.fire({
+              title: 'Job Order placed Successfully',
+              icon: 'success',
+              timer:1500,
+              showCancelButton: false,
+              showConfirmButton: false 
             })
-            .catch((error)=>{
-                this.errors=error.response.data.errors;
+            }).catch(()=>{
+                //this.errors=error.response.data.errors;
+                Swal.fire({
+                  title: 'Error',
+                  text:'Invalid JO Details',
+                  icon: 'danger',
+                  showCancelButton: false,
+                  showConfirmButton: false 
+                })
             })
+
+          }else if (result.dismiss === Swal.DismissReason.cancel) {
+           console.log("back to create JO.")
+          }
+        })
+
+
+
+
         },
 
         Load_PO(){
@@ -479,7 +532,7 @@ checkQty(product){
     }
 }
 </script>
-<style>
+<style scoped>
 
 .PO{
   color:gray;

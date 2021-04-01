@@ -1,6 +1,6 @@
 <template>
     <div>
-        <button href="#addDevice" data-toggle="modal" type="button" class="btn btn-outline-secondary" @click="load_customer" :disabled="disabled == 1">Customer's Device</button>
+        <button href="#addDevice" data-toggle="modal" type="button" class="btn btn-outline-secondary" @click="load_customer" :disabled="disabled == 1">Device</button>
         <!--modal Customer-->
 <div id="addDevice" class="modal fade">
 	<div class="modal-dialog">
@@ -8,26 +8,32 @@
 			
 				<div class="modal-header">						
 					<h4 class="modal-title">Add Device</h4>
-					<button type="button" id="closedevice" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<button type="button" id="closedevice" class="close" data-dismiss="modal" aria-hidden="true" style="margin-top:10px;">&times;</button>
 				</div>
+
 				<div class="modal-body">	
           <div class="form-group">		
-                    <label>Device Code</label>	
-                    <input type="text" id='Vcode' v-model="Customer">
+            <label>Device Code</label>	
+            <input type="text" id='Vcode' v-model="Customer">
           </div>
-  <ul class="list-group">
-  <li class="list-group-item d-flex justify-content-between align-items-center" 
-    v-for="(Device, k) in List_Customer" :key="k">
-    <a @click="Selected_cus(k)">{{Device.DeciveName}}</a>
-    <span class="badge badge-primary badge-pill">{{Device.Model}}</span>
-  </li>
-  <a  href="#addDeviceModal" data-toggle="modal" type="button" class="my_btn btn link tn-secondary">Add Device</a>
-</ul>
-          </div>
+            <ul class="list-group">
+              <li class="list-group-item d-flex justify-content-between align-items-center" 
+                v-for="(Device, k) in List_Customer" :key="k">
+                <a @click="Selected_cus(k)">{{Device.DeciveName}}</a>
+                <span class="badge badge-primary badge-pill">{{Device.Model}}</span>
+              </li>
+            </ul>
+        </div>
+        <br>
+        <br>
+
+        <div class="modal-footer">
+          <a href="#addDeviceModal" type="button" data-toggle="modal" id="addDeviceLink" class="my_btn btn link tn-secondary">Add Device</a>
+        </div>
 				
-				<div class="modal-footer">
+				<!-- <div class="modal-footer">
           <button  type="button" class="btn btn-light" data-dismiss="modal" aria-hidden="true">Select Vendor</button>
-				</div>
+				</div> -->
 			
 		</div>
 	</div>
@@ -184,7 +190,7 @@ methods:{
 
 }
 </script>
-<style>
+<style scoped>
 /* Modal styles */
 /* this is class for dialog itself*/
 .modal {
@@ -223,4 +229,18 @@ methods:{
 .modal form label {
 	font-weight: normal;
 }	
+ul li:hover{
+  background-color: #eee;
+  cursor: pointer;
+}
+#addDeviceLink{
+  text-align:right;
+}
+#addDeviceLink:hover{
+  cursor: pointer;
+  color:#5bc0de;
+}
+.close{
+  text-align: right;
+}
 </style>

@@ -88,9 +88,9 @@
         <li data-toggle="collapse" data-target="#setup" class="Menu"> <b-icon icon="clipboard" font-scale="2"></b-icon> Data Setup</li>
             <div id="setup" class="collapse">
                 <ul>   
-                    <li class="subMenus"><router-link onclick="closeNav()" to="/Vendor_Create">Vendor</router-link></li>
-                    <li class="subMenus"><router-link onclick="closeNav()" to="/Customer_Create">Customer</router-link></li>
-                    <li class="subMenus"><router-link onclick="closeNav()" to="/Items_Create">Items</router-link></li>
+                    <li class="subMenus"><router-link onclick="closeNav()" to="/Vendor_Create"><b-icon icon="person"></b-icon> Vendor</router-link></li>
+                    <li class="subMenus"><router-link onclick="closeNav()" to="/Customer_Create"><b-icon icon="person-fill"></b-icon> Customer</router-link></li>
+                    <li class="subMenus"><router-link onclick="closeNav()" to="/Items_Create"><b-icon icon="box-seam"></b-icon> Items</router-link></li>
                 </ul>
             </div>
 

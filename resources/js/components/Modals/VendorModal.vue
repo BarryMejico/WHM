@@ -21,12 +21,14 @@
             <a @click="Selected_Vendor(k)">{{Vendor.Vendor}}</a>
             <span class="badge badge-primary badge-pill">{{Vendor.id}}</span>
           </li>
-          <a class="link">New Vendor</a>
         </ul>
+        <br>
+           <br>
           </div>
 				
 				<div class="modal-footer">
-          <button  type="button" class="btn btn-light" data-dismiss="modal" aria-hidden="true">Select Vendor</button>
+          <!-- <button  type="button" class="btn btn-light" data-dismiss="modal" aria-hidden="true">Select Vendor</button> -->
+           <a class="my_btn btn link tn-secondary">New Vendor</a>
 				</div>
 			
 		</div>

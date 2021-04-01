@@ -5,7 +5,7 @@
      <div class="row" >
       <div class="col-md-12">
             <div class="jumbotron" style="background-color:white; ">
-              <h1 class="display-4 text-muted">Customer: <b>Create</b></h1>
+              <h1 class="display-4 text-muted"><b-icon icon="person-fill" font-scale="1"></b-icon>Customer: <b>Create</b></h1>
               <MenuList></MenuList>
             </div>
       </div>

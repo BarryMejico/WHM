@@ -16,11 +16,11 @@
 			
 				<div class="modal-header">						
 					<h4 class="modal-title">Employees</h4>
-					<button type="button" id="closeGetEmployee" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<button type="button" id="closeGetEmployee" class="close" data-dismiss="modal" aria-hidden="true" style="margin-top:10px;">&times;</button>
 				</div>
 				<div class="modal-body">	
           <div class="form-group">		
-                    <label>Search Employee</label>	
+                    <label>Search Employee Name</label>	
                     <input type="text" v-on:input="liveSearch" v-model="Search">
           </div>
 <ul class="list-group">
@@ -32,6 +32,7 @@
   
  
 </ul>
+<br>
 
 <ul class="pagination justify-content-end">
     <li class="page-item"><a class="page-link bg-dark text-white" @click.prevent="prepAGE()">Previous</a></li>
@@ -44,8 +45,8 @@
 
           </div>			
 				<div class="modal-footer">
-           <a  href="#NewEmployee" data-toggle="modal" type="button" class="my_btn btn link tn-secondary">New Employee</a>
-          <button  type="button" class="btn btn-light" data-dismiss="modal" aria-hidden="true">Select Vendor</button>
+           <a  href="#NewEmployee" data-toggle="modal" type="button" class="my_btn btn link tn-secondary" id="newEmployeeModal">New Employee</a>
+          <!-- <button  type="button" class="btn btn-light" data-dismiss="modal" aria-hidden="true">Select Vendor</button> -->
 				</div>
 			
 		</div>
@@ -197,7 +198,7 @@ methods:{
 
 }
 </script>
-<style>
+<style scoped>
 /* Modal styles */
 /* this is class for dialog itself*/
 .modal {
@@ -236,5 +237,14 @@ methods:{
 .modal form label {
 	font-weight: normal;
 }	
+.close{
+  text-align: right;
+}
+ul li:hover{
+  background-color: #eee;
+}
+#newEmployeeModal:hover{
+  color:#5bc0de;
+}
 
 </style>

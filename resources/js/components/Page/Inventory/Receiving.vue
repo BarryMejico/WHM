@@ -1,82 +1,79 @@
 <template>
     <div>
     <div class="container">
-       <h1> PO : Receiving </h1>
-      <hr>
-      <br>
-      <br>
+    <div class="row" >
+      <div class="col-md-12">
+            <div class="jumbotron" style="background-color:white; ">
+              <h1 class="display-4 text-muted"><b-icon icon="cart-x-fill" font-scale="1"></b-icon>Purchase Order: <b>Receiving</b></h1>
+              <MenuList></MenuList>
+            </div>
+      </div>
+    </div>
 
       <div class="row">
-       <div class="col-lg-2">
-            <MenuList></MenuList>
-      </div>
+          <div class="col-lg-10">
 
-          <div class="col-lg-8">
-
-          <div class="row">
-            <div class="col-lg-6">
-              <div class="form-inline">
-                   <label for="po">PO#: </label>                     
-                  <input class="form-control" v-model="po" id="po" type="text" required autocomplete="name" disabled>
-                  
-              </div>     
-            </div>
-            <div class="col-lg-6">
-              <div class="form-inline">
-               
-                   <label for="mode">Mode: </label>                     
-                    <input id="mode" type="text" class="form-control" required autocomplete="name" autofocus>
- 
-              </div>     
-            </div>
-          </div>
-          <br>
-          <div class="row" style="text-align:center">
-            <div class="col-md-6"><label>Vendor</label></div>
-            <div class="col-md-6"><label>Customer</label></div>
-          </div>
-          <br>
-              <div class="row">
-                 
+            <div class="row">
               <div class="col-lg-6">
-                  <div class="form-inline"> 
-                 
-                    <div>
-                      <b>Name:</b><label class="text-muted"><i>{{Vendor}}</i></label><br>
-                      <b>Address:</b><label class="text-muted"><i>{{add_Ven}}</i></label><br>
-                    </div>
+                <div>
+                  <label for="po" class="text-muted">PO#: </label>                     
+                  <input class="form-control" v-model="po" id="po" type="text" required autocomplete="name" disabled>
                 </div>     
               </div>
               <div class="col-lg-6">
-                <div class="form-inline">    
-                   
-                    <div>
-                      <b>Name: </b><label class="text-muted"><i>{{Customer}}</i></label><br>
-                      <b>Address:</b><label class="text-muted"><i>{{add_Cus}}</i></label><br>
-                    </div>
-                </div>
+                <div>
+                    <label for="mode" class="text-muted">Mode: </label>                     
+                    <input id="mode" type="text" class="form-control" required autocomplete="name" autofocus>
+                </div>     
               </div>
+            </div>
+          <br>
+            <div class="row" style="text-align:center">
+              <div class="col-md-6 text-muted"><h6>Vendor</h6></div>
+              <div class="col-md-6 text-muted"><h6>Customer</h6></div>
+            </div>
+          <br>
+              <div class="row"> 
+                <div class="col-lg-6">
+                    <div class="form-inline"> 
+                      <div>
+                        <b>Name:</b><label class="text-muted"><i>{{Vendor}}</i></label><br>
+                        <b>Address:</b><label class="text-muted"><i>{{add_Ven}}</i></label><br>
+                      </div>
+                  </div>     
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-inline">    
+                    
+                      <div>
+                        <b>Name: </b><label class="text-muted"><i>{{Customer}}</i></label><br>
+                        <b>Address:</b><label class="text-muted"><i>{{add_Cus}}</i></label><br>
+                      </div>
+                  </div>
+                </div>
             </div>
           
         </div>
         
               <div class="col-lg-2">
-                  <button type="button" class="btn btn-info">Print</button>
+                <br>
+                <br>
+                  <button type="button" class="btn btn-info" style="margin-bottom:10px;">Print</button>
                   <items-modal @SelectedItems="Selected_Item" :disabled="disabled == 1"></items-modal>
               
-                <!--Status-->        
-          <div class="dropdown">
-          <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-          <!--<span class="caret">{{status}}</span>
-           <p>{{last_update}}</p>-->
-          </button>
-          <ul class="dropdown-menu">
-            <li><button @click="changeStatus('Open')" class="my_btn btn">Open</button></li>
-            <li><button @click="changeStatus('Approved')" class="success my_btn">Approved</button></li>
-            <li><button @click="changeStatus('Canceled')" class="my_btn btn-danger">Canceled</button></li>
-          </ul>
-          </div>   
-<!--End Status-->
+                 <!--Status-->        
+                          <div class="dropdown">
+                            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                            <!--<span class="caret">{{status}}</span>
+                            <p>{{last_update}}</p>-->
+                            </button>
+                            <ul class="dropdown-menu">
+                              <li><button @click="changeStatus('Open')" class="my_btn btn">Open</button></li>
+                              <li><button @click="changeStatus('Approved')" class="success my_btn">Approved</button></li>
+                              <li><button @click="changeStatus('Canceled')" class="my_btn btn-danger">Canceled</button></li>
+                            </ul>
+                          </div>   
+                <!--End Status-->
               </div>
       </div>
       <br>
@@ -84,7 +81,7 @@
       <br>
        <div class="sc">
          <div class="row">
-           <div class="col-md-10">
+           <div class="col-md-12">
               <table class="table table-responsive">
                 <thead class="thead-dark">
                   <tr>
@@ -114,19 +111,24 @@
                   </tr>
                 </tbody>
               </table>
-              <hr>
+              <br>
+           
              
            </div>
-              <div class="col-md-2">
-                
-                    <span><b>Total:</b> {{PO_total | numeral('0,0')}} Php</span><br>
-                    <hr>
-                    <button type="button" class="btn btn-info" @click.prevent="saveform">Save</button>
-                    <button type="button" class="btn danger btn-danger" @click.prevent="clearData">Clear ALL</button>
-               
-              </div>
+              
       </div>
-       </div>
+
+      <div class="row">
+        <div class="col"></div>
+          <div class="col-md-2" style="border:solid #eee 1px;padding:30px;border-radius:5px;">
+            
+            <span><b>Total:</b> {{PO_total | numeral('0,0')}} Php</span><br>
+            <hr>
+            <button type="button" class="btn btn-info" @click.prevent="saveform" style="margin-bottom:5px;">Save</button>
+            <button type="button" class="btn danger btn-danger" @click.prevent="clearData">Clear ALL</button>
+          </div>
+      </div>
+    </div>
 
 
     

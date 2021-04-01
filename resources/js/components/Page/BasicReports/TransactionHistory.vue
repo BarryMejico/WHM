@@ -499,7 +499,7 @@ export default {
     }
 }
 </script> 
-<style>
+<style scoped>
 .subTable {
 visibility: hidden !important;
 padding-top: 0 !important;
@@ -538,6 +538,9 @@ width:inherit;
 
 small{
   font-weight: bold;
+}
+table{
+  height: 800px;
 }
 
 </style>

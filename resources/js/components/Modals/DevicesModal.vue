@@ -141,7 +141,7 @@ methods:{
            //this.DeviceForm.splice(0, 1);
             this.Cus=[];
             this.Cus.Code=res.data[0]['Code'];
-            this.Cus.Name=res.data[0]['DeviceName'] + this.Customer;
+            this.Cus.Name=res.data[0]['DeciveName'];
             this.Cus.Unit=res.data[0]['Model'];
           this.$emit("SelectedDevice",this.Cus);
 
@@ -158,7 +158,7 @@ methods:{
       
                 this.Cus=[];
                 this.Cus.Code=this.List_Customer[index]['Code'];
-                this.Cus.Name=this.List_Customer[index]['DeviceName'] + this.Customer;
+                this.Cus.Name=this.List_Customer[index]['DeciveName'];
                 this.Cus.Unit= this.List_Customer[index]['Model'];
         this.closeModal();
         this.$emit("SelectedDevice",this.Cus);

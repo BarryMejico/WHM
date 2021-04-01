@@ -333,7 +333,6 @@ export default {
               model:this.model,
               DeviceName:this.DeviceName,
               datefrom:this.datefrom,
-              dateto:this.dateto,
               DifDay:this.DifDay,
               }})
             .then((response)=>{

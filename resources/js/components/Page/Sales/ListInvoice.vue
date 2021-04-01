@@ -27,7 +27,7 @@
                     <th scope="row">{{k}}</th>
                     <td>{{po_item.invoice}}</td>
                     <td>{{po_item.Customer}}</td>
-                    <td>{{po_item.Total_Amount}}</td>
+                    <td>{{po_item.Total_Amount| numeral('0,0')}}</td>
                     <td>{{po_item.Status}}</td>
                     <td>
                       <button class="btn-sm">

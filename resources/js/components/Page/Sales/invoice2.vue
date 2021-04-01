@@ -89,17 +89,17 @@
             <div class="row">
                 <div class="col"></div>
                 <div class="col-md-2">
-                  <div class="total"> 
-                      <Label><b>Total:</b> {{PO_total}} Php</Label><br>
-                      <Label for="Deposit"><b>Deposit/Payment:</b></Label>
-                      <input type="number" id="Deposit" v-model="Deposit"/><hr>
-                      <Label><b>Balance:</b> {{PO_Balance}} Php</Label><br>
-                      <Label><b>Change:</b> {{PO_Change}} Php</Label><br>
-                      <Label for="status"><b> Status: </b></Label>
-                      <Label>{{status}}</Label>
-                      <br>
-                      <button type="button" id="btnSave" class="btn btn-info" @click.prevent="saveform">Save</button>
-                  </div>
+          <div class="row">
+            <div class="col"></div>
+            <div class="col-md-2">
+                <div class="total"> 
+                  <Label><b>Total:</b> {{PO_total| numeral('0,0')}} Php</Label><br>
+                  <Label for="Deposit"><b>Deposit/Payment:</b></Label>
+                  <input type="number" id="Deposit" v-model="Deposit"/><hr>
+                  <Label><b>Balance:</b> {{PO_Balance| numeral('0,0')}} Php</Label><br>
+                  <Label><b>Change:</b> {{PO_Change| numeral('0,0')}} Php</Label><br>
+                  <Label for="status"><b> Status: </b></Label>
+                  <Label>{{status}}</Label>
                   <br>
                 </div>
               </div>
@@ -113,7 +113,9 @@
 
 
 
-
+        </div>
+      </div>
+    </div>
 </div>
 </template>
 
@@ -235,8 +237,9 @@ export default {
     methods:{
 
       StatCheck(i){
-          if(this.po_items[i]['']="RTO"){
-            
+          if(this.po_items[i]['DeviceStatus']=="RTO"){
+            this.po_items[i]['UnitCost']=0;
+            this.calculateTotalInArray()
           }
       },
 
@@ -492,6 +495,7 @@ checkQty(product){
                   this.Deposit=this.po_items2[0]['payment'];
                   this.PO_total=this.po_items2[0]['Total_Amount'];
                   this.po_items=response.data
+                  
                   }
           )
          .catch((error)=>{
@@ -525,7 +529,7 @@ checkQty(product){
     }
 }
 </script>
-<style scoped>
+<style>
 
 .PO{
   color:gray;
@@ -590,6 +594,11 @@ th{
 tr:hover{
   cursor: pointer;
 }
+
+.table{
+  width: 100% !important;
+}
+
 .total{
   
   box-shadow: 0px 0px 2px grey;

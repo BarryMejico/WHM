@@ -74,7 +74,7 @@
                     <td>{{po_item.Unit}}</td>
                     <td class="in"><div class="qty"><input  v-model="po_item.Qty" min="1" type="number" @change="checkQty(po_item)" :disabled="disabled == 1"></div></td>
                     <td class="in"><div class="qty"><input  v-model="po_item.UnitCost"  type="number" @change="calculateLineTotal(po_item)" :disabled="disabled == 1"></div></td>
-                    <td>{{po_item.Tcost}} Php</td>
+                    <td>{{po_item.Tcost| numeral('0,0')}} Php</td>
                     <td :disabled="disabled == 1">
                     <span class="badge badge-info" @click="calculateLineTotal(po_item)">Recompute</span>
                     <span class="badge badge-danger" @click="deleteRow(k, po_item,po_item.Code)" :disabled="disabled == 1"><small>X</small></span></td>
@@ -87,7 +87,7 @@
            <div class="col-lg-10"></div>
            <div class="col-lg-2">
             <div class="total"> 
-                <span><b>Total:</b> {{PO_total}} Php</span><br>
+                <span><b>Total:</b> {{PO_total| numeral('0,0')}} Php</span><br>
                 <hr>
                 <button type="button" id="btnSave" class="btn btn-info" @click.prevent="saveform">Save</button>
                 <button type="button" id="btnClear" class="btn danger btn-danger" @click.prevent="clearData">Clear ALL</button>
@@ -142,7 +142,7 @@ function int_data(){
       po_items:[{
         Icode:'',
         idescription:'',
-        iunit:'',
+        Unit:'',
         Qty:'',
         UnitCost:'',
         Tcost:0,
@@ -257,7 +257,7 @@ export default {
             this.po_items.push({
                  Icode:code,
                  description:Name,
-                 iunit:Unit,
+                 Unit:Unit,
                  Qty:1, 
                  AvailableQty:res.data[0]['Qty'],
                  Remarks:null,
@@ -332,16 +332,7 @@ export default {
           
       },
       
-        addNewRow(code) {
-          var codes=$('#code').val()
 
-            this.po_items.push({
-                Code:codes,
-                idescription:'New Added Descriptopn',
-                iunit:'ea',
-            });
-            this.closeModal()
-        },
 
         deleteRow(index,invoice_product,code) {
             var idx = this.po_items.indexOf(invoice_product);
@@ -364,7 +355,7 @@ export default {
               this.po_items.push({
                 Code:"",
                 idescription:'',
-                iunit:'',
+                Unit:'',
                 Qty:0,
               });
             }

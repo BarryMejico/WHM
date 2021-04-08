@@ -109,7 +109,7 @@
       </div>
 
        <div class="container-fluid">
-         <table class="table" style="width:100%;">
+         <table class="table" style="width:100%;height: 700px;">
           <thead class="thead-dark">
             <tr>
               <th scope="col">#</th>
@@ -466,13 +466,7 @@ width:inherit;
 .btn{
   border-radius:5px;
 }
-/* #table1{
-  border-top-left-radius:20px;
-  border-top-right-radius:0px;
-  border-bottom-left-radius:0px;
-  border-bottom-right-radius:0px;
-}
-#table2{
+/* #table2{
   border-top-left-radius:0px;
   border-top-right-radius:20px;
   border-bottom-left-radius:0px;
@@ -487,6 +481,5 @@ tr:hover{
   background-color: #eee;
   cursor:pointer;
 }
-
 
 </style>

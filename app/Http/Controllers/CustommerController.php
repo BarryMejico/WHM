@@ -48,8 +48,7 @@ class CustommerController extends Controller
         ]);
 
         $input = $request->all();
-        $Code=Ucode();
-        //dd($input);
+       
         $customer = Customer::where('Ccode',$input['ids'])
         ->update([
            'Customer'=> $input['Name'],

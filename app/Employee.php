@@ -8,6 +8,9 @@ class Employee extends Model
 {
     protected $fillable = [
         'Employee',
-        'Ecode'  
+        'Ecode',
+        'CoCode',
+        'id',
+        'Position',
     ];
 }

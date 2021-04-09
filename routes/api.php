@@ -85,4 +85,6 @@ Route::get('searchtramsaction','SalesController@SearchTrans');
 Route::get('SaveEmployee','EmployeesController@store'); 
 Route::get('LoadEmployee','EmployeesController@LoadEmp'); 
 Route::get('searchEmployee','EmployeesController@Search'); 
+
+Route::post('SaveCompany','CompanyController@SaveCompany');
  

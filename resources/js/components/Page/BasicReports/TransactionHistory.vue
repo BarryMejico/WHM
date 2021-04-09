@@ -109,7 +109,7 @@
       </div>
 
        <div class="container-fluid">
-         <table class="table" style="width:100%;height: 700px;">
+         <table class="table table-responsive" style="width:100%;height:700px;">
           <thead class="thead-dark">
             <tr>
               <th scope="col">#</th>
@@ -481,5 +481,10 @@ tr:hover{
   background-color: #eee;
   cursor:pointer;
 }
-
+table thead tr th {
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  z-index: 2;
+} 
 </style>

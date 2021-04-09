@@ -62,11 +62,26 @@
 					<button type="button" id="closeEmployee" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
 				<div class="modal-body">	
-          <div class="form-group">		
+          <!-- for new tab -->
+          <div class="form-group">	
+            <i>this part should be in a new tab</i>	<br>
+                    <label>Search by id or Email</label>	
+                    <input type="text" v-model="Name_">
+                    <b>Name:</b><br>
+                    <b>Email:</b><br>
+                    <button> Send Invite</button>
+          </div>
+          <!-- end new tab -->
+          <hr>
+
+           <div class="form-group">
+             <i>this part should be in a  1st tab</i>	<br>		
                     <label>Name</label>	
                     <input type="text" v-model="Name_">
+                    
           </div>
 
+          
           </div>			
 				<div class="modal-footer">
           <button  type="button" class="btn btn-light" data-dismiss="modal" @click.prevent="SaveEmployee()" aria-hidden="true">Save</button>

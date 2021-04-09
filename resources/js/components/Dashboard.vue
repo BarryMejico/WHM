@@ -7,20 +7,28 @@
                 <div class="card-header">Starting up</div>
 
                 <div class="card-body">
-                   <ul>
-                   <li>Step 1:Build your database
-                       <h3>Data Setup</h3>
-                        Enter the nescessary data for creating transaction such as Vendors, Customers and Items. 
-                   </li>
-                   <li>Step 2:Begining Balance</li>
-                   <h3>Purchase Order</h3>
-                        Using the purchase order form enter your Begining balances of Inventory ans set the status to approved.
-                   <li>Step 3:Inventory</li>
-                    <h3>Receiving</h3>
-                        Receiving the approved PO is the last set so you can account the Inventory as ready to issue stocks.
-                   <li>Step 4:</li>
-                   <li>Step 5:</li>
-                   </ul>
+                    
+                  <b>User Name:</b><i>{{user.name}}</i><br>
+                  <b>Email:</b><i>{{user.email}}</i><br>
+                  <b>Company Name:</b><i>{{user.CoCode}}</i><br>
+                  <hr>
+                  <!-- company -->
+                  <i>new component that can create company</i>
+                  <h1>Company</h1>
+                  <h4>Create</h4>
+                  <input type="text" v-model="company.CompanyName" placeholder="Company Name"/>
+                  <input type="text"  v-model="company.CompanyAddress" placeholder="Address"/>
+                  <button @click="SaveCompany()">Save</button><br>
+                  <i>new component or modal for notification of invite to join company</i>
+                  <h4>Company Invite</h4>
+                  <i>Name</i> Invites you to join <i>Company Name</i>.<br>
+                  <button>Accept</button>
+                  <button class="alert">Decline</button>
+                  <hr>
+                  <i>additional features for employee modal</i>
+                  <h1>Employee</h1>
+                  <employee-modal/>
+                  <!-- end company -->
                 </div>
             </div>
         </div>
@@ -29,16 +37,39 @@
 </div>
 </template>
 <script>
+import EmployeeModal from './Modals/EmployeeModal.vue';
 export default {
+  components: { EmployeeModal },
     data(){
         return{
-            user:null
+            user:[],
+            // for company
+            company:{
+                CompanyName:'camp1',
+                CompanyAddress:'add camp 1',
+                CompanyOwner:'',
+                
+            },
+            // end company
         }
     },
     mounted(){
         axios.get('/api/user').then((res)=>{
-            this.user=res.data
+            this.user=res.data;
+            this.company.CompanyOwner=this.user['id'];
         })
+    },
+
+    methods:{
+        // for company
+        SaveCompany(){
+            axios.post('/api/SaveCompany',this.company)
+            .then(
+                this.company=[]
+            )
+            .catch()
+        },
+        // end company
     }
 }
 </script>

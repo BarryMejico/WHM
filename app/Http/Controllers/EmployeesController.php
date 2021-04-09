@@ -16,10 +16,13 @@ class EmployeesController extends Controller
 
        
         $Code=Ucode();
+        $CoCode=getUser()->CoCode;
        
         $Vendor = Employee::Create([
             'Employee'=> $input['Name_'], 
             'Ecode'=>$Code,
+            'CoCode'=>$CoCode,
+            'Position'=>"n",
         ]);
         $Vendor->save();
     }

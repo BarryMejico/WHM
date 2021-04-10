@@ -1,39 +1,57 @@
 <template>
     <div>
     <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Starting up</div>
+        <h6>temporay buttons for quick navigation during development</h6>
+        <router-link class="temp" to="/Dashboard" tag="button">dashboard</router-link>
+        <br><br>
+        <router-link class="temp" to="/company" tag="button">company</router-link>
+        <br><br>
+        <router-link class="temp" to="/companyInvite" tag="button">company Invite</router-link>
+   
 
-                <div class="card-body">
-                    
-                  <b>User Name:</b><i>{{user.name}}</i><br>
-                  <b>Email:</b><i>{{user.email}}</i><br>
-                  <b>Company Name:</b><i>{{user.CoCode}}</i><br>
-                  <hr>
-                  <!-- company -->
-                  <i>new component that can create company</i>
-                  <h1>Company</h1>
-                  <h4>Create</h4>
-                  <input type="text" v-model="company.CompanyName" placeholder="Company Name"/>
-                  <input type="text"  v-model="company.CompanyAddress" placeholder="Address"/>
-                  <button @click="SaveCompany()">Save</button><br>
-                  <i>new component or modal for notification of invite to join company</i>
-                  <h4>Company Invite</h4>
-                  <i>Name</i> Invites you to join <i>Company Name</i>.<br>
-                  <button>Accept</button>
-                  <button class="alert">Decline</button>
-                  <hr>
-                  <i>additional features for employee modal</i>
-                  <h1>Employee</h1>
-                  <employee-modal/>
-                  <!-- end company -->
-                </div>
+
+    <hr>
+    <br>
+    <br>
+    
+        <div class="row">
+            <div class="col-md-4" align="center">
+                <b-avatar size="200px"></b-avatar>
             </div>
+            <div class="col" >
+                <div class="row">
+                    <div class="col">
+                        <h6 class="text-muted">Username</h6>
+                        <br>
+                        <h6>{{user.name}}</h6>
+                    </div>
+                    <div class="col">
+                        <h6 class="text-muted">Email</h6>
+                        <br>
+                        <h6>{{user.email}}</h6>
+                    </div>
+                    <div class="col">
+                        <h6 class="text-muted">Company Name</h6>
+                        <br>
+                        <h6>{{user.CoCode}}</h6>
+                    </div>
+                </div>
+                <hr>
+
+                    <!-- <i>additional features for employee modal</i> -->
+                    <h6 class="text-muted">Search & Add Employee</h6>
+                    <employee-modal/>
+                    <!-- end company -->
+                   
+
+                
+            </div>
+            
         </div>
+
+        
     </div>
-</div>
+
 </div>
 </template>
 <script>
@@ -73,3 +91,10 @@ export default {
     }
 }
 </script>
+<style scoped>
+.temp{
+    background-color:#eee ;
+    width:20%;
+    color:black;
+}
+</style>

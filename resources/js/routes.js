@@ -34,6 +34,9 @@ import Products from './components/Page/Product/CreateProduct';
 
 import invoice2 from './components/Page/Sales/invoice2';
 
+import company from './components/Page/company';
+import companyInvite from './components/Page/companyInvite';
+
 import { before } from 'lodash';
 export default{
     mode: 'history',
@@ -54,6 +57,32 @@ export default{
     {
         path:'/register_',
         component: Register
+    },
+    {
+        path:'/company',
+        component:company,
+        name: company,
+        beforeEnter:(to,from,next)=>{
+            axios.get('api/Authenticated').then(()=>{
+                next()
+                
+            }).catch(()=>{
+                return next({name: '/login_'})
+            })
+        }
+    },
+    {
+        path:'/companyInvite',
+        component:companyInvite,
+        name: companyInvite,
+        beforeEnter:(to,from,next)=>{
+            axios.get('api/Authenticated').then(()=>{
+                next()
+                
+            }).catch(()=>{
+                return next({name: '/login_'})
+            })
+        }
     },
     {
         path:'/PO',

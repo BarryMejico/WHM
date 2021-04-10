@@ -12,7 +12,7 @@
 
 <router-link class="nav-link" to='/Dashboard'>
 <img src="media/logo.png" alt="logo" style="width:40px;">
-  <label class="navbar-brand">{{ config('app.name', 'Araneus') }}</label>
+  <label class="navbar-brand" id="appname">{{ config('app.name', 'Araneus') }}</label>
 </router-link>
 
   <li class="navbar-toggler" type="li" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -288,6 +288,10 @@ window.onclick = function(event) {
     }
     #account,#WH,#WHsetup{
         text-decoration: line-through;
+    }
+    #appname:hover{
+        cursor:pointer;
+        color:#5bc0de;
     }
     
 </style>

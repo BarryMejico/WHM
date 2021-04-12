@@ -15,21 +15,19 @@
  
     <hr>
     <div class="row">
-        <div class="col"></div>
-        <div class="col-md-8">
-            <b-card title="Company Invite">
-                <b-card-header>
+        <!-- <div class="col"></div> -->
+        <div class="col-md-12" align='center'>
+            <b-card title="Company Invite" style="width:30%;">
+                <b-card-header style="background-color:white;">
                     <i>Name</i> Invites you to join <i>Company Name</i>.<br>
                 </b-card-header>
                 <b-card-body>
-                <button>Accept</button>
-                <br>
-                <br>
-                  <button class="alert">Decline</button>
+                    <button style="margin-bottom:10px;">Accept</button>
+                    <button class="alert">Decline</button>
                 </b-card-body>
             </b-card>
         </div>
-        <div class="col"></div>
+        <!-- <div class="col"></div> -->
     </div>
    
 

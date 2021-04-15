@@ -6,7 +6,7 @@
   <a href="javascript:void(0)" class="closeli" @click="closeNav()"><b-icon icon="x" font-scale="2"></b-icon></a>
 
 <ul v-for="(menus,k) in menusp" :key="k">
-    <li v-if="menus.route!=0" data-toggle="collapse" :data-target="'#s'+ menus.id" class="Menu">
+    <li v-if="menus.route!=0" class="Menu2">
         <router-link  :to="{path: menus.route}">
             <b-icon :icon="menus.icon" font-scale="2"></b-icon>
                         {{menus.Description}}
@@ -14,7 +14,6 @@
     </li>
 
      <li v-if="menus.route==0" data-toggle="collapse" :data-target="'#s'+ menus.id" class="Menu">
-       
             <b-icon :icon="menus.icon" font-scale="2"></b-icon>
                         {{menus.Description}}
         
@@ -22,7 +21,7 @@
        <div  :id="'s' + menus.id" class="collapse">
         <ul>
             <li  v-for="(smenu,i) in menus.child" :key="i" class="subMenus">
-                 <router-link  :to="{path: menus.route}">
+                 <router-link  :to="{path: smenu.route}">
                 <b-icon :icon="smenu.icon" font-scale="2"></b-icon>
                 {{smenu.Description}}
                  </router-link>

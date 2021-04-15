@@ -87,4 +87,6 @@ Route::get('LoadEmployee','EmployeesController@LoadEmp');
 Route::get('searchEmployee','EmployeesController@Search'); 
 
 Route::post('SaveCompany','CompanyController@SaveCompany');
+
+Route::get('menu','MenuController@menu'); 
  

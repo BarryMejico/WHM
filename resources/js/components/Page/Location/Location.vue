@@ -210,18 +210,15 @@ itemsInside(e)
         var parent=eTarget.id,
         textBox=document.getElementById("head"),
         textBox2=document.getElementById("Namehead");
-textBox.textContent=eTarget.id;
-    textBox2.textContent= e.textContent + "/";
+        textBox.textContent=eTarget.id;
+        textBox2.textContent= e.textContent + "/";
         
     axios.get('/api/itemsInside',{params:{parent:parent}})
         .then((response)=>{
             this.ItemsInsidecode=response.data;
-
             var i,j,code;
             this.items=[];
             for(i=0;i<this.ItemsInsidecode.length;i++){
-                code=this.ItemsInsidecode[i]['itemCode'];
-                console.log(code);
                 for(j=0;j<this.items2.length;j++){
                     if(code==this.items2[j]['Code']){
                             this.items.push({
@@ -239,8 +236,7 @@ itemsloader(Code){
     axios.get('/api/LoadItems')
         .then(
           (response)=>{
-            this.items2=response.data;
-            
+            this.items2=response.data;  
           }
         )
 },
@@ -255,24 +251,22 @@ itemsloader(Code){
         this.children=[];
         var i,j;
         var parent_code;
-        
+        //Loading parent code
         for (i=0;i < this.LocationRoot.length; i++){
             if(this.LocationRoot[i]['parent']==='root'){
             var target = document.getElementById("root"),
             ulparent= document.createElement("UL"),
             Label=document.createElement("li"),
             parentLabel=document.createTextNode(">  " + this.LocationRoot[i]['name']);
-
             Label.id= "pa-" + this.LocationRoot[i]['code'];
             Label.appendChild(parentLabel);
-
             target.appendChild(Label);
             ulparent.id=this.LocationRoot[i]['code'];
-            
             target.append(ulparent);
-            
             }
         }
+    //end loading all parent node
+    //loading child node
         for (i=0;i < this.LocationRoot.length; i++){   
             if(this.LocationRoot[i]['parent']!="root"){
 

@@ -85,7 +85,8 @@
                 <li><router-link onclick="closeNav()" to="/TransactionHistory">Job Order History</router-link></li>
             </ul>
         </div> -->
-        <li data-toggle="collapse" data-target="#setup" class="Menu"> <b-icon icon="clipboard" font-scale="2"></b-icon> Data Setup</li>
+        <li data-toggle="collapse" data-target="#setup" class="Menu"> 
+        <b-icon icon="clipboard" font-scale="2"></b-icon> Data Setup</li>
             <div id="setup" class="collapse">
                 <ul>   
                     <li class="subMenus"><router-link onclick="closeNav()" to="/Vendor_Create"><b-icon icon="person"></b-icon> Vendor</router-link></li>

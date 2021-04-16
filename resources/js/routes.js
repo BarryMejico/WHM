@@ -35,7 +35,7 @@ import Products from './components/Page/Product/CreateProduct';
 import invoice2 from './components/Page/Sales/invoice2';
 
 import company from './components/Page/company';
-import companyInvite from './components/Page/companyInvite';
+import companyInvites from './components/Page/companyInvite';
 
 import Sidenav from './components/component/Sidenav';
 
@@ -75,8 +75,8 @@ export default{
     },
     {
         path:'/companyInvite',
-        component:companyInvite,
-        name: companyInvite,
+        component:companyInvites,
+        
         beforeEnter:(to,from,next)=>{
             axios.get('api/Authenticated').then(()=>{
                 next()
@@ -368,11 +368,10 @@ export default{
     {
         path:'/Sidenav',
         component: Sidenav,
-        name: 'Sidenav',
+        name: 'sidenav',
         beforeEnter:(to,from,next)=>{
             axios.get('api/Authenticated').then(()=>{
                 next()
-                
             }).catch(()=>{
                 return next({name: '/login_'})
             })

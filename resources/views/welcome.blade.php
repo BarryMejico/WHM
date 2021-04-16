@@ -7,8 +7,11 @@
     @if (Route::has('register'))
     @endif
 @else
-<span class="navbar-brand" style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Menu</span>
 
+<div id="app">
+    <mySidemenu></mySidemenu>
+   
+</div>
 @endguest
 
 <router-link class="nav-link" to='/Dashboard'>

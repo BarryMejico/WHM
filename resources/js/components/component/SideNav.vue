@@ -1,8 +1,8 @@
 <template>
     <div>
-        <button type="button" class="btn btn-outline-secondary" @click="loadMenu()">Menu</button>
+        <span class="navbar-brand" style="font-size:30px;cursor:pointer" @click="loadMenu()">&#9776; Menu</span>
 <!--side bar-->
-<div id="DynamicSideNav" class="sidenav">
+    <div id="DynamicSideNav" class="sidenav">
   <a href="javascript:void(0)" class="closeli" @click="closeNav()"><b-icon icon="x" font-scale="2"></b-icon></a>
 
 <ul v-for="(menus,k) in menusp" :key="k">
@@ -115,77 +115,3 @@ openNav() {
 }
 </script>
 
-<style scoped>
-    .notAvailable{ /* empty link/components */
-        text-decoration: line-through;
-        background-color:grey;
-        padding:5px;
-        margin:3px;
-        border-radius:5px;
-        border-top-left-radius:100px;
-        border-bottom-left-radius:100px;
-        
-    }
-   
-    .footer-bs{
-        margin-top:500px;
-    }
-    .Menu{ /* menus */
-        padding:15px;
-        text-indent:10%;
-        margin:10px;
-        border-top-left-radius:100px;
-        border-bottom-left-radius:100px;
-       
-    }
-    .Menu2{ /* menus: PO & Warehouse Setup only*/
-        padding:15px;
-        margin:10px;
-        border-top-left-radius:100px;
-        border-bottom-left-radius:100px;
-       
-    }
-
-    .subMenus{ /* submenus */
-        padding:5px;
-        margin:3px;
-        border-top-left-radius:100px;
-        border-bottom-left-radius:100px;
-        color:#5bc0de;
-       
-    }
-    .closeli{  /* close btn */
-        text-align:right;
-        margin-bottom:50px;
-    }
-
-    /* hover effects*/
-    .Menu:hover{
-        color:#5bc0de;
-        cursor:pointer;
-    }
-    .Menu2:hover{
-        color:#5bc0de;
-        text-decoration:none;
-        list-style:none;
-    }
-    /* active effects*/
-    .Menu:active{
-        color:#5bc0de;
-       
-        
-    }
-    .Menu2:active{
-        color:#5bc0de;
-        font-weight: 700;
-       
-    }
-    #account,#WH,#WHsetup{
-        text-decoration: line-through;
-    }
-    #appname:hover{
-        cursor:pointer;
-        color:#5bc0de;
-    }
-    
-</style>

@@ -26,6 +26,8 @@ Route::middleware('auth:sanctum')->get('/Authenticated', function () {
     return true;
 });
 
+
+
 Route::post('registeraccount','RegisterControl@register');
 Route::post('login','RegisterControl@login');
 

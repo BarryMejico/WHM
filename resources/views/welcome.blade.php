@@ -10,7 +10,6 @@
 
 <div id="app">
     <mySidemenu></mySidemenu>
-   
 </div>
 @endguest
 
@@ -70,88 +69,6 @@
   </div>  
 </nav>
 </div>
-
-
-
-
-<!--side bar-->
-<div id="mySidenav" class="sidenav">
-  <a href="javascript:void(0)" class="closeli" onclick="closeNav()"><b-icon icon="x" font-scale="2"></b-icon></a>
- 
-    <ul>
-        <li class="Menu2"><router-link to="/PO"> <b-icon icon="cart-x" font-scale="2"></b-icon> Purchase Order</router-link></li>  
-
-        <!-- <button data-toggle="collapse" data-target="#Report" class="btnMenu">Report</button>
-        <div id="Report" class="collapse">
-            <ul>   
-	            <li><router-link onclick="closeNav()" to="/DeviceHistory">Device Repair History</router-link></li>
-                <li><router-link onclick="closeNav()" to="/SalesHistory">Sales History</router-link></li>
-                <li><router-link onclick="closeNav()" to="/TransactionHistory">Job Order History</router-link></li>
-            </ul>
-        </div> -->
-        <li data-toggle="collapse" data-target="#setup" class="Menu"> 
-        <b-icon icon="clipboard" font-scale="2"></b-icon> Data Setup</li>
-            <div id="setup" class="collapse">
-                <ul>   
-                    <li class="subMenus"><router-link onclick="closeNav()" to="/Vendor_Create"><b-icon icon="person"></b-icon> Vendor</router-link></li>
-                    <li class="subMenus"><router-link onclick="closeNav()" to="/Customer_Create"><b-icon icon="person-fill"></b-icon> Customer</router-link></li>
-                    <li class="subMenus"><router-link onclick="closeNav()" to="/Items_Create"><b-icon icon="box-seam"></b-icon> Items</router-link></li>
-                </ul>
-            </div>
-
-        <li data-toggle="collapse" data-target="#Sales" class="Menu"><b-icon icon="tags" font-scale="2"></b-icon> Sales</li>
-            <div id="Sales" class="collapse">
-                <ul>  
-                    <li class="notAvailable"><router-link onclick="closeNav()" to="/Upcoming">Products</router-link></li>
-                    <li class="notAvailable"><router-link onclick="closeNav()" to="/Upcoming">Service</router-link></li>
-                    <li class="subMenus"><router-link onclick="closeNav()" to="/invoice">Sales Invoice</router-link></li>
-                    <li class="subMenus"><router-link onclick="closeNav()" to="/JobOrder">Job Order</router-link></li>
-                </ul>
-            </div>
-
-        <li data-toggle="collapse" data-target="#Inventory" class="Menu"><b-icon icon="clipboard-check" font-scale="2"></b-icon> Inventory</li>
-            <div id="Inventory" class="collapse">
-                <ul>   
-                    <li class="subMenus"><router-link onclick="closeNav()" to="/PO_list">Receiving</router-link></li>
-                    <li class="notAvailable"><router-link onclick="closeNav()" to="/Upcoming">Dispatching</router-link></li>
-                    <li class="notAvailable"><router-link onclick="closeNav()" to="/Upcoming">Returns</router-link></li>
-                </ul>
-            </div>
-
-        <li data-toggle="collapse" data-target="#Report" class="Menu"><b-icon icon="clipboard-data" font-scale="2"></b-icon> Report</li>
-            <div id="Report" class="collapse">
-                <ul>   
-                    <li class="subMenus"><router-link onclick="closeNav()" to="/DeviceHistory">Device Repair History</router-link></li>
-                    <li class="subMenus"><router-link onclick="closeNav()" to="/SalesHistory">Sales History</router-link></li>
-                    <li class="subMenus"><router-link onclick="closeNav()" to="/TransactionHistory">Job Order History</router-link></li>
-                </ul>
-            </div>
-
-        <li data-toggle="collapse" data-target="#Accounting" class="Menu" id="account"><b-icon icon="calculator" font-scale="2"></b-icon> Accounting</li>
-            <div id="Accounting" class="collapse">
-                <ul>   
-                    <li class="notAvailable"><router-link onclick="closeNav()" to="/Upcoming">Journals</router-link></li>
-                    <li class="notAvailable"><router-link onclick="closeNav()" to="/Upcoming">Cash Flow</router-link></li>
-                    <li class="notAvailable"><router-link onclick="closeNav()" to="/Upcoming">Reports</router-link></li>
-                </ul>
-            </div>
-
-        <li data-toggle="collapse" data-target="#WareHouse" class="Menu" id="WH"><b-icon icon="house-door" font-scale="2"></b-icon> WareHouse</li>
-            <div id="WareHouse" class="collapse">
-                <ul>   
-                    <li class="notAvailable"><router-link onclick="closeNav()" to="/Upcoming">Receiving</router-link></li>
-                    <li class="notAvailable"><router-link onclick="closeNav()" to="/Upcoming">Placing/Put-Away</router-link></li>
-                    <li class="notAvailable"><router-link onclick="closeNav()" to="/Upcoming">Picking</router-link></li>
-                    <li class="notAvailable"><router-link onclick="closeNav()" to="/Upcoming">Added Value</router-link></li>
-                    <li class="notAvailable"><router-link onclick="closeNav()" to="/Upcoming">Dispatching</router-link></li>
-                    <li class="notAvailable"><router-link onclick="closeNav()" to="/Upcoming">Returns</router-link></li>
-                </ul>
-            </div>
-
-        <li data-toggle="collapse" class="Menu2" id="WHsetup"><router-link onclick="closeNav()" to="/Location"><b-icon icon="menu-button-wide" font-scale="2"></b-icon> WareHouse Setup</router-link></li>
-    </ul>
-</div>
-<!--side bar End-->
 <div>
 <br>
         <router-view></router-view> 

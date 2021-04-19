@@ -83,7 +83,6 @@ class CustommerController extends Controller
         $search = DB::table('customers')
                 ->where('Customer', 'like', "%{$s}%")
                 ->paginate(5);
-        
         //dd($input);
         return $search;
     }

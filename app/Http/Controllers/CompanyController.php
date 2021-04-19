@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Company;
 use App\User;
+use Illuminate\Support\Facades\DB;
 
 class CompanyController extends Controller
 {
@@ -35,5 +36,11 @@ class CompanyController extends Controller
             ->update([
                'CoCode'=> $Code,
             ]);
+    }
+
+    public function getCompany(Request $res){
+        $company= DB::connection('mysql')->select("SELECT * FROM `companies` where CoCode=?",[$res['CoCode']]);
+        //dd($request);
+        return $company;
     }
 }

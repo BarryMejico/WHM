@@ -22,7 +22,7 @@ class EmployeesController extends Controller
             'Employee'=> $input['Name_'], 
             'Ecode'=>$Code,
             'CoCode'=>$CoCode,
-            'Position'=>"n",
+            'Position'=>"Input position",
         ]);
         $Vendor->save();
     }

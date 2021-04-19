@@ -79,11 +79,11 @@
                <div class="form-group">	
                 
                           <label>Search by id or Email</label>	
-                          <input type="text" v-model="Name_">
-                          <b class="employeeData">Name:</b><br>
-                          <b class="employeeData">Email:</b>
+                          <input type="text" v-model="iName_">
+                          <b class="employeeData">Name:<i>{{iName}}</i></b><br>
+                          <b class="employeeData">Email:<i>{{iEmail}}</i></b>
                           <br><br>
-                          <button> Send Invite</button>
+                          <button @click="saveInvite()"> Send Invite</button>
                 </div>
             </b-tab>
           </b-tabs>
@@ -106,6 +106,9 @@ function int_data(){
        List_Customer:[],
        Customer:'',
        Name_:'',
+       iName_:'',
+       iName:'Automatically will load',
+       iEmail:'Automatically will load',
        add_Cus:'',
        //Live Search
         Search:'',
@@ -113,6 +116,9 @@ function int_data(){
         selected: 'A',
         ins:null,
         pages:'',
+        to:'',
+        from:'',
+        COCode:'',
     }
     }
 export default {
@@ -128,6 +134,14 @@ export default {
 mounted(){
 this.load_customer();
 },
+
+watch:{
+  iName_:function(val){
+    this.sUser();
+  }
+},
+
+
 methods:{
 
   //pagination
@@ -160,6 +174,28 @@ methods:{
           })
       },
 //end pagination
+saveInvite(){
+  axios.post('/api/saveInvite',{invite_to:this.to})
+  .then(()=>{
+    this.closeModal();
+  })
+},
+
+sUser(){
+  this.iName="loading";
+  this.iEmail="loading";
+  axios.get('/api/getUser',{params:{sUser:this.iName_}})
+  .then((res=>{
+    this.iName=res.data[0]['name'];
+    this.iEmail=res.data[0]['email'];
+    this.to=res.data[0]['id'];
+  }))
+  .catch(()=>{
+    this.to="";
+    this.iName="?";
+    this.iEmail="?";}
+  )
+},
 
   loadindex(){
     this.ins=this.index;

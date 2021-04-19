@@ -33,7 +33,7 @@
                     <div class="col">
                         <h6 class="text-muted">Company Name</h6>
                         <br>
-                        <h6>{{user.CoCode}}</h6>
+                        <h6>{{company.CompanyName}}</h6>
                     </div>
                 </div>
                 <hr>
@@ -63,8 +63,8 @@ export default {
             user:[],
             // for company
             company:{
-                CompanyName:'camp1',
-                CompanyAddress:'add camp 1',
+                CompanyName:'',
+                CompanyAddress:'',
                 CompanyOwner:'',
                 
             },
@@ -75,6 +75,11 @@ export default {
         axios.get('/api/user').then((res)=>{
             this.user=res.data;
             this.company.CompanyOwner=this.user['id'];
+
+            axios.get('/api/getCompany',{params:{CoCode:this.user['CoCode']}})
+            .then((res)=>{
+                this.company.CompanyName=res.data[0]['CompanyName'];
+            })
         })
     },
 

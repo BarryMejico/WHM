@@ -46,6 +46,14 @@ export default {
         }
     },
 
+    mounted(){
+          axios.get('/api/user').then((res)=>{
+            this.user=res.data;
+            this.company.CompanyOwner=this.user['id'];
+            
+        })
+    },
+
     methods:{
          SaveCompany(){
             axios.post('/api/SaveCompany',this.company)

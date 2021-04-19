@@ -20,7 +20,6 @@ class LocationDetailsController extends Controller
             'parent'=>$request['parent'],
         ]);
         $item = DB::connection('mysql')->select("UPDATE `items` SET `status`=1 WHERE Code=?",[$request['itemCode']]);
-
     }
 
     public function SelectedParent(Request $request)

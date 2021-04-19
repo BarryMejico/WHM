@@ -52,10 +52,10 @@ class PoDetailsControl extends Controller
                     $newData->save();
                    
                 } $PO->save();
-                
-                //Save Audit
 
 }
+
+
 public function LoadPo(){
     $po= po_list::all();
     return $po;
@@ -66,6 +66,7 @@ public function GetPo(Request $request){
     //dd($PO);
     return $PO;
 }
+
 public function GetPoHead(Request $request){
     $PO= DB::connection('mysql')->select("SELECT * FROM `po_lists` where PO=?",[$request['PO']]);
     //dd($PO);

@@ -1,36 +1,25 @@
 <template>
 <div class="container">
-    <!-- <i>new component or modal for notification of invite to join company</i> -->
-                  <!-- <h4>Company Invite</h4>
-                  <i>Name</i> Invites you to join <i>Company Name</i>.<br>
-                  <button>Accept</button>
-                  <button class="alert">Decline</button>
-                  <hr> -->
-             <h6>temporay buttons for quick navigation during development</h6>
-        <router-link class="temp" to="/Dashboard" tag="button">dashboard</router-link>
-        <br><br>
-        <router-link class="temp" to="/company" tag="button">company</router-link>
-        <br><br>
-        <router-link class="temp" to="/companyInvite" tag="button">company Invite</router-link>
- 
-    <hr>
-    <div class="row">
-        <!-- <div class="col"></div> -->
-        <div class="col-md-12" align='center'>
-            <b-card title="Company Invite" style="width:30%;">
+
+    <div>
+<div>
+  <b-button v-b-toggle.collapse-1 variant="primary" style="width:30%;"><b-icon icon="gear-wide-connected" font-scale="2"></b-icon>
+  {{notif.length}}</b-button>
+  <b-collapse id="collapse-1" class="mt-2">
+    <b-card v-for="(noti,k) in notif" :key="k">
+        <b-card title="Company Invite" style="width:30%;">
                 <b-card-header style="background-color:white;">
-                    <i>Name</i> Invites you to join <i>Company Name</i>.<br>
+                    <i>{{noti.name}}</i> Invites you to join <i>{{noti.CompanyName}}</i>.<br>
                 </b-card-header>
                 <b-card-body>
                     <button style="margin-bottom:10px;">Accept</button>
                     <button class="alert">Decline</button>
                 </b-card-body>
             </b-card>
-        </div>
-        <!-- <div class="col"></div> -->
-    </div>
-   
-
+    </b-card>
+  </b-collapse>
+</div>
+</div>
 </div>
 </template>
 
@@ -39,12 +28,21 @@
 export default {
     data(){
         return{
-         
+         notif:null,
         }
     },
 
+    mounted(){
+        this.getnotif()
+    },
+
     methods:{
-         
+         getnotif(){
+             axios('/api/getNotif')
+             .then((res)=>{
+                 this.notif=res.data;
+             })
+         },
     }
  
 }

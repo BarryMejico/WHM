@@ -24,27 +24,62 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('abitolentino'),
         ]);
 
+        ///adding company
+        DB::table('companies')->insert([
+            'CoCode'=>'company-code-001',
+            'CompanyName'=>'BarkSpider',
+            'CompanyAddress'=>'Cavite City',
+            'CompanyOwner'=>'1'
+            ]);
 
+            //end company
+            
+            //sending company invte
+
+            DB::table('invites')->insert([
+                'invite_to'=>'1',
+                'invite_from'=>'2',
+                'CoCode'=>'company-code-001',
+                'invite_Status'=>'1',
+                ]);
+
+                DB::table('invites')->insert([
+                    'invite_to'=>'2',
+                    'invite_from'=>'1',
+                    'CoCode'=>'company-code-001',
+                    'invite_Status'=>'1',
+                    ]);
+            //end company invte
+
+//adding basic data
         DB::table('Customers')->insert([
             'Customer'=>'Customer-seed001',
             'Number'=>'09605053',
             'Address'=>'Cavite',
             'Ccode'=>'Seed-001', 
+            'user_id'=>'1',
+            'CoCode'=>'company-code-001',
         ]);
 
         DB::table('vendor_models')->insert([
             'Vendor'=>'Vendor-seed001',
             'Number'=>'09605053',
             'Address'=>'Cavite',
-            'Vcode'=>'Seed-001', 
+            'Vcode'=>'Seed-001',
+            'user_id'=>'1',
+            'CoCode'=>'company-code-001',
         ]);
-
+        
+        
         DB::table('Items')->insert([
             'Name'=>'Item-seed001',
             'Unit'=>'Kilo',
             'status'=>'1',
             'Code'=>'001', 
+            'user_id'=>'1',
+            'CoCode'=>'company-code-001',
         ]);
+//adding basic data
 
         DB::table('menus')->insert([
             'menuParent'=>'root',

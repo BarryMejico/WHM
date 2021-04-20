@@ -78,6 +78,7 @@ export default {
 
             axios.get('/api/getCompany',{params:{CoCode:this.user['CoCode']}})
             .then((res)=>{
+                
                 this.company.CompanyName=res.data[0]['CompanyName'];
             })
         })

@@ -10,6 +10,8 @@ class VendorModel extends Model
         'Vendor',
         'Number',
         'Address',
-        'Vcode'  
+        'Vcode',
+        'user_id',
+        'CoCode',
     ];
 }

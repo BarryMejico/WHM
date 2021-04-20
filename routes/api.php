@@ -90,11 +90,13 @@ Route::get('searchEmployee','EmployeesController@Search');
 
 Route::post('SaveCompany','CompanyController@SaveCompany');
 Route::get('getCompany','CompanyController@getCompany');
+Route::post('setCompany','CompanyController@setCompany');
 
 Route::get('getUser','userController@getUser');
 
 Route::post('saveInvite','InviteController@saveInvite');
 Route::get('getNotif','InviteController@getNotif');
+Route::post('accepted','InviteController@accepted');
 
 Route::get('menu','MenuController@menu'); 
  

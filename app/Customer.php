@@ -10,6 +10,9 @@ class Customer extends Model
         'Customer',
         'Number',
         'Address',
-        'Ccode'  
+        'Ccode',
+        'user_id',
+        'CoCode',
+
     ];
 }

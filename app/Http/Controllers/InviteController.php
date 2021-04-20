@@ -30,11 +30,23 @@ class InviteController extends Controller
     ->join('companies', 'invites.CoCode', '=', 'companies.CoCode')
 
     ->where('invites.invite_to', '=', $UserIn)
+    ->where('invites.invite_Status', '=', 1)
 
     ->select('users.name',
-            'companies.CompanyName')
+            'companies.CompanyName',
+            'companies.CoCode',
+            'invites.id',
+            )
     ->get();
     return $search;
+   }
 
+   public function accepted(Request $REQUEST){
+    $input = $REQUEST->all();
+      
+    $invite = invite::where('id',$input['id'])
+    ->update([
+        'invite_Status'=>0,
+    ]);
    }
 }

@@ -28,6 +28,9 @@ class CompanyController extends Controller
             'CompanyAddress'=>$input['CompanyAddress'],
             'CompanyOwner' =>$input['CompanyOwner'],
             ]);
+
+            
+            
             $company->save();
 
             $UserIn=getUser()->id;
@@ -35,6 +38,16 @@ class CompanyController extends Controller
             $User = User::where('id',$UserIn)
             ->update([
                'CoCode'=> $Code,
+            ]);
+    }
+
+    public function setCompany(Request $res){
+        $input=$res->all();
+        $UserIn=getUser()->id;
+       
+            $User = User::where('id',$UserIn)
+            ->update([
+               'CoCode'=> $input['CoCode'],
             ]);
     }
 

@@ -10,6 +10,8 @@ class Item extends Model
         'Name',
         'Unit',
         'Code',
-        'status'        
+        'status',
+        'user_id',
+        'CoCode',       
     ];
 }

@@ -34,6 +34,34 @@ class AddCompanyToData extends Migration
             $table->foreign('CoCode')->references('CoCode')->on('companies')->onDelete('cascade');
         });
 
+        Schema::table('po_lists', function (Blueprint $table) {
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('CoCode');
+            $table->foreign('CoCode')->references('CoCode')->on('companies')->onDelete('cascade');
+        });
+
+        Schema::table('receiving_lists', function (Blueprint $table) {
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('CoCode');
+            $table->foreign('CoCode')->references('CoCode')->on('companies')->onDelete('cascade');
+        });
+
+        Schema::table('sales', function (Blueprint $table) {
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('CoCode');
+            $table->foreign('CoCode')->references('CoCode')->on('companies')->onDelete('cascade');
+        });
+
+        Schema::table('stocks_lists', function (Blueprint $table) {
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('CoCode');
+            $table->foreign('CoCode')->references('CoCode')->on('companies')->onDelete('cascade');
+        });
+
         
     }
 

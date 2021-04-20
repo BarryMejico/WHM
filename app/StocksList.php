@@ -11,6 +11,8 @@ class StocksList extends Model
         'Qty',
         'UnitCost',
         'Location',
+        'user_id',
+        'CoCode',
         
     ];
 }

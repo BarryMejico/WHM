@@ -14,5 +14,7 @@ class Sales extends Model
         'Status',
         'Reviewed_by',
         'Ccode',
+        'user_id',
+        'CoCode',
     ];
 }

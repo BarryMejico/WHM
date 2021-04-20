@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Customer extends Model
 {
+
+    protected $primaryKey = 'Ccode';
     protected $fillable = [
         'Customer',
         'Number',
@@ -13,6 +15,6 @@ class Customer extends Model
         'Ccode',
         'user_id',
         'CoCode',
-
+        
     ];
 }

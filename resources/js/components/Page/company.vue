@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col"></div>
         <div class="col-md-8">
-            <b-card title="Create">
+            <b-card title="Details">
                 <b-card-body>
                 <input type="text" v-model="company.CompanyName" placeholder="Company Name"/>
                 <input type="text"  v-model="company.CompanyAddress" placeholder="Address"/>
@@ -29,8 +29,8 @@ export default {
     data(){
         return{
          company:{
-                CompanyName:'camp1',
-                CompanyAddress:'add camp 1',
+                CompanyName:'',
+                CompanyAddress:'',
                 CompanyOwner:'',
                 
             }
@@ -41,7 +41,10 @@ export default {
           axios.get('/api/user').then((res)=>{
             this.user=res.data;
             this.company.CompanyOwner=this.user['id'];
-            
+             axios.get('/api/getCompany',{params:{CoCode:this.user['CoCode']}})
+            .then((res)=>{
+                this.company=res.data[0];
+            })
         })
     },
 

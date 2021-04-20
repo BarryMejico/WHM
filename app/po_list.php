@@ -13,6 +13,8 @@ class po_list extends Model
         'Status',
         'Reviewed_by',
         'Vendor',
-        'Ship_to'
+        'Ship_to',
+        'user_id',
+        'CoCode',
     ];
 }

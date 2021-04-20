@@ -13,14 +13,19 @@ use App\Rules\inUseData;
 class VendorController extends Controller
 {
     public function index(){
-        $Vendors=VendorModel::all();
-        //$Vendors=VendorModel::paginate(5);
+       $Cocode=getUser()->CoCode;
+        $Vendors=DB::table('vendor_models')
+        ->where('CoCode', '=', $Cocode)
+        ->get();
         return $Vendors;
+        
     }
 
     public function indexPagination(){
-        //$Vendors=VendorModel::all();
-        $Vendors=VendorModel::paginate(5);
+        $Cocode=getUser()->CoCode;
+        $Vendors=DB::table('vendor_models')
+        ->where('CoCode', '=', $Cocode)
+        ->paginate(5);
         return $Vendors;
     }
 
@@ -32,12 +37,19 @@ class VendorController extends Controller
         ]);
         $input = $request->all();
         $Code=Ucode();
-        //dd($input);
+         //----for taging to specific user/s
+         $UserIn=getUser()->id;
+         $UserCoCode=getUser()->CoCode;
+         //---------------
         $Vendor = VendorModel::updateOrCreate([
             'Vendor'=> $input['Name'],
             'Number'=> $input['Number'],
             'Address'=> $input['Address'], 
             'Vcode'=>$Code,
+            //----taging to specific user/s
+            'user_id' => $UserIn,
+            'CoCode' => $UserCoCode,
+            //---------------
         ]);
         $Vendor->save(); 
     }
@@ -75,8 +87,10 @@ class VendorController extends Controller
         $input = $request->all();
         //$search = VendorModel::find($input['Search']);
         $s= $input['Search'];
+        $Cocode=getUser()->CoCode;
         $search = DB::table('vendor_models')
                 ->where('Vendor', 'like', "%{$s}%")
+                ->where('CoCode', '=', $Cocode)
                 ->get();
         
         //dd($input);

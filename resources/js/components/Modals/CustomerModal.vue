@@ -195,7 +195,7 @@ methods:{
 },
 
     load_customer(){
-          axios.get('/api/LoadCus')
+          axios.get('/api/LoadCus2')
           .then(
               (response)=>{
                   this.List_Customer=response.data.data;

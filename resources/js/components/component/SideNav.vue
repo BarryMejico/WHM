@@ -6,8 +6,8 @@
   <a href="javascript:void(0)" class="closeli" @click="closeNav()"><b-icon icon="x" font-scale="2"></b-icon></a>
 
 <ul v-for="(menus,k) in menusp" :key="k">
-    <li v-if="menus.route!=0" class="Menu2">
-        <router-link  :to="{path: menus.route}">
+    <li v-if="menus.route!=0" class="Menu2" @click.prevent="closeNav()">
+        <router-link :to="{path: menus.route}" >
             <b-icon :icon="menus.icon" font-scale="2"></b-icon>
                         {{menus.Description}}
         </router-link>
@@ -20,7 +20,7 @@
     </li>
        <div  :id="'s' + menus.id" class="collapse">
         <ul>
-            <li  v-for="(smenu,i) in menus.child" :key="i" class="subMenus">
+            <li  v-for="(smenu,i) in menus.child" :key="i" class="subMenus" @click.prevent="closeNav()">
                  <router-link  :to="{path: smenu.route}">
                 <b-icon :icon="smenu.icon" font-scale="2"></b-icon>
                 {{smenu.Description}}

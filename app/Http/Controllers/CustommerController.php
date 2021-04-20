@@ -17,12 +17,21 @@ class CustommerController extends Controller
         ]);
         $input = $request->all();
         $Code=Ucode();
-        //dd($input);
+
+        //----for taging to specific user/s
+        $UserIn=getUser()->id;
+        $UserCoCode=getUser()->CoCode;
+        //---------------
+        
         $Vendor = Customer::updateOrCreate([
             'Customer'=> $input['Name'],
             'Number'=> $input['Number'],
             'Address'=> $input['Address'], 
             'Ccode'=>$Code,
+            //----taging to specific user/s
+            'user_id' => $UserIn,
+            'CoCode' => $UserCoCode,
+            //---------------
         ]);
         $Vendor->save();
 
@@ -40,7 +49,6 @@ class CustommerController extends Controller
     }   
 
     public function update(Request $request){        
- 
         $request->validate([
             'Name'=>'required',
             'Number'=>'required',
@@ -59,31 +67,39 @@ class CustommerController extends Controller
 
 
     public function LoadCus(){
-            //$Vendors=Customer::all();
-            $Vendors=Customer::paginate(5);
-            return $Vendors;
+        $Cocode=getUser()->CoCode;
+        $Vendors=DB::table('customers')
+        ->where('CoCode', '=', $Cocode)
+        ->get();
+        return $Vendors;
     }
 
     public function LoadlistCus(){
-        $Vendors=Customer::all();
-        //$Vendors=Customer::paginate(5);
+        $Cocode=getUser()->CoCode;
+        $Vendors=DB::table('customers')
+        ->where('CoCode', '=', $Cocode)
+        ->get();
         return $Vendors;
 }
 
     public function LoadCusPagination(){
-        //$Vendors=Customer::all();
-        $Vendors=Customer::paginate(5);
+        $Cocode=getUser()->CoCode;
+        $Vendors=DB::table('customers')
+        ->where('CoCode', '=', $Cocode)
+        ->paginate(5);
         return $Vendors;
 }
 
     public function Search(Request $request){
         $input = $request->all();
-        //$search = VendorModel::find($input['Search']);
+        $Cocode=getUser()->CoCode;
+        
         $s= $input['Search'];
         $search = DB::table('customers')
                 ->where('Customer', 'like', "%{$s}%")
+                ->where('CoCode', '=', $Cocode)
+                
                 ->paginate(5);
-        //dd($input);
         return $search;
     }
 }

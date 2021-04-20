@@ -16,7 +16,10 @@ class receivingController extends Controller
         $input = $request->all();
         //dd($input);
         
-        $UserIn=getUser()->id;
+         //----for taging to specific user/s
+         $UserIn=getUser()->id;
+         $UserCoCode=getUser()->CoCode;
+         //---------------
         $countR=ReceivingList::count();
         $ReceivingCode=Ucode() . "-" . strval($countR);
 
@@ -32,6 +35,10 @@ class receivingController extends Controller
         'Status'=>'Open',
         'Reviewed_by'=>null,
         'ReceivingCode'=>$ReceivingCode,
+        //----taging to specific user/s
+        'user_id' => $UserIn,
+        'CoCode' => $UserCoCode,
+        //---------------
         ]);
         
         $countarray = count($input['po_items'])-1;
@@ -49,6 +56,7 @@ class receivingController extends Controller
                     'UnitCost' => '',
                     'PO' => $input['PO'],
                     'ReceivingCode'=>$ReceivingCode,
+                    
 
         ]);
         $item=DB::table('stocks_lists')
@@ -66,6 +74,10 @@ class receivingController extends Controller
             'Qty' => $input['po_items'][$i]['Qty'],
             'UnitCost'=>'',
             'Location'=>'',
+            //----taging to specific user/s
+        'user_id' => $UserIn,
+        'CoCode' => $UserCoCode,
+        //---------------
         ]);
 
                         }else{
@@ -74,6 +86,10 @@ class receivingController extends Controller
                                 'Qty' => $newCalQty,
                                 'UnitCost'=>'',
                                 'Location'=>'',
+                                //----taging to specific user/s
+                                'user_id' => $UserIn,
+                                'CoCode' => $UserCoCode,
+                                //---------------
                             ]);
 
                         }
@@ -114,7 +130,11 @@ public function item(Request $request){
 }
 
 public function stocks(){
-    $stocks= StocksList::all();
+    $Cocode=getUser()->CoCode;
+    $stocks=DB::table('receiving_lists')
+    ->where('CoCode', '=', $Cocode)
+    ->get();
+    
     return $stocks;
 }
 

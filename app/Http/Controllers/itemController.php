@@ -19,23 +19,37 @@ class itemController extends Controller
             'Unit' => ['required', 'string'],
         ]);
 
+        //----for taging to specific user/s
+        $UserIn=getUser()->id;
+        $UserCoCode=getUser()->CoCode;
+        //---------------
+
         item::create([
             'Name' => $REQUEST['Name'],
             'Code' => $REQUEST['Code'],
             'Unit' => $REQUEST['Unit'],
             'status'=>1,
+            //----taging to specific user/s
+            'user_id' => $UserIn,
+            'CoCode' => $UserCoCode,
+            //---------------
         ]);
     } 
 
     public function LoadItems(){
-        $items= item::all();
-        //$items=item::paginate(5);
+        $Cocode=getUser()->CoCode;
+        $items=DB::table('items')
+        ->where('CoCode', '=', $Cocode)
+        ->get();
         return $items;
     }
 
     public function LoadItemsPagination(){
-        //$items= item::all();
-        $items=item::paginate(5);
+        $Cocode=getUser()->CoCode;
+        $items=DB::table('items')
+        ->where('CoCode', '=', $Cocode)
+        ->paginate(5);
+        
         return $items;
     }
 
@@ -78,10 +92,11 @@ class itemController extends Controller
 
     public function Search(Request $request){
         $input = $request->all();
-        //$search = VendorModel::find($input['Search']);
+        $Cocode=getUser()->CoCode;
         $s= $input['Search'];
         $search = DB::table('items')
                 ->where('Name', 'like', "%{$s}%")
+                ->where('CoCode', '=', $Cocode)
                 ->get();
         
         //dd($input);

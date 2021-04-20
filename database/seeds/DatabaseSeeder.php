@@ -260,6 +260,13 @@ class DatabaseSeeder extends Seeder
             'icon'=>'box-seam',
             'route'=>'/Upcoming', 
         ]);
+//-------------
+        DB::table('locaions')->insert([
+            'code'=>'0',
+            'name'=>'Local warehouse',
+            'parent'=>'root',
+            
+        ]);
         
 
     }

@@ -1,25 +1,31 @@
 <template>
 <div class="container">
 
-    <div>
-<div>
-  <b-button v-b-toggle.collapse-1 variant="primary" style="width:30%;"><b-icon icon="gear-wide-connected" font-scale="2"></b-icon>
-  {{notif.length}}</b-button>
+  
+
+  <b-button v-b-toggle.collapse-1 variant="outline-info" size="sm">
+      <b v-if="notif.length < 1"> No </b> 
+      <b v-else>{{notif.length}}</b> Invitation 
+      <!-- <b-icon icon="gear-wide-connected" font-scale="1"></b-icon> -->
+      </b-button>
+
   <b-collapse id="collapse-1" class="mt-2">
-    <b-card v-for="(noti,k) in notif" :key="k">
-        <b-card title="Company Invite" style="width:30%;">
-                <b-card-header style="background-color:white;">
-                    <i>{{noti.name}}</i> Invites you to join <i>{{noti.CompanyName}}</i>.<br>
-                </b-card-header>
-                <b-card-body>
+    <b-card v-for="(noti,k) in notif" :key="k" title="Company Invitation" align="center">
+                    <br>
+                    <br>
+                    <i>{{noti.name}}</i> Invites you to join <b>{{noti.CompanyName}}</b>.
+                    <br>
+                    <hr>
+
+               
                     <button @click.prevent="accept" style="margin-bottom:10px;">Accept</button>
                     <button class="alert">Decline</button>
-                </b-card-body>
-            </b-card>
+                
+            
     </b-card>
   </b-collapse>
-</div>
-</div>
+
+
 </div>
 </template>
 
@@ -61,12 +67,6 @@ accept(){
 </script>
 
 <style scoped>
-.temp{
-    background-color:#eee ;
-    width:20%;
-    border-radius: 5px;
-    color:black;
-}
 
 
 </style>

@@ -1,24 +1,15 @@
 <template>
     <div>
     <div class="container">
-        <h6>temporay buttons for quick navigation during development</h6>
-        <router-link class="temp" to="/Dashboard" tag="button">dashboard</router-link>
-        <br><br>
-        <router-link class="temp" to="/company" tag="button">company</router-link>
-        <br><br>
-        <router-link class="temp" to="/companyInvite" tag="button">company Invite</router-link>
-   
-
-
-    <hr>
+  
     <br>
     <br>
     
         <div class="row">
-            <div class="col-md-4" align="center">
-                <b-avatar size="200px"></b-avatar>
+            <div class="col">
+                <b-avatar size="150px"></b-avatar>
             </div>
-            <div class="col" >
+            <div class="col-md-7">
                 <div class="row">
                     <div class="col">
                         <h6 class="text-muted">Username</h6>
@@ -31,7 +22,8 @@
                         <h6>{{user.email}}</h6>
                     </div>
                     <div class="col">
-                        <h6 class="text-muted">Company Name</h6>
+                        <!-- <h6 class="text-muted">Company Name</h6> -->
+                        <router-link class="temp" to="/company"><h6 class="text-muted">Company</h6></router-link>
                         <br>
                         <h6>{{company.CompanyName}}</h6>
                     </div>
@@ -42,9 +34,10 @@
                     <h6 class="text-muted">Search & Add Employee</h6>
                     <employee-modal/>
                     <!-- end company -->
-                   
 
-                
+            </div>
+            <div class="col">
+                 <companyInvite style="margin-top:-25px;"/>
             </div>
             
         </div>
@@ -56,8 +49,13 @@
 </template>
 <script>
 import EmployeeModal from './Modals/EmployeeModal.vue';
+import companyInvite from './Page/companyInvite';
+
 export default {
-  components: { EmployeeModal },
+  components: { 
+      EmployeeModal,
+      companyInvite
+  },
     data(){
         return{
             user:[],

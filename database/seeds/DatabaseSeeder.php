@@ -161,28 +161,28 @@ class DatabaseSeeder extends Seeder
         DB::table('menus')->insert([
             'menuParent'=>'3',
             'Description'=>'Products',
-            'icon'=>'box-seam',
+            'icon'=>'basket',
             'route'=>'/Upcoming', 
         ]);
 
         DB::table('menus')->insert([
             'menuParent'=>'3',
             'Description'=>'Service',
-            'icon'=>'box-seam',
+            'icon'=>'screwdriver',
             'route'=>'/Upcoming', 
         ]);
 
         DB::table('menus')->insert([
             'menuParent'=>'3',
             'Description'=>'Sales Invoice',
-            'icon'=>'box-seam',
+            'icon'=>'receipt',
             'route'=>'/invoice', 
         ]);
 
         DB::table('menus')->insert([
             'menuParent'=>'3',
             'Description'=>'Job Order',
-            'icon'=>'box-seam',
+            'icon'=>'pencil-square',
             'route'=>'/JobOrder', 
         ]);
         // --------------
@@ -190,21 +190,21 @@ class DatabaseSeeder extends Seeder
         DB::table('menus')->insert([
             'menuParent'=>'4',
             'Description'=>'Receiving',
-            'icon'=>'box-seam',
+            'icon'=>'clipboard-check',
             'route'=>'/PO_list', 
         ]);
 
         DB::table('menus')->insert([
             'menuParent'=>'4',
             'Description'=>'Dispatching',
-            'icon'=>'box-seam',
+            'icon'=>'truck',
             'route'=>'/Upcoming', 
         ]);
 
         DB::table('menus')->insert([
             'menuParent'=>'4',
             'Description'=>'Returns',
-            'icon'=>'box-seam',
+            'icon'=>'arrow-counterclockwise',
             'route'=>'/Upcoming', 
         ]);
 //---------------
@@ -212,14 +212,14 @@ class DatabaseSeeder extends Seeder
         DB::table('menus')->insert([
             'menuParent'=>'5',
             'Description'=>'Device Repair History',
-            'icon'=>'box-seam',
+            'icon'=>'clock',
             'route'=>'/DeviceHistory', 
         ]);
 
         DB::table('menus')->insert([
             'menuParent'=>'5',
             'Description'=>'Sales History',
-            'icon'=>'box-seam',
+            'icon'=>'clock-fill',
             'route'=>'/SalesHistory', 
         ]);
 
@@ -227,7 +227,7 @@ class DatabaseSeeder extends Seeder
         DB::table('menus')->insert([
             'menuParent'=>'5',
             'Description'=>'Job Order History',
-            'icon'=>'box-seam',
+            'icon'=>'clock-history',
             'route'=>'/TransactionHistory', 
         ]);
 
@@ -235,21 +235,21 @@ class DatabaseSeeder extends Seeder
         DB::table('menus')->insert([
             'menuParent'=>'6',
             'Description'=>'Journals',
-            'icon'=>'box-seam',
+            'icon'=>'journal-bookmark-fill',
             'route'=>'/Upcoming', 
         ]);
 
         DB::table('menus')->insert([
             'menuParent'=>'6',
             'Description'=>'Cash Flow',
-            'icon'=>'box-seam',
+            'icon'=>'cash-stack',
             'route'=>'/Upcoming', 
         ]);
 
         DB::table('menus')->insert([
             'menuParent'=>'6',
             'Description'=>'Reports',
-            'icon'=>'box-seam',
+            'icon'=>'graph-up',
             'route'=>'/Upcoming', 
         ]);
         //--------------------
@@ -257,42 +257,42 @@ class DatabaseSeeder extends Seeder
         DB::table('menus')->insert([
             'menuParent'=>'7',
             'Description'=>'Receiving',
-            'icon'=>'box-seam',
+            'icon'=>'clipboard-check',
             'route'=>'/Upcoming', 
         ]);
 
         DB::table('menus')->insert([
             'menuParent'=>'7',
             'Description'=>'Placing/Put-Away',
-            'icon'=>'box-seam',
+            'icon'=>'arrows-move',
             'route'=>'/Upcoming', 
         ]);
 
         DB::table('menus')->insert([
             'menuParent'=>'7',
             'Description'=>'Picking',
-            'icon'=>'box-seam',
+            'icon'=>'box-arrow-up',
             'route'=>'/Upcoming', 
         ]);
 
         DB::table('menus')->insert([
             'menuParent'=>'7',
             'Description'=>'Added Value',
-            'icon'=>'box-seam',
+            'icon'=>'bag-plus',
             'route'=>'/Upcoming', 
         ]);
 
         DB::table('menus')->insert([
             'menuParent'=>'7',
             'Description'=>'Dispatching',
-            'icon'=>'box-seam',
+            'icon'=>'truck-flatbed',
             'route'=>'/Upcoming', 
         ]);
 
         DB::table('menus')->insert([
             'menuParent'=>'7',
             'Description'=>'Returns',
-            'icon'=>'box-seam',
+            'icon'=>'arrow-counterclockwise',
             'route'=>'/Upcoming', 
         ]);
 //-------------

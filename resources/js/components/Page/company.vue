@@ -1,15 +1,6 @@
 <template>
 <div class="container">
-   
 
-     <h6>temporay buttons for quick navigation during development</h6>
-        <router-link class="temp" to="/Dashboard" tag="button">dashboard</router-link>
-        <br><br>
-        <router-link class="temp" to="/company" tag="button">company</router-link>
-        <br><br>
-        <router-link class="temp" to="/companyInvite" tag="button">company Invite</router-link>
-<hr>
-    <!-- <i>new component that can create company</i> -->
     <h1>Company</h1>
     <br>
     <div class="row">

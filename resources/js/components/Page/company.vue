@@ -29,30 +29,37 @@ export default {
     data(){
         return{
          company:{
-                CompanyName:'',
-                CompanyAddress:'',
-                CompanyOwner:'',
-                
-            }
+             CompanyName:'',
+             CompanyAddress:'',
+         }
         }
     },
 
     mounted(){
-          axios.get('/api/user').then((res)=>{
+          this.getdata()
+    },
+
+
+    methods:{
+
+        getdata(){
+            axios.get('/api/user').then((res)=>{
             this.user=res.data;
             this.company.CompanyOwner=this.user['id'];
              axios.get('/api/getCompany',{params:{CoCode:this.user['CoCode']}})
             .then((res)=>{
-                this.company=res.data[0];
+                this.company.CompanyName=res.data[0]['CompanyName'];
+                this.company.CompanyAddress=res.data[0]['CompanyAddress'];
             })
+            .catch((res)=>{})
         })
-    },
+        },
 
-    methods:{
          SaveCompany(){
+             console.log(this.company)
             axios.post('/api/SaveCompany',this.company)
             .then(
-                this.company=[]
+               
             )
             .catch()
         },

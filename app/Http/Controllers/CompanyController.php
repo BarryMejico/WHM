@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 class CompanyController extends Controller
 {
     public function SaveCompany(Request $res){
-        // dd($res);
+      
         $res->validate([
             'CompanyName' => 'required',
             'CompanyAddress' => 'required',
@@ -42,6 +42,7 @@ class CompanyController extends Controller
     }
 
     public function setCompany(Request $res){
+
         $input=$res->all();
         $UserIn=getUser()->id;
        
@@ -49,11 +50,15 @@ class CompanyController extends Controller
             ->update([
                'CoCode'=> $input['CoCode'],
             ]);
+
+            return $User;
     }
 
     public function getCompany(Request $res){
-        $company= DB::connection('mysql')->select("SELECT * FROM `companies` where CoCode=?",[$res['CoCode']]);
+        //$company= DB::connection('mysql')->select("SELECT * FROM `companies` where CoCode=?",[$res['CoCode']]);
         //dd($request);
+        $company = Company::where('CoCode',$res['CoCode'])
+                        ->get();
         return $company;
     }
 }

@@ -3,7 +3,7 @@
         <span class="navbar-brand" style="font-size:30px;cursor:pointer" @click="loadMenu()">&#9776; Menu</span>
 <!--side bar-->
     <div id="DynamicSideNav" class="sidenav">
-  <a href="javascript:void(0)" class="closeli" @click="closeNav()"><b-icon icon="x" font-scale="2"></b-icon></a>
+  <a class="closeli" @click="closeNav()"><b-icon icon="x" font-scale="2"></b-icon></a>
 
 <ul v-for="(menus,k) in menusp" :key="k">
     <li v-if="menus.route!=0" class="Menu2" @click.prevent="closeNav()">
@@ -30,7 +30,6 @@
        </div>  
 </ul>
 
-
 </div>
 <!--side bar End-->
 
@@ -42,7 +41,6 @@
 export default{
 mounted(){
     this.getListofMenu();
-   
 },
 
     data(){
@@ -97,6 +95,7 @@ openNav() {
                             child:[],
                     })}}
     //end loading all parent node
+
     //loading child node
     for(j=0;j<this.menusp.length;j++){
         for (i=0;i < LocationRoot.length; i++){   

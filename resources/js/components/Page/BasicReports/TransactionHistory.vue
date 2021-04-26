@@ -107,9 +107,13 @@
               <br>
               <br>
       </div>
+      <b-btn @click="excels()">export ----- dito lang na component</b-btn>
+      <br><br>
+      <toExcel @click="excels()"></toExcel>
+      <br>
 
        <div class="container-fluid">
-         <table class="table table-responsive" style="width:100%;height:700px;">
+         <table class="table table-responsive" id="mytable" style="width:100%;height:700px;">
           <thead class="thead-dark">
             <tr>
               <th scope="col">#</th>
@@ -144,7 +148,7 @@
               <td><br><br>{{item.name}}</td>
               <td><br><br>{{item.Status}}</td>
               <td class="subTable2">
-                <table style="width:100%;">
+                <table id="mytable2" style="width:100%;">
                 <thead>
                     <tr>
                       <th scope="col"><small><b>Model</b></small></th>
@@ -189,10 +193,13 @@
 
 <script>
 
+import XLSX from 'xlsx';
 import MenuList from '../../Page/Sales/MainInvoice2';
 import CustomerModal from '../../Modals/CustomerModal.vue';
 import DevicesModal from '../../Modals/DevicesModal.vue';
 import EmployeeModal from '../../Modals/EmployeeModal.vue';
+
+import toExcel from '../../component/toExcel.vue'
 
 export default {
     components: {
@@ -200,6 +207,7 @@ export default {
         CustomerModal,
         DevicesModal,
         EmployeeModal,
+        toExcel
     },
 
     data(){
@@ -438,6 +446,29 @@ export default {
           this.load_item();
           this.Load_stocks();
       },
+      excels(){
+         var workbook = XLSX.utils.book_new();
+        
+        //var worksheet_data  =  [['hello','world']];
+        //var worksheet = XLSX.utils.aoa_to_sheet(worksheet_data);
+      
+        var worksheet_data  = document.getElementById("mytable");
+        var worksheet_data2  = document.getElementById("mytable2");
+
+        var worksheet = XLSX.utils.table_to_sheet(worksheet_data);
+        var worksheet2 = XLSX.utils.table_to_sheet(worksheet_data2);
+        
+        workbook.SheetNames.push("Test");
+        workbook.Sheets["Test"] = worksheet;
+
+        workbook.SheetNames.push("Test2");
+        workbook.Sheets["Test2"] = worksheet2;
+      
+         this.exportExcelFile(workbook);
+      },
+      exportExcelFile(workbook) {
+    return XLSX.writeFile(workbook, "bookName.xlsx");
+      }
 
 
     }

@@ -109,7 +109,7 @@
       </div>
       <b-btn @click="excels()">export ----- dito lang na component</b-btn>
       <br><br>
-      <toExcel @click="excels()"></toExcel>
+      <toExcel></toExcel>
       <br>
 
        <div class="container-fluid">

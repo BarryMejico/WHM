@@ -107,9 +107,8 @@
               <br>
               <br>
       </div>
-      <b-btn @click="excels()">export ----- dito lang na component</b-btn>
-      <br><br>
-      <toExcel></toExcel>
+     
+      <toExcel :array1 = this.stocks></toExcel>
       <br>
 
        <div class="container-fluid">
@@ -193,7 +192,7 @@
 
 <script>
 
-import XLSX from 'xlsx';
+
 import MenuList from '../../Page/Sales/MainInvoice2';
 import CustomerModal from '../../Modals/CustomerModal.vue';
 import DevicesModal from '../../Modals/DevicesModal.vue';
@@ -446,30 +445,7 @@ export default {
           this.load_item();
           this.Load_stocks();
       },
-      excels(){
-         var workbook = XLSX.utils.book_new();
-        
-        //var worksheet_data  =  [['hello','world']];
-        //var worksheet = XLSX.utils.aoa_to_sheet(worksheet_data);
-      
-        var worksheet_data  = document.getElementById("mytable");
-        var worksheet_data2  = document.getElementById("mytable2");
-
-        var worksheet = XLSX.utils.table_to_sheet(worksheet_data);
-        var worksheet2 = XLSX.utils.table_to_sheet(worksheet_data2);
-        
-        workbook.SheetNames.push("Test");
-        workbook.Sheets["Test"] = worksheet;
-
-        workbook.SheetNames.push("Test2");
-        workbook.Sheets["Test2"] = worksheet2;
-      
-         this.exportExcelFile(workbook);
-      },
-      exportExcelFile(workbook) {
-    return XLSX.writeFile(workbook, "bookName.xlsx");
-      }
-
+    
 
     }
 }

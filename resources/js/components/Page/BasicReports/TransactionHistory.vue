@@ -100,17 +100,16 @@
                   <button class="btn btn-outline-info" @click.prevent="Search()">Load</button>
                 </div>
                 <div class="col">
-                  <button class="btn btn-outline-danger" @click.prevent="reloadthis()">Clear Filters</button>
+                   <button class="btn btn-outline-secondary" @click.prevent="reloadthis()">Clear Filters</button>
+                </div>
+                <div class="col">
+                  <toExcel :array1 = this.stocks></toExcel>
                 </div>
               </div>
-
-              <br>
-              <br>
+            
+          <br>
       </div>
      
-      <toExcel :array1 = this.stocks></toExcel>
-      <br>
-
        <div class="container-fluid">
          <table class="table table-responsive" id="mytable" style="width:100%;height:700px;">
           <thead class="thead-dark">

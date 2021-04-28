@@ -1,6 +1,6 @@
 <template>
 <div id="toExcel">
-    <b-btn @click="excels()"> Export to Excel</b-btn>
+    <b-btn @click="excels()" variant="outline-success"> Export to Excel</b-btn>
 </div>
 
 </template>

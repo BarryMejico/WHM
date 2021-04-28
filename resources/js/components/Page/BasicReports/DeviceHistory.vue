@@ -10,6 +10,7 @@
                   </div>
             </div>
         </div>
+
         <div class="row">
             <div class="col">
                 <input type="text" v-model="deviceCode">       
@@ -17,15 +18,19 @@
             <div class="col" style="padding-top:10px;">
                 <button @click.prevent="LoadHistory">load</button>
             </div>
+            <div class="col" style="padding-top:10px;">
+                <toExcel :array1 = this.stocks></toExcel>
+            </div>
         </div>
+
     </div>
+
 
     <div class="container-fluid">
 
-
         <div class="row justify-content-center">
             <div class="col"></div>
-            <div class="col-md-9">
+            <div class="col-md-10">
                         <table class="table" style="width:100%;">
                             <thead class="thead-dark">
                                 <tr>
@@ -67,10 +72,16 @@
 </div>
 </template>
 <script>
+
+import toExcel from '../../component/toExcel.vue'
+
  export default {
+     components:{
+         toExcel
+     },
      data(){
          return{
-             stocks:[],
+            stocks:[],
             deviceCode:'root-001',
             invo:[],
             inoDetails:[],

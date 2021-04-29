@@ -1,39 +1,45 @@
 <template>
-    <div>
-        <span class="navbar-brand" style="font-size:30px;cursor:pointer" @click="loadMenu()">&#9776; Menu</span>
+    <div class="a">
+        <span class="navbar-brand" style="font-size:30px;cursor:pointer" @click="loadMenu()" >&#9776; Menu</span>
 <!--side bar-->
     <div id="DynamicSideNav" class="sidenav">
-  <a href="javascript:void(0)" class="closeli" @click="closeNav()"><b-icon icon="x" font-scale="2"></b-icon></a>
+        <a href="javascript:void(0)" class="closeli" @click="closeNav()"><b-icon icon="x" font-scale="2"></b-icon></a>
 
-<ul v-for="(menus,k) in menusp" :key="k">
-    <li v-if="menus.route!=0" class="Menu2">
-        <router-link  :to="{path: menus.route}">
-            <b-icon :icon="menus.icon" font-scale="2"></b-icon>
-                        {{menus.Description}}
-        </router-link>
-    </li>
+        <ul v-for="(menus,k) in menusp" :key="k">
+            <li v-if="menus.route!=0" class="Menu2">
+                <router-link  :to="{path: menus.route}">
+                    <b-icon :icon="menus.icon" font-scale="2"></b-icon>
+                                {{menus.Description}}
+                </router-link>
+            </li>
 
-     <li v-if="menus.route==0" data-toggle="collapse" :data-target="'#s'+ menus.id" class="Menu">
-            <b-icon :icon="menus.icon" font-scale="2"></b-icon>
-                        {{menus.Description}}
-        
-    </li>
-       <div  :id="'s' + menus.id" class="collapse">
-        <ul>
-            <li  v-for="(smenu,i) in menus.child" :key="i" class="subMenus">
-                 <router-link  :to="{path: smenu.route}">
-                <b-icon :icon="smenu.icon" font-scale="2"></b-icon>
-                {{smenu.Description}}
-                 </router-link>
-                </li>
+            <li v-if="menus.route==0" data-toggle="collapse" :data-target="'#s'+ menus.id" class="Menu">
+                    <b-icon :icon="menus.icon" font-scale="2"></b-icon>
+                                {{menus.Description}}
+                
+            </li>
+            <div  :id="'s' + menus.id" class="collapse">
+                <ul>
+                    <li  v-for="(smenu,i) in menus.child" :key="i" class="subMenus">
+                        <router-link  :to="{path: smenu.route}">
+                        <b-icon :icon="smenu.icon" font-scale="2"></b-icon>
+                        {{smenu.Description}}
+                        </router-link>
+                        </li>
+                </ul>
+            </div>  
         </ul>
-       </div>  
-</ul>
+        <br>
 
 
-</div>
+        <div id="footer1" class="fixed-bottom">
+            <h5>Footer</h5>
+        </div>
+
+    </div>
+
+   
 <!--side bar End-->
-
 
     </div>
 </template>
@@ -114,4 +120,19 @@ openNav() {
 }
 }
 </script>
+<style scoped>
+
+    #footer1 {
+        position: relative;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        padding: 1rem;
+        color:white;
+        text-align: center;
+        background-color: #292b2c;
+    }
+
+
+</style>
 

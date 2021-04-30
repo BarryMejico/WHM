@@ -3,7 +3,7 @@
         <span class="navbar-brand" style="font-size:30px;cursor:pointer" @click="loadMenu()" >&#9776; Menu</span>
 <!--side bar-->
     <div id="DynamicSideNav" class="sidenav">
-  <a class="closeli" @click="closeNav()"><b-icon icon="x" font-scale="2"></b-icon></a>
+        <a class="closeli" @click="closeNav()"><b-icon icon="x" font-scale="2"></b-icon></a>
 
 <ul v-for="(menus,k) in menusp" :key="k">
     <li v-if="menus.route!=0" class="Menu2" @click.prevent="closeNav()">
@@ -27,6 +27,8 @@
                  </router-link>
                 </li>
         </ul>
+        </div>
+</ul>
         <br>
 
 
@@ -35,11 +37,11 @@
         </div>
 
     </div>
-
+    </div>
    
 <!--side bar End-->
 
-    </div>
+    
 </template>
 
 <script>

@@ -14,51 +14,51 @@ class AddCompanyToData extends Migration
     public function up()
     {
         Schema::table('customers', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('CoCode');
+            $table->string('CoCode')->nullable();
             $table->foreign('CoCode')->references('CoCode')->on('companies')->onDelete('cascade');
         });
 
         Schema::table('items', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('CoCode');
+            $table->string('CoCode')->nullable();
             $table->foreign('CoCode')->references('CoCode')->on('companies')->onDelete('cascade');
         });
 
         Schema::table('vendor_models', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('CoCode');
+            $table->string('CoCode')->nullable();
             $table->foreign('CoCode')->references('CoCode')->on('companies')->onDelete('cascade');
         });
 
         Schema::table('po_lists', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('CoCode');
+            $table->string('CoCode')->nullable();
             $table->foreign('CoCode')->references('CoCode')->on('companies')->onDelete('cascade');
         });
 
         Schema::table('receiving_lists', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('CoCode');
+            $table->string('CoCode')->nullable();
             $table->foreign('CoCode')->references('CoCode')->on('companies')->onDelete('cascade');
         });
 
         Schema::table('sales', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('CoCode');
+            $table->string('CoCode')->nullable();
             $table->foreign('CoCode')->references('CoCode')->on('companies')->onDelete('cascade');
         });
 
         Schema::table('stocks_lists', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('CoCode');
+            $table->string('CoCode')->nullable();
             $table->foreign('CoCode')->references('CoCode')->on('companies')->onDelete('cascade');
         });
 

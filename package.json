@@ -16,7 +16,8 @@
     "sweetalert2": "^10.14.0",
     "vue-numeral-filter": "^2.0.0",
     "vue-pwa-install": "^1.1.0",
-    "vue-router": "^3.4.5"
+    "vue-router": "^3.4.5",
+    "xlsx": "^0.16.9"
   },
   "devDependencies": {
     "@vue/cli-plugin-pwa": "^4.5.11",

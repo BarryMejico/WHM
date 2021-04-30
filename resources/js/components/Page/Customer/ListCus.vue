@@ -10,6 +10,15 @@
             </div>
       </div>
     </div>
+
+
+     <div class="row">
+          <div class="col"></div>
+          <div class="col-md-2">
+            <toExcel :array1 = this.POs.data></toExcel>
+          </div>
+        </div>
+        <br>
      
     <div class="row">
         <div class="col-md-2"></div>
@@ -118,9 +127,13 @@
 <script>
 import MenuList from '../Customer/MainCus'
 import Swal from 'sweetalert2'
+
+import toExcel from '../../component/toExcel.vue';
+
 export default {
     components: {
-     MenuList
+     MenuList,
+     toExcel
     },
 
 

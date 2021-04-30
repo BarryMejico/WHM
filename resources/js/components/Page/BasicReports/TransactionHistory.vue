@@ -100,16 +100,18 @@
                   <button class="btn btn-outline-info" @click.prevent="Search()">Load</button>
                 </div>
                 <div class="col">
-                  <button class="btn btn-outline-danger" @click.prevent="reloadthis()">Clear Filters</button>
+                   <button class="btn btn-outline-secondary" @click.prevent="reloadthis()">Clear Filters</button>
+                </div>
+                <div class="col">
+                  <toExcel :array1 = this.stocks></toExcel>
                 </div>
               </div>
-
-              <br>
-              <br>
+            
+          <br>
       </div>
-
+     
        <div class="container-fluid">
-         <table class="table table-responsive" style="width:100%;height:700px;">
+         <table class="table table-responsive" id="mytable" style="width:100%;height:700px;">
           <thead class="thead-dark">
             <tr>
               <th scope="col">#</th>
@@ -144,7 +146,7 @@
               <td><br><br>{{item.name}}</td>
               <td><br><br>{{item.Status}}</td>
               <td class="subTable2">
-                <table style="width:100%;">
+                <table id="mytable2" style="width:100%;">
                 <thead>
                     <tr>
                       <th scope="col"><small><b>Model</b></small></th>
@@ -189,10 +191,13 @@
 
 <script>
 
+
 import MenuList from '../../Page/Sales/MainInvoice2';
 import CustomerModal from '../../Modals/CustomerModal.vue';
 import DevicesModal from '../../Modals/DevicesModal.vue';
 import EmployeeModal from '../../Modals/EmployeeModal.vue';
+
+import toExcel from '../../component/toExcel.vue'
 
 export default {
     components: {
@@ -200,6 +205,7 @@ export default {
         CustomerModal,
         DevicesModal,
         EmployeeModal,
+        toExcel
     },
 
     data(){
@@ -438,7 +444,7 @@ export default {
           this.load_item();
           this.Load_stocks();
       },
-
+    
 
     }
 }

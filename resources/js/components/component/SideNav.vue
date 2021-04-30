@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <span class="navbar-brand" style="font-size:30px;cursor:pointer" @click="loadMenu()">&#9776; Menu</span>
+    <div class="a">
+        <span class="navbar-brand" style="font-size:30px;cursor:pointer" @click="loadMenu()" >&#9776; Menu</span>
 <!--side bar-->
     <div id="DynamicSideNav" class="sidenav">
   <a class="closeli" @click="closeNav()"><b-icon icon="x" font-scale="2"></b-icon></a>
@@ -27,12 +27,17 @@
                  </router-link>
                 </li>
         </ul>
-       </div>  
-</ul>
+        <br>
 
-</div>
+
+        <div id="footer1" class="fixed-bottom">
+            <h5>Footer</h5>
+        </div>
+
+    </div>
+
+   
 <!--side bar End-->
-
 
     </div>
 </template>
@@ -113,4 +118,19 @@ openNav() {
 }
 }
 </script>
+<style scoped>
+
+    #footer1 {
+        position: relative;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        padding: 1rem;
+        color:white;
+        text-align: center;
+        background-color: #292b2c;
+    }
+
+
+</style>
 

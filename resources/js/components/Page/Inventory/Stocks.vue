@@ -10,6 +10,14 @@
         </div>
       </div>
 
+       <div class="row">
+          <div class="col"></div>
+          <div class="col-md-2">
+            <toExcel :array1 = this.stocks></toExcel>
+          </div>
+        </div>
+        <br>
+
       <div class='row'>
           <div class="col-lg-12">
             <table class="table" style="width:100%;">
@@ -46,10 +54,14 @@
   </div>
 </template>
 <script>
+
 import MenuList from '../MainPO';
+import toExcel from '../../component/toExcel';
+
 export default {
   components:{
-     MenuList
+     MenuList,
+     toExcel
   },
     data(){
         return{

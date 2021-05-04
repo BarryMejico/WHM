@@ -39,6 +39,8 @@ import companyInvites from './components/Page/companyInvite';
 
 import Sidenav from './components/component/Sidenav';
 
+import adminAuth from './components/component/adminAuth';
+
 import { before } from 'lodash';
 export default{
     mode: 'history',
@@ -376,6 +378,11 @@ export default{
                 return next({name: '/login_'})
             })
         }
+    },
+    {
+        path:'/adminAuth',
+        component: adminAuth
+       
     },
 ]
 }

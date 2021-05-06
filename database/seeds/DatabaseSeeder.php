@@ -10,10 +10,7 @@ class DatabaseSeeder extends Seeder
      * @return void
      */
     public function run()
-    {
-        
-
-        
+    {  
 
         DB::table('locaions')->insert([
             'code'=>'0',

@@ -22,7 +22,10 @@ class SalesController extends Controller
             $SalesCode=$input['Invoice'];
         }
 
+        //----for taging to specific user/s
         $UserIn=getUser()->id;
+        $UserCoCode=getUser()->CoCode;
+        //---------------
 
         $REQUEST->validate([
         'PO_total'=>'required',
@@ -38,7 +41,11 @@ class SalesController extends Controller
         'Created_by'=>$UserIn,
         'Status'=>$input['Status'],
         'Reviewed_by'=>'',
-        'Ccode'=>$input['Ship_to'],          
+        'Ccode'=>$input['Ship_to'],  
+        //----taging to specific user/s
+        'user_id' => $UserIn,
+        'CoCode' => $UserCoCode,
+        //---------------        
         ]);
         $PO->save();
 
@@ -159,6 +166,10 @@ class SalesController extends Controller
     }
 
     public function GetJointInvoice(Request $request){
+        //----for taging to specific user/s
+        $UserIn=getUser()->id;
+        $UserCoCode=getUser()->CoCode;
+        //---------------
         $search=DB::table('sales_details')
         ->join('sales', 'sales.invoice', '=', 'sales_details.invoice')
         ->join('employees', 'employees.Ecode', '=', 'sales_details.RepairedbyCode')
@@ -166,8 +177,11 @@ class SalesController extends Controller
         ->join('users', 'users.id', '=', 'sales.Created_by')
         ->join('payments', 'payments.invoice', '=', 'sales_details.invoice')
         ->join('customers', 'customers.Ccode', '=', 'sales.Ccode')
-
+        ->join('companies', 'sales.CoCode', '=', 'companies.CoCode')
+        
+        ->where('sales.CoCode', '=', $UserCoCode)
         ->where('sales_details.invoice', $request['invoice'])
+        
 
         ->select('sales_details.*',
                  'sales.*',
@@ -185,6 +199,10 @@ class SalesController extends Controller
     }
 
     public function SearchTrans(Request $request){
+        //----for taging to specific user/s
+        $UserIn=getUser()->id;
+        $UserCoCode=getUser()->CoCode;
+        //---------------
         
         $search = DB::table('sales_details')
         ->join('sales', 'sales.invoice', '=', 'sales_details.invoice')
@@ -193,7 +211,9 @@ class SalesController extends Controller
         ->join('users', 'users.id', '=', 'sales.Created_by')
         ->join('payments', 'payments.invoice', '=', 'sales_details.invoice')
         ->join('customers', 'customers.Ccode', '=', 'sales.Ccode')
+        ->join('companies', 'sales.CoCode', '=', 'companies.CoCode')
         
+        ->where('sales.CoCode', '=', $UserCoCode)
         ->where('sales.Status', 'like', "%{$request['Status']}%")
         ->where('sales.Ccode', 'like', "%{$request['Ccode']}%")
         ->where('sales.Created_by', 'like', "%{$request['Createdby']}%")
@@ -205,6 +225,7 @@ class SalesController extends Controller
         ->whereDate('sales_details.created_at',"<=" ,$request['dateto'])
         ->whereDate('sales_details.created_at',">=" ,$request['datefrom'])
         ->whereNotNull('sales_details.DeviceStatus')
+        
 
         ->select('sales.updated_at',
                     'customers.Customer',

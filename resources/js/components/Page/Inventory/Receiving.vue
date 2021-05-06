@@ -58,7 +58,7 @@
               <div class="col-lg-2">
                 <br>
                 <br>
-                  <button type="button" class="btn btn-info" style="margin-bottom:10px;">Print</button>
+                  <button type="button" @click="Checking" class="btn btn-info" style="margin-bottom:10px;">Print</button>
                   <items-modal @SelectedItems="Selected_Item" :disabled="disabled == 1"></items-modal>
               
                  <!--Status-->        
@@ -179,7 +179,7 @@
           <div class="form-group">		
                     <label>Item Code</label>	
                     
-										<input type="text" id='Vcode' v-model="Customer">
+										<input type="text" id='Vcode2' v-model="Customer">
 <ul class="list-group">
   <li class="list-group-item d-flex justify-content-between align-items-center" 
     v-for="(Customer, k) in List_Customer" :key="k">
@@ -282,10 +282,14 @@ export default {
     },
 
     methods:{
+
+      Checking(){
+        console.log(this.po_items);
+      },
       
       Selected_Item(event){
          var code=event['Code'],Name=event['Name'],Unit=event['Unit'];
-        var i,unitCost;
+        var i,unitCost,gQTY;
         var meron = false;
         var wala = false;
         //console.log(this.po_items);
@@ -294,6 +298,7 @@ export default {
          for (i=0;i < this.po_items2.length; i++){
             if(this.po_items2[i]['Icode']==code){
               unitCost=this.po_items2[i]['UnitCost'];
+              gQTY=this.po_items2[i]['expected'];
               meron = true;
             }
         }
@@ -307,8 +312,10 @@ export default {
               })
         }
         else{
+
             if (this.po_items[0]['Icode']=="")
         {this.po_items.splice(0, 1);}
+
           var j;
           for (j=0;j<=this.po_items.length-1; j++){
             if(this.po_items[j]['Icode']==code || this.po_items[j]['Icode']==""){
@@ -334,13 +341,13 @@ export default {
                 Qty:1,
                 UnitCost:unitCost,
                 Tcost:unitCost,
+                R_Qty:gQTY,
               });
             }
         }
-            //this.tryconvert=Object.assign({}, this.po_items[this.po_items.length-1]);
-            //console.log(this.tryconvert);
+            
             this.calculateLineTotal(this.po_items[this.po_items.length-1]);
-            //this.calculateLineTotal(this.tryconvert);
+             
             this.closeModal();
       },
 
@@ -378,7 +385,6 @@ export default {
           .then(
               (response)=>{
                   this.List_Vendor=response.data;
-                  
               }
           )
           .catch()
@@ -455,10 +461,11 @@ export default {
 
         chckQty(invoice_product){
           var i;
-          for (i=0;i < this.po_items2.length; i++){
-            if(this.po_items2[i]['Icode']==invoice_product.Icode){
-              if( parseFloat(this.po_items2[i]['Qty'])< parseFloat(invoice_product.Qty)){
-                invoice_product.Qty=this.po_items2[i]['Qty'];
+          //for (i=0;i < this.po_items.length; i++){
+            //if(this.po_items[i]['Icode']==invoice_product.Icode){
+               
+              if( parseFloat(invoice_product.R_Qty)< parseFloat(invoice_product.Qty)){
+                invoice_product.Qty=invoice_product.R_Qty;
 
                  Swal.fire({
                           title: 'Qty is greater than expected',
@@ -470,8 +477,8 @@ export default {
               }
               else{
               }
-            }
-        }
+            //}
+        //}
 
           this.calculateLineTotal(invoice_product)
         },
@@ -498,7 +505,7 @@ export default {
         },
 
         saveform(){
-          var i,j;
+         
               Swal.fire({
                 title: 'Confirmation',
                 text: 'Are you sure with the following details of your received purchase?',
@@ -508,29 +515,27 @@ export default {
                 cancelButtonText: 'No'
               }).then((result) => {
                 if (result.value) {
-                   for(i=0;i<=this.po_items.length-1;i++) {console.log(i);
-                     for(j=0;j<=this.po_items2.length-1;j++) {console.log(j);
-                    if(this.po_items[i]['Icode']==this.po_items2[j]['Icode']){
-                      
-                     if(this.po_items[i]['Qty']!=this.po_items2[j]['Qty']){
-                      // alert('items are lesthan expected cant be save!!')
-
-                        Swal.fire({
-                          title: 'Oops!',
-                          text:'items are less than expected, can`t be save',
-                          icon: 'warning',
-                          showCancelButton: true,
-                          showConfirmButton: false 
-                        })
-                       
-                       return 0;
+                   var i,j,countG=0;
+                   var isDone=false;
+                   for(i=0;i<=this.po_items2.length-1;i++){
+                     if(this.po_items2[i]['expected']==0){
+                          countG=countG+1;
                      }
-
                      else{
-
+                     for(j=0;j<=this.po_items.length-1;j++){
+                          
+                       if(this.po_items2[i]['Icode']==this.po_items[j]['Icode'] && this.po_items2[i]['expected']==this.po_items[j]['Qty']){
+                          countG=countG+1;
+                         
+                       }
                      }
-              
-              }}}
+                     }
+                   }
+
+                   if (this.po_items2.length==countG){
+                     isDone=true;
+                   }
+
              axios.post('/api/SaveReceived', {
               po_items:this.po_items, 
               PO_total:this.PO_total,
@@ -538,7 +543,15 @@ export default {
               
               })
             .then(()=>{
-               this.clearData();
+               
+                if(isDone){
+                  axios.post('/api/ChangeStatusFromReceived',{PO:this.po,Status:"Done"})
+                           .then()
+                           .catch()
+                           }
+
+                           this.clearData();
+
             })
             .catch((error)=>{
                 this.errors=error.response.data.errors;
@@ -569,40 +582,28 @@ export default {
         },
 
         Load_PO(){
-          axios.get('/api/GetPo', {params:{PO:this.$route.params.PO_Load}})
+          axios.get('/api/GetPoforReceiving', {params:{PO:this.$route.params.PO_Load}})
           .then(
               (response)=>{
-
                   this.po_items2=response.data;
-                  
-                  var i;
-                  for (i=0; i < this.po_items2.length; i++){
-                      this.po_items2[i]['Tcost']=this.po_items2[i]['Qty']*this.po_items2[i]['UnitCost'];
-                      //this.calculateTotal(this.po_items2[i]['Tcost']);
-                  }
-
-                  //this.po_items=this.po_items2;
-                  
-                  //this.Load_idescription();
+                      axios.get('/api/ReceivedItems', {params:{PO:this.$route.params.PO_Load}})
+                      .then((res)=>{
+                        var i,j;
+                        for(i=0;i<=this.po_items2.length-1;i++){
+                          for(j=0;j<=res.data.length-1;j++){
+                          if(this.po_items2[i]['Icode']==res.data[j]['Icode']){
+                              this.po_items2[i]['expected']= parseFloat(this.po_items2[i]['expected'])-parseFloat(res.data[j]['received']);
+                          }
+                        }}
+                        
+                      })
                   }
           )
          .catch((error)=>{
                 this.errors=error.response.data.errors;
             })
-        },
 
-        Load_idescription(){
-         
-          var i,j;
-                  for (i=0; i < this.po_items.length; i++){   
-                      
-                    for (j=0; j < this.items.length; j++){
-                      
-                      if (this.po_items[i]['Icode']===this.items[j]['Code']){
-                      this.po_items[i]['idescription']=this.items[j]['Name'];  
-                      this.po_items[i]['iunit']=this.items[j]['Unit']; 
-                  }}}
-        
+            
         },
 
       Load_Details(){
@@ -652,9 +653,6 @@ export default {
         },
          load_Selected_customer(cus){
         var i;
-
-        
-
         for(i=0;i<=this.List_Customer.length-1;i++){
           
 

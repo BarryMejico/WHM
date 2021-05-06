@@ -8,7 +8,7 @@ class ReceivingDetails extends Model
 {
     protected $fillable = [
         'Icode',
-        'Qty',
+        'R_Qty',
         'UnitCost',
         'ReceivingCode', 
         'PO',

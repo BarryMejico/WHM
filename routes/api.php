@@ -41,6 +41,7 @@ Route::get('LiveSearchVen','VendorController@Search');
 
 Route::get('LoadPo','PoDetailsControl@LoadPo');
 Route::get('GetPo','PoDetailsControl@GetPo');
+Route::get('GetPoforReceiving','PoDetailsControl@GetPoReceived');
 Route::get('GetPoHead','PoDetailsControl@GetPoHead');
 Route::post('DeletePOItem','PoDetailsControl@DeleteItem');
 Route::post('SavePo','PoDetailsControl@store');
@@ -70,6 +71,8 @@ Route::post('saveItemtoLoaction','LocationDetailsController@save');
 Route::get('stocks','receivingController@stocks');
 Route::post('SaveReceived','receivingController@store');
 Route::get('getitem','receivingController@item');
+Route::get('ReceivedItems','receivingController@ReceivedItems');
+Route::post('ChangeStatusFromReceived','receivingController@ChangeStatus');
 
 Route::post('SaveCusDevice','DeviceController@SaveCusDevice');
 Route::get('getDevices','DeviceController@GetCusDevice');

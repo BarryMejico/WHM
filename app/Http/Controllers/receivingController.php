@@ -42,17 +42,12 @@ class receivingController extends Controller
         ]);
         
         $countarray = count($input['po_items'])-1;
-        //dd($countarray);
-        
-        DB::table('receiving_details')->where('PO',$input['PO'])->delete();
+         
 
             for($i=0;$i<=$countarray;$i++){          
                      $newData = ReceivingDetails::updateOrCreate([
-                        'Icode' => $input['po_items'][$i]['Icode'],
-                        'PO' => $input['PO']
-                     ],[
                     'Icode' => $input['po_items'][$i]['Icode'],
-                    'Qty' => $input['po_items'][$i]['Qty'],
+                    'R_Qty' => $input['po_items'][$i]['Qty'],
                     'UnitCost' => '',
                     'PO' => $input['PO'],
                     'ReceivingCode'=>$ReceivingCode,
@@ -75,9 +70,9 @@ class receivingController extends Controller
             'UnitCost'=>'',
             'Location'=>'',
             //----taging to specific user/s
-        'user_id' => $UserIn,
-        'CoCode' => $UserCoCode,
-        //---------------
+            'user_id' => $UserIn,
+            'CoCode' => $UserCoCode,
+            //---------------
         ]);
 
                         }else{
@@ -99,16 +94,16 @@ class receivingController extends Controller
                    
                 } $PO->save();
 
-                $status = DB::table('po_lists')
-                ->where('PO',$input['PO'])
-                ->update(['Status'=>"Done"],['Reviewed_by'=>$UserIn]);
+                // $status = DB::table('po_lists')
+                // ->where('PO',$input['PO'])
+                // ->update(['Status'=>"Done"],['Reviewed_by'=>$UserIn]);
 
 }
 
 
 public function ChangeStatus(Request $request){
-    $input = $request->all();
-        //dd($input['PO']);
+        $input = $request->all();
+
         $UserIn=getUser()->id;
         
         $request->validate([
@@ -131,12 +126,30 @@ public function item(Request $request){
 
 public function stocks(){
     $Cocode=getUser()->CoCode;
-    $stocks=DB::table('receiving_lists')
+    $stocks=DB::table('stocks_lists')
     ->where('CoCode', '=', $Cocode)
     ->get();
-    
     return $stocks;
 }
+
+public function ReceivedItems(Request $request){
+    //----for taging to specific user/s
+    $UserIn=getUser()->id;
+    $UserCoCode=getUser()->CoCode;
+    //---------------
+    $search=DB::table('receiving_details')
+    
+    ->where('receiving_details.PO', $request['PO'])
+    ->select('Icode',
+        DB::raw('SUM(receiving_details.R_Qty) as received')
+    )
+
+    ->groupBy('receiving_details.Icode')
+    ->get();
+
+    return $search;
+}
+
 
 
 }

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\poDetails; 
 use App\po_list;
+use App\ReceivingDetails; 
+use App\ReceivingList;
 use Illuminate\Support\Facades\DB;
 
 
@@ -74,6 +76,34 @@ public function GetPo(Request $request){
     $PO= DB::connection('mysql')->select("SELECT * FROM `po_details` where PO=?",[$request['PO']]);
     return $PO;
 }
+
+public function GetPoReceived(Request $request){
+    //----for taging to specific user/s
+    $UserIn=getUser()->id;
+    $UserCoCode=getUser()->CoCode;
+    //---------------
+    $search=DB::table('po_lists')
+    
+    ->join('po_details', 'po_details.PO', '=', 'po_lists.PO')
+    ->join('companies', 'po_lists.CoCode', '=', 'companies.CoCode')
+    ->join('items', 'items.Code', '=', 'po_details.Icode')
+        
+    ->where('po_lists.CoCode', $UserCoCode)
+    ->where('po_lists.PO', $request['PO'])
+
+    ->select(
+             'po_details.Qty as expected',
+             'po_details.*',
+             'po_lists.*',
+             'items.Name',
+             'items.Unit',
+    )
+    ->get();
+
+    
+    return $search;
+}
+
 
 public function GetPoHead(Request $request){
     $PO= DB::connection('mysql')->select("SELECT * FROM `po_lists` where PO=?",[$request['PO']]);

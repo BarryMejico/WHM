@@ -10,8 +10,8 @@
                   </div>
             </div>
         </div>
-     
-        
+
+
           <div class="row">
             <div class="col-md-2">
               <b-form-group label="From" label-for="datefrom">
@@ -24,7 +24,7 @@
               </b-form-group>
             </div>
             <div class="col-md-2">
-               <!--Status-->        
+               <!--Status-->
             <div class="dropdown">
                <b-form-group label="Status" label-for="x">
                  <button class="btn btn-secondary dropdown-toggle btn-sm" id="x" type="button" data-toggle="dropdown">
@@ -48,7 +48,7 @@
           <div class="row">
             <div class="col">
               <customer-modal id="CusModal" @SelectedCustomer="Selected_cus" :disabled="disabled"/><br>
-                <div class="form-inline">    
+                <div class="form-inline">
                   <div>
                     <b class="text-muted">Name:</b>
                     <h4>{{Customer}}</h4>
@@ -86,11 +86,11 @@
                 <option>Claimed</option>
                 <option>RTO</option>
                 <option>Open</option>
-              </b-select> 
+              </b-select>
             </div>
           </div>
-            
-  
+
+
               <br>
               <br>
               <br>
@@ -106,10 +106,10 @@
                   <toExcel :array1 = this.stocks></toExcel>
                 </div>
               </div>
-            
+
           <br>
       </div>
-     
+
        <div class="container-fluid">
          <table class="table table-responsive" id="mytable" style="width:100%;height:700px;">
           <thead class="thead-dark">
@@ -127,12 +127,12 @@
               <th scope="col" style="text-align:center;">
                Device Information
               </th>
-              
+
             </tr>
           </thead>
           <tbody>
-            
-            <tr v-for="(item, k) in stocks" :key="k">   
+
+            <tr v-for="(item, k) in stocks" :key="k">
               <th scope="row"><br><br>{{k}}</th>
               <td><a href="#load"><br><br>{{item.updated_at}}</a></td>
               <td>
@@ -157,7 +157,7 @@
                       <th scope="col"><small><b>Date Update</b></small></th>
                     </tr>
                 </thead>
-            
+
                 <tr v-for="(details,d) in item.items" :key="d">
                   <td>{{item.items[d][0].Icode }}</td>
                   <td>{{item.items[d][0].description }}</td>
@@ -178,19 +178,21 @@
           <td><b>Total</b></td>
           <td><b>{{GTPayment| numeral('0,0')}}</b></td>
           <td><b>{{GTBalance| numeral('0,0')}}</b></td>
-          
+
           </tr>
         </tbody>
       </table>
 
-   
+
     </div>
+
+    <Chart></Chart>
+
 
 </div>
 </template>
 
 <script>
-
 
 import MenuList from '../../Page/Sales/MainInvoice2';
 import CustomerModal from '../../Modals/CustomerModal.vue';
@@ -199,13 +201,17 @@ import EmployeeModal from '../../Modals/EmployeeModal.vue';
 
 import toExcel from '../../component/toExcel.vue'
 
+import Chart from '../../component/chart.vue'
+
+
 export default {
     components: {
         MenuList,
         CustomerModal,
         DevicesModal,
         EmployeeModal,
-        toExcel
+        toExcel,
+        Chart
     },
 
     data(){
@@ -233,7 +239,7 @@ export default {
             dateto:new Date().toISOString().substr(0, 10),
             Createdby:null,
             CreatedbyCode:null,
-    
+
             Status:null,
             Customer:null,
             add_Cus:null,
@@ -246,11 +252,11 @@ export default {
             DeviceStatus:null,
             model:null,
             DeviceName:null,
-            DifDay:0,
-            
+
+
         }
     },
-    
+
     beforeMount(){
         //this.load_data();
     },
@@ -258,13 +264,12 @@ export default {
     beforeUpdate(){
         //this.Load_idescription();
     },
-
     mounted(){
-     this.firstDate()
-      
+     this.firstDate();
     },
 
     methods:{
+
 
       CalculateGT(){
           this.GTBalance=0;
@@ -317,14 +322,14 @@ export default {
          this.DevUnit=event['Unit'];
          },
 
-      Selected_cus(event){        
+      Selected_cus(event){
                 this.add_Cus=event['Address'];
                 this.Customer=event['Customer'];
                 //this.Customer_code=event['id'];
                 this.Ccode=event['Ccode'];
       },
 
-        Search(){     
+        Search(){
           this.stocks=[];
             axios.get('/api/searchtramsaction',{params:{
               datefrom:this.datefrom,
@@ -351,7 +356,7 @@ export default {
                 console.log(err)
             })
 
-            
+
         },
 
         PresentationLoop(){
@@ -360,7 +365,7 @@ export default {
           //this.stocks2[0]=this.stocks[0]
           var meron=false;
           for(i=0;i<=this.stocks.length-1;i++){
-            
+
                 for(j=0;j<=this.stocks2.length-1;j++){
                   if(this.stocks2[j].invoice==this.stocks[i].invoice){
                       meron=true;
@@ -370,15 +375,15 @@ export default {
 
                   if (meron){
                       meron=false;
-                      
+
                   }
-                   else{         
-                     this.stocks2.push(this.stocks[i]); 
-                  }
-                  
+                   else{
+                     this.stocks2.push(this.stocks[i]);
                   }
 
-                
+                  }
+
+
                       for(j=0;j<=this.stocks2.length-1;j++){
                          var laman=[];
                         for(i=0;i<=this.stocks.length-1;i++){
@@ -422,20 +427,20 @@ export default {
 
         Load_idescription(){
           var i,j;
-          
-                  for (i=0; i < this.stocks.length; i++){   
+
+                  for (i=0; i < this.stocks.length; i++){
                  var D=this.stocks[i]['updated_at'];
                  var myDate = D.split(" ");
                  this.stocks[i]['updated_at']=myDate[0];
                  }
-        
+
         },
 
         load_item(){
         axios.get('/api/LoadItems')
         .then(
           (response)=>{
-            this.items=response.data;       
+            this.items=response.data;
           }
         )
       },
@@ -444,11 +449,12 @@ export default {
           this.load_item();
           this.Load_stocks();
       },
-    
+
+
 
     }
 }
-</script> 
+</script>
 <style scoped>
 .subTable {
 visibility: hidden !important;
@@ -492,5 +498,6 @@ table thead tr th {
   position: -webkit-sticky;
   top: 0;
   z-index: 2;
-} 
+}
+
 </style>

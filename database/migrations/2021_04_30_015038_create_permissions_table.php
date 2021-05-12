@@ -19,6 +19,7 @@ class CreatePermissionsTable extends Migration
             $table->string('permCode');
             $table->primary('permCode');
             $table->string('Description');
+            
         });
     }
 

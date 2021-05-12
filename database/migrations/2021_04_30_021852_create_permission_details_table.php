@@ -21,6 +21,9 @@ class CreatePermissionDetailsTable extends Migration
             
             $table->unsignedBigInteger('id')->nullable();
             $table->foreign('id')->references('id')->on('menus')->onDelete('cascade');
+
+            $table->string('CoCode')->nullable();
+            $table->foreign('CoCode')->references('CoCode')->on('companies')->onDelete('cascade');
         });
     }
 

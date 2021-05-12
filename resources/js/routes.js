@@ -41,6 +41,8 @@ import Sidenav from './components/component/Sidenav';
 
 import adminAuth from './components/component/adminAuth';
 
+import menus from './components/component/Menus';
+
 import { before } from 'lodash';
 export default{
     mode: 'history',
@@ -383,6 +385,19 @@ export default{
         path:'/adminAuth',
         component: adminAuth
        
+    },
+
+    {
+        path:'/menus',
+        component: menus,
+        name: 'menus',
+        beforeEnter:(to,from,next)=>{
+            axios.get('api/Authenticated').then(()=>{
+                next()
+            }).catch(()=>{
+                return next({name: '/login_'})
+            })
+        }
     },
 ]
 }

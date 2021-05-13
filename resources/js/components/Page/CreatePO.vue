@@ -356,12 +356,7 @@ export default {
 
       load_Selected_customer(cus){
         var i;
-
-        
-
         for(i=0;i<=this.List_Customer.length-1;i++){
-          
-
             if(this.List_Customer[i]['Ccode']==cus){ 
                 this.add_Cus=this.List_Customer[i]['Address'];
                 this.Customer=this.List_Customer[i]['Customer'];

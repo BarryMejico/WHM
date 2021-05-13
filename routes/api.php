@@ -102,4 +102,5 @@ Route::get('getNotif','InviteController@getNotif');
 Route::post('accepted','InviteController@accepted');
 
 Route::get('menu','MenuController@menu'); 
+Route::get('allmenu','MenuController@allmenu'); 
  

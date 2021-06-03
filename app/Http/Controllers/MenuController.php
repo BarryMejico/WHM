@@ -9,8 +9,20 @@ use Illuminate\Support\Facades\DB;
 class MenuController extends Controller
 {
     public function menu(){
+        $permCode=getUser()->permCode;
             $Menu= DB::table('permission_details')
             ->join('menus', 'menus.id', '=', 'permission_details.id')
+            ->where('permission_details.permCode',$permCode)
+            ->select('menus.*')
+            ->get();
+            return $Menu;
+    }
+
+    public function menufor(Request $request){
+        $permCode=$request->selected;
+            $Menu= DB::table('permission_details')
+            ->join('menus', 'menus.id', '=', 'permission_details.id')
+            ->where('permission_details.permCode',$permCode)
             ->select('menus.*')
             ->get();
             return $Menu;
@@ -18,7 +30,6 @@ class MenuController extends Controller
 
     public function allmenu(){
         $Menu= DB::table('menus')
-        
         ->get();
         return $Menu;
 }

@@ -34,7 +34,15 @@
                     <h6 class="text-muted">Search & Add Employee</h6>
                     <employee-modal/>
                     <!-- end company -->
-
+                    <!-- list of employee -->
+                    <ul class="list-group">
+                        <li class="list-group-item d-flex justify-content-between align-items-center" 
+                            v-for="(Employee, k) in employees" :key="k">
+                            <b>{{Employee.Employee}}</b> :
+                            <i>{{Employee.Position}}</i>
+                            <span class="badge badge-primary badge-pill">{{Employee.id}}</span>
+                        </li>
+                    </ul>
             </div>
             <div class="col">
                  <companyInvite style="margin-top:-25px;"/>
@@ -67,6 +75,7 @@ export default {
                 
             },
             // end company
+            employees:[],
         }
     },
     mounted(){
@@ -76,8 +85,8 @@ export default {
 
             axios.get('/api/getCompany',{params:{CoCode:this.user['CoCode']}})
             .then((res)=>{
-                
                 this.company.CompanyName=res.data[0]['CompanyName'];
+                this.load_employee()
             })
         })
     },
@@ -92,7 +101,22 @@ export default {
             .catch()
         },
         // end company
-    }
+
+         load_employee(){
+          axios.get('/api/LoadallEmployee')
+          .then(
+              (response)=>{
+                  this.employees=response.data;
+                  //this.pages=response.data;
+              }
+          )
+          .catch()
+      },
+    },
+
+      
+
+
 }
 </script>
 <style scoped>

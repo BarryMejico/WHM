@@ -29,8 +29,6 @@
     <a @click="Selected_cus(k)">{{Customer.Employee}}</a>
     <span class="badge badge-primary badge-pill">{{Customer.id}}</span>
   </li>
-  
- 
 </ul>
 <br>
 
@@ -218,8 +216,6 @@ sUser(){
 },
 
    load_customer(){
-        //this.cus=""
-        //console.log(this.selectedCus);
           axios.get('/api/LoadEmployee')
           .then(
               (response)=>{

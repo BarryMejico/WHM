@@ -48,9 +48,11 @@ accept(){
     axios.post('/api/setCompany',{CoCode:this.notif[0]['CoCode']})
             .then(()=>{
                      axios.post('/api/accepted',{id:this.notif[0]['id']})
-            .then(()=>{
-                    this.getnotif()
-            })
+                            .then(()=>{
+                                this.getnotif()
+                                
+                                axios.post('/api/SaveInvitedEmployee',{params:{Name_:this.Name_}})
+                            })
             })
 },
 

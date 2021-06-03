@@ -28,9 +28,22 @@ class EmployeesController extends Controller
     }
 
     public function LoadEmp(){
-        $Vendors=Employee::paginate(5);
-        //$Vendors=Customer::paginate(5);
-        return $Vendors;
+        $Employee=Employee::paginate(5);
+        return $Employee;
+}
+
+public function all_LoadEmp(){
+    $Employee=DB::table('employees')
+                ->leftJoin('users','users.id','=','employees.id')
+                ->select('users.id',
+                         'employees.Employee',
+                         'employees.CoCode',
+                         'users.permCode',
+                         'employees.Position',
+                )
+                ->get();
+    
+    return $Employee;
 }
 
 public function Search(Request $request){
@@ -44,4 +57,19 @@ public function Search(Request $request){
     return $search;
 }
 
+public function storeinvited(){  
+    $Code=Ucode();
+    $CoCode=getUser()->CoCode;
+    $Name_=getUser()->name;
+    $id_=getUser()->id;
+   
+    $Vendor = Employee::Create([
+        'Employee'=> $Name_, 
+        'Ecode'=>$Code,
+        'CoCode'=>$CoCode,
+        'id'=>$id_,
+        'Position'=>"Input position",
+    ]);
+    $Vendor->save();
+}
 }

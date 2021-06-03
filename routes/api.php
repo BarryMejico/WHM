@@ -89,7 +89,9 @@ Route::get('searchtramsaction','SalesController@SearchTrans');
 
 Route::get('SaveEmployee','EmployeesController@store'); 
 Route::get('LoadEmployee','EmployeesController@LoadEmp'); 
+Route::get('LoadallEmployee','EmployeesController@all_LoadEmp'); 
 Route::get('searchEmployee','EmployeesController@Search'); 
+Route::post('SaveInvitedEmployee','EmployeesController@storeinvited'); 
 
 Route::post('SaveCompany','CompanyController@SaveCompany');
 Route::get('getCompany','CompanyController@getCompany');
@@ -102,5 +104,6 @@ Route::get('getNotif','InviteController@getNotif');
 Route::post('accepted','InviteController@accepted');
 
 Route::get('menu','MenuController@menu'); 
+Route::get('menuforperma','MenuController@menufor'); 
 Route::get('allmenu','MenuController@allmenu'); 
  

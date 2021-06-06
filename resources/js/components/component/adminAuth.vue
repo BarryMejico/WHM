@@ -27,7 +27,7 @@
             </b-input-group>
         </b-modal>
         <br>
-        <br>
+
         <table class="table">
            <thead class="thead-dark">
                <th>Permission</th>
@@ -37,7 +37,7 @@
            <br>
            <tbody>
                <tr v-for="(menus,k) in menusp" :key="k">
-                <td><input type="checkbox" :checked='menus.box'/></td>
+                <td><input type="checkbox" :checked='menus.box' @click="changeStatus(k,'x')"/></td>
                    <td>{{menus.Description}}</td>
                    <td>
                    <ul>
@@ -52,6 +52,7 @@
                </tr>
            </tbody>
         </table>
+        <button @click="save()">save</button>
 
        
     </div>
@@ -88,8 +89,57 @@ export default{
     },
     methods:{
 
+        changeStatus(k,child){
+            if(child=='x'){
+                this.menusp[k]['box']=true;
+                console.log(this.menusp[k]['box']);
+                }
+            else{
+               this.menusp[k]['child'][child]['id'] =true;
+            }
+        },
+
+        save(){
+             axios
+            .post('/api/addpermiDetails',{params:{perma:"2121-06-040621100",id:"1"}})
+            .then(()=>{})
+
+            // // add Permission 
+            // axios
+            // .post('/api/addpermi')
+            // .then((res)=>{
+            //     // add permission details
+            //     var i,j;
+            //     for(i=0;i<=this.menusp.length-1;i++){
+            //                 if(this.menusp[i]['box']==true){
+            //                     axios
+            //                     .post('/api/addpermiDetails',{params:{perma:res.data,id:this.menusp[i]['id']}})
+            //                 }
+
+            //     for(j=0;j<=this.menusp[i]['child'].length-1;j++){
+            //                 if(this.menusp[i]['child'][j]['box']==true){
+            //                     axios
+            //                     .post('/api/addpermiDetails',{perma:res.data,id:this.menusp[i]['child'][j]['id']})
+            //                 }
+            //     }
+            //     }
+            //      // add permcode to employee
+
+            // })
+             
+           
+        },
+        negatib(){ var i,j;
+                for(i=0;i<=this.menusp.length-1;i++){
+                            this.menusp[i]['box']=false
+                for(j=0;j<=this.menusp[i]['child'].length-1;j++){
+                            this.menusp[i]['child'][j]['box']=false
+                }
+                }},
+
         loadpermi(){
-            console.log(this.selected)
+
+            this.negatib();
             axios
             .get('/api/menuforperma',{params:{selected:this.selected}})
             .then((res)=>{

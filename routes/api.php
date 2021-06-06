@@ -106,4 +106,6 @@ Route::post('accepted','InviteController@accepted');
 Route::get('menu','MenuController@menu'); 
 Route::get('menuforperma','MenuController@menufor'); 
 Route::get('allmenu','MenuController@allmenu'); 
- 
+
+Route::post('addpermi','PermissionController@addpermision');
+Route::post('addpermiDetails','PermissionController@addpermisionDetails');

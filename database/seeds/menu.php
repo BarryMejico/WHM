@@ -246,8 +246,99 @@ DB::table('permission_details')->insert([
 
 DB::table('permission_details')->insert([
     'permCode'=>'1',
+    'id'=>'3',            
+]);
+
+DB::table('permission_details')->insert([
+    'permCode'=>'1',
+    'id'=>'4',            
+]);
+DB::table('permission_details')->insert([
+    'permCode'=>'1',
+    'id'=>'5',            
+]);
+DB::table('permission_details')->insert([
+    'permCode'=>'1',
+    'id'=>'6',            
+]);
+DB::table('permission_details')->insert([
+    'permCode'=>'1',
+    'id'=>'7',            
+]);
+DB::table('permission_details')->insert([
+    'permCode'=>'1',
+    'id'=>'8',            
+]);
+DB::table('permission_details')->insert([
+    'permCode'=>'1',
     'id'=>'9',            
 ]);
+DB::table('permission_details')->insert([
+    'permCode'=>'1',
+    'id'=>'10',            
+]);
+DB::table('permission_details')->insert([
+    'permCode'=>'1',
+    'id'=>'11',            
+]);
+DB::table('permission_details')->insert([
+    'permCode'=>'1',
+    'id'=>'12',            
+]);
+DB::table('permission_details')->insert([
+    'permCode'=>'1',
+    'id'=>'13',            
+]);
+DB::table('permission_details')->insert([
+    'permCode'=>'1',
+    'id'=>'14',            
+]);
+DB::table('permission_details')->insert([
+    'permCode'=>'1',
+    'id'=>'15',            
+]);
+DB::table('permission_details')->insert([
+    'permCode'=>'1',
+    'id'=>'16',            
+]);
+DB::table('permission_details')->insert([
+    'permCode'=>'1',
+    'id'=>'17',            
+]);
+DB::table('permission_details')->insert([
+    'permCode'=>'1',
+    'id'=>'18',            
+]);
+DB::table('permission_details')->insert([
+    'permCode'=>'1',
+    'id'=>'19',            
+]);
+DB::table('permission_details')->insert([
+    'permCode'=>'1',
+    'id'=>'20',            
+]);
+DB::table('permission_details')->insert([
+    'permCode'=>'1',
+    'id'=>'21',            
+]);
+DB::table('permission_details')->insert([
+    'permCode'=>'1',
+    'id'=>'22',            
+]);
+DB::table('permission_details')->insert([
+    'permCode'=>'1',
+    'id'=>'23',            
+]);
+DB::table('permission_details')->insert([
+    'permCode'=>'1',
+    'id'=>'24',            
+]);
+DB::table('permission_details')->insert([
+    'permCode'=>'1',
+    'id'=>'25',            
+]);
+
+
 
  
     }

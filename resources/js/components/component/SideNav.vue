@@ -77,6 +77,7 @@ openNav() {
   },
   
   getListofMenu(){
+      
       axios
       .get('/api/menu')
       .then((res)=>{

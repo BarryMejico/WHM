@@ -17,6 +17,11 @@ class PermissionUser extends Migration
             $table->string('permCode')->nullable();
             $table->foreign('permCode')->references('permCode')->on('permissions')->onDelete('cascade');
         });
+
+        Schema::table('employees', function (Blueprint $table) {
+            $table->string('permCode')->nullable();
+            $table->foreign('permCode')->references('permCode')->on('permissions')->onDelete('cascade');
+        });
     }
 
     /**

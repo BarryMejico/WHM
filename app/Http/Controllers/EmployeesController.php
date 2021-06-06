@@ -23,6 +23,7 @@ class EmployeesController extends Controller
             'Ecode'=>$Code,
             'CoCode'=>$CoCode,
             'Position'=>"Input position",
+            'permCode'=>null,
         ]);
         $Vendor->save();
     }
@@ -69,6 +70,7 @@ public function storeinvited(){
         'CoCode'=>$CoCode,
         'id'=>$id_,
         'Position'=>"Input position",
+        'permCode'=>null,
     ]);
     $Vendor->save();
 }

@@ -109,3 +109,4 @@ Route::get('allmenu','MenuController@allmenu');
 
 Route::post('addpermi','PermissionController@addpermision');
 Route::post('addpermiDetails','PermissionController@addpermisionDetails');
+Route::post('activePerma','PermissionController@activePermaCode');

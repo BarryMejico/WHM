@@ -145,8 +145,6 @@ methods:{
             this.Cus.Unit=res.data[0]['Model'];
           this.$emit("SelectedDevice",this.Cus);
 
-          
-          
          } 
         )
         .catch()

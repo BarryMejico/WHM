@@ -279,7 +279,7 @@ export default {
                 DeciveName:Name,
                 Model:Unit,
                 Qty:1, 
-                DeviceStatus:"",
+                DeviceStatus:"Open",
                 Remarks:"",
          });
         }

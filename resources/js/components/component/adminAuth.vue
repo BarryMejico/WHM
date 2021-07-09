@@ -42,7 +42,7 @@
                    <td>
                    <ul>
             <li  v-for="(smenu,i) in menus.child" :key="i">
-                <input type="checkbox" :checked='smenu.box'/>
+                <input type="checkbox" :checked='smenu.box' @click="changeStatus(k,i)"/>
                 <b-icon :icon="smenu.icon" font-scale="2"></b-icon>
                 {{smenu.Description}}
             
@@ -63,6 +63,7 @@ import Swal from 'sweetalert2'
 export default{
     data(){
         return{
+        
             selected:'',
         options: [],
         items: [
@@ -95,37 +96,45 @@ export default{
                 console.log(this.menusp[k]['box']);
                 }
             else{
-               this.menusp[k]['child'][child]['id'] =true;
+               this.menusp[k]['child'][child]['box'] =true;
             }
         },
 
         save(){
-             axios
-            .post('/api/addpermiDetails',{params:{perma:"2121-06-040621100",id:"1"}})
-            .then(()=>{})
+           
+            //add Permission 
+            axios
+            .post('/api/addpermi')
+            .then((res)=>{
+                // add permission details
+                var i,j;
+                for(i=0;i<=this.menusp.length-1;i++){
+                            if(this.menusp[i]['box']==true){
+                                
+                                axios
+                                .post('/api/addpermiDetails',{params:{perma:res.data,id:this.menusp[i]['id']}})
+                                .then(()=>{
+                                   
+                                })
+                            }
+                                
+                             if(this.menusp[i]['child'].length!=0){
+                                      for(j=0;j<=this.menusp[i]['child'].length-1;j++){
+                                          console.log(this.menusp[i]['child'][j]['box'])
+                                            if(this.menusp[i]['child'][j]['box']==true){
+                                                axios
+                                                .post('/api/addpermiDetails',{params:{perma:res.data,id:this.menusp[i]['child'][j]['id']}})
+                                            }
+                }}
 
-            // // add Permission 
-            // axios
-            // .post('/api/addpermi')
-            // .then((res)=>{
-            //     // add permission details
-            //     var i,j;
-            //     for(i=0;i<=this.menusp.length-1;i++){
-            //                 if(this.menusp[i]['box']==true){
-            //                     axios
-            //                     .post('/api/addpermiDetails',{params:{perma:res.data,id:this.menusp[i]['id']}})
-            //                 }
+              
+                }
+                 // add permcode to employee
+                 
+                 axios
+                 .post('/api/activePerma',{params:{permCode:res.data,id:this.selected['ID']}})
 
-            //     for(j=0;j<=this.menusp[i]['child'].length-1;j++){
-            //                 if(this.menusp[i]['child'][j]['box']==true){
-            //                     axios
-            //                     .post('/api/addpermiDetails',{perma:res.data,id:this.menusp[i]['child'][j]['id']})
-            //                 }
-            //     }
-            //     }
-            //      // add permcode to employee
-
-            // })
+            })
              
            
         },
@@ -138,19 +147,19 @@ export default{
                 }},
 
         loadpermi(){
-
+                console.log(this.selected['perma'])
             this.negatib();
             axios
-            .get('/api/menuforperma',{params:{selected:this.selected}})
+            .get('/api/menuforperma',{params:{selected:this.selected['perma']}})
             .then((res)=>{
                 var laman=res.data;
+                
                 var i,j;
                 for(i=0;i<=this.menusp.length-1;i++){
                     for(j=0;j<=laman.length-1;j++){
                         if(this.menusp[i]['id']==laman[j]['id']){
                             this.menusp[i]['box']=true
                         }
-                        
                 var ij;
                 for(ij=0;ij<=this.menusp[i]['child'].length-1;ij++){
                  if(this.menusp[i]['child'][ij]['id']==laman[j]['id']){
@@ -255,12 +264,12 @@ export default{
               (response)=>{
                   
                   var laman = response.data
-                  console.log(laman[0]['id'])
+                
                   var i;
                   for(i=0;i<=response.data.length-1;i++){
                       this.options.push({
-                          value:laman[i]['permCode'],
-                          text:response.data[i]['Employee']
+                          value:{perma:laman[i]['permCode'],ID:laman[i]['id']},
+                          text:laman[i]['Employee']
                       })
                   }
               }

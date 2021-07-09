@@ -83,7 +83,7 @@ export default {
 
     methods:{
         login(){
-
+            axios.get('/sanctum/csrf-cookie').then(response => {
         axios.post('/api/login', this.log)
         .then(()=>{
                 this.$router.push({name:"Dashboard"});
@@ -114,10 +114,11 @@ export default {
             
               })
             })
+            
 
 
    
-        }
+        })}
     }
 }
 </script>

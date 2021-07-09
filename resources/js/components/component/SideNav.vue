@@ -3,8 +3,9 @@
         <span class="navbar-brand" style="font-size:30px;cursor:pointer" @click="loadMenu()" >&#9776; Menu</span>
 <!--side bar-->
     <div id="DynamicSideNav" class="sidenav">
-        <a class="closeli" @click="closeNav()"><b-icon icon="x" font-scale="2"></b-icon></a>
-
+    <a class="closeli" @click="closeNav()"><b-icon icon="x" font-scale="2"></b-icon></a>
+<div class="parentDiv">
+    <div class="parentDiv">
 <ul v-for="(menus,k) in menusp" :key="k">
     <li v-if="menus.route!=0" class="Menu2" @click.prevent="closeNav()">
         <router-link :to="{path: menus.route}" >
@@ -31,13 +32,27 @@
 </ul>
         <br>
 
-
-        <div id="footer1" class="fixed-bottom">
+    
+<!-- end menuloader -->
+    </div>
+    <!-- end menuloader -->
+    <div id="footer1" class="fixed-bottom">
             <h5>Footer</h5>
         </div>
 
+    <!-- end divParent -->
     </div>
+    <!-- end divParent -->
+
+
+
+
+    
     </div>
+
+    </div>
+
+    
    
 <!--side bar End-->
 
@@ -123,15 +138,37 @@ openNav() {
 </script>
 <style scoped>
 
+.parentDiv{
+  position: relative;
+  height: 90%;
+  border: 3px solid red;
+overflow: auto;  
+}
+
+.menuLoader{
+position: relative;
+overflow: hidden;
+}
+
     #footer1 {
-        position: relative;
+        position: absolute;
+        bottom: 10px;
+        border: 3px solid #8AC007;
+ height: 10%;
+
+        /* position: fixed;
+        bottom: 10px;
+        border: 3px solid #8AC007; */
+
+
+        /* position: relative;
         right: 0;
         bottom: 0;
         left: 0;
         padding: 1rem;
         color:white;
         text-align: center;
-        background-color: #292b2c;
+        background-color: #292b2c; */
     }
 
 

@@ -16,7 +16,7 @@
 
      <li v-if="menus.route==0" data-toggle="collapse" :data-target="'#s'+ menus.id" class="Menu">
             <b-icon :icon="menus.icon" font-scale="2"></b-icon>
-                        {{menus.Description}}
+                       {{menus.Description}}
         
     </li>
        <div  :id="'s' + menus.id" class="collapse">
@@ -141,23 +141,23 @@ openNav() {
 .parentDiv{
   position: relative;
   height: 90%;
-  border: 3px solid red;
+  /* border: 3px solid red; */
 }
 
 .menuLoader{
 position: relative;
 overflow: hidden;
-border: 3px solid blue;
-height: 85%;
+/* border: 3px solid blue; */
+height: 90%;
 overflow: auto; 
 overflow-x: hidden; 
 }
 
     #footer1 {
         position: absolute;
-        border: 3px solid #8AC007;
-        height: 15%;
-         color:white;
+        /* border: 3px solid #8AC007; */
+        height: 10%;
+        color:white;
         text-align: center;
         background-color: #292b2c; 
     }

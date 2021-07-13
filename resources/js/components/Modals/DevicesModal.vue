@@ -133,8 +133,9 @@ methods:{
         else{
           this.DeviceForm.Code= "cp" + this.DeviceForm.Code;
         }
-        
-        axios.post('/api/SaveCusDevice',this.DeviceForm)
+
+        try{
+           axios.post('/api/SaveCusDevice',this.DeviceForm)
         .then(
          (res)=>{
            this.closeModal();
@@ -147,8 +148,10 @@ methods:{
 
          } 
         )
-        .catch()
-
+        }catch(e){
+             alert('Exception: ', e);
+        }
+        
       },
 
   Selected_cus(index){

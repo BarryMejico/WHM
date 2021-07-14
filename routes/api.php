@@ -22,9 +22,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware('auth:sanctum')->get('/Authenticated', function () {
-    return true;
+Route::middleware('auth:sanctum')
+->get('/Authenticated', function () {
+        return true;
 });
+
+Route::middleware('menuCode')
+->get('/menuCode', function () {
+        return true;
+});
+
+
 
 
 

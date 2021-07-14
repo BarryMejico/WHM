@@ -138,6 +138,7 @@ methods:{
            axios.post('/api/SaveCusDevice',this.DeviceForm)
         .then(
          (res)=>{
+          
            this.closeModal();
            //this.DeviceForm.splice(0, 1);
             this.Cus=[];
@@ -145,13 +146,17 @@ methods:{
             this.Cus.Name=res.data[0]['DeciveName'];
             this.Cus.Unit=res.data[0]['Model'];
           this.$emit("SelectedDevice",this.Cus);
+           
 
          } 
         )
-        }catch(e){
-             alert('Exception: ', e);
+        .catch((errors)=>{
+          alert(errors);
+        })
         }
-        
+        finally{
+          
+        }
       },
 
   Selected_cus(index){
@@ -175,17 +180,18 @@ methods:{
 },
 
     load_customer(){
+          this.DeviceForm.Ccode=this.selectedCus;
           axios.get('/api/getDevices',{params:{ccode:this.selectedCus}})
           .then(
               (response)=>{
                   this.List_Customer=response.data;
-                  
               }
           )
           .catch()
-
           this.DeviceForm.Ccode=this.selectedCus;
       },
+
+      
 },
 
 }

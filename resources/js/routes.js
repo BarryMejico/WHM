@@ -37,20 +37,22 @@ import invoice2 from './components/Page/Sales/invoice2';
 import company from './components/Page/company';
 import companyInvites from './components/Page/companyInvite';
 
-import Sidenav from './components/component/Sidenav';
-
 import adminAuth from './components/component/adminAuth';
 
 import menus from './components/component/Menus';
+
 
 import { before } from 'lodash';
 export default{
     mode: 'history',
     routes: [
-        {
+,
+
+    {
         path:'/',
         component: Home
     },
+
     {
         path:'/about',
         component: About
@@ -60,10 +62,12 @@ export default{
         component: Login,
         name:'/login_'
     },
+
     {
         path:'/register_',
         component: Register
     },
+    
     {
         path:'/company',
         component:company,
@@ -368,18 +372,7 @@ export default{
         }
     },
 
-    {
-        path:'/Sidenav',
-        component: Sidenav,
-        name: 'sidenav',
-        beforeEnter:(to,from,next)=>{
-            axios.get('api/Authenticated').then(()=>{
-                next()
-            }).catch(()=>{
-                return next({name: '/login_'})
-            })
-        }
-    },
+
     {
         path:'/adminAuth',
         component: adminAuth

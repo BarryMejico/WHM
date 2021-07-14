@@ -3,14 +3,11 @@
 @section('content') 
 <div>
 <nav class="navbar navbar-expand-md bg-dark navbar-dark navbar-fixed-top">
-@guest
+    @guest
     @if (Route::has('register'))
     @endif
 @else
-
-<div id="app">
     <mySidemenu></mySidemenu>
-</div>
 @endguest
 
 <router-link class="nav-link" to='/Dashboard'>

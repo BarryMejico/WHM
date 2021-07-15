@@ -73,6 +73,8 @@
 </template>
 <script>
 
+import Swal from 'sweetalert2'
+
 
 
 function int_data(){
@@ -151,8 +153,15 @@ methods:{
 
          } 
         )
-        .catch((errors)=>{
-          alert(errors);
+        .catch(()=>{
+          this.closeModal();
+          Swal.fire({
+                icon:'warning',
+                title:'Oops!',
+                text:'The device code had been used already, please provide a different code',
+                showCancelButton: false,
+                showConfirmButton: true
+                }) 
         })
         }
         finally{

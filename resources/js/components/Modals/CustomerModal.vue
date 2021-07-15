@@ -127,13 +127,13 @@ methods:{
           axios.post('/api/SaveCus',{Name:this.Name,Number:this.CNumber,Address:this.Address,ids:null})
           .then(
               (res)=>{
+                
                 this.Name="";
                 this.Address="";
                 this.CNumber="";
                 this.success=true;
-                 this.closeModal();
-              this.$emit("SelectedCustomer",res.data[0]);
-              
+                this.closeModal();
+                this.$emit("SelectedCustomer",res.data);
                 
               }
           )

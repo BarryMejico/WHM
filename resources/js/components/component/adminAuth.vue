@@ -52,7 +52,7 @@
                </tr>
            </tbody>
         </table>
-        <button @click="save()">save</button>
+        <b-btn variant="success" @click="save()">save</b-btn>
 
        
     </div>
@@ -60,6 +60,8 @@
 
 <script>
 import Swal from 'sweetalert2'
+
+
 export default{
     data(){
         return{
@@ -92,11 +94,15 @@ export default{
 
         changeStatus(k,child){
             if(child=='x'){
-                this.menusp[k]['box']=true;
-                console.log(this.menusp[k]['box']);
-                }
+                 this.menusp[k]['box']=true;
+                // console.log(this.menusp[k]['box']);
+
+            }
+         
             else{
-               this.menusp[k]['child'][child]['box'] =true;
+                 this.menusp[k]['child'][child]['box'] = true;
+                 this.menusp[k]['box']=true;
+              
             }
         },
 
@@ -109,22 +115,21 @@ export default{
                 // add permission details
                 var i,j;
                 for(i=0;i<=this.menusp.length-1;i++){
-                            if(this.menusp[i]['box']==true){
-                                
-                                axios
-                                .post('/api/addpermiDetails',{params:{perma:res.data,id:this.menusp[i]['id']}})
-                                .then(()=>{
-                                   
-                                })
-                            }
-                                
-                             if(this.menusp[i]['child'].length!=0){
-                                      for(j=0;j<=this.menusp[i]['child'].length-1;j++){
-                                          console.log(this.menusp[i]['child'][j]['box'])
-                                            if(this.menusp[i]['child'][j]['box']==true){
-                                                axios
-                                                .post('/api/addpermiDetails',{params:{perma:res.data,id:this.menusp[i]['child'][j]['id']}})
-                                            }
+                    if(this.menusp[i]['box']==true){ 
+                        axios
+                        .post('/api/addpermiDetails',{params:{perma:res.data,id:this.menusp[i]['id']}})
+                        .then(()=>{ 
+                            
+                        })
+                    }
+                        
+                    if(this.menusp[i]['child'].length!=0){
+                            for(j=0;j<=this.menusp[i]['child'].length-1;j++){
+                                console.log(this.menusp[i]['child'][j]['box'])
+                                if(this.menusp[i]['child'][j]['box']==true){
+                                    axios
+                                    .post('/api/addpermiDetails',{params:{perma:res.data,id:this.menusp[i]['child'][j]['id']}})
+                                }
                 }}
 
               
@@ -135,10 +140,25 @@ export default{
                  .post('/api/activePerma',{params:{permCode:res.data,id:this.selected['ID']}})
 
             })
+            .then(
+              ()=>{
+              Swal.fire({
+                icon:'success',
+                title:'Success!',
+                text:'Permission Updated',
+                timer:2000,
+                showCancelButton: false,
+                showConfirmButton: false
+                }) 
+              }
+          )
+
              
            
         },
-        negatib(){ var i,j;
+        negatib(){ 
+            var i,j;
+            
                 for(i=0;i<=this.menusp.length-1;i++){
                             this.menusp[i]['box']=false
                 for(j=0;j<=this.menusp[i]['child'].length-1;j++){
@@ -147,10 +167,10 @@ export default{
                 }},
 
         loadpermi(){
-                console.log(this.selected['perma'])
+                //console.log(this.selected['perma'])
             this.negatib();
             axios
-            .get('/api/menuforperma',{params:{selected:this.selected['perma']}})
+            .get('api/menuforperma',{params:{selected:this.selected['perma']}})
             .then((res)=>{
                 var laman=res.data;
                 
@@ -305,6 +325,9 @@ input[type=checkbox]
   -o-transform: scale(1.5); /* Opera */
   transform: scale(1.5);
   padding: 10px;
+}
+ul li{
+     list-style: none;
 }
 
 

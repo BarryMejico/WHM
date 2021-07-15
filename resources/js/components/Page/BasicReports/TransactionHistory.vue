@@ -5,71 +5,56 @@
         <div class="row" >
             <div class="col-md-12">
                   <div class="jumbotron" style="background-color:white; ">
-                    <h1 class="display-4 text-muted"><b-icon icon="clock-history" font-scale="1"></b-icon> JOb Order: <b>Transaction History</b></h1>
+                    <h1 class="text-muted"><b-icon icon="clock-history" font-scale="1"></b-icon> JOb Order: <b>Transaction History</b></h1>
                     <MenuList></MenuList>
                   </div>
             </div>
         </div>
 
 
-          <div class="row">
-            <div class="col-md-2">
-              <b-form-group label="From" label-for="datefrom">
-                <input type="date" id="datefrom" @change="DatDiff()" name="datefrom" v-model="datefrom">
-              </b-form-group>
-            </div>
-            <div class="col-md-2">
-              <b-form-group label="To" label-for="dateto">
+          <b-row>
+            <b-col class="col">
+                <label for="dateform">Choose a date</label>
+                <b-form-datepicker @change="DatDiff()" name="datefrom" v-model="datefrom"></b-form-datepicker>
+            </b-col>
+            <b-col class="col">
+              <!-- <b-form-group label="To" label-for="dateto">
                 <input type="date" id="dateto" name="dateto" @change="DatDiff()" v-model="dateto">
-              </b-form-group>
-            </div>
-            <div class="col-md-2">
-               <!--Status-->
-            <div class="dropdown">
-               <b-form-group label="Status" label-for="x">
-                 <button class="btn btn-secondary dropdown-toggle btn-sm" id="x" type="button" data-toggle="dropdown">
-                    <span class="caret">{{Status}}</span>
-                </button>
-                <ul class="dropdown-menu">
-                  <li><a @click="changeStatus('Open')" class="my_btn btn">Open</a></li>
-                  <li><a @click="changeStatus('Approved')" class="success btn">Approved</a></li>
-                  <li><a @click="changeStatus('Canceled')" class="btn">Canceled</a></li>
-                  <li><a @click="changeStatus('All')" class="btn">All</a></li>
-                </ul>
-              </b-form-group>
-            </div>
-            <!--End Status-->
-            </div>
-            <div class="col"></div>
-          </div>
-          <hr>
+              </b-form-group> -->
+
+               <label for="dateto">Choose a date</label>
+              <b-form-datepicker name="dateto" @change="DatDiff()" v-model="dateto"></b-form-datepicker>
+            </b-col>
+            <b-col class="col" cols="2">
+                  <!--Status-->
+                <!-- <div class="dropdown">
+                  <b-form-group label="Status" label-for="x">
+                    <button class="btn btn-secondary dropdown-toggle btn-sm" id="x" type="button" data-toggle="dropdown" >
+                        <span class="caret">{{Status}}</span>
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li><a @click="changeStatus('Open')" class="my_btn btn">Open</a></li>
+                      <li><a @click="changeStatus('Approved')" class="success btn">Approved</a></li>
+                      <li><a @click="changeStatus('Canceled')" class="btn">Canceled</a></li>
+                      <li><a @click="changeStatus('All')" class="btn">All</a></li>
+                    </ul>
+                  </b-form-group>
+                </div> -->
+
+                  <b-form-group label="Status" label-for="status">
+                    <b-dropdown id="status" :text="Status" class="m-md-2">
+                        <b-dropdown-item><a @click="changeStatus('Open')" class="my_btn btn">Open</a></b-dropdown-item>
+                        <b-dropdown-item><a @click="changeStatus('Approved')" class="success btn">Approved</a></b-dropdown-item>
+                        <b-dropdown-item><a @click="changeStatus('Canceled')" class="btn">Canceled</a></b-dropdown-item>
+                        <b-dropdown-item><a @click="changeStatus('All')" class="btn">All</a></b-dropdown-item>
+                    </b-dropdown>
+                  </b-form-group>
+                
+                <!--End Status-->
+            </b-col>
+          </b-row>
           <br>
-
-          <div class="row">
-            <div class="col">
-              <customer-modal id="CusModal" @SelectedCustomer="Selected_cus" :disabled="disabled"/><br>
-                <div class="form-inline">
-                  <div>
-                    <b class="text-muted">Name:</b>
-                    <h4>{{Customer}}</h4>
-                    <br>
-                    <b class="text-muted">Address: </b>
-                    <h4>{{add_Cus}}</h4>
-                    <br>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <devices-modal @SelectedDevice="Selected_Device" v-bind:selectedCus="Ccode" :disabled="disabled"/><br>
-                <b class="text-muted">Device: </b>
-                <br>
-                <h3>{{Device}}</h3>
-                <br>
-              </div>
-              <div class="col"></div>
-          </div>
-
-          <div class="row">
+           <div class="row">
             <div class="col"><small class="text-muted">Repaired By</small></div>
             <div class="col-md-1"></div>
             <div class="col"><small class="text-muted">Model</small></div>
@@ -89,13 +74,44 @@
               </b-select>
             </div>
           </div>
+          <br>
+
+          <b-row>
+            <b-col>
+              <customer-modal id="CusModal" @SelectedCustomer="Selected_cus" :disabled="disabled"/>
+           
+              <div class="something">
+                    <!-- <b class="text-muted">Name:</b> -->
+                    <h4>{{Customer}}</h4>
+                    <small class="text-muted">{{add_Cus}}</small>
+                    <!-- <br>
+                    <b class="text-muted">Address: </b>
+                    <h4>{{add_Cus}}</h4>
+                    <br> -->
+              </div>
+              </b-col>
+              <b-col>
+                <devices-modal @SelectedDevice="Selected_Device" v-bind:selectedCus="Ccode" :disabled="disabled"/>
+                
+                <div class="something">
+                <!-- <b class="text-muted">Device: </b> -->
+                <h4>{{Device}}</h4>
+                </div>
+              </b-col>
+              <b-col>
+                  <b-btn id="loadBtn" variant="outline-info" @click.prevent="Search()" size="lg">Load Filters</b-btn>
+                  
+                  <b-row>
+                    <b-col><b-btn variant="outline-secondary" @click.prevent="reloadthis()" class="otherBtn">Clear Filters</b-btn></b-col>
+                    <b-col><toExcel :array1 = this.stocks class="otherBtn"></toExcel></b-col>
+                  </b-row>
+                </b-col>
+          </b-row>
 
 
-              <br>
-              <br>
-              <br>
+            
 
-              <div class="row">
+              <!-- <div class="row">
                 <div class="col">
                   <button class="btn btn-outline-info" @click.prevent="Search()">Load</button>
                 </div>
@@ -105,7 +121,7 @@
                 <div class="col">
                   <toExcel :array1 = this.stocks></toExcel>
                 </div>
-              </div>
+              </div> -->
 
           <br>
       </div>
@@ -186,7 +202,69 @@
 
     </div>
 
-    <Chart></Chart>
+    <!------------------------------------------ <Chart></Chart> ------------------------------------------------------------>
+
+     <b-table-simple hover small caption-top responsive>
+    <colgroup><col><col></colgroup>
+    <colgroup><col><col><col></colgroup>
+    <colgroup><col><col></colgroup>
+    <b-thead head-variant="dark">
+      <b-tr>
+        <b-th colspan="8" style="text-align:center;">Customer</b-th>
+        <b-th colspan="6" style="text-align:center;">Order Details</b-th>
+        
+      </b-tr>
+      <b-tr>
+         <!------------------------- Customer Details ---------------->
+        <b-th>No.</b-th>
+        <b-th>Date</b-th>
+        <b-th>Customer</b-th>
+        <b-th>Amount</b-th>
+        <b-th>Payment</b-th>
+        <b-th>Balance</b-th>
+        <b-th>Created By</b-th>
+        <b-th>Status</b-th>
+        <!---------------------- Device Information ------------------>
+         <b-th>Model</b-th>
+        <b-th>Description</b-th>
+        <b-th>Repaired By</b-th>
+        <b-th>Remarks</b-th>
+        <b-th>Status</b-th>
+         <b-th>Date Update</b-th>
+
+      </b-tr>
+    </b-thead>
+
+
+    <b-tbody>
+      <b-tr v-for="(item, k) in stocks" :key="k">
+         <!------------------------- Customer Details ---------------->
+        <b-td>{{k}}</b-td>
+        <b-td><a href="#load">{{item.updated_at}}</a></b-td>
+        <b-td>
+           <router-link :to="{ name:'JobOrder', params:{PO_Load: item.invoice}}">
+                  <br><br>{{item.Customer}}
+                </router-link>
+        </b-td>
+        <b-td>{{item.Total_Amount| numeral('0,0')}}</b-td>
+        <b-td>{{item.payment| numeral('0,0')}}</b-td>
+        <b-td>{{item.Balance| numeral('0,0')}}</b-td>
+        <b-td>{{item.name}}</b-td>
+        <b-td>{{item.Status}}</b-td>
+        <!---------------------- Device Information ------------------>
+         <b-tr v-for="(details,d) in item.items" :key="d">
+          <b-td>{{item.items[d][0].Icode }}</b-td>
+          <b-td>{{item.items[d][0].description }}</b-td>
+          <b-td>{{item.items[d][0].Repairedby}}</b-td>
+          <b-td>{{item.items[d][0].Remarks}}</b-td>
+          <b-td>{{item.items[d][0].Status}}</b-td>
+          <b-td>{{item.items[d][0].updated_at}}</b-td>
+         </b-tr>
+      </b-tr>
+     
+    </b-tbody>
+   
+  </b-table-simple>
 
 
 </div>
@@ -499,5 +577,18 @@ table thead tr th {
   top: 0;
   z-index: 2;
 }
-
+#status{
+  width:100%;
+}
+#loadBtn{
+  height:70px;
+}
+.something{
+  height: 73px;
+  margin-top:10px;
+  padding:10px;
+}
+.otherBtn{
+  margin-top:15px;
+}
 </style>

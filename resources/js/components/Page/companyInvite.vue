@@ -34,17 +34,19 @@
 export default {
     data(){
         return{
-         notif:null,
+         notif:[],
+         notifcount:0,
         }
     },
 
     mounted(){
         this.getnotif()
+        this.notifcount=this.notif.length;
     },
 
     methods:{
 accept(){
-    console.log("accept")
+    
     axios.post('/api/setCompany',{CoCode:this.notif[0]['CoCode']})
             .then(()=>{
                      axios.post('/api/accepted',{id:this.notif[0]['id']})
@@ -60,7 +62,7 @@ accept(){
              axios('/api/getNotif')
              .then((res)=>{
                  this.notif=res.data;
-                 console.log(this.notif[0])
+                
              })
          },
     }

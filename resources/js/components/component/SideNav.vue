@@ -5,7 +5,7 @@
     <div id="DynamicSideNav" class="sidenav">
     <a class="closeli" @click="closeNav()"><b-icon icon="x" font-scale="2"></b-icon></a>
 <div class="parentDiv">
-    <div class="parentDiv">
+    <div class="menuloader">
 <ul v-for="(menus,k) in menusp" :key="k">
     <li v-if="menus.route!=0" class="Menu2" @click.prevent="closeNav()">
         <router-link :to="{path: menus.route}" >
@@ -16,7 +16,7 @@
 
      <li v-if="menus.route==0" data-toggle="collapse" :data-target="'#s'+ menus.id" class="Menu">
             <b-icon :icon="menus.icon" font-scale="2"></b-icon>
-                        {{menus.Description}}
+                       {{menus.Description}}
         
     </li>
        <div  :id="'s' + menus.id" class="collapse">
@@ -141,34 +141,25 @@ openNav() {
 .parentDiv{
   position: relative;
   height: 90%;
-  border: 3px solid red;
-overflow: auto;  
+  /* border: 3px solid red; */
 }
 
 .menuLoader{
 position: relative;
 overflow: hidden;
+/* border: 3px solid blue; */
+height: 90%;
+overflow: auto; 
+overflow-x: hidden; 
 }
 
     #footer1 {
         position: absolute;
-        bottom: 10px;
-        border: 3px solid #8AC007;
- height: 10%;
-
-        /* position: fixed;
-        bottom: 10px;
-        border: 3px solid #8AC007; */
-
-
-        /* position: relative;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        padding: 1rem;
+        /* border: 3px solid #8AC007; */
+        height: 10%;
         color:white;
         text-align: center;
-        background-color: #292b2c; */
+        background-color: #292b2c; 
     }
 
 

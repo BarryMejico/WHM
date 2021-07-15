@@ -233,20 +233,13 @@ export default {
       //this.load();
       var $POL = this.$route.params.PO_Load;      
       if(typeof this.$route.params.PO_Load === "undefined" ){
-        //  Swal.fire({
-        //       title: 'PO Undefined',
-        //       icon: 'Warning',
-        //       showCancelButton: false,
-        //       showConfirmButton: true
-        //     })
-        console.log("PO Undefied")
-        console.log(".");
+      
       }else{
         this.Load_PO();
-        console.log(".");
+        
         this.Load_Details();
-        console.log(". unload next");
-        //this.unload();
+        
+        
       }
      
     },

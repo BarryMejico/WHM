@@ -5,7 +5,7 @@
         <div class="row">
           <div class="col-md-12">
             <div class="jumbotron" style="background-color:white; ">
-              <h1 class="display-4 text-muted"><b-icon icon="box-seam" font-scale="1"></b-icon> Items: <b>List</b></h1>
+              <h1 class="text-muted"> Items: <b-icon icon="list-ol" font-scale="1"></b-icon> <b>List</b></h1>
               <MenuList></MenuList>
             </div>
           </div>
@@ -19,11 +19,10 @@
         </div>
         <br>
 
-        <div class="row">
-          <div class="col-lg-2"></div>
-          <div class="col-lg-10">
+        <b-row>
+          <b-col>
             <span class="alert alert-success" v-show="success">The data has been saved!!</span>	
-            <div class="row">
+            <b-row>
               <table class="table" style="width:100%;">
                 <thead class="thead-dark">
                   <tr>
@@ -56,10 +55,10 @@
                   <li class="page-item"><a class="page-link bg-dark text-white" @click.prevent="nextpAGE()">Next</a></li>
               </ul>
               <!--end pagination vue-->
-            </div>
+            </b-row>
 
-          </div>
-        </div>
+          </b-col>
+        </b-row>
 
     </div>
 

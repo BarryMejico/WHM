@@ -1,34 +1,38 @@
 <template>
-    <div>
+    <div class="container-fluid">
     <div class="container">
       
         <!------------------------------------------------------------------------------------------------------->
          <div class="row" >
             <div class="col-md-12">
                   <div class="jumbotron" style="background-color:white; ">
-                    <h1 class="display-4 text-muted"><b-icon icon="tag" font-scale="1"></b-icon>Sales Invoice: <b>Create</b></h1>
+                    <h1 class="text-muted">Sales Invoice: <b-icon icon="pencil-square" font-scale="1"></b-icon> <b>Create</b></h1>
                     <MenuList></MenuList>
                   </div>
             </div>
           </div>
 
 
-      <div class="row">
+      <b-row>
 
-        <div class="col-lg-1"></div>
-        <div class="col-lg-7">
+       
+        <b-col>
           <label for="po">Invoice#: </label>                     
-          <input class="form-control" v-model="po" id="po" type="text" required autocomplete="name" autofocus>
+          <input class="form-control" v-model="po" id="po" type="text" required autocomplete="name" autofocus disabled>
           
           <CustomerModal id="CusModal" @SelectedCustomer="Selected_cus" :disabled="disabled"></CustomerModal>
           <div style="text-transform:capitalize;">
             <br>
-            <b>Name: </b><br><h4 class="text-muted"><i>{{Customer}}</i></h4><br>
-            <b>Address:</b><br><h4 class="text-muted"><i>{{add_Cus}}</i></h4><br>
+            <div style="display:flex;">
+            <h4>Name: <b class="text">{{Customer}}</b></h4><br>
+            </div>
+            <div style="display:flex;">
+            <h4>Address:<b class="text">{{add_Cus}}</b></h4>
+            </div>
           </div>                    
-        </div> 
+        </b-col> 
               
-        <div class="col-lg-4">
+        <b-col cols="4">
           <br>
           <br>
             <button type="button" class="btn btn-info">Print</button>
@@ -42,9 +46,11 @@
                   <li><button @click="changeStatus('Canceled')" class="my_btn btn-danger">Canceled</button></li>
                 </ul>
             </div>
-        </div>
+        </b-col>
      
-      </div>
+      </b-row>
+
+    </div>
       
         <br>
         <br>
@@ -72,8 +78,8 @@
                    <td>{{po_item.Icode}}</td>    <!-- Code -->
                     <td>{{po_item.description}}</td>   <!--Name-->
                     <td>{{po_item.Unit}}</td>
-                    <td class="in"><div class="qty"><input  v-model="po_item.Qty" min="1" type="number" @change="checkQty(po_item)" :disabled="disabled == 1"></div></td>
-                    <td class="in"><div class="qty"><input  v-model="po_item.UnitCost"  type="number" @change="calculateLineTotal(po_item)" :disabled="disabled == 1"></div></td>
+                    <td class="in"><div class="qty"><input class="boxes" v-model="po_item.Qty" min="1" type="number" @change="checkQty(po_item)" :disabled="disabled == 1"></div></td>
+                    <td class="in"><div class="qty"><input class="boxes" v-model="po_item.UnitCost"  type="number" @change="calculateLineTotal(po_item)" :disabled="disabled == 1"></div></td>
                     <td>{{po_item.Tcost| numeral('0,0')}} Php</td>
                     <td :disabled="disabled == 1">
                     <span class="badge badge-info" @click="calculateLineTotal(po_item)">Recompute</span>
@@ -83,24 +89,27 @@
               </table>
               </div>     
          </div>
-         <div class="row">
-           <div class="col-lg-10"></div>
-           <div class="col-lg-2">
+         <br>
+         <br>
+
+         <b-row>
+           <b-col></b-col>
+           <b-col cols="3">
             <div class="total"> 
                 <span><b>Total:</b> {{PO_total| numeral('0,0')}} Php</span><br>
                 <hr>
                 <button type="button" id="btnSave" class="btn btn-info" @click.prevent="saveform">Save</button>
                 <button type="button" id="btnClear" class="btn danger btn-danger" @click.prevent="clearData">Clear ALL</button>
             </div>
-          </div> 
-         </div>
+          </b-col> 
+         </b-row>
       
 
          
 
        <!------------------------------------------------------------------------------------------------------->
     
-    </div>
+    
 </div>
 
 </template>
@@ -524,7 +533,7 @@ checkQty(product){
 }
  
 .qty{
-width:50px;
+width:100px;
 overflow: hidden;
 padding:0;
 margin: 0%;
@@ -583,13 +592,16 @@ tr:hover{
   width: 100% !important;
 }
 .total{
-   float:right;
+  width:100%;
   box-shadow: 0px 0px 2px grey;
   border-radius:5px;
   padding:20px;
 }
 #btnSave,#btnClear{
   margin:3px;
+}
+.text{
+  text-indent: 10%;
 }
 
 /**try for input table

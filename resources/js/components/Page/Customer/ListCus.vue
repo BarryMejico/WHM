@@ -5,26 +5,25 @@
     <div class="row" >
       <div class="col-md-12">
             <div class="jumbotron" style="background-color:white; ">
-              <h1 class="display-4 text-muted"><b-icon icon="person-fill" font-scale="1"></b-icon>Customer: <b>List</b></h1>
+              <h1 class="text-muted">Customer: <b-icon icon="list-ol" font-scale="1"></b-icon> <b>List</b></h1>
               <MenuList></MenuList>
             </div>
       </div>
     </div>
 
 
-     <div class="row">
-          <div class="col"></div>
-          <div class="col-md-2">
+     <b-row>
+          <b-col></b-col>
+          <b-col cols="2">
             <toExcel :array1 = this.POs.data></toExcel>
-          </div>
-        </div>
+          </b-col>
+      </b-row>
         <br>
      
-    <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-10">
+    <b-row>
+        <b-col>
           <span class="alert alert-success" v-show="success">The data has been saved!!</span>	
-          <div class="row">
+          <b-row>
             <table class="table" style="width:100%;">
               <thead class="thead-dark">
                 <tr>
@@ -60,9 +59,9 @@
                   <li class="page-item"><a class="page-link bg-dark text-white" @click.prevent="nextpAGE()">Next</a></li>
               </ul>
               <!--end pagination vue-->
-          </div>
-      </div>
-    </div>
+          </b-row>
+      </b-col>
+    </b-row>
 </div>
         <!--modal Mod/Del-->
         <div id="addDeviceModal" class="modal fade">

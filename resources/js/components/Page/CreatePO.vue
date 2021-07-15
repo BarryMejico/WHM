@@ -4,7 +4,7 @@
     <div class="row" >
       <div class="col-md-12">
             <div class="jumbotron" style="background-color:white; ">
-              <h1 class="display-4 text-muted"><b-icon icon="cart-x-fill" font-scale="1"></b-icon>Purchase Order: <b>Create</b></h1>
+              <h1 class="text-muted">Purchase Order: <b-icon icon="pencil-square" font-scale="1"></b-icon> <b>Create</b></h1>
               <MenuList></MenuList>
             </div>
       </div>

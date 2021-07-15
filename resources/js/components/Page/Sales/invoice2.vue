@@ -5,7 +5,7 @@
     <div class="row" >
       <div class="col-md-12">
             <div class="jumbotron" style="background-color:white; ">
-              <h1 class="display-4 text-muted"><b-icon icon="clipboard-check" font-scale="1"></b-icon> Job Order: <b>Create</b></h1>
+              <h1 class="text-muted"> Job Order: <b-icon icon="pencil-square" font-scale="1"></b-icon> <b>Create</b></h1>
               <MenuList></MenuList>
             </div>
       </div>
@@ -19,10 +19,10 @@
              <CustomerModal id="CusModal" @SelectedCustomer="Selected_cus" :disabled="disabled"></CustomerModal>
              <br>
               <small class="text-muted">Name</small>
-              <input class="form-control" type="text" :value="Customer" required autofocus disabled>
+              <input class="form-control input-lg" type="text" :value="Customer" required autofocus disabled>
             
               <small class="text-muted">Contact Number</small>
-            <input class="form-control" v-model="Num" type="text" required disabled> 
+            <input class="form-control input-lg" v-model="Num" type="text" required disabled> 
           </div>
            <div class="col-md-6"> 
              <br>
@@ -30,7 +30,7 @@
              
 
               <small class="text-muted">Address</small>
-              <input class="form-control" type="text" :value="add_Cus" style="height:50px;" required disabled>
+              <input class="form-control input-lg" type="text" :value="add_Cus" style="height:50px;" required disabled>
               <br>
               <br>
             
@@ -44,8 +44,7 @@
 
     <div class="container-fluid">
       <div class="row">
-        <div class="col"></div>
-        <div class="col-md-10">
+        <div class="col">
           <table class="table" style="width:100%;">
             <thead class="thead-dark">
               <tr>
@@ -62,13 +61,15 @@
             </thead>
             <tbody v-if="po_items">
               <tr  v-for="(po_item, k) in po_items" :key="k"> 
-                <th class="in">{{k}}</th>
+                <th>{{k}}</th>
                 <td>{{po_item.DeciveName}}-{{po_item.Model}}</td>
-                <td><textarea v-model="po_item.description" :disabled="disabled == 1"></textarea></td>
-                <td class="in"><div class="qty"><input  v-model="po_item.UnitCost"  type="number" @change="calculateLineTotal(po_item)" :disabled="disabled == 1"></div></td>
+                <td><textarea class="mahaba" v-model="po_item.description" :disabled="disabled == 1"></textarea></td>
+                <td>
+                    <input style="width:100%;" v-model="po_item.UnitCost"  type="number" @change="calculateLineTotal(po_item)" :disabled="disabled == 1"> 
+                </td>
                 <td>{{po_item.Employee}}</td>
                 <td><employee-modal @loadindex="indext" @SelectedEmployee="Selected_employee" v-bind:index="k" :disabled="disabled"/></td>
-                <td><textarea v-model="po_item.Remarks"  @change="calculateLineTotal(po_item)" :disabled="disabled == 1"></textarea></td>
+                <td><textarea class="mahaba" v-model="po_item.Remarks"  @change="calculateLineTotal(po_item)" :disabled="disabled == 1"></textarea></td>
                 <td>
                 <select @change="StatCheck(k)" v-model="po_item.DeviceStatus">
                     <option>Claimed</option>
@@ -86,12 +87,12 @@
           <br>
           <br>
         </div>
-         <div class="col"></div>
+      
       </div>
 
         <div class="row">
           <div class="col"></div>
-          <div class="col-md-2">
+          <div class="col-md-4">
               <div class="total"> 
                 <Label><b>Total:</b> {{PO_total| numeral('0,0')}} Php</Label><br>
                 <Label for="Deposit"><b>Deposit/Payment:</b></Label>
@@ -105,7 +106,6 @@
                 <button class="btn btn-info" @click="saveform()">Save</button>
               </div>
             </div>
-             <div class="col-md-1"></div>
         </div>
       
     </div>
@@ -533,7 +533,7 @@ checkQty(product){
 
 
  
-.qty{
+/* .qty{
 width:50px;
 overflow: hidden;
 padding:0;
@@ -544,7 +544,7 @@ margin: 0%;
 .qty>input{
 width: 100%;
 text-align: center;
-}
+} */
 /* Modal styles */
 /* this is class for dialog itself*/
 .modal {
@@ -608,7 +608,12 @@ tr:hover{
 tr:hover{
   background-color: #eee;
 }
-
+.mahaba{
+  width:100%;
+}
+textarea{
+  height: 40px;
+}
 
 
 /**try for input table

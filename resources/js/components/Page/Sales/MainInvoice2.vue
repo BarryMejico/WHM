@@ -2,7 +2,7 @@
 <div>
      <a>
       <keep-alive>
-        <router-link class="nav-link" to='/JobOrder'><span class="btn btn-outline-secondary btn-lg"><b-icon icon="clipboard-check" font-scale="1"></b-icon> <b>Create</b></span></router-link>
+        <router-link class="nav-link" to='/JobOrder'><span class="btn btn-outline-secondary btn-lg"><b-icon icon="pencil-square" font-scale="1"></b-icon> <b>Create</b></span></router-link>
       </keep-alive>
     </a>
     <a>

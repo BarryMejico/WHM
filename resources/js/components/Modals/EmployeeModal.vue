@@ -292,6 +292,7 @@ sUser(){
 }
 ul li:hover{
   background-color: #eee;
+  cursor: pointer;
 }
 #newEmployeeModal:hover{
   color:#5bc0de;

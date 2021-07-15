@@ -4,16 +4,19 @@
     <div class="row" >
       <div class="col-md-12">
         <div class="jumbotron" style="background-color:white; ">
-          <h1 class="display-4 text-muted"><b-icon icon="box-seam" font-scale="1"></b-icon> Items: <b>Create</b></h1>
+          <h1 class="text-muted"> Items: <b-icon icon="pencil-square" font-scale="1"></b-icon> <b>Create</b></h1>
           <MenuList></MenuList>
         </div>
       </div>
     </div>
 
-    <div class="row">
-        <div class="col-lg-2"></div>
-        <div class="col-lg-6">
-            <div class="form-group">
+     <b-row>
+    <b-col>
+      <b-card
+      header="Add New Item"
+      header-tag="header"
+      >
+        <div class="form-group">
               <div class="alert alert-success" v-show="success">
               The data has been saved!!
               </div>
@@ -36,8 +39,13 @@
             </div>
 
             <button type="button" class="btn btn-dark" @click.prevent="SaveVendor">Submit</button>
-        </div>
-    </div>
+
+       
+      </b-card>
+    </b-col>
+    <b-col></b-col>
+  </b-row>
+
 
   </div>
 </template>

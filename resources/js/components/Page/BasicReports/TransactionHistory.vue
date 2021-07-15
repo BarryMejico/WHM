@@ -5,7 +5,7 @@
         <div class="row" >
             <div class="col-md-12">
                   <div class="jumbotron" style="background-color:white; ">
-                    <h1 class="text-muted"><b-icon icon="clock-history" font-scale="1"></b-icon> JOb Order: <b>Transaction History</b></h1>
+                    <h1 class="text-muted"> Job Order: <b-icon icon="clock-history" font-scale="1"></b-icon> <b>Transaction History</b></h1>
                     <MenuList></MenuList>
                   </div>
             </div>
@@ -14,7 +14,7 @@
 
           <b-row>
             <b-col class="col">
-                <label for="dateform">Choose a date</label>
+                <label class="text-muted" for="dateform">From</label>
                 <b-form-datepicker @change="DatDiff()" name="datefrom" v-model="datefrom"></b-form-datepicker>
             </b-col>
             <b-col class="col">
@@ -22,7 +22,7 @@
                 <input type="date" id="dateto" name="dateto" @change="DatDiff()" v-model="dateto">
               </b-form-group> -->
 
-               <label for="dateto">Choose a date</label>
+               <label class="text-muted" for="dateto">To</label>
               <b-form-datepicker name="dateto" @change="DatDiff()" v-model="dateto"></b-form-datepicker>
             </b-col>
             <b-col class="col" cols="2">
@@ -54,20 +54,25 @@
             </b-col>
           </b-row>
           <br>
-           <div class="row">
-            <div class="col"><small class="text-muted">Repaired By</small></div>
-            <div class="col-md-1"></div>
-            <div class="col"><small class="text-muted">Model</small></div>
-            <div class="col"><small class="text-muted">Device Name</small></div>
-            <div class="col"><small class="text-muted">Device Status</small> </div>
-          </div>
           <div class="row">
-            <div class="col"><input type="text" :value="RepairedBy" disabled/></div>
-            <div class="col-md-1" style="padding:15px 0px 0px 0px;"><employee-modal @SelectedEmployee="Selected_employee" /></div>
-            <div class="col"><input type="text" v-model="model"/></div>
-            <div class="col"><input type="text" v-model="DeviceName"/></div>
             <div class="col">
-              <b-select v-model="DeviceStatus" style="margin-top:7px;">
+              <div style="display:flex;">
+                <label class="text-muted" for="repairedby">Repaired By</label> 
+                <employee-modal @SelectedEmployee="Selected_employee" />
+              </div>
+              <input id="repairedby" type="text" :value="RepairedBy" disabled/>
+            </div>
+            <div class="col">
+              <label class="text-muted" for="model">Model</label>
+              <input id="model" type="text" v-model="model"/>
+            </div>
+            <div class="col">
+              <label class="text-muted" for="devicename">Device Name</label>
+              <input id="devicename" type="text" v-model="DeviceName"/>
+              </div>
+            <div class="col">
+              <label class="text-muted" for="devicestatus">Device Status</label>
+              <b-select id="devicestatus" v-model="DeviceStatus" style="margin-top:7px;">
                 <option>Claimed</option>
                 <option>RTO</option>
                 <option>Open</option>
@@ -204,7 +209,7 @@
 
     <!------------------------------------------ <Chart></Chart> ------------------------------------------------------------>
 
-     <b-table-simple hover small caption-top responsive>
+     <!-- <b-table-simple hover small caption-top responsive>
     <colgroup><col><col></colgroup>
     <colgroup><col><col><col></colgroup>
     <colgroup><col><col></colgroup>
@@ -215,7 +220,7 @@
         
       </b-tr>
       <b-tr>
-         <!------------------------- Customer Details ---------------->
+   
         <b-th>No.</b-th>
         <b-th>Date</b-th>
         <b-th>Customer</b-th>
@@ -224,7 +229,7 @@
         <b-th>Balance</b-th>
         <b-th>Created By</b-th>
         <b-th>Status</b-th>
-        <!---------------------- Device Information ------------------>
+        
          <b-th>Model</b-th>
         <b-th>Description</b-th>
         <b-th>Repaired By</b-th>
@@ -238,7 +243,7 @@
 
     <b-tbody>
       <b-tr v-for="(item, k) in stocks" :key="k">
-         <!------------------------- Customer Details ---------------->
+      
         <b-td>{{k}}</b-td>
         <b-td><a href="#load">{{item.updated_at}}</a></b-td>
         <b-td>
@@ -251,7 +256,7 @@
         <b-td>{{item.Balance| numeral('0,0')}}</b-td>
         <b-td>{{item.name}}</b-td>
         <b-td>{{item.Status}}</b-td>
-        <!---------------------- Device Information ------------------>
+       
          <b-tr v-for="(details,d) in item.items" :key="d">
           <b-td>{{item.items[d][0].Icode }}</b-td>
           <b-td>{{item.items[d][0].description }}</b-td>
@@ -264,7 +269,7 @@
      
     </b-tbody>
    
-  </b-table-simple>
+  </b-table-simple> -->
 
 
 </div>

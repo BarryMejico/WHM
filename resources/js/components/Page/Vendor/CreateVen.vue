@@ -4,15 +4,19 @@
   <div class="row" >
     <div class="col-md-12">
       <div class="jumbotron" style="background-color:white; ">
-        <h1 class="display-4 text-muted"><b-icon icon="person-fill" font-scale="1"></b-icon>Vendor: <b>Create</b></h1>
+        <h1 class="text-muted">Vendor: <b-icon icon="pencil-square" font-scale="1"></b-icon> <b>Create</b></h1>
         <MenuList></MenuList>
       </div>
     </div>
   </div>
   
-  <div class="row">
-    <div class="col-md-2"></div>
-    <div class="col-md-6">
+  <b-row>
+    <b-col>
+      <b-card
+      header="Add New Vendor"
+      header-tag="header"
+      >
+    
         <div class="form-group">
               <div class="alert alert-success" v-show="success">
                 The data has been saved!!
@@ -32,9 +36,11 @@
           <span class="alert-danger" v-if="errors.Address">{{errors.Address[0]}}</span>
         </div>
         <button type="button" class="btn btn-dark" @click.prevent="SaveVendor">Submit</button>
-    </div>
-    <div class="col"></div>
-  </div>
+       
+      </b-card>
+    </b-col>
+    <b-col></b-col>
+  </b-row>
 
 </div>
 </template>

@@ -4,7 +4,7 @@
        <div class="row" >
         <div class="col-md-12">
           <div class="jumbotron" style="background-color:white; ">
-            <h1 class="display-4 text-muted"><b-icon icon="person-fill" font-scale="1"></b-icon>Vendor: <b>List</b></h1>
+            <h1 class="text-muted">Vendor: <b-icon icon="list-ol" font-scale="1"></b-icon> <b>List</b></h1>
             <MenuList></MenuList>
           </div>
         </div>
@@ -19,8 +19,7 @@
         <br>
 
       <div class="row">
-          <div class="col-md-2"></div>
-          <div class="col-md-10">
+          <div class="col">
             <span class="alert alert-success" v-show="success"> The data has been saved!!</span>	
             <div class="row">
               <table class="table" style="width:100%;">

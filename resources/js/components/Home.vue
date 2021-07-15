@@ -1,8 +1,8 @@
 <template>
 <div>
     <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
+    <!-- <div class="row justify-content-center"> -->
+        <!-- <div class="col-md-8">
             <div class="card">
                 <div class="card-header">Home</div>
 
@@ -25,7 +25,7 @@
                 </div>
             </div>
         </div>
-        <hr> -->
+        <hr>  -->
         
         <p id="titlex" class="display-4 text-muted"> System Quick Guide</p>
 
@@ -61,7 +61,7 @@
             </b-card>
         </b-col>
     </b-row>
-    <hr>
+    <br>
     <b-row>
         <b-col>
              <b-card
@@ -94,7 +94,7 @@
             </b-card>
         </b-col>
     </b-row>
-</div>
+<!-- </div> -->
 </div>
 </div>
 </template>

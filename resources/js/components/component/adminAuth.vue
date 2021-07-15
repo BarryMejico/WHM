@@ -156,7 +156,9 @@ export default{
              
            
         },
-        negatib(){ var i,j;
+        negatib(){ 
+            var i,j;
+            
                 for(i=0;i<=this.menusp.length-1;i++){
                             this.menusp[i]['box']=false
                 for(j=0;j<=this.menusp[i]['child'].length-1;j++){
@@ -165,10 +167,10 @@ export default{
                 }},
 
         loadpermi(){
-                console.log(this.selected['perma'])
+                //console.log(this.selected['perma'])
             this.negatib();
             axios
-            .get('/api/menuforperma',{params:{selected:this.selected['perma']}})
+            .get('api/menuforperma',{params:{selected:this.selected['perma']}})
             .then((res)=>{
                 var laman=res.data;
                 

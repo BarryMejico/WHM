@@ -26,8 +26,8 @@ class MenuController extends Controller
             ->where('permission_details.permCode',$permCode)
             ->select('menus.*')
             ->get();
-            listofmenu().$menus=$Menu;
-            dd(listofmenu());
+            //listofmenu().$menus=$Menu;
+            //dd(listofmenu());
             return $Menu;
     }
 

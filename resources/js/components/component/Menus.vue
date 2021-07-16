@@ -1,31 +1,31 @@
 <template>
-    <div>
-        <table>
+    <div class="container">
+        <table class="table">
             <thead class="thead-dark">
                  <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Item Code</th>
+                  <th scope="col" class="t">#</th>
+                  <th scope="col" class="t">Item Code</th>
                   <th scope="col">Description</th>
                   <th scope="col">Icon</th>
                   <th scope="col">route</th>
-                  
                 </tr>
               </thead>
+              <br>
+
               <tbody>
                   <tr v-for="(menu, k) in roots" :key="k">
-                    <td>
+                    <td class="zz">
                           {{k}}
                       </td>
-                      <td>
+                      <td class="zz">
                           {{menu.id}}
                       </td>
 
-                      <td><button @click="getChild(menu.id)">
-                          {{menu.Description}}
-                          </button>
+                      <td>
+                          <b-btn variant="outline-dark" @click="getChild(menu.id)">{{menu.Description}}</b-btn>
                       </td>
 
-                      <td>
+                      <td class="x">
                           <b-icon :icon="menu.icon" font-scale="2"></b-icon>
                          {{menu.icon}}
                       </td>
@@ -34,37 +34,44 @@
                           {{menu.route}}
                       </td>
                   </tr>
-                   <tr>
-                                <td>
-                                <button>Add Root</button>
-                                </td>
-                                </tr>
-                  
+                  <br>
+                   <tr id="emptyRow">
+                       <td>---</td>
+                       <td>---</td>
+                       <td>---</td>
+                       <td>---</td>
+                    <td>
+                        <b-btn variant="outline-info" align="right">Add Root</b-btn>
+                    </td>
+                    </tr>
+
               </tbody>
         </table>
 
-        <table>
+
+        <table class="table">
                            <thead class="thead-dark">
                                 <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Item Code</th>
+                                <th scope="col" class="t">#</th>
+                                <th scope="col" class="t">Item Code</th>
                                 <th scope="col">Description</th>
                                 <th scope="col">Icon</th>
                                 <th scope="col">route</th>
                                 </tr>
                             </thead>
+                            <br>
                             <tbody>
                                 <tr v-for="(Child, k) in Children" :key="k">
-                                <td>
+                                <td class="zz">
                           {{k}}
                       </td>
-                      <td>
+                      <td class="zz">
                           {{Child.id}}
                       </td>
 
                       <td>
                           {{Child.Description}}
-                         
+
                       </td>
 
                       <td>
@@ -75,13 +82,18 @@
                       <td>
                           {{Child.route}}
                       </td>
-                                </tr>
+                   </tr>
+                   <br>
 
-                                <tr>
-                                <td>
-                                <button>Add Child</button>
-                                </td>
-                                </tr>
+                    <tr id="emptyRow">
+                       <td>---</td>
+                       <td>---</td>
+                       <td>---</td>
+                       <td>---</td>
+                        <td>
+                            <b-btn variant="outline-info" align="right">Add Child</b-btn>
+                        </td>
+                    </tr>
                             </tbody>
 </table>
 
@@ -99,14 +111,14 @@ export default {
 
     data:function(){
       return int_data();
-      }, 
+      },
 
       beforeMount(){
 this.getmenus()
       },
 
     mounted(){
-        
+
     },
 
     methods:{
@@ -115,7 +127,7 @@ this.getmenus()
             .then((res)=>{
                     this.menus=res.data;
                     this.getroots();
-                    
+
             })
             //.catch(()=>{})
         },
@@ -132,7 +144,7 @@ this.getmenus()
                         route: this.menus[i]['route']
                         });
                 }
-                
+
                 }
         },
 
@@ -149,9 +161,26 @@ this.Children=[]
                         route: this.menus[i]['route']
                         });
                 }
-                
+
                 }
         },
     }
 }
 </script>
+<style scoped>
+table{
+    width:100%;
+}
+.t{
+    text-align: center;
+}
+.zz{
+    text-align: center;
+}
+.x{
+    padding-left:20px;
+}
+#emptyRow{
+    text-align: center;
+}
+</style>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\permission;
 use App\permission_detail;
+use App\Employee;
 use App\User;
 use Illuminate\Support\Facades\DB;
 
@@ -34,10 +35,19 @@ class PermissionController extends Controller
     }
 
     public function activePermaCode(Request $request){
+         //----for taging to specific user/s
+   $UserIn=getUser()->id;
+   $UserCoCode=getUser()->CoCode;
+   //---------------
+
         $input = $request->all();
-        
         $PO = DB::table('users')
         ->where('id',$input['params']['id'])
+        ->update(['permCode'=>$input['params']['permCode']]);
+
+        $PO = DB::table('employees')
+        ->where('id',$input['params']['id'])
+        ->where('CoCode',$UserCoCode)
         ->update(['permCode'=>$input['params']['permCode']]);
     }
 }

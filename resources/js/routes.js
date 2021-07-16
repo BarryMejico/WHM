@@ -36,10 +36,12 @@ import invoice2 from './components/Page/Sales/invoice2';
 
 import company from './components/Page/company';
 import companyInvites from './components/Page/companyInvite';
+import companies from './components/Page/companies';
 
 import adminAuth from './components/component/adminAuth';
 
 import menus from './components/component/Menus';
+
 
 
 import { before } from 'lodash';
@@ -81,6 +83,20 @@ export default{
             })
         }
     },
+
+    {
+        path:'/companies',
+        component:companies,
+        beforeEnter:(to,from,next)=>{
+            axios.get('api/Authenticated').then(()=>{
+                next()
+                
+            }).catch(()=>{
+                return next({name: '/login_'})
+            })
+        }
+    },
+
     {
         path:'/companyInvite',
         component:companyInvites,

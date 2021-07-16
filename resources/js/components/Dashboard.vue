@@ -31,8 +31,10 @@
                 <hr>
 
                     <!-- <i>additional features for employee modal</i> -->
-                    <h6 class="text-muted">Search & Add Employee</h6>
-                    <employee-modal/>
+                    <div style="display:flex;">
+                        <h6 class="text-muted">Search & Add Employee</h6>
+                        <employee-modal/>
+                    </div>
                     <!-- end company -->
                     <!-- list of employee -->
                     <ul class="list-group">

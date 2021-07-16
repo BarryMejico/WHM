@@ -1,6 +1,60 @@
 <template>
-    <div class="container">
-         <br>
+    <div>
+
+        <div>
+        <br>
+        <br>
+        <br>
+        <b-row>
+            <b-col></b-col>
+            <b-col sm="10" md="4" lg="4" style="border-radius:15px;box-shadow:13px 15px 37px grey;padding:60px;font-family:Verdana;background: rgb(238,238,238);
+background: linear-gradient(24deg, rgba(238,238,238,1) 2%, rgba(255,255,255,1) 50%);">
+                <div class="container">
+                    <h3 class="text-muted" style="letter-spacing: 3px;text-align:center;"><b>Register</b></h3>
+                <hr>
+                <br>
+                <br>
+                    <b-form>
+                        <b-form-group label="Name" label-for="name" class="text-muted" label-size="sm">
+                            <b-form-input v-model="form.name" id="name" type="text" class="form-control" required autocomplete="name" size="lg" autofocus></b-form-input>
+                        </b-form-group> 
+
+                        <b-form-group label="Email" label-for="email" description="We'll never share your email with anyone else." class="text-muted" label-size="sm">
+                            <b-form-input v-model="form.email" id="email" type="email" class="form-control" required autocomplete="email" size="lg"></b-form-input>
+                        </b-form-group>
+
+                         <b-form-group label="Password" label-for="password" class="text-muted" label-size="sm">
+                            <b-form-input v-model="form.password" id="password" type="password" class="form-control"  required autocomplete="new-password" size="lg"></b-form-input>
+                        </b-form-group>
+                        
+                        <b-form-group label="Confirm Password" label-for="password-confirm" class="text-muted" label-size="sm">
+                            <b-form-input v-model="form.password_confirmation" id="password-confirm" type="password" class="form-control"  required autocomplete="new-password" size="lg"></b-form-input>
+                        </b-form-group>
+
+
+                        <b-btn @click.prevent="saveform" variant="secondary" size="lg">Submit</b-btn>    
+                    </b-form>
+
+        
+          
+      
+                        <message-box :message="message"></message-box>
+                </div>
+            </b-col>
+        <b-col></b-col>
+        </b-row>
+
+    </div>
+
+
+
+
+
+
+
+
+
+         <!-- <br>
         <br>
         <br>
         
@@ -62,7 +116,7 @@
 
         </div>
         <message-box :message="message"></message-box>
-    </div>
+    </div> -->
 </div>
 </template>
 <script>

@@ -28,9 +28,6 @@ class CompanyController extends Controller
             'CompanyAddress'=>$input['CompanyAddress'],
             'CompanyOwner' =>$input['CompanyOwner'],
             ]);
-
-            
-            
             $company->save();
 
             $UserIn=getUser()->id;
@@ -38,6 +35,7 @@ class CompanyController extends Controller
             $User = User::where('id',$UserIn)
             ->update([
                'CoCode'=> $Code,
+               
             ]);
     }
 
@@ -54,9 +52,24 @@ class CompanyController extends Controller
             return $User;
     }
 
+   public function companies(){
+   //----for taging to specific user/s
+   $UserIn=getUser()->id;
+   $UserCoCode=getUser()->CoCode;
+   //---------------
+    $companies=DB::table('employees')
+                ->Join('companies','companies.CoCode','=','employees.CoCode')
+                ->leftJoin('users','users.id','=','companies.CompanyOwner')
+                ->where('employees.id', $UserIn)
+                ->select('companies.CompanyName',
+                         'companies.CompanyAddress',
+                         'users.name',
+                )
+                ->get();
+    return $companies;
+   }
+
     public function getCompany(Request $res){
-        //$company= DB::connection('mysql')->select("SELECT * FROM `companies` where CoCode=?",[$res['CoCode']]);
-        //dd($request);
         $company = Company::where('CoCode',$res['CoCode'])
                         ->get();
         return $company;

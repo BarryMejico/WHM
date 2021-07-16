@@ -104,6 +104,7 @@ Route::post('SaveInvitedEmployee','EmployeesController@storeinvited');
 Route::post('SaveCompany','CompanyController@SaveCompany');
 Route::get('getCompany','CompanyController@getCompany');
 Route::post('setCompany','CompanyController@setCompany');
+Route::get('affilatedCompanies','CompanyController@companies');
 
 Route::get('getUser','userController@getUser');
 

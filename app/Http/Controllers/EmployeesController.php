@@ -34,6 +34,10 @@ class EmployeesController extends Controller
 }
 
 public function all_LoadEmp(){
+   //----for taging to specific user/s
+   $UserIn=getUser()->id;
+   $UserCoCode=getUser()->CoCode;
+   //---------------
     $Employee=DB::table('employees')
                 ->leftJoin('users','users.id','=','employees.id')
                 ->select('users.id',
@@ -42,6 +46,7 @@ public function all_LoadEmp(){
                          'users.permCode',
                          'employees.Position',
                 )
+                ->where('employees.CoCode', $UserCoCode)
                 ->get();
     
     return $Employee;

@@ -64,6 +64,9 @@ class CompanyController extends Controller
                 ->select('companies.CompanyName',
                          'companies.CompanyAddress',
                          'users.name',
+                         'users.name',
+                         'employees.CoCode',
+                         'employees.permCode',
                 )
                 ->get();
     return $companies;
@@ -73,5 +76,21 @@ class CompanyController extends Controller
         $company = Company::where('CoCode',$res['CoCode'])
                         ->get();
         return $company;
+    }
+
+    public function changeCompany(Request $request){
+         //----for taging to specific user/s
+        $UserIn=getUser()->id;
+        $UserCoCode=getUser()->CoCode;
+        //---------------
+        $input = $request->all();
+
+        $PO = DB::table('users')
+        ->where('id',$UserIn)
+        ->update([
+            'permCode'=>$input['params']['permCode'],
+            'CoCode'=>$input['params']['CoCode'],
+    
+    ]);
     }
 }

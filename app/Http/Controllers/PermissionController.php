@@ -11,8 +11,16 @@ use Illuminate\Support\Facades\DB;
 
 class PermissionController extends Controller
 {
-    public function addpermision(){
+    public function addpermision(Request $request){
         $Code=Ucode();
+        $UserCoCode=getUser()->CoCode;
+
+        $input = $request->all();
+            
+            $customer = permission_detail::
+            where('permCode',$input['params']['permCode'])
+            ->delete();
+
         $permission = permission::Create([
             'permCode'=>$Code,
             'Description'=>$Code,
@@ -35,7 +43,7 @@ class PermissionController extends Controller
     }
 
     public function activePermaCode(Request $request){
-         //----for taging to specific user/s
+   //----for taging to specific user/s
    $UserIn=getUser()->id;
    $UserCoCode=getUser()->CoCode;
    //---------------

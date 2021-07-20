@@ -109,8 +109,9 @@ export default{
         save(){
            
             //add Permission 
+            
             axios
-            .post('/api/addpermi')
+            .post('/api/addpermi',{params:{permCode:this.selected['perma']}})
             .then((res)=>{
                 // add permission details
                 var i,j;
@@ -288,7 +289,8 @@ export default{
                   var i;
                   for(i=0;i<=response.data.length-1;i++){
                       this.options.push({
-                          value:{perma:laman[i]['permCode'],ID:laman[i]['id']},
+                          value:{perma:laman[i]['permCode'],
+                          ID:laman[i]['id']},
                           text:laman[i]['Employee']
                       })
                   }

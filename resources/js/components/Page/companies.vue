@@ -18,7 +18,7 @@
             <td>{{company.CompanyName}}</td>
             <td><Address>{{company.CompanyAddress}}</Address></td>
             <td>{{company.name}}</td>
-            <td><button>login</button></td>
+            <td><button @click="changeCompany(k)">login</button></td>
         </tr>
     </tbody>
 </table>                
@@ -44,6 +44,17 @@ export default {
             this.companies=res.data;
         })
 
+    },
+
+    methods:{
+        changeCompany(i){
+            axios
+            .post('api/changePerma',{params:{permCode:this.companies[i]['permCode'],CoCode:this.companies[i]['CoCode']}})
+            .then(()=>{
+                alert("Done");
+            })
+
+        },
     }
  
 }

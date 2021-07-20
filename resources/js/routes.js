@@ -4,6 +4,7 @@ import Login from './components/Auth/LoginSys';
 import Register from './components/Auth/RegisterSys';
 import Dashboard from './components/Dashboard';
 import Upcoming from './components/Upcoming';
+import E404 from './components/component/E404';
 
 import ListPO from './components/Page/ListPO';
 import CreatePO from './components/Page/CreatePO';
@@ -49,6 +50,11 @@ export default{
     mode: 'history',
     routes: [
 ,
+
+{
+    path:'*',
+    component: E404,
+},
 
     {
         path:'/',

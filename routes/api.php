@@ -105,6 +105,7 @@ Route::post('SaveCompany','CompanyController@SaveCompany');
 Route::get('getCompany','CompanyController@getCompany');
 Route::post('setCompany','CompanyController@setCompany');
 Route::get('affilatedCompanies','CompanyController@companies');
+Route::post('changePerma','CompanyController@changeCompany');
 
 Route::get('getUser','userController@getUser');
 
